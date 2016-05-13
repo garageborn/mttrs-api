@@ -6,6 +6,8 @@ gem 'memoist', '0.14.0'
 gem 'thread', '0.2.2'
 gem 'pg', '0.18.4'
 gem 'rails', '4.2.6'
+gem 'figaro', '1.1.1'
+gem 'cloudinary', '1.1.6'
 
 group :development, :test do
   gem 'byebug'

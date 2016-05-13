@@ -2,5 +2,6 @@
 .byebug_history
 .DS_Store
 /.bundle
+/config/application.yml
 /log/*
 /tmp

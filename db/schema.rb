@@ -18,14 +18,15 @@ ActiveRecord::Schema.define(version: 3) do
   enable_extension "citext"
 
   create_table "links", force: :cascade do |t|
-    t.citext   "url",                      null: false
-    t.integer  "status",      default: 0,  null: false
+    t.citext   "url",                          null: false
+    t.integer  "status",          default: 0,  null: false
     t.citext   "title"
     t.text     "description"
     t.text     "content"
-    t.jsonb    "social",      default: {}
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.string   "image_public_id"
+    t.jsonb    "social",          default: {}
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "links", ["status"], name: "index_links_on_status", using: :btree

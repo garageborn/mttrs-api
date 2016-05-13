@@ -8,6 +8,7 @@ class CreateLinks < ActiveRecord::Migration
       t.citext :title
       t.text :description
       t.text :content
+      t.string :image_public_id
       t.jsonb :social, default: '{}'
       t.timestamps null: false
     end
