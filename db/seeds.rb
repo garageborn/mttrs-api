@@ -5,3 +5,8 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Source.create([
+  { name: 'HackerNews', rss: 'https://news.ycombinator.com/rss' },
+  { name: 'TechCrunch', rss: 'http://techcrunch.com/feed/' }
+])
