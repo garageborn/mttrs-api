@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
   include Concerns::CloudinaryAsset
+  include Concerns::Filterable
 
   belongs_to :publisher
   has_and_belongs_to_many :feeds
@@ -14,6 +15,16 @@ class Story < ActiveRecord::Base
   validates :url, presence: true, uniqueness: { case_sensitive: false }
 
   after_commit :instrument_creation, on: :create
+
+  scope :recent, -> { order(created_at: :desc) }
+  scope :created_since, -> (date) { where('stories.created_at >= ?', date) }
+  scope :created_between, -> (start_at, end_at) { where(created_at: start_at..end_at) }
+  scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
+
+  scope :today, -> { created_at(Time.zone.now) }
+  scope :yesterday, -> { created_at(1.day.yesterday) }
+  scope :last_week, -> { created_since(1.week.ago) }
+  scope :last_month, -> { created_since(1.month_ago.ago) }
 
   private
 
