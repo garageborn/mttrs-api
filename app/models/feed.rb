@@ -8,6 +8,10 @@ class Feed < ActiveRecord::Base
 
   after_commit :instrument_creation, on: :create
 
+  scope :order_by_stories_count, lambda {
+    joins(:stories).group('feeds.id').order('count(feeds.id) desc')
+  }
+
   private
 
   def instrument_creation
