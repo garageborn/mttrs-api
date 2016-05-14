@@ -1,8 +1,9 @@
-class CreateLinks < ActiveRecord::Migration
+class CreateStories < ActiveRecord::Migration
   def change
     enable_extension 'citext'
 
-    create_table :links do |t|
+    create_table :stories do |t|
+      t.integer :publisher_id, null: false, index: true
       t.citext :url, null: false
       t.integer :status, default: 0, null: false, index: true
       t.citext :title
@@ -13,6 +14,6 @@ class CreateLinks < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :links, :url, unique: true
+    add_index :stories, :url, unique: true
   end
 end
