@@ -30,6 +30,7 @@ group :test do
   gem 'factory_girl_rails', '4.7.0'
   gem 'faker', '1.6.3'
   gem 'rspec-its', '1.2.0'
+  gem 'rspec_junit_formatter', '0.2.3'
   gem 'shoulda-callback-matchers', '1.1.3'
   gem 'shoulda-matchers', '3.1.1'
   gem 'terminal-notifier', '1.6.3', require: false
