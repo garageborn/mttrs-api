@@ -16,7 +16,6 @@ module Concerns
       end
 
       def url(options = {})
-        byebug
         source = resource.read_attribute(attribute)
         return unless source.present?
         Cloudinary::Utils.cloudinary_url(source, options)
@@ -33,7 +32,7 @@ module Concerns
       end
     end
 
-    included do |base|
+    included do
       def self.cloudinary_asset(name, attribute:, styles: {})
         define_method(name) do
           Model.new(resource: self, attribute: attribute, styles: styles)

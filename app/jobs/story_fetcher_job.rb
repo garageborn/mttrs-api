@@ -1,30 +1,30 @@
-class LinkFetcherJob < ActiveJob::Base
+class StoryFetcherJob < ActiveJob::Base
   extend Memoist
 
-  def perform(link_id)
-    @link_id = link_id
-    return if link.blank?
+  def perform(story_id)
+    @story_id = story_id
+    return if story.blank?
 
-    link.fetching!
+    story.fetching!
     if update
-      link.ready!
+      story.ready!
     else
-      link.error!
+      story.error!
     end
   end
 
   private
 
-  def link
-    Link.find_by_id(@link_id)
+  def story
+    Story.find_by_id(@story_id)
   end
 
   def social
-    SocialShare.count(link.url)
+    SocialShare.count(story.url)
   end
 
   def embedly
-    Embedly.extract(link.url)
+    Embedly.extract(story.url)
   end
 
   def image_public_id
@@ -35,7 +35,8 @@ class LinkFetcherJob < ActiveJob::Base
 
   def update
     return if embedly.code != 200
-    link.update_attributes(
+
+    story.update_attributes(
       social: social.to_h,
       title: embedly.parsed_response.title,
       description: embedly.parsed_response.description,
@@ -44,5 +45,5 @@ class LinkFetcherJob < ActiveJob::Base
     )
   end
 
-  memoize :link, :social, :embedly, :image_public_id
+  memoize :story, :social, :embedly, :image_public_id
 end

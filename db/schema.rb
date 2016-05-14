@@ -11,13 +11,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 3) do
+ActiveRecord::Schema.define(version: 5) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
 
-  create_table "links", force: :cascade do |t|
+  create_table "categories", force: :cascade do |t|
+    t.citext   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
+
+  create_table "feeds", force: :cascade do |t|
+    t.integer  "publisher_id", null: false
+    t.integer  "category_id",  null: false
+    t.citext   "url",          null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "feeds", ["category_id", "publisher_id"], name: "index_feeds_on_category_id_and_publisher_id", using: :btree
+  add_index "feeds", ["publisher_id", "category_id"], name: "index_feeds_on_publisher_id_and_category_id", using: :btree
+  add_index "feeds", ["url"], name: "index_feeds_on_url", unique: true, using: :btree
+
+  create_table "feeds_stories", id: false, force: :cascade do |t|
+    t.integer  "feed_id",    null: false
+    t.integer  "story_id",   null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "feeds_stories", ["feed_id", "story_id"], name: "index_feeds_stories_on_feed_id_and_story_id", unique: true, using: :btree
+  add_index "feeds_stories", ["story_id", "feed_id"], name: "index_feeds_stories_on_story_id_and_feed_id", unique: true, using: :btree
+
+  create_table "publishers", force: :cascade do |t|
+    t.citext   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "publishers", ["name"], name: "index_publishers_on_name", unique: true, using: :btree
+
+  create_table "stories", force: :cascade do |t|
+    t.integer  "publisher_id",                 null: false
     t.citext   "url",                          null: false
     t.integer  "status",          default: 0,  null: false
     t.citext   "title"
@@ -29,27 +68,8 @@ ActiveRecord::Schema.define(version: 3) do
     t.datetime "updated_at",                   null: false
   end
 
-  add_index "links", ["status"], name: "index_links_on_status", using: :btree
-  add_index "links", ["url"], name: "index_links_on_url", unique: true, using: :btree
-
-  create_table "links_sources", id: false, force: :cascade do |t|
-    t.integer  "link_id",    null: false
-    t.integer  "source_id",  null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "links_sources", ["link_id", "source_id"], name: "index_links_sources_on_link_id_and_source_id", unique: true, using: :btree
-  add_index "links_sources", ["source_id", "link_id"], name: "index_links_sources_on_source_id_and_link_id", unique: true, using: :btree
-
-  create_table "sources", force: :cascade do |t|
-    t.citext   "name",       null: false
-    t.citext   "rss",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "sources", ["name"], name: "index_sources_on_name", unique: true, using: :btree
-  add_index "sources", ["rss"], name: "index_sources_on_rss", unique: true, using: :btree
+  add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree
+  add_index "stories", ["status"], name: "index_stories_on_status", using: :btree
+  add_index "stories", ["url"], name: "index_stories_on_url", unique: true, using: :btree
 
 end

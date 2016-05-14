@@ -1,12 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+if Rails.env.development?
+  technology = Category.create(name: 'Technology')
+  business = Category.create(name: 'Business')
+  entertainment = Category.create(name: 'Entertainment')
 
-Source.create([
-  { name: 'HackerNews', rss: 'https://news.ycombinator.com/rss' },
-  { name: 'TechCrunch', rss: 'http://techcrunch.com/feed/' }
-])
+  Publisher.create(
+    name: 'Mashable',
+    feeds: [
+      Feed.new(category: technology, url: 'http://feeds.mashable.com/mashable/tech'),
+      Feed.new(category: business, url: 'http://feeds.mashable.com/mashable/business'),
+      Feed.new(category: entertainment, url: 'http://feeds.mashable.com/mashable/entertainment')
+    ]
+  )
+
+  Publisher.create(
+    name: 'TechCrunch',
+    feeds: [
+      Feed.new(category: business, url: 'http://feeds.feedburner.com/TechCrunch/startups'),
+    ]
+  )
+end
