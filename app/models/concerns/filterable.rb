@@ -13,9 +13,9 @@ module Concerns
       def filter(filtering_params)
         results = where(nil) # create an anonymous scope
         filtering_params.each do |key, value|
-          if method(key).arity > 0
-            results = results.public_send(key, value) if value.present?
-          else
+          begin
+            results = results.public_send(key, value)
+          rescue ArgumentError # if we have a scope with arity 0 or enum query
             results = results.public_send(key)
           end
         end

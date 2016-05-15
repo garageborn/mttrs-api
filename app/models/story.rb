@@ -16,15 +16,15 @@ class Story < ActiveRecord::Base
 
   after_commit :instrument_creation, on: :create
 
-  scope :recent, -> { order(created_at: :desc) }
-  scope :created_since, -> (date) { where('stories.created_at >= ?', date) }
-  scope :created_between, -> (start_at, end_at) { where(created_at: start_at..end_at) }
+  scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
-
+  scope :created_between, -> (start_at, end_at) { where(created_at: start_at..end_at) }
+  scope :created_since, -> (date) { where('stories.created_at >= ?', date) }
+  scope :last_month, -> { created_since(1.month_ago.ago) }
+  scope :last_week, -> { created_since(1.week.ago) }
+  scope :recent, -> { order(created_at: :desc) }
   scope :today, -> { created_at(Time.zone.now) }
   scope :yesterday, -> { created_at(1.day.yesterday) }
-  scope :last_week, -> { created_since(1.week.ago) }
-  scope :last_month, -> { created_since(1.month_ago.ago) }
 
   private
 
