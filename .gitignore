@@ -5,3 +5,4 @@
 /config/application.yml
 /log/*
 /tmp
+coverage

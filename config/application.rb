@@ -15,6 +15,7 @@ Bundler.require(*Rails.groups)
 module Mttrs
   class Application < Rails::Application
     config.time_zone = 'Brasilia'
+    config.active_job.queue_adapter = :sidekiq
     config.active_record.raise_in_transactional_callbacks = true
     config.active_record.timestamped_migrations = false
     config.autoload_paths += %W(#{ config.root }/lib)

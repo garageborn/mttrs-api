@@ -4,8 +4,10 @@ class CreatePublishers < ActiveRecord::Migration
 
     create_table :publishers do |t|
       t.citext :name, null: false
+      t.citext :slug, null: false
       t.timestamps null: false
     end
     add_index :publishers, :name, unique: true
+    add_index :publishers, :slug, unique: true
   end
 end

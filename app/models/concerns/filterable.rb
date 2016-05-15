@@ -11,9 +11,9 @@ module Concerns
       # URL params. Make sure you don't pass stuff directly from the web without
       # whitelisting only the params you care about first!
       def filter(filtering_params)
-        results = self.where(nil) # create an anonymous scope
+        results = where(nil) # create an anonymous scope
         filtering_params.each do |key, value|
-          if self.method(key).arity > 0
+          if method(key).arity > 0
             results = results.public_send(key, value) if value.present?
           else
             results = results.public_send(key)

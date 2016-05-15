@@ -19,11 +19,13 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "categories", force: :cascade do |t|
     t.citext   "name",       null: false
+    t.citext   "slug",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
 
   create_table "feeds", force: :cascade do |t|
     t.integer  "publisher_id", null: false
@@ -49,11 +51,13 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "publishers", force: :cascade do |t|
     t.citext   "name",       null: false
+    t.citext   "slug",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   add_index "publishers", ["name"], name: "index_publishers_on_name", unique: true, using: :btree
+  add_index "publishers", ["slug"], name: "index_publishers_on_slug", unique: true, using: :btree
 
   create_table "stories", force: :cascade do |t|
     t.integer  "publisher_id",                 null: false

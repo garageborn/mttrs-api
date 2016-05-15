@@ -3,11 +3,14 @@ source 'https://rubygems.org'
 gem 'active_model_serializers', '0.9.5'
 gem 'cloudinary', '1.1.6'
 gem 'figaro', '1.1.1'
+gem 'friendly_id', '5.1.0'
 gem 'httparty', '0.13.7'
 gem 'memoist', '0.14.0'
 gem 'pg', '0.18.4'
 gem 'rails', '4.2.6'
 gem 'rails-api', '0.4.0'
+gem 'sidekiq', '4.1.2'
+gem 'sinatra', '1.4.7', require: false
 gem 'thread', '0.2.2'
 
 group :development, :test do
@@ -19,6 +22,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman', '0.81.0'
   gem 'puma', '3.4.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'spring'
@@ -33,6 +37,7 @@ group :test do
   gem 'rspec_junit_formatter', '0.2.3'
   gem 'shoulda-callback-matchers', '1.1.3'
   gem 'shoulda-matchers', '3.1.1'
+  gem 'simplecov', '0.11.2', require: false
   gem 'terminal-notifier', '1.6.3', require: false
   gem 'terminal-notifier-guard', '1.7.0', require: false
 end

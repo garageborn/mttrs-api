@@ -5,6 +5,7 @@ module SocialShare
     def self.count(url)
       request = HTTParty.get(BASE_URL, query: { format: 'json', url: url })
       request.parsed_response.try(:[], 'count').to_i
+    rescue StandardError
     end
   end
 end
