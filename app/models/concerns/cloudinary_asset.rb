@@ -3,12 +3,13 @@ module Concerns
     extend ActiveSupport::Concern
 
     class Model
-      attr_accessor :resource, :attribute
+      attr_accessor :resource, :attribute, :styles
       delegate :present?, :blank?, to: :url
 
       def initialize(resource:, attribute:, styles: {})
         self.resource = resource
         self.attribute = attribute
+        self.styles = styles
 
         styles.each do |style, options|
           self.class.send(:define_method, style) { style(options.dup) }
@@ -23,6 +24,13 @@ module Concerns
 
       def to_s
         url
+      end
+
+      def as_json(options = {})
+        Hash.new.tap do |hash|
+          hash[:url] = url
+          styles.each { |style, _| hash[style] = send(style).to_s }
+        end
       end
 
       private
