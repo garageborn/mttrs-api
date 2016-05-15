@@ -26,6 +26,14 @@ class Story < ActiveRecord::Base
   scope :today, -> { created_at(Time.zone.now) }
   scope :yesterday, -> { created_at(1.day.yesterday) }
 
+  def missing_image?
+    image_public_id.blank?
+  end
+
+  def missing_info?
+    title.blank? || description.blank? || content.blank?
+  end
+
   private
 
   def instrument_creation

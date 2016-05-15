@@ -34,15 +34,25 @@ class StoryFetcherJob < ActiveJob::Base
   end
 
   def update
-    return if embedly.code != 200
+    story.save
+  end
 
-    story.update_attributes(
-      social: social.to_h,
-      title: embedly.parsed_response.title,
-      description: embedly.parsed_response.description,
-      content: embedly.parsed_response.content,
-      image_public_id: image_public_id
-    )
+  def update_info
+    return unless story.missing_info?
+    return if embedly.code != 200
+    story.title = embedly.parsed_response.title
+    story.description = embedly.parsed_response.description
+    story.content = embedly.parsed_response.content
+  end
+
+  def update_image
+    return unless story.missing_image?
+    return if embedly.code != 200
+    story.image_public_id = image_public_id
+  end
+
+  def update_social
+    story.social = social.to_h
   end
 
   memoize :story, :social, :embedly, :image_public_id
