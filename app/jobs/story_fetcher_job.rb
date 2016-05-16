@@ -34,6 +34,9 @@ class StoryFetcherJob < ActiveJob::Base
   end
 
   def update
+    update_info
+    update_image
+    update_social
     story.save
   end
 
