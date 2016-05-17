@@ -9,7 +9,7 @@ dependencies:
     - ~/docker
 
   override:
-    - ./docker/build
+    - ./.docker/build
 
 deployment:
   hub:
