@@ -9,11 +9,11 @@ dependencies:
     - ~/docker
 
   override:
-    - cd ./.docker && ./build
+    - ./.docker/build
 
 deployment:
   hub:
     branch: master
     commands:
-      - cd ./.docker && ./push
-      - cd ./.docker && ./publish
+      - ./.docker/push
+      - ./.docker/publish
