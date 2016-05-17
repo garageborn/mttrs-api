@@ -15,7 +15,12 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def rss
-    RSS::Parser.parse(open(feed.url))
+    request = HTTParty.get(
+      feed.url,
+      headers: { 'User-Agent' => 'Firefox' },
+      verify: false
+    )
+    RSS::Parser.parse(request.body)
   end
 
   def proccess(item)
