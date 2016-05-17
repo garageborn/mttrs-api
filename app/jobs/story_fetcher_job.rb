@@ -25,6 +25,7 @@ class StoryFetcherJob < ActiveJob::Base
 
   def embedly
     Embedly.extract(story.url)
+  rescue StandardError
   end
 
   def image_public_id
