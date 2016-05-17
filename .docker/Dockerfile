@@ -1,7 +1,9 @@
 # FROM ruby:2.3.1
 FROM ubuntu:16.04
 
-RUN apt-get update -qq && apt-get install -y build-essential
+RUN apt-get update -qq
+RUN apt-get install -y build-essential
+RUN apt-get install -y ruby ruby-dev ruby-bundler
 
 # build api
 ENV MTTRS_API /mttrs-api
