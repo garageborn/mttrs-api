@@ -1,0 +1,3 @@
+#!/bin/bash
+docker tag mttrs-api:latest 939320565827.dkr.ecr.us-east-1.amazonaws.com/mttrs-api:latest
+docker push 939320565827.dkr.ecr.us-east-1.amazonaws.com/mttrs-api:latest

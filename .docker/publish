@@ -1,0 +1,4 @@
+#!/bin/bash
+aws ecs register-task-definition --cli-input-json file://task_definition.json
+REVISION=`aws ecs describe-task-definition --task-definition mttrs-api | egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'` &&
+aws ecs update-service --cluster mttrs --service mttrs-api-service --task-definition mttrs-api:$REVISION

@@ -1,0 +1,19 @@
+machine:
+  services:
+    - docker
+  post:
+    - eval `aws ecr get-login`
+
+dependencies:
+  cache_directories:
+    - ~/docker
+
+  override:
+    - ./docker/build
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - ./.docker/push
+      - ./.docker/publish

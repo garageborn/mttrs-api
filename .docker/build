@@ -1,0 +1,4 @@
+#!/bin/bash
+if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+docker build -t mttrs-api .
+mkdir -p ~/docker; docker save mttrs-api > ~/docker/image.tar
