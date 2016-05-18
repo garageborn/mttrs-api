@@ -23,5 +23,6 @@ RUN bundle install --jobs 10 --deployment --quiet --without development test
 
 ARG DATABASE_URL=DATABASE_URL
 RUN echo $DATABASE_URL
+RUN docker info
 
 CMD RAILS_ENV=production bundle exec rails s
