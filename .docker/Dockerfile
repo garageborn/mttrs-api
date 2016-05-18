@@ -16,6 +16,7 @@ ENV MTTRS_API /mttrs-api
 RUN mkdir $MTTRS_API
 COPY . $MTTRS_API
 WORKDIR $MTTRS_API
+RUN gem install bundler
 RUN bundle install --jobs 10 --deployment --quiet --without development test
 
 # # EXPOSE 80
