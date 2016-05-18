@@ -5,7 +5,6 @@ require 'capistrano/bundler'
 require 'capistrano/rails/migrations'
 require 'capistrano/sidekiq'
 require 'whenever/capistrano'
-require 'new_relic/recipes'
 require 'slackistrano/capistrano'
 require 'capistrano/passenger'
 
