@@ -1,29 +1,5 @@
-machine:
-  pre:
-    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
-  services:
-    - docker
-  post:
-    - eval `aws ecr get-login`
-
-dependencies:
-  cache_directories:
-    - ~/docker
-
-  override:
-    - ./.docker/build
-
 deployment:
-  hub:
+  production:
     branch: master
     commands:
-      - ./.docker/push
-      - ./.docker/publish
-
-database:
-  override:
-    - echo 'no database setup'
-
-test:
-  override:
-    - echo 'Skip'
+      - bundle exec cap production deploy branch=master
