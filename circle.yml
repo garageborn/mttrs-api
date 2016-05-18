@@ -13,7 +13,7 @@ dependencies:
 
 deployment:
   hub:
-    branch: master
+    branch: docker
     commands:
       - docker --version
       - docker info
