@@ -2,4 +2,4 @@ deployment:
   production:
     branch: master
     commands:
-      - bundle exec cap production deploy branch=features/capistrano
+      - bundle exec cap production deploy branch=master
