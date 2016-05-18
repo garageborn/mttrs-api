@@ -12,6 +12,7 @@ gem 'rails-api', '0.4.0'
 gem 'sidekiq', '4.1.2'
 gem 'sinatra', '1.4.7', require: false
 gem 'thread', '0.2.2'
+gem 'whenever', '0.9.4', require: false
 
 group :development, :test do
   gem 'byebug'
@@ -22,9 +23,15 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano', '3.5.0'
+  gem 'capistrano-passenger', '0.2.0'
+  gem 'capistrano-rails', '1.1.6'
+  gem 'capistrano-rbenv', '2.0.4'
+  gem 'capistrano-sidekiq', '0.5.4'
   gem 'foreman', '0.81.0'
   gem 'puma', '3.4.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
+  gem 'slackistrano', '3.0.1', require: false
   gem 'spring'
   gem 'web-console', '~> 2.0'
 end
