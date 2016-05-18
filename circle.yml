@@ -17,3 +17,7 @@ deployment:
     commands:
       - ./.docker/push
       - ./.docker/publish
+
+test:
+  override:
+    - echo 'Skip'
