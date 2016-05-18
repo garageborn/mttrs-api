@@ -1,9 +1,16 @@
 #!/bin/bash
-if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+echo $DATABASE_URL
+echo $DATABASE_URL
+echo $DATABASE_URL
+echo $DATABASE_URL
+echo $DATABASE_URL
+echo $DATABASE_URL
 
-docker build \
-  --build-arg DATABASE_URL=$DATABASE_URL \
-  --tag mttrs-api \
-  --file .docker/Dockerfile .
+# if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
 
-mkdir -p ~/docker; docker save mttrs-api > ~/docker/image.tar
+# docker build \
+#   --build-arg DATABASE_URL=$DATABASE_URL \
+#   --tag mttrs-api \
+#   --file .docker/Dockerfile .
+
+# mkdir -p ~/docker; docker save mttrs-api > ~/docker/image.tar
