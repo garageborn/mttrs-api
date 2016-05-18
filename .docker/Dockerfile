@@ -25,4 +25,4 @@ RUN echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 RUN gem install bundler
 RUN bundle install --jobs 10 --deployment --quiet --without development test
 
-CMD rake db:create && rake db:migrate && rails s
+CMD bundle exec rake db:migrate && bundle exec rails s
