@@ -11,8 +11,6 @@ dependencies:
     - ~/docker
 
   override:
-    - docker --version
-    - docker info
     - docker build --help
     - ./.docker/build
 
