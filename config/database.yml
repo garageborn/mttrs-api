@@ -13,6 +13,4 @@ test:
 
 production:
   <<: *default
-  database: mttrs_production
-  username: mttrs
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
