@@ -16,7 +16,7 @@ dependencies:
 
 deployment:
   hub:
-    branch: master
+    branch: docker
     commands:
       - ./.docker/push
       - ./.docker/publish

@@ -25,6 +25,5 @@ WORKDIR $MTTRS_API
 RUN echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 RUN gem install bundler
 RUN bundle install --jobs 10 --deployment --quiet --without development test
-RUN bundle exec rake db:create && bundle exec rake db:migrate
 
-CMD bundle exec rails s
+CMD rake db:create && rake db:migrate && rails s
