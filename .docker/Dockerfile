@@ -1,9 +1,14 @@
 FROM ubuntu:16.04
 
+ARG RAILS_ENV=production
+ARG DATABASE_URL
+
+ENV RAILS_ENV $RAILS_ENV
+ENV DATABASE_URL $DATABASE_URL
+
 # install dependencies
 RUN apt-get update -qq
-RUN apt-get install -y build-essential wget curl
-RUN apt-get install -y ruby ruby-dev ruby-bundler
+RUN apt-get install -y build-essential wget curl ruby ruby-dev ruby-bundler
 
 # postgresql setup
 RUN sh -c "echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
@@ -15,13 +20,9 @@ ENV MTTRS_API /mttrs-api
 RUN mkdir $MTTRS_API
 COPY . $MTTRS_API
 WORKDIR $MTTRS_API
+
+RUN echo 'gem: --no-rdoc --no-ri' >> ~/.gemrc
 RUN gem install bundler
 RUN bundle install --jobs 10 --deployment --quiet --without development test
 
-# # EXPOSE 80
-# # EXPOSE 443
-
-ARG DATABASE_URL=DATABASE_URL
-RUN echo $DATABASE_URL
-
-CMD RAILS_ENV=production bundle exec rails s
+CMD rake db:create && rake db:migrate && rails s

@@ -1,4 +1,6 @@
 machine:
+  pre:
+    - curl -sSL https://s3.amazonaws.com/circle-downloads/install-circleci-docker.sh | bash -s -- 1.10.0
   services:
     - docker
   post:
@@ -9,14 +11,13 @@ dependencies:
     - ~/docker
 
   override:
+    - docker build --help
     - ./.docker/build
 
 deployment:
   hub:
     branch: master
     commands:
-      - docker --version
-      - docker info
       - ./.docker/push
       - ./.docker/publish
 
