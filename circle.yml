@@ -9,14 +9,14 @@ dependencies:
     - ~/docker
 
   override:
+    - docker --version
+    - docker info
     - ./.docker/build
 
 deployment:
   hub:
     branch: docker
     commands:
-      - docker --version
-      - docker info
       - ./.docker/push
       - ./.docker/publish
 
