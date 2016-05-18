@@ -18,6 +18,10 @@ deployment:
       - ./.docker/push
       - ./.docker/publish
 
+database:
+  override:
+    - echo 'no database setup'
+
 test:
   override:
     - echo 'Skip'
