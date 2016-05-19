@@ -24,7 +24,7 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def proccess(item)
-    feed.publisher.stories.where(url: item.link).first_or_create.tap do |story|
+    feed.publisher.stories.where(source_url: item.link).first_or_create.tap do |story|
       story.feeds << feed unless story.feeds.include?(feed)
     end
   end

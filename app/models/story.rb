@@ -12,7 +12,8 @@ class Story < ActiveRecord::Base
   }
 
   validates :publisher, :status, presence: true
-  validates :url, presence: true, uniqueness: { case_sensitive: false }
+  validates :source_url, presence: true, uniqueness: { case_sensitive: false }
+  validates :url, uniqueness: { case_sensitive: false }, allow_blank: true
 
   after_commit :instrument_creation, on: :create
 

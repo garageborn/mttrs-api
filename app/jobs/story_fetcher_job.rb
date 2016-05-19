@@ -42,6 +42,7 @@ class StoryFetcherJob < ActiveJob::Base
   end
 
   def update_info
+    story.url ||= story.source_url
     return unless story.missing_info?
     return if embedly.code != 200
     story.url = embedly.url

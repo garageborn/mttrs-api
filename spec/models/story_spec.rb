@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Story do
   it { should have_db_column(:publisher_id).with_options(null: false) }
-  it { should have_db_column(:url).with_options(null: false) }
+  it { should have_db_column(:source_url).with_options(null: false) }
+  it { should have_db_column(:url) }
   it { should have_db_column(:status).with_options(null: false, default: 0) }
   it { should have_db_column(:title) }
   it { should have_db_column(:description) }
@@ -14,7 +15,8 @@ RSpec.describe Story do
   it { should have_db_index(:status) }
   it { should have_db_index(:publisher_id) }
   it { should have_db_index(:status) }
-  it { should have_db_index(:url).unique(true) }
+  it { should have_db_index(:source_url).unique(true) }
+  it { should have_db_index(:url) }
 
   it { should belong_to(:publisher) }
   it { should have_and_belong_to_many(:feeds) }
@@ -26,7 +28,8 @@ RSpec.describe Story do
     subject { build(:story) }
     it { is_expected.to validate_presence_of(:publisher) }
     it { is_expected.to validate_presence_of(:status) }
-    it { is_expected.to validate_presence_of(:url) }
-    it { is_expected.to validate_uniqueness_of(:url).case_insensitive }
+    it { is_expected.to validate_presence_of(:source_url) }
+    it { is_expected.to validate_uniqueness_of(:source_url).case_insensitive }
+    it { is_expected.to validate_uniqueness_of(:url).case_insensitive.allow_blank }
   end
 end

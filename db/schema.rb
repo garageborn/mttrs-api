@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 5) do
+ActiveRecord::Schema.define(version: 6) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "stories", force: :cascade do |t|
     t.integer  "publisher_id",                 null: false
-    t.citext   "url",                          null: false
+    t.citext   "url"
     t.integer  "status",          default: 0,  null: false
     t.citext   "title"
     t.text     "description"
@@ -70,10 +70,12 @@ ActiveRecord::Schema.define(version: 5) do
     t.jsonb    "social",          default: {}
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
+    t.citext   "source_url",                   null: false
   end
 
   add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree
+  add_index "stories", ["source_url"], name: "index_stories_on_source_url", unique: true, using: :btree
   add_index "stories", ["status"], name: "index_stories_on_status", using: :btree
-  add_index "stories", ["url"], name: "index_stories_on_url", unique: true, using: :btree
+  add_index "stories", ["url"], name: "index_stories_on_url", using: :btree
 
 end
