@@ -1,7 +1,8 @@
 module SocialShare
   class Facebook
     def self.count(url)
-      request = HTTParty.get("http://graph.facebook.com/?id=#{ url }")
+      request = Proxy.request("http://graph.facebook.com/?id=#{ url }")
+      return unless request.parsed_response
       request.parsed_response.try(:[], 'shares').to_i
     rescue StandardError
     end
