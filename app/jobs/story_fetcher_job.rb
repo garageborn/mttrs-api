@@ -57,7 +57,7 @@ class StoryFetcherJob < ActiveJob::Base
   end
 
   def update_social
-    story.social = social.to_h
+    StorySocialFetcherJob.perform_later(story.id)
   end
 
   memoize :story, :social, :embedly, :image_public_id
