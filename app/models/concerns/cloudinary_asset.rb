@@ -26,7 +26,7 @@ module Concerns
         url
       end
 
-      def as_json(options = {})
+      def as_json(_ = {})
         Hash.new.tap do |hash|
           hash[:url] = url
           styles.each { |style, _| hash[style] = send(style).to_s }
