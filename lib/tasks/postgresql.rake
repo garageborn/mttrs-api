@@ -2,8 +2,8 @@ require 'tempfile'
 require 'date'
 
 namespace :postgresql do
-  POSTGRESQL_BACKUP_PATH = "/tmp/#{ Time.now.strftime('%Y%m%d%H%M%S') }.dump"
-  POSTGRESQL_GZIP_PATH = "#{ POSTGRESQL_BACKUP_PATH }.tar.gz"
+  POSTGRESQL_BACKUP_PATH = "/tmp/#{ Time.now.strftime('%Y%m%d%H%M%S') }.dump".freeze
+  POSTGRESQL_GZIP_PATH = "#{ POSTGRESQL_BACKUP_PATH }.tar.gz".freeze
 
   def dump
     system <<-CMD

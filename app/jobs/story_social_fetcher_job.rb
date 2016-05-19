@@ -5,7 +5,7 @@ class StorySocialFetcherJob < ActiveJob::Base
     @story_id = story_id
     return if story.blank?
 
-    story.update_attributes(social: social.to_h)
+    update
   end
 
   private
@@ -16,6 +16,14 @@ class StorySocialFetcherJob < ActiveJob::Base
 
   def social
     SocialShare.count(story.url)
+  end
+
+  def update
+    social.each_pair do |provider, count|
+      next if story.social['provider'].to_i > count
+      story.social['provider'] = count
+    end
+    story.save if story.changed?
   end
 
   memoize :story, :social
