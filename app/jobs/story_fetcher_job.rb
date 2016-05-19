@@ -7,8 +7,8 @@ class StoryFetcherJob < ActiveJob::Base
 
     story.fetching!
     if update && !story.missing_info?
-      enqueue_social_fetcher
       story.ready!
+      enqueue_social_fetcher
     else
       story.error!
     end
@@ -38,7 +38,6 @@ class StoryFetcherJob < ActiveJob::Base
   def update
     update_info
     update_image
-    return false unless story.changed?
     story.save
   end
 
