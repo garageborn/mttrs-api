@@ -1,5 +1,4 @@
 lock '3.5.0'
-require 'pry'
 
 set :application, 'mttrs-api'
 set :repo_url, 'git@github.com:alexandrebini/mttrs-api.git'
@@ -12,6 +11,7 @@ set :branch, -> {
 }
 set :log_level, :info
 set :ssh_options, { forward_agent: true }
+set :root, File.expand_path(File.dirname(__FILE__) + '/../')
 
 # rbenv
 set :rbenv_type, :user
