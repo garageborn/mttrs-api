@@ -6,7 +6,7 @@ module Proxy
   class << self
     attr_accessor :current_source, :current_proxy
 
-    def request(url, options = {}, method: :get, max_tries: 3)
+    def request(url, options = {}, method: :get, max_tries: 5)
       options[:timeout] ||= DEFAULT_TIMEOUT
 
       current_source, current_proxy = get_proxy
