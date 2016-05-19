@@ -15,4 +15,13 @@ namespace :postgresql do
       end
     end
   end
+
+  desc 'Restore'
+  task :restore do
+    invoke 'postgresql:backup'
+    last_dump = Dir.glob("#{ fetch(:root) }/tmp/*.dump.tar.gz").max_by { |f| File.mtime(f) }
+    system("tar -zxvf #{ last_dump }")
+    system("psql mttrs_development --command='drop schema public cascade;create schema public;'")
+    system("psql mttrs_development < #{ last_dump.gsub('.tar.gz', '') }")
+  end
 end
