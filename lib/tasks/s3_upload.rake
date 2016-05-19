@@ -2,7 +2,7 @@ require 'fog'
 
 Fog::Logger[:warning] = nil
 
-namespace :upload do
+namespace :s3_upload do
   def connection
     @connection ||= Fog::Storage.new({
       provider: 'AWS',
