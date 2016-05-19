@@ -16,6 +16,10 @@ gem 'sinatra', '1.4.7', require: false
 gem 'thread', '0.2.2'
 gem 'whenever', '0.9.4', require: false
 
+group :production do
+  gem 'sentry-raven', '1.0.0'
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'guard-bundler', '2.1.0'

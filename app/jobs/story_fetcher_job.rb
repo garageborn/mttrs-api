@@ -6,7 +6,8 @@ class StoryFetcherJob < ActiveJob::Base
     return if story.blank?
 
     story.fetching!
-    if update
+    if update && !story.missing_info?
+      enqueue_social_fetcher
       story.ready!
     else
       story.error!
@@ -37,7 +38,7 @@ class StoryFetcherJob < ActiveJob::Base
   def update
     update_info
     update_image
-    update_social
+    return false unless story.changed?
     story.save
   end
 
@@ -57,7 +58,7 @@ class StoryFetcherJob < ActiveJob::Base
     story.image_public_id = image_public_id
   end
 
-  def update_social
+  def enqueue_social_fetcher
     StorySocialFetcherJob.perform_later(story.id)
   end
 
