@@ -8,7 +8,7 @@ module Proxy
 
     attr_accessor :last_request
 
-    def current
+    def sample
       sample_proxy
     end
 
@@ -31,6 +31,7 @@ module Proxy
     def request_new_proxy(wait: false)
       new_proxy_proc = proc do
         current_request = fetch_proxy!
+        return if current_request.blank?
         add_proxy(
           host: current_request.parsed_response['ip'],
           port: current_request.parsed_response['port']
