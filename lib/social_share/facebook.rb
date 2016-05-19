@@ -4,7 +4,7 @@ module SocialShare
       request = Proxy.request("http://graph.facebook.com/?id=#{ url }")
       return unless request.parsed_response
       request.parsed_response.try(:[], 'shares').to_i
-    rescue StandardError => e
+    rescue StandardError
     end
   end
 end
