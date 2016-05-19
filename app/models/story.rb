@@ -21,7 +21,7 @@ class Story < ActiveRecord::Base
   scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
   scope :created_between, -> (start_at, end_at) { where(created_at: start_at..end_at) }
   scope :created_since, -> (date) { where('stories.created_at >= ?', date) }
-  scope :last_month, -> { created_since(1.month.ago.ago) }
+  scope :last_month, -> { created_since(1.month.ago) }
   scope :last_week, -> { created_since(1.week.ago) }
   scope :recent, -> { order(created_at: :desc) }
   scope :today, -> { created_at(Time.zone.now) }
