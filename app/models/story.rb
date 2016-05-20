@@ -6,16 +6,12 @@ class Story < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 
-  enum status: %i(pending fetching ready error)
   cloudinary_asset :image, attribute: :image_public_id, styles: {
     thumb: { width: 200, height: 200, crop: :fit, fetch_format: 'auto', dpr: 'auto' },
   }
 
-  validates :publisher, :status, presence: true
-  validates :source_url, presence: true, uniqueness: { case_sensitive: false }
-  validates :url, uniqueness: { case_sensitive: false }, allow_blank: true
-
-  after_commit :instrument_creation, on: :create
+  validates :title, :description, :publisher, presence: true
+  validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
@@ -37,11 +33,5 @@ class Story < ActiveRecord::Base
 
   def missing_content?
     content.blank?
-  end
-
-  private
-
-  def instrument_creation
-    ActiveSupport::Notifications.instrument('story.created', self)
   end
 end

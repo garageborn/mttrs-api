@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers', '0.9.5'
 gem 'cloudinary', '1.1.6'
+gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.1.0'
