@@ -5,7 +5,7 @@ class FeedFetcherJob < ActiveJob::Base
     @feed_id = feed_id
     return if feed.blank?
 
-    rss.items.each { |item| proccess(item) }
+    rss.entries.each { |entry| proccess(entry) }
   end
 
   private
@@ -20,16 +20,17 @@ class FeedFetcherJob < ActiveJob::Base
       headers: { 'User-Agent' => 'Firefox' },
       verify: false
     )
-    RSS::Parser.parse(request.body)
+    Feedjira::Feed.parse(request.body)
   end
 
-  def proccess(item)
-    feed.publisher.stories.where(source_url: item.link).first_or_initialize.tap do |story|
-      story.title ||= item.title
-      story.description ||= item.description
-      story.feeds << feed unless story.feeds.include?(feed)
-      story.save
-    end
+  def proccess(entry)
+    StoryProcessJob.perform_later(
+      feed_id: feed.id,
+      url: entry.url,
+      title: entry.title,
+      description: entry.summary,
+      image: entry.image
+    )
   end
 
   memoize :feed, :rss
