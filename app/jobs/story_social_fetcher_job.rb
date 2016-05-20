@@ -24,6 +24,7 @@ class StorySocialFetcherJob < ActiveJob::Base
       next if story.social[provider].to_i > count.to_i
       story.social[provider] = count.to_i
     end
+    story.social.delete_if { |_, value| value.to_i < 1 }
     story.save if story.changed?
   end
 
