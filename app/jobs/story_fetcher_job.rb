@@ -5,13 +5,7 @@ class StoryFetcherJob < ActiveJob::Base
     @story_id = story_id
     return if story.blank?
 
-    story.fetching!
-    if update && !story.missing_info?
-      story.ready!
-      enqueue_social_fetcher
-    else
-      story.error!
-    end
+    update
   end
 
   private
@@ -36,9 +30,18 @@ class StoryFetcherJob < ActiveJob::Base
   end
 
   def update
+    story.fetching!
+
     update_info
+    return story.destroy if Story.where(url: story.url).where.not(id: story.id).exists?
     update_image
-    story.save
+
+    if story.save && !story.missing_info?
+      story.ready!
+      enqueue_social_fetcher
+    else
+      story.error!
+    end
   end
 
   def update_info
