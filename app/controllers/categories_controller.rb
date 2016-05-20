@@ -5,7 +5,6 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    batata # test sentry
     category = Category.find(category_params[:id])
     render json: category
   end
