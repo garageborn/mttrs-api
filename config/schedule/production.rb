@@ -1,6 +1,6 @@
 env :PATH, ENV['PATH']
 
-every 3.hours do
+every 15.minutes do
   rake 'feeds:fetcher:run'
 end
 
