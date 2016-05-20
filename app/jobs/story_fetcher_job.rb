@@ -34,6 +34,7 @@ class StoryFetcherJob < ActiveJob::Base
 
     update_info
     return story.destroy if Story.where(url: story.url).where.not(id: story.id).exists?
+    update_content
     update_image
 
     if story.save && !story.missing_info?
@@ -47,17 +48,22 @@ class StoryFetcherJob < ActiveJob::Base
   def update_info
     story.url ||= story.source_url
     return unless story.missing_info?
-    return if embedly.code != 200
+    return unless embedly.success?
     story.url = embedly.url
     story.title = embedly.parsed_response.title
     story.description = embedly.parsed_response.description
-    story.content = embedly.parsed_response.content
   end
 
   def update_image
     return unless story.missing_image?
-    return if embedly.code != 200
+    return unless embedly.success?
     story.image_public_id = image_public_id
+  end
+
+  def update_content
+    return unless story.missing_content?
+    return unless embedly.success?
+    story.content = embedly.parsed_response.content
   end
 
   def enqueue_social_fetcher

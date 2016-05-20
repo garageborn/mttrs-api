@@ -32,7 +32,11 @@ class Story < ActiveRecord::Base
   end
 
   def missing_info?
-    title.blank? || description.blank? || content.blank?
+    title.blank? || description.blank?
+  end
+
+  def missing_content?
+    content.blank?
   end
 
   private
