@@ -20,6 +20,7 @@ class StorySocialFetcherJob < ActiveJob::Base
 
   def update
     social.each_pair do |provider, count|
+      next if count.blank?
       next if story.social[provider].to_i > count.to_i
       story.social[provider] = count.to_i
     end
