@@ -18,7 +18,7 @@ gem 'thread', '0.2.2'
 gem 'whenever', '0.9.4', require: false
 
 group :production do
-  gem 'sentry-raven', '1.0.0'
+  gem 'sentry-raven', '0.15.6'
 end
 
 group :development, :test do
