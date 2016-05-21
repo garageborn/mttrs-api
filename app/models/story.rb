@@ -3,6 +3,7 @@ class Story < ActiveRecord::Base
   include Concerns::Filterable
 
   belongs_to :publisher
+  has_one :social_counter
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 
@@ -22,6 +23,7 @@ class Story < ActiveRecord::Base
   scope :recent, -> { order(created_at: :desc) }
   scope :today, -> { created_at(Time.zone.now) }
   scope :yesterday, -> { created_at(1.day.ago) }
+  scope :popular, -> { order(total_social: :desc) }
 
   def missing_image?
     image_public_id.blank?

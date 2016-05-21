@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 7) do
+ActiveRecord::Schema.define(version: 10) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,22 +59,34 @@ ActiveRecord::Schema.define(version: 7) do
   add_index "publishers", ["name"], name: "index_publishers_on_name", unique: true, using: :btree
   add_index "publishers", ["slug"], name: "index_publishers_on_slug", unique: true, using: :btree
 
+  create_table "social_counters", force: :cascade do |t|
+    t.integer  "story_id",               null: false
+    t.integer  "facebook",   default: 0, null: false
+    t.integer  "linkedin",   default: 0, null: false
+    t.integer  "total",      default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "social_counters", ["story_id", "total"], name: "index_social_counters_on_story_id_and_total", using: :btree
+
   create_table "stories", force: :cascade do |t|
-    t.integer  "publisher_id",                  null: false
-    t.citext   "url",                           null: false
-    t.citext   "title",                         null: false
-    t.text     "description",                   null: false
+    t.integer  "publisher_id",                 null: false
+    t.citext   "url",                          null: false
+    t.citext   "title",                        null: false
+    t.text     "description",                  null: false
     t.text     "content"
     t.string   "image_public_id"
-    t.jsonb    "social",           default: {}
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.citext   "source_url",                    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.citext   "source_url",                   null: false
     t.citext   "image_source_url"
+    t.integer  "total_social",     default: 0, null: false
   end
 
   add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree
   add_index "stories", ["source_url"], name: "index_stories_on_source_url", unique: true, using: :btree
+  add_index "stories", ["total_social"], name: "index_stories_on_total_social", using: :btree
   add_index "stories", ["url"], name: "index_stories_on_url", unique: true, using: :btree
 
 end
