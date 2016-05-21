@@ -5,5 +5,5 @@ every 15.minutes do
 end
 
 every 1.hour do
-  rake 'stories:social:run'
+  rake 'social_counters:update'
 end

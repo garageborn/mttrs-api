@@ -7,6 +7,8 @@ module SocialShare
       pool = Thread.pool(sources.size)
       OpenStruct.new.tap do |counters|
         sources.each do |source|
+          count = source.count(url)
+          next if count.nil?
           name = source.name.underscore.split('/').last.to_sym
           counters[name] = source.count(url)
         end

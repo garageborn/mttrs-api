@@ -13,7 +13,7 @@ class StoryProcessJob < ActiveJob::Base
     set_missing_info
     set_image
     set_content
-    enqueue_social_fetcher if story.save
+    enqueue_social_counter_update if story.save
   end
 
   private
@@ -81,8 +81,8 @@ class StoryProcessJob < ActiveJob::Base
     embedly.parsed_response.images.try(:first).try(:url)
   end
 
-  def enqueue_social_fetcher
-    StorySocialFetcherJob.perform_later(story.id)
+  def enqueue_social_counter_update
+    SocialCounterUpdateJob.perform_later(story.id)
   end
 
   memoize :options, :story, :feed, :embedly, :image_source_url
