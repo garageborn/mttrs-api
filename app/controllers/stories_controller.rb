@@ -7,6 +7,15 @@ class StoriesController < ApplicationController
   private
 
   def filter_params
-    params.permit(:category_slug, :last_month, :last_week, :popular, :recent, :today, :yesterday)
+    params.permit(
+      :category_slug,
+      :last_month,
+      :last_week,
+      :limit,
+      :popular,
+      :recent,
+      :today,
+      :yesterday
+    )
   end
 end
