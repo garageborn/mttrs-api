@@ -13,6 +13,7 @@ class Story < ActiveRecord::Base
 
   validates :title, :description, :publisher, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
+  validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
@@ -35,5 +36,18 @@ class Story < ActiveRecord::Base
 
   def missing_content?
     content.blank?
+  end
+
+  def uri
+    Addressable::URI.parse(url)
+  end
+
+  private
+
+  def validate_unique_story
+    return if publisher.blank?
+    other_story = publisher.stories.where(title: title).where.not(id: id).first
+    return if other_story.blank?
+    errors.add(:url, :invalid) if other_story.uri.path == uri.path
   end
 end

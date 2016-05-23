@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'active_model_serializers', '0.9.5'
+gem 'addressable', '2.4.0'
 gem 'cloudinary', '1.1.6'
 gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'

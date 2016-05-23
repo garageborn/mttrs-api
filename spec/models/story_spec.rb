@@ -31,5 +31,18 @@ RSpec.describe Story do
     it { is_expected.to validate_uniqueness_of(:source_url).case_insensitive }
     it { is_expected.to validate_presence_of(:url) }
     it { is_expected.to validate_uniqueness_of(:url).case_insensitive }
+
+    describe '#validate_unique_story' do
+      let!(:first_story) { create(:story) }
+      subject do
+        build(
+          :story,
+          publisher: first_story.publisher,
+          title: first_story.title,
+          url: "#{ first_story.url }?param=foo"
+        )
+      end
+      its(:valid?) { is_expected.to be_falsey }
+    end
   end
 end
