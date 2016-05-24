@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 10) do
+ActiveRecord::Schema.define(version: 11) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,8 +66,10 @@ ActiveRecord::Schema.define(version: 10) do
     t.integer  "total",      default: 0, null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "parent_id"
   end
 
+  add_index "social_counters", ["parent_id"], name: "index_social_counters_on_parent_id", unique: true, using: :btree
   add_index "social_counters", ["story_id", "total"], name: "index_social_counters_on_story_id_and_total", using: :btree
 
   create_table "stories", force: :cascade do |t|
