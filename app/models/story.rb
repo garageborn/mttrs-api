@@ -3,7 +3,8 @@ class Story < ActiveRecord::Base
   include Concerns::Filterable
 
   belongs_to :publisher
-  has_one :social_counter
+  has_many :social_counters, inverse_of: :story, dependent: :destroy
+  has_one :social_counter, -> { order(id: :desc) }
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 

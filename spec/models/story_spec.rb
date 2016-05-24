@@ -18,8 +18,9 @@ RSpec.describe Story do
   it { should have_db_index(:total_social) }
 
   it { should belong_to(:publisher) }
-  it { should have_one(:social_counter) }
+  it { should have_one(:social_counter).order(id: :desc) }
   it { should have_and_belong_to_many(:feeds) }
+  it { should have_many(:social_counters).dependent(:destroy).inverse_of(:story) }
   it { should have_many(:categories).through(:feeds) }
 
   describe 'Validations' do
