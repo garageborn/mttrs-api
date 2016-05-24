@@ -17,7 +17,6 @@ module Proxy
         current_source, current_proxy = get_proxy
       end
 
-      p '----------------aaaaaaaaaaaaaaaaaaaaa'
       with_retries(max_tries: max_tries, handler: handler, rescue: RESCUE_FROM) do |attempt|
         puts "attempt #{ attempt } MAX_RETRIES: #{ MAX_RETRIES - 1  }   attempt < MAX_RETRIES: #{ attempt < MAX_RETRIES}"
         if attempt == MAX_RETRIES
@@ -27,7 +26,7 @@ module Proxy
           options[:http_proxyaddr] = current_proxy[:host]
           options[:http_proxyport] = current_proxy[:port]
         end
-        p options
+
         request = HTTParty.send(method, url, options)
         raise Errno::ECONNREFUSED unless request.success?
         request
