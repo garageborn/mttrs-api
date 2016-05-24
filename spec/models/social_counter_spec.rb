@@ -12,7 +12,7 @@ RSpec.describe SocialCounter do
   it { should have_db_index(:parent_id).unique(true) }
 
   it { should belong_to(:story) }
-  it { should have_one(:parent).class_name('SocialCounter').foreign_key(:parent_id) }
+  it { should have_one(:parent).class_name('SocialCounter').with_foreign_key(:parent_id) }
 
   describe 'Validations' do
     subject { build(:social_counter) }

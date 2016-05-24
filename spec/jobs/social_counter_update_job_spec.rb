@@ -11,7 +11,7 @@ RSpec.describe SocialCounterUpdateJob do
     context 'all providers response' do
       let(:social) { OpenStruct.new(facebook: 2, linkedin: 4) }
       before do
-        allow(story).to receive(:social_counter).and_return(social_counter)
+        allow(job).to receive(:social_counter).and_return(social_counter)
         allow(job).to receive(:social).and_return(social)
         job.send(:update)
       end
@@ -23,7 +23,7 @@ RSpec.describe SocialCounterUpdateJob do
     context 'single provider response' do
       let(:social) { OpenStruct.new(linkedin: 4) }
       before do
-        allow(story).to receive(:social_counter).and_return(social_counter)
+        allow(job).to receive(:social_counter).and_return(social_counter)
         allow(job).to receive(:social).and_return(social)
         job.send(:update)
       end
@@ -35,7 +35,7 @@ RSpec.describe SocialCounterUpdateJob do
     context 'empty response' do
       let(:social) { OpenStruct.new }
       before do
-        allow(story).to receive(:social_counter).and_return(social_counter)
+        allow(job).to receive(:social_counter).and_return(social_counter)
         allow(job).to receive(:social).and_return(social)
         job.send(:update)
       end
@@ -47,7 +47,7 @@ RSpec.describe SocialCounterUpdateJob do
 
   describe '#update_counter' do
     let(:social_counter) { build(:social_counter, story: story, facebook: 3, linkedin: 3) }
-    before { allow(story).to receive(:social_counter).and_return(social_counter) }
+    before { allow(job).to receive(:social_counter).and_return(social_counter) }
     subject { social_counter }
 
     empty_values = [nil, '0', 0, -1]
