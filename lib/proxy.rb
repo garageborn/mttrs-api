@@ -2,7 +2,7 @@ module Proxy
   autoload :GimmeProxy, './lib/proxy/gimme_proxy'
   RESCUE_FROM = [Errno::ECONNRESET, Errno::ECONNREFUSED, EOFError, Timeout::Error].freeze
   DEFAULT_TIMEOUT = 10
-  MAX_RETRIES = 3
+  MAX_RETRIES = 7
 
   class << self
     attr_accessor :current_source, :current_proxy
