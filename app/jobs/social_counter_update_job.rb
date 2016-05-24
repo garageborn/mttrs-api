@@ -28,8 +28,8 @@ class SocialCounterUpdateJob < ActiveJob::Base
   end
 
   def update_counter(provider, value)
-    return if value.nil?
     value = value.to_i
+    return if value.blank?
     return if social_counter.read_attribute(provider) > value
     social_counter[provider] = value
   end
