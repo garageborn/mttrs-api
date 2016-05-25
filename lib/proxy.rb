@@ -18,7 +18,7 @@ module Proxy
       end
 
       with_retries(max_tries: max_tries, handler: handler, rescue: RESCUE_FROM) do |attempt|
-        if attempt == MAX_RETRIES
+        if attempt == MAX_RETRIES || current_proxy.blank?
           options.delete(:http_proxyaddr)
           options.delete(:http_proxyport)
         else
