@@ -4,7 +4,6 @@ RSpec.describe Story do
   it { should have_db_column(:content) }
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:description).with_options(null: false) }
-  it { should have_db_column(:image_public_id) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:source_url).with_options(null: false) }

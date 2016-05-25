@@ -1,5 +1,4 @@
 class Story < ActiveRecord::Base
-  include Concerns::CloudinaryAsset
   include Concerns::Filterable
 
   belongs_to :publisher
@@ -7,10 +6,6 @@ class Story < ActiveRecord::Base
   has_one :social_counter, -> { order(id: :desc) }
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
-
-  cloudinary_asset :image, attribute: :image_public_id, styles: {
-    thumb: { width: 200, height: 200, crop: :fit, fetch_format: 'auto', dpr: 'auto' },
-  }
 
   validates :title, :description, :publisher, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
@@ -29,7 +24,7 @@ class Story < ActiveRecord::Base
   scope :popular, -> { order(total_social: :desc) }
 
   def missing_image?
-    image_public_id.blank?
+    image_source_url.blank?
   end
 
   def missing_info?

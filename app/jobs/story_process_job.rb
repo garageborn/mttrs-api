@@ -56,7 +56,6 @@ class StoryProcessJob < ActiveJob::Base
     return unless story.missing_image?
     return if image_source_url.blank?
     story.image_source_url = image_source_url
-    story.image_public_id = Cloudinary::Uploader.upload(image_source_url).try(:[], 'public_id')
   end
 
   def set_content
