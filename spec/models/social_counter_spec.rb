@@ -27,5 +27,5 @@ RSpec.describe SocialCounter do
   end
 
   it { is_expected.to callback(:update_total).before(:save) }
-  it { is_expected.to callback(:update_total_social_on_story).after(:commit) }
+  it { is_expected.to callback(:update_total_social_on_story).after(:commit).on(:create) }
 end

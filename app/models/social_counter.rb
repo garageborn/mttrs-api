@@ -9,7 +9,7 @@ class SocialCounter < ActiveRecord::Base
   validates :parent_id, uniqueness: true, allow_blank: true
 
   before_save :update_total
-  after_commit :update_total_social_on_story, on: [:create, :update]
+  after_commit :update_total_social_on_story, on: :create
 
   scope :recent, -> { order(created_at: :desc) }
 
