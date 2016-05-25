@@ -17,5 +17,7 @@ Sidekiq.configure_server do |config|
 end
 
 Sidekiq.default_worker_options = {
-  retry: false
+  retry: false,
+  unique: :until_executing,
+  unique_args: ->(args) { args.first.except('job_id') }
 }
