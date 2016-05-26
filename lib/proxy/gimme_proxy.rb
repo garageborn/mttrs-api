@@ -3,8 +3,11 @@ module Proxy
     include Singleton
     extend Memoist
 
-    GET_PROXY_URL = 'http://gimmeproxy.com/api/getProxy?supportsHttps=true'.freeze
+    GET_PROXY_URL = 'http://gimmeproxy.com/api/getProxy?supportsHttps=true&?protocol=http'.freeze
     DEFAULT_RATE_LIMIT = 10
+    DEFAULT_RATE_LIMIT_WINDOW = 1.minute.to_i
+    MAX_RETRIES = 3
+    RESCUE_FROM = Proxy::RESCUE_FROM
 
     attr_accessor :last_request
 
@@ -44,12 +47,12 @@ module Proxy
     end
 
     def fetch_proxy!
-      with_retries(max_tries: 3) do
+      with_retries(max_tries: MAX_RETRIES, rescue: RESCUE_FROM) do
         sleep next_rate_limit_window if at_rate_limit?
 
-        request = HTTParty.get(GET_PROXY_URL)
-        fail unless request.success?
-        return request
+        HTTParty.get(GET_PROXY_URL).tap do |request|
+          fail unless request.success?
+        end
       end
     end
 
@@ -80,7 +83,8 @@ module Proxy
     end
 
     def next_rate_limit_window
-      1.minute.from_now
+      return DEFAULT_RATE_LIMIT_WINDOW if last_request.blank?
+      last_request.headers['retry-after'].to_i
     end
 
     def pool

@@ -8,8 +8,6 @@ module Proxy
     attr_accessor :current_source, :current_proxy
 
     def request(url, options = {}, method: :get, max_tries: MAX_RETRIES)
-      options[:timeout] ||= DEFAULT_TIMEOUT
-
       current_source, current_proxy = get_proxy
 
       handler = proc do
@@ -18,18 +16,33 @@ module Proxy
       end
 
       with_retries(max_tries: max_tries, handler: handler, rescue: RESCUE_FROM) do |attempt|
-        if attempt == MAX_RETRIES || current_proxy.blank?
-          options.delete(:http_proxyaddr)
-          options.delete(:http_proxyport)
-        else
-          options[:http_proxyaddr] = current_proxy[:host]
-          options[:http_proxyport] = current_proxy[:port]
+        options = parse_options(options, attempt: attempt, current_proxy: current_proxy)
+        logging(attempt: attempt, url: url, method: method, options: options) do
+          call(method, url, options)
         end
-
-        request = HTTParty.send(method, url, options)
-        raise Errno::ECONNREFUSED unless request.success?
-        request
       end
+    end
+
+    private
+
+    def call(method, url, options)
+      HTTParty.send(method, url, options).tap do |request|
+        raise Errno::ECONNREFUSED unless request.success?
+      end
+    end
+
+    def parse_options(options, attempt:, current_proxy: nil)
+      options[:timeout] ||= DEFAULT_TIMEOUT
+
+      if attempt == MAX_RETRIES || current_proxy.blank?
+        options.delete(:http_proxyaddr)
+        options.delete(:http_proxyport)
+      else
+        options[:http_proxyaddr] = current_proxy[:host]
+        options[:http_proxyport] = current_proxy[:port]
+      end
+
+      options
     end
 
     def get_proxy
@@ -40,6 +53,20 @@ module Proxy
 
     def sources
       [GimmeProxy.instance]
+    end
+
+    def logging(options)
+      payload = options.merge(type: :info, action: :request)
+      ActiveSupport::Notifications.instrument('proxy.logger', payload)
+      yield
+    rescue StandardError => e
+      payload = options.merge(
+        type: :error,
+        action: :request,
+        exception: { message: e.message, backtrace: e.backtrace.join("\n") }
+      )
+      ActiveSupport::Notifications.instrument('proxy.logger', payload)
+      raise(e)
     end
   end
 end
