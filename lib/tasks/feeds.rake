@@ -8,8 +8,8 @@ namespace :feeds do
     end
   end
 
-  task :update => :environment do
-    json = File.open("#{Rails.root}/lib/feeds.json").read
+  task update: :environment do
+    json = File.open("#{ Rails.root }/lib/feeds.json").read
     json_feeds = JSON.parse(json)
 
     json_feeds.each do |feed|

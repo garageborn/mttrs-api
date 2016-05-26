@@ -7,8 +7,9 @@ module SocialShare
         BASE_URL,
         options: { query: { format: 'json', url: url } }
       )
+      return unless request && request.parsed_response
       request.parsed_response.try(:[], 'count').to_i
-    rescue StandardError
+    rescue *Proxy::RESCUE_FROM
     end
   end
 end
