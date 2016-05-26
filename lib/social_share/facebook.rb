@@ -2,9 +2,9 @@ module SocialShare
   class Facebook
     def self.count(url)
       request = Proxy.request("http://graph.facebook.com/?id=#{ url }")
-      return unless request.parsed_response
+      return unless request && request.parsed_response
       request.parsed_response.try(:[], 'shares').to_i
-    rescue StandardError
+    rescue *Proxy::RESCUE_FROM
     end
   end
 end

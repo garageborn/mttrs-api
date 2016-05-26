@@ -5,9 +5,10 @@ module Proxy
   MAX_RETRIES = 7
 
   class << self
+    extend Memoist
     attr_accessor :current_source, :current_proxy
 
-    def request(url, options = {}, method: :get, max_tries: MAX_RETRIES)
+    def request(url, options: {}, method: :get, max_tries: MAX_RETRIES)
       current_source, current_proxy = get_proxy
 
       handler = proc do
@@ -56,17 +57,22 @@ module Proxy
     end
 
     def logging(options)
-      payload = options.merge(type: :info, action: :request)
-      ActiveSupport::Notifications.instrument('proxy.logger', payload)
-      yield
+      default_options = { type: :info, action: :request, request_id: SecureRandom.uuid }
+      payload = default_options.merge(options)
+      ActiveSupport::Notifications.instrument('proxy.logger', payload.merge(status: :pending))
+      response = yield
+      ActiveSupport::Notifications.instrument('proxy.logger', payload.merge(status: :success))
+      response
     rescue StandardError => e
-      payload = options.merge(
+      payload = default_options.merge(
         type: :error,
-        action: :request,
+        status: :error,
         exception: { message: e.message, backtrace: e.backtrace.join("\n") }
       )
       ActiveSupport::Notifications.instrument('proxy.logger', payload)
       raise(e)
     end
+
+    memoize :sources
   end
 end

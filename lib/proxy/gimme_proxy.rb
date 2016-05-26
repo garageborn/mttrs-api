@@ -1,11 +1,12 @@
 module Proxy
   class GimmeProxy
-    include Singleton
     extend Memoist
+    include Singleton
 
     GET_PROXY_URL = 'http://gimmeproxy.com/api/getProxy?supportsHttps=true&?protocol=http'.freeze
     DEFAULT_RATE_LIMIT = 10
     DEFAULT_RATE_LIMIT_WINDOW = 1.minute.to_i
+    MAX_RATE_LIMIT_WINDOW = 5.minutes.to_i
     MAX_RETRIES = 3
     RESCUE_FROM = Proxy::RESCUE_FROM
 
@@ -32,16 +33,6 @@ module Proxy
     end
 
     def request_new_proxy(wait: false)
-      new_proxy_proc = proc do
-        current_request = fetch_proxy!
-        return if current_request.blank?
-        add_proxy(
-          host: current_request.parsed_response['ip'],
-          port: current_request.parsed_response['port']
-        )
-        @last_request = current_request
-      end
-
       return new_proxy_proc.call if wait == true
       pool.process { new_proxy_proc.call }
     end
@@ -51,8 +42,21 @@ module Proxy
         sleep next_rate_limit_window if at_rate_limit?
 
         HTTParty.get(GET_PROXY_URL).tap do |request|
-          fail unless request.success?
+          raise Errno::ECONNREFUSED unless request.success?
         end
+      end
+    rescue *RESCUE_FROM
+    end
+
+    def new_proxy_proc
+      proc do
+        current_request = fetch_proxy!
+        next if current_request.blank?
+        add_proxy(
+          host: current_request.parsed_response['ip'],
+          port: current_request.parsed_response['port']
+        )
+        @last_request = current_request
       end
     end
 
@@ -84,14 +88,13 @@ module Proxy
 
     def next_rate_limit_window
       return DEFAULT_RATE_LIMIT_WINDOW if last_request.blank?
-      last_request.headers['retry-after'].to_i
+      [last_request.headers['retry-after'].to_i, MAX_RATE_LIMIT_WINDOW].min
     end
 
     def pool
-      Thread.abort_on_exception = true
       Thread.pool(rate_limit)
     end
 
-    memoize :proxies, :pool
+    memoize :proxies, :pool, :new_proxy_proc
   end
 end

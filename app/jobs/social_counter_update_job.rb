@@ -32,6 +32,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   end
 
   def update
+    return if social.blank?
     social.each_pair { |provider, count| update_counter(provider, count) }
     social_counter.save if social_counter.increased?
   end
