@@ -1,4 +1,4 @@
-if Rails.env.production?
+if Rails.env.production? && ENV['LOGGLY_TOKEN'].present?
   loggly = Logglier.new(
     "https://logs-01.loggly.com/inputs/#{ ENV['LOGGLY_TOKEN'] }/tag/rails/",
     threaded: true,
