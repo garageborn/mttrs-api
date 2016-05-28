@@ -1,6 +1,6 @@
 :verbose: true
 development:
-  :concurrency: 2
+  :concurrency: 10
 production:
   :concurrency: 25
 :queues:
