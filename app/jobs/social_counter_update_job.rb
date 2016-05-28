@@ -15,7 +15,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   end
 
   def social
-    SocialShare.count(story.url)
+    SocialShare.count(story.url.omit(:query))
   end
 
   def social_counter

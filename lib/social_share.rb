@@ -12,7 +12,7 @@ module SocialShare
         pool.process do
           social = fetch_social(source, url)
           counters.merge!(social) unless social.blank?
-        end
+        }
       end
       pool.shutdown
       return if counters.blank?
