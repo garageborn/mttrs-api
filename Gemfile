@@ -40,7 +40,6 @@ group :development do
   gem 'capistrano-rbenv', '2.0.4'
   gem 'capistrano-sidekiq', '0.5.4'
   gem 'foreman', '0.81.0'
-  gem 'puma', '3.4.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'slackistrano', '3.0.1', require: false
   gem 'spring'
