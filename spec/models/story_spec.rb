@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Story do
   it { should have_db_column(:content) }
   it { should have_db_column(:created_at).with_options(null: false) }
-  it { should have_db_column(:description).with_options(null: false) }
+  it { should have_db_column(:description) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:source_url).with_options(null: false) }
@@ -25,7 +25,7 @@ RSpec.describe Story do
   describe 'Validations' do
     subject { build(:story) }
     it { is_expected.to validate_presence_of(:title) }
-    it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to_not validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:publisher) }
     it { is_expected.to validate_presence_of(:source_url) }
     it { is_expected.to validate_uniqueness_of(:source_url).case_insensitive }

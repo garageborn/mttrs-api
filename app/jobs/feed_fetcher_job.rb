@@ -24,11 +24,12 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def proccess(entry)
-    StoryProcessJob.perform_later(
-      feed_id: feed.id,
-      url: entry.url,
+    FeedEntryProcessJob.perform_later(
+      feed.id,
       title: entry.title,
-      description: entry.summary,
+      url: entry.url,
+      published: entry.published.to_i,
+      summary: entry.summary,
       image: entry.image
     )
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 12) do
+ActiveRecord::Schema.define(version: 15) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,19 +54,23 @@ ActiveRecord::Schema.define(version: 12) do
     t.citext   "slug",       null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.citext   "domain",     null: false
   end
 
   add_index "publishers", ["name"], name: "index_publishers_on_name", unique: true, using: :btree
   add_index "publishers", ["slug"], name: "index_publishers_on_slug", unique: true, using: :btree
 
   create_table "social_counters", force: :cascade do |t|
-    t.integer  "story_id",               null: false
-    t.integer  "facebook",   default: 0, null: false
-    t.integer  "linkedin",   default: 0, null: false
-    t.integer  "total",      default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer  "story_id",                null: false
+    t.integer  "facebook",    default: 0, null: false
+    t.integer  "linkedin",    default: 0, null: false
+    t.integer  "total",       default: 0, null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "parent_id"
+    t.integer  "twitter",     default: 0, null: false
+    t.integer  "pinterest",   default: 0, null: false
+    t.integer  "google_plus", default: 0, null: false
   end
 
   add_index "social_counters", ["parent_id"], name: "index_social_counters_on_parent_id", unique: true, using: :btree
@@ -76,7 +80,7 @@ ActiveRecord::Schema.define(version: 12) do
     t.integer  "publisher_id",                 null: false
     t.citext   "url",                          null: false
     t.citext   "title",                        null: false
-    t.text     "description",                  null: false
+    t.text     "description"
     t.text     "content"
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false

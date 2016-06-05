@@ -7,7 +7,7 @@ class Story < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 
-  validates :title, :description, :publisher, presence: true
+  validates :title, :publisher, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_unique_story
 
@@ -23,16 +23,20 @@ class Story < ActiveRecord::Base
   scope :yesterday, -> { created_at(1.day.ago) }
   scope :popular, -> { order(total_social: :desc) }
 
-  def missing_image?
-    image_source_url.blank?
-  end
-
   def missing_info?
     title.blank? || description.blank?
   end
 
+  def missing_image?
+    image_source_url.blank?
+  end
+
   def missing_content?
     content.blank?
+  end
+
+  def needs_full_fetch?
+    missing_info? || missing_image? || missing_content?
   end
 
   def uri

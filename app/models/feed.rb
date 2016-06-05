@@ -12,6 +12,10 @@ class Feed < ActiveRecord::Base
     joins(:stories).group('feeds.id').order('count(feeds.id) desc')
   }
 
+  def uri
+    Addressable::URI.parse(url)
+  end
+
   private
 
   def instrument_creation

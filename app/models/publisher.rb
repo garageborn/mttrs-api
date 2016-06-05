@@ -6,6 +6,7 @@ class Publisher < ActiveRecord::Base
   has_many :categories, through: :feeds
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
+  validates :domain, presence: true
 
   friendly_id :name, use: %i(slugged finders)
 end
