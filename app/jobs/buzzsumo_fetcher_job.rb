@@ -1,22 +1,22 @@
 class BuzzsumoFetcherJob < ActiveJob::Base
   extend Memoist
+  attr_reader :publisher_id
 
-  def perform
+  def perform(publisher_id)
+    @publisher_id = publisher_id
+    return if publisher.blank?
+
     entries.each { |entry| proccess(entry) }
   end
 
   private
 
-  def domains
-    Publisher.pluck(:domain)
+  def publisher
+    Publisher.find_by_id(publisher_id)
   end
 
   def entries
-    query = {
-      q: domains.join(' OR '),
-      num_results: 100,
-      # begin_date: 15.minutes.ago.to_i
-    }
+    query = { q: publisher.domain, num_results: 1_000 }
     response = Buzzsumo.articles(query: query)
     return [] if response.blank? || response.parsed_response.blank?
     response.parsed_response.results.to_a
