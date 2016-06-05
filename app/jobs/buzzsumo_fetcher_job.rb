@@ -26,5 +26,5 @@ class BuzzsumoFetcherJob < ActiveJob::Base
     BuzzsumoEntryProcessJob.perform_later(entry.to_h)
   end
 
-  memoize :domains, :entries
+  memoize :publisher, :entries
 end
