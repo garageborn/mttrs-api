@@ -1,9 +1,11 @@
 class SocialCounterUpdateJob < ActiveJob::Base
   extend Memoist
+  attr_reader :story_id, :counters
 
-  def perform(story_id)
+  def perform(story_id, counters = {})
     @story_id = story_id
-    return if story.blank?
+    @counters = counters
+    return if story.blank? || counters.blank?
 
     update
   end
@@ -11,11 +13,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   private
 
   def story
-    Story.find_by_id(@story_id)
-  end
-
-  def social
-    SocialShare.count(story.uri.omit(:query).to_s)
+    Story.find_by_id(story_id)
   end
 
   def social_counter
@@ -32,8 +30,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   end
 
   def update
-    return if social.blank?
-    social.each_pair { |provider, count| update_counter(provider, count) }
+    counters.each { |provider, count| update_counter(provider, count) }
     social_counter.save if social_counter.increased?
   end
 
@@ -45,5 +42,5 @@ class SocialCounterUpdateJob < ActiveJob::Base
     social_counter[provider] = value
   end
 
-  memoize :story, :social, :social_counter, :last_social_counter
+  memoize :story, :social_counter, :last_social_counter
 end

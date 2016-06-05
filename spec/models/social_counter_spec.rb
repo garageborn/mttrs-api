@@ -4,6 +4,9 @@ RSpec.describe SocialCounter do
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:facebook).with_options(null: false, default: 0) }
   it { should have_db_column(:linkedin).with_options(null: false, default: 0) }
+  it { should have_db_column(:twitter).with_options(null: false, default: 0) }
+  it { should have_db_column(:pinterest).with_options(null: false, default: 0) }
+  it { should have_db_column(:google_plus).with_options(null: false, default: 0) }
   it { should have_db_column(:story_id).with_options(null: false) }
   it { should have_db_column(:parent_id) }
   it { should have_db_column(:total).with_options(null: false, default: 0) }
@@ -19,10 +22,16 @@ RSpec.describe SocialCounter do
     it { is_expected.to validate_presence_of(:story) }
     it { is_expected.to validate_presence_of(:facebook) }
     it { is_expected.to validate_presence_of(:linkedin) }
+    it { is_expected.to validate_presence_of(:twitter) }
+    it { is_expected.to validate_presence_of(:pinterest) }
+    it { is_expected.to validate_presence_of(:google_plus) }
     it { is_expected.to validate_presence_of(:total) }
     it { is_expected.to validate_uniqueness_of(:parent_id).allow_blank }
     it { is_expected.to validate_numericality_of(:facebook).only_integer.is_greater_than_or_equal_to(0) }
     it { is_expected.to validate_numericality_of(:linkedin).only_integer.is_greater_than_or_equal_to(0) }
+    it { is_expected.to validate_numericality_of(:twitter).only_integer.is_greater_than_or_equal_to(0) }
+    it { is_expected.to validate_numericality_of(:pinterest).only_integer.is_greater_than_or_equal_to(0) }
+    it { is_expected.to validate_numericality_of(:google_plus).only_integer.is_greater_than_or_equal_to(0) }
     it { is_expected.to validate_numericality_of(:total).only_integer.is_greater_than_or_equal_to(0) }
   end
 

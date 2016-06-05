@@ -1,10 +1,11 @@
 class SocialCounter < ActiveRecord::Base
-  PROVIDERS = %i(facebook linkedin).freeze
+  PROVIDERS = %i(facebook linkedin twitter pinterest google_plus).freeze
   belongs_to :story
   has_one :parent, class_name: 'SocialCounter', foreign_key: :parent_id
 
-  validates :story, :facebook, :linkedin, :total, presence: true
-  validates :facebook, :linkedin, :total,
+  validates :story, presence: true
+  validates :facebook, :linkedin, :twitter, :pinterest, :google_plus, :total,
+            presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :parent_id, uniqueness: true, allow_blank: true
 
@@ -16,14 +17,14 @@ class SocialCounter < ActiveRecord::Base
   def increased?
     return true if parent.blank?
     PROVIDERS.any? do |provider|
-      self.read_attribute(provider) > parent.read_attribute(provider)
+      self[provider] > parent[provider]
     end
   end
 
   private
 
   def update_total
-    self.total = PROVIDERS.map { |provider| read_attribute(provider) }.sum
+    self.total = PROVIDERS.map { |provider| self[provider] }.sum
   end
 
   def update_total_social_on_story
