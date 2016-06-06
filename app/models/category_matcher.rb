@@ -6,4 +6,6 @@ class CategoryMatcher < ActiveRecord::Base
   validates :url_matcher,
             uniqueness: { case_sensitive: false, scope: :publisher_id },
             allow_blank: true
+
+  scope :ordered, -> { order(:order) }
 end

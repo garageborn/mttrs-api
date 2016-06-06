@@ -12,6 +12,7 @@ RSpec.describe Publisher do
   it { should have_many(:feeds).dependent(:destroy) }
   it { should have_many(:stories).dependent(:destroy) }
   it { should have_many(:categories).through(:feeds) }
+  it { should have_many(:category_matchers).inverse_of(:publisher).dependent(:destroy) }
 
   describe 'Validations' do
     subject { build(:publisher) }

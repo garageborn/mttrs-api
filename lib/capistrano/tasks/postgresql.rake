@@ -2,7 +2,7 @@ require 'uri'
 
 namespace :postgresql do
   desc 'Create a postgresql dump'
-  task :backup do
+  task backup: :environment do
     on roles(:db) do
       within current_path do
         rake_output = capture(:bundle, :exec, :rake, 'postgresql:backup')
@@ -17,7 +17,7 @@ namespace :postgresql do
   end
 
   desc 'Restore'
-  task :restore do
+  task restore: :environment do
     invoke 'postgresql:backup'
     last_dump = Dir.glob("#{ fetch(:root) }/tmp/*.dump.tar.gz").max_by { |f| File.mtime(f) }
     system("tar -zxvf #{ last_dump }")

@@ -12,6 +12,8 @@ class Feed < ActiveRecord::Base
     joins(:stories).group('feeds.id').order('count(feeds.id) desc')
   }
 
+  before_destroy { stories.clear }
+
   def uri
     Addressable::URI.parse(url)
   end

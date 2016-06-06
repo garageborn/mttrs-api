@@ -21,7 +21,7 @@ RSpec.describe Story do
   it { should have_one(:social_counter).order(id: :desc) }
   it { should have_and_belong_to_many(:feeds) }
   it { should have_many(:social_counters).dependent(:destroy).inverse_of(:story) }
-  it { should have_many(:categories).through(:feeds) }
+  it { should have_and_belong_to_many(:categories) }
 
   describe 'Validations' do
     subject { build(:story) }

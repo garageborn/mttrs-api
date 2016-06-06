@@ -6,8 +6,10 @@ class StoryCategorizerJob < ActiveJob::Base
     @story_id = story_id
     return if story.blank?
 
-    add_categories_from_feeds
-    add_categories_from_matchers
+    categories.each do |category|
+      next if story.categories.include?(category)
+      story.categories << category
+    end
   end
 
   private
@@ -16,22 +18,11 @@ class StoryCategorizerJob < ActiveJob::Base
     Story.find_by_id(story_id)
   end
 
-  def add_categories_from_feeds
-    story.feeds.each do |feed|
-      next if story.categories.include?(feed.category)
-      story.categories << feed.category
-    end
+  def categories
+    feeds_categories = story.feeds.map(&:category).to_a
+    matchers_categories = StoryCategorizer.run(story).to_a
+    [feeds_categories + matchers_categories].flatten.compact.uniq
   end
 
-  def add_categories_from_matchers
-    categories = StoryCategorizer.run(story)
-    return unless categories.present?
-
-    categories.each do |category|
-      next if story.categories.include?(category)
-      story.categories << category
-    end
-  end
-
-  memoize :story
+  memoize :story, :categories
 end

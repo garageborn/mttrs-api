@@ -16,7 +16,8 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
   def publisher
     host = Addressable::URI.parse(entry[:url]).host
-    Publisher.find_by_domain(PublicSuffix.domain(host))
+    public_suffix = PublicSuffix.domain(host)
+    Publisher.where(domain: [host, public_suffix])
   end
 
   def url

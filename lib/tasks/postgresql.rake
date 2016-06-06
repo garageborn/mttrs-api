@@ -25,7 +25,7 @@ namespace :postgresql do
     CMD
   end
 
-  task :backup do
+  task backup: :environment do
     begin
       dump
       gzip
