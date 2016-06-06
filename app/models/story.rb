@@ -7,7 +7,7 @@ class Story < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 
-  validates :title, :publisher, presence: true
+  validates :title, :publisher, :published_at, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_unique_story
 
