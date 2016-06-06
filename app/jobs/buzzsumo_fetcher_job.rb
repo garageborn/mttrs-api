@@ -16,10 +16,8 @@ class BuzzsumoFetcherJob < ActiveJob::Base
   end
 
   def entries
-    query = { q: publisher.domain, num_results: 1_000 }
-    response = Buzzsumo.articles(query: query)
-    return [] if response.blank? || response.parsed_response.blank?
-    response.parsed_response.results.to_a
+    query = { q: publisher.domain, num_results: 1_000, num_days: 7 }
+    Buzzsumo.all(:articles, query: query)
   end
 
   def proccess(entry)
