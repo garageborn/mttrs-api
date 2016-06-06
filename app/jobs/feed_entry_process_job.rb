@@ -5,9 +5,7 @@ class FeedEntryProcessJob < ActiveJob::Base
   def perform(feed_id, entry)
     @feed_id = feed_id
     @entry = entry
-
-    return if entry.blank? || feed.blank?
-    return if Story.where(url: url).where.not(id: story.id).exists?
+    return if entry.blank? || feed.blank? || url.blank?
 
     add_feed
     enqueue_story_full_fetch if story.save
@@ -19,16 +17,17 @@ class FeedEntryProcessJob < ActiveJob::Base
     Feed.find_by_id(feed_id)
   end
 
+  def url
+    UrlDiscovery.run(entry[:url])
+  end
+
   def story
-    story = Story.where(source_url: entry[:url])
-    story = Story.where(url: url) unless story.exists?
-    story.first_or_initialize.tap do |story|
-      story.url ||= url
-      story.title ||= entry[:title]
+    Story.where(url: url).first_or_initialize.tap do |story|
       story.description ||= entry[:summary]
       story.image_source_url ||= entry[:image]
-      story.source_url ||= entry[:url]
       story.published_at ||= Time.zone.at(entry[:published].to_i) || Time.zone.now
+      story.source_url ||= entry[:url]
+      story.title ||= entry[:title]
     end
   end
 
@@ -52,5 +51,5 @@ class FeedEntryProcessJob < ActiveJob::Base
     FullFetchStoryJob.perform_later(story.id)
   end
 
-  memoize :feed, :story, :url
+  memoize :feed, :url, :story, :url
 end
