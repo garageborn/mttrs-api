@@ -15,7 +15,7 @@ namespace :s3_upload do
     connection.directories.create(key: "#{ ENV['S3_BUCKET_NAME'] }/#{ prefix }")
   end
 
-  task :file, :environment do
+  task file: :environment do
     prefix = ENV['prefix']
     path = ENV['path']
     expiry = ENV['expiry'] || 30.minutes.from_now

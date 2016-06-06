@@ -2,10 +2,10 @@ class Story < ActiveRecord::Base
   include Concerns::Filterable
 
   belongs_to :publisher
+  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :feeds
   has_many :social_counters, inverse_of: :story, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
-  has_and_belongs_to_many :feeds
-  has_many :categories, through: :feeds
 
   validates :title, :publisher, :published_at, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
@@ -22,6 +22,11 @@ class Story < ActiveRecord::Base
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
   scope :popular, -> { order(total_social: :desc) }
+
+  before_destroy do
+    feeds.clear
+    categories.clear
+  end
 
   def missing_info?
     title.blank? || description.blank?

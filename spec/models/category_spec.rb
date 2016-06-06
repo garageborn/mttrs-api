@@ -8,9 +8,10 @@ RSpec.describe Category do
   it { should have_db_index(:name).unique(true) }
   it { should have_db_index(:slug).unique(true) }
 
-  it { should have_many(:feeds) }
-  it { should have_many(:publishers).through(:feeds) }
-  it { should have_many(:stories).through(:feeds) }
+  it { should have_and_belong_to_many(:stories) }
+  it { should have_many(:category_matchers).inverse_of(:category).dependent(:destroy) }
+  it { should have_many(:feeds).inverse_of(:category).dependent(:nullify) }
+  it { should have_many(:publishers).through(:stories) }
 
   describe 'Validations' do
     subject { build(:category) }

@@ -8,6 +8,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
     return unless story.save
     enqueue_social_counter_update
+    enqueue_story_categorizer
     enqueue_story_full_fetch
   end
 
@@ -15,7 +16,8 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
   def publisher
     host = Addressable::URI.parse(entry[:url]).host
-    Publisher.find_by_domain(PublicSuffix.domain(host))
+    public_suffix = PublicSuffix.domain(host)
+    Publisher.where(domain: [host, public_suffix])
   end
 
   def url
@@ -41,6 +43,10 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
       pinterest: entry[:pinterest_shares],
       google_plus: entry[:google_plus_shares]
     )
+  end
+
+  def enqueue_story_categorizer
+    StoryCategorizerJob.perform_later(story.id)
   end
 
   def enqueue_story_full_fetch
