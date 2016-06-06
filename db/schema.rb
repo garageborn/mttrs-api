@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 16) do
     t.citext   "source_url",                   null: false
     t.citext   "image_source_url"
     t.integer  "total_social",     default: 0, null: false
-    t.datetime "published_at"
+    t.datetime "published_at",                 null: false
   end
 
   add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree
