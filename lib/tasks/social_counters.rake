@@ -7,19 +7,19 @@ namespace :social_counters do
 
   desc 'Fetch all social counts from recent stories'
   task recent: :environment do
-    stories = Story.recent.created_since(2.days.ago)
+    stories = Story.recent.published_since(2.days.ago)
     update(stories)
   end
 
   desc 'Fetch all social counts from yesterday stories'
   task since_30_days: :environment do
-    stories = Story.recent.created_between(30.days.ago, 2.days.ago)
+    stories = Story.recent.published_between(30.days.ago, 2.days.ago)
     update(stories)
   end
 
   desc 'Fetch all social counts from oldest stories'
   task oldest: :environment do
-    stories = Story.recent.created_until(30.days.ago)
+    stories = Story.recent.published_until(30.days.ago)
     update(stories)
   end
 end

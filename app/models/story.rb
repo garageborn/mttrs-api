@@ -12,15 +12,15 @@ class Story < ActiveRecord::Base
   validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
-  scope :created_at, -> (date) { created_between(date.at_beginning_of_day, date.end_of_day) }
-  scope :created_between, -> (start_at, end_at) { where(created_at: start_at..end_at) }
-  scope :created_since, -> (date) { where('stories.created_at >= ?', date) }
-  scope :created_until, -> (date) { where('stories.created_at <= ?', date) }
-  scope :last_month, -> { created_since(1.month.ago) }
-  scope :last_week, -> { created_since(1.week.ago) }
+  scope :published_at, -> (date) { published_between(date.at_beginning_of_day, date.end_of_day) }
+  scope :published_between, -> (start_at, end_at) { where(published_at: start_at..end_at) }
+  scope :published_since, -> (date) { where('stories.published_at >= ?', date) }
+  scope :published_until, -> (date) { where('stories.published_at <= ?', date) }
+  scope :last_month, -> { published_since(1.month.ago) }
+  scope :last_week, -> { published_since(1.week.ago) }
   scope :recent, -> { order(published_at: :desc) }
-  scope :today, -> { created_at(Time.zone.now) }
-  scope :yesterday, -> { created_at(1.day.ago) }
+  scope :today, -> { published_at(Time.zone.now) }
+  scope :yesterday, -> { published_at(1.day.ago) }
   scope :popular, -> { order(total_social: :desc) }
 
   def missing_info?
