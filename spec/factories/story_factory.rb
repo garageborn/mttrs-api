@@ -5,5 +5,6 @@ FactoryGirl.define do
     description { Faker::Lorem.paragraph }
     url { generate(:url) }
     source_url { generate(:url) }
+    published_at { Time.zone.now }
   end
 end

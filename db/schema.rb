@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 15) do
+ActiveRecord::Schema.define(version: 16) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 15) do
     t.citext   "source_url",                   null: false
     t.citext   "image_source_url"
     t.integer  "total_social",     default: 0, null: false
+    t.datetime "published_at",                 null: false
   end
 
   add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree

@@ -7,7 +7,7 @@ class Story < ActiveRecord::Base
   has_and_belongs_to_many :feeds
   has_many :categories, through: :feeds
 
-  validates :title, :publisher, presence: true
+  validates :title, :publisher, :published_at, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
   validate :validate_unique_story
 
@@ -18,7 +18,7 @@ class Story < ActiveRecord::Base
   scope :created_until, -> (date) { where('stories.created_at <= ?', date) }
   scope :last_month, -> { created_since(1.month.ago) }
   scope :last_week, -> { created_since(1.week.ago) }
-  scope :recent, -> { order(created_at: :desc) }
+  scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { created_at(Time.zone.now) }
   scope :yesterday, -> { created_at(1.day.ago) }
   scope :popular, -> { order(total_social: :desc) }

@@ -23,6 +23,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
       story.url ||= entry[:url]
       story.title ||= entry[:title]
       story.image_source_url ||= entry[:image_source_url]
+      story.published_at ||= Time.zone.at(entry[:published_date].to_i) || Time.zone.now
     end
   end
 

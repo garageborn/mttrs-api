@@ -2,7 +2,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   extend Memoist
   attr_reader :story_id, :counters
 
-  def perform(story_id, counters = {})
+  def perform(story_id, counters)
     @story_id = story_id
     @counters = counters
     return if story.blank? || counters.blank?

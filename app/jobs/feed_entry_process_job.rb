@@ -28,6 +28,7 @@ class FeedEntryProcessJob < ActiveJob::Base
       story.description ||= entry[:summary]
       story.image_source_url ||= entry[:image]
       story.source_url ||= entry[:url]
+      story.published_at ||= Time.zone.at(entry[:published].to_i) || Time.zone.now
     end
   end
 
