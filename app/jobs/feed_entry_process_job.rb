@@ -31,15 +31,6 @@ class FeedEntryProcessJob < ActiveJob::Base
     end
   end
 
-  def url
-    url = entry[:url]
-    head = HTTParty.head(url, headers: { 'User-Agent' => '' }, verify: false)
-    url = head.request.last_uri.to_s if head.success?
-  rescue HTTParty::Error
-  ensure
-    return Addressable::URI.parse(url).omit(:query, :fragment).to_s
-  end
-
   def add_feed
     return if story.feeds.include?(feed)
     story.feeds << feed
@@ -51,5 +42,5 @@ class FeedEntryProcessJob < ActiveJob::Base
     FullFetchStoryJob.perform_later(story.id)
   end
 
-  memoize :feed, :url, :story, :url
+  memoize :feed, :url, :story
 end
