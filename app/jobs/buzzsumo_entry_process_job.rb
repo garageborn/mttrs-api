@@ -8,6 +8,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
     return unless story.save
     enqueue_social_counter_update
+    enqueue_story_categorizer
     enqueue_story_full_fetch
   end
 
@@ -41,6 +42,10 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
       pinterest: entry[:pinterest_shares],
       google_plus: entry[:google_plus_shares]
     )
+  end
+
+  def enqueue_story_categorizer
+    StoryCategorizerJob.perform_later(story.id)
   end
 
   def enqueue_story_full_fetch

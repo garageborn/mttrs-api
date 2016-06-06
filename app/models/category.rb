@@ -5,6 +5,7 @@ class Category < ActiveRecord::Base
   has_many :feeds, inverse_of: :category
   has_many :publishers, through: :feeds
   has_many :stories, through: :feeds
+  has_many :category_matchers, inverse_of: :category, dependent: :destroy
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 
