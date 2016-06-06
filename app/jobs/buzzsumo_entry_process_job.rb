@@ -4,7 +4,8 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
   def perform(entry)
     @entry = entry
-    return if entry.blank? || publisher.blank?
+    return if entry.blank? || publisher.blank? || url.blank?
+
     return unless story.save
     enqueue_social_counter_update
     enqueue_story_full_fetch
@@ -17,13 +18,17 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     Publisher.find_by_domain(PublicSuffix.domain(host))
   end
 
+  def url
+    UrlDiscovery.run(entry[:url])
+  end
+
   def story
-    Story.where(source_url: entry[:url]).first_or_initialize.tap do |story|
-      story.publisher = publisher
-      story.url ||= entry[:url]
-      story.title ||= entry[:title]
+    Story.where(url: url).first_or_initialize.tap do |story|
       story.image_source_url ||= entry[:image_source_url]
       story.published_at ||= Time.zone.at(entry[:published_date].to_i) || Time.zone.now
+      story.publisher = publisher
+      story.source_url ||= entry[:url]
+      story.title ||= entry[:title]
     end
   end
 
@@ -43,5 +48,5 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     FullFetchStoryJob.perform_later(story.id)
   end
 
-  memoize :publisher, :story
+  memoize :publisher, :url, :story
 end
