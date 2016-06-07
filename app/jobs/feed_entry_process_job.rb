@@ -10,6 +10,7 @@ class FeedEntryProcessJob < ActiveJob::Base
     add_feed
     return unless story.save
     enqueue_story_categorizer
+    enqueue_social_counter_fetcher
     enqueue_story_full_fetch
   end
 
@@ -41,6 +42,10 @@ class FeedEntryProcessJob < ActiveJob::Base
 
   def enqueue_story_categorizer
     StoryCategorizerJob.perform_later(story.id)
+  end
+
+  def enqueue_social_counter_fetcher
+    SocialCounterFetcherJob.perform_later(story.id)
   end
 
   def enqueue_story_full_fetch
