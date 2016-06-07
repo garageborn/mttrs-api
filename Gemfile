@@ -43,7 +43,6 @@ group :development do
   gem 'foreman', '0.82.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'slackistrano', '3.0.1', require: false
-  gem 'spring'
 end
 
 group :test do
