@@ -1,11 +1,7 @@
 env :PATH, ENV['PATH']
 
-every 15.minutes do
-  rake 'feeds:fetcher:run'
-end
-
-every 15.minutes do
-  rake 'buzzsumo:fetcher:run'
+every 10.minutes do
+  rake 'stories:fetcher:run'
 end
 
 # every 1.hour do
