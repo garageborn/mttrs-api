@@ -1,0 +1,63 @@
+{
+  "ars technica": {
+    "business": "\/business\/\\d{4}\/\\d{2}\/",
+    "technology": "\/information-technology\/\\d{4}\/\\d{2}\/",
+    "science": "\/science\/\\d{4}\/\\d{2}\/"
+  },
+
+  "bbc": {
+    "entertainment": "\/entertainment-arts-\\d+",
+    "business": "\/business-\\d+",
+    "world news": "\/news\/world-"
+  },
+
+  "cnn": {
+    "entertainment": [
+      "\/entertainment\/\\d{4}\/\\d{2}\/\\d{2}",
+      "\\d{4}\/\\d{2}\/\\d{2}\/entertainment\/"
+    ],
+    "business": [
+      "\/business\/\\d{4}\/\\d{2}\/\\d{2}",
+      "\\d{4}\/\\d{2}\/\\d{2}\/smallbusiness\/"
+    ],
+    "technology": [
+      "\/technology\/\\d{4}\/\\d{2}\/\\d{2}",
+      "\\d{4}\/\\d{2}\/\\d{2}\/technology\/",
+      "cnn\.com\/technology\/",
+      "cnn\.com\/interactive\/technology\/"
+    ],
+    "world news": [
+      "\/world\/\\d{4}\/\\d{2}\/\\d{2}",
+      "\\d{4}\/\\d{2}\/\\d{2}\/world\/"
+    ]
+  },
+
+  "college humor": {
+    "humor": "(.*)"
+  },
+
+  "new york times": {
+    "entertainment": "\\d{4}\/\\d{2}\/\\d{2}\/(.*)\/entertainment\/",
+    "business": "\\d{4}\/\\d{2}\/\\d{2}\/business\/",
+    "science": "\\d{4}\/\\d{2}\/\\d{2}\/science\/",
+    "world news": "\\d{4}\/\\d{2}\/\\d{2}\/world\/"
+  },
+
+  "popular science": {
+    "technology": "\/technology\/article\/\\d{4}-\\d{2}\/",
+    "science": "\/science\/article\/\\d{4}-\\d{2}\/"
+  },
+
+  "the guardian": {
+    "business": [
+      "\/business\/\\d{4}\/",
+      "\/sustainable-business\/\\d{4}\/"
+    ],
+    "technology": "\/technology\/\\d{4}\/",
+    "science": [
+      "\/science\/\\d{4}\/",
+      "www\.theguardian\.com\/science\/"
+    ],
+    "world news": "\/world\/\\d{4}\/"
+  }
+}

@@ -18,7 +18,8 @@ class StoryCategorizer
 
     def match_url?
       return false if category_matcher.url_matcher.blank?
-      story.url.match(category_matcher.url_matcher).present?
+      regexp = Regexp.new(category_matcher.url_matcher, Regexp::IGNORECASE)
+      story.url.match(regexp).present?
     end
 
     memoize :match?, :match_url?
