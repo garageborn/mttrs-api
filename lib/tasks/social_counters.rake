@@ -1,7 +1,7 @@
 namespace :social_counters do
   def update(scope)
     scope.find_each(batch_size: 50) do |story|
-      SocialCounterUpdateJob.perform_later(story.id)
+      SocialCounterFetcherJob.perform_later(story.id)
     end
   end
 
@@ -12,14 +12,8 @@ namespace :social_counters do
   end
 
   desc 'Fetch all social counts from yesterday stories'
-  task since_30_days: :environment do
-    stories = Story.recent.published_between(30.days.ago, 2.days.ago)
-    update(stories)
-  end
-
-  desc 'Fetch all social counts from oldest stories'
-  task oldest: :environment do
-    stories = Story.recent.published_until(30.days.ago)
+  task since_7_days: :environment do
+    stories = Story.recent.published_between(7.days.ago, 2.days.ago)
     update(stories)
   end
 end
