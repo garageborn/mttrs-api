@@ -19,7 +19,7 @@ module Social
     end
 
     def to_h
-      Hash[attributes.map { |attribute| [attribute, send(:attribute)] }]
+      Hash[attributes.map { |attribute| [attribute, send(attribute)] }]
     end
   end
 end
