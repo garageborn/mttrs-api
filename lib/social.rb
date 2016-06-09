@@ -9,6 +9,7 @@ module Social
         next if counters.blank?
         break counters
       end
+      nil
     end
 
     private
