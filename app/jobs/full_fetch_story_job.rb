@@ -20,7 +20,6 @@ class FullFetchStoryJob < ActiveJob::Base
   end
 
   def set_missing_info
-    byebug
     return unless story.missing_info?
     return unless embedly && embedly.success?
     story.title = embedly.parsed_response.title
