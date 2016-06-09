@@ -45,7 +45,7 @@ class FullFetchStoryJob < ActiveJob::Base
   end
 
   def embedly
-    # return unless Rails.env.production?
+    return unless Rails.env.production?
     Embedly.extract(story.url)
   end
 
