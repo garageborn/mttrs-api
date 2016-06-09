@@ -35,14 +35,9 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
   end
 
   def enqueue_social_counter_update
-    SocialCounterUpdateJob.perform_later(
-      story.id,
-      facebook: entry[:total_facebook_shares],
-      linkedin: entry[:linkedin_shares],
-      twitter: entry[:twitter_shares],
-      pinterest: entry[:pinterest_shares],
-      google_plus: entry[:google_plus_shares]
-    )
+    counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
+    return if counters.blank?
+    SocialCounterUpdateJob.perform_later(story.id, counters.to_h)
   end
 
   def enqueue_story_categorizer
