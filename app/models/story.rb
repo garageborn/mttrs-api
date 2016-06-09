@@ -1,5 +1,6 @@
 class Story < ActiveRecord::Base
   include Concerns::Filterable
+  include Concerns::StoryMissingAttributes
 
   belongs_to :publisher
   has_and_belongs_to_many :categories
@@ -26,22 +27,6 @@ class Story < ActiveRecord::Base
   before_destroy do
     feeds.clear
     categories.clear
-  end
-
-  def missing_info?
-    title.blank? || description.blank?
-  end
-
-  def missing_image?
-    image_source_url.blank?
-  end
-
-  def missing_content?
-    content.blank?
-  end
-
-  def needs_full_fetch?
-    missing_info? || missing_image? || missing_content?
   end
 
   def uri

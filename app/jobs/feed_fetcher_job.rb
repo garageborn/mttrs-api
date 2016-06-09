@@ -15,11 +15,7 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def rss
-    request = HTTParty.get(
-      feed.url,
-      headers: { 'User-Agent' => 'Firefox' },
-      verify: false
-    )
+    request = UrlFetcher.run(feed.url)
     Feedjira::Feed.parse(request.body)
   end
 
@@ -29,7 +25,7 @@ class FeedFetcherJob < ActiveJob::Base
       title: entry.title,
       url: entry.url,
       published: entry.published.to_i,
-      summary: entry.summary,
+      summary: entry.summary || entry.content,
       image: entry.image
     )
   end
