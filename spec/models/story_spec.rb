@@ -4,18 +4,19 @@ RSpec.describe Story do
   it { should have_db_column(:content) }
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:description) }
-  it { should have_db_column(:publisher_id).with_options(null: false) }
+  it { should have_db_column(:html) }
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:published_at).with_options(null: false) }
+  it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:source_url).with_options(null: false) }
   it { should have_db_column(:title).with_options(null: false) }
+  it { should have_db_column(:total_social).with_options(null: false, default: 0) }
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:url).with_options(null: false) }
-  it { should have_db_column(:total_social).with_options(null: false, default: 0) }
   it { should have_db_index(:publisher_id) }
   it { should have_db_index(:source_url).unique(true) }
-  it { should have_db_index(:url).unique(true) }
   it { should have_db_index(:total_social) }
+  it { should have_db_index(:url).unique(true) }
 
   it { should belong_to(:publisher) }
   it { should have_one(:social_counter).order(id: :desc) }

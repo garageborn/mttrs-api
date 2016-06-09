@@ -16,7 +16,7 @@ class BuzzsumoFetcherJob < ActiveJob::Base
   end
 
   def entries
-    query = { q: publisher.domain, num_results: 100, num_days: 7 }
+    query = { q: publisher.domain, num_results: 100, language: 'en', num_days: 7 }
     Buzzsumo.all(:articles, query: query)
   end
 
