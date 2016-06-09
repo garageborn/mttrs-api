@@ -41,7 +41,7 @@ class FullFetchStoryJob < ActiveJob::Base
   def set_html
     return unless story.missing_html?
     return unless url_fetcher.success?
-    story.html = url_fetcher.response.body
+    story.html = url_fetcher.response.body.encode('UTF-8', 'ISO-8859-1')
   end
 
   def embedly
