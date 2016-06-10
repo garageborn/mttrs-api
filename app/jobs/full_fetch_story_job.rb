@@ -17,8 +17,6 @@ class FullFetchStoryJob < ActiveJob::Base
   end
 
   def set_missing_info
-    p '-----------------------------'
-    p page
     return if page.blank?
     story.content ||= page.content
     story.description ||= page.description
