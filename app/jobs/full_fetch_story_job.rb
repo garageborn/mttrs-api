@@ -7,9 +7,6 @@ class FullFetchStoryJob < ActiveJob::Base
     return if story.blank? || !story.needs_full_fetch?
 
     set_missing_info
-    set_image
-    set_content
-    set_html
     story.save
   end
 
@@ -20,38 +17,19 @@ class FullFetchStoryJob < ActiveJob::Base
   end
 
   def set_missing_info
-    return unless story.missing_info?
-    return unless embedly && embedly.success?
-    story.title = embedly.parsed_response.title
-    story.description = embedly.parsed_response.description
+    p '-----------------------------'
+    p page
+    return if page.blank?
+    story.content ||= page.content
+    story.description ||= page.description
+    story.image_source_url ||= page.image
+    story.html ||= page.html
+    story.title ||= page.title
   end
 
-  def set_image
-    return unless story.missing_image?
-    return unless embedly && embedly.success?
-    story.image_source_url = embedly.parsed_response.images.try(:first).try(:url)
+  def page
+    Extract.run(story.url, html: story.html)
   end
 
-  def set_content
-    return unless story.missing_content?
-    return unless embedly && embedly.success?
-    story.content = embedly.parsed_response.content
-  end
-
-  def set_html
-    return unless story.missing_html?
-    return unless url_fetcher.success?
-    story.html = url_fetcher.response.body.encode('UTF-8', 'ISO-8859-1')
-  end
-
-  def embedly
-    return unless Rails.env.production?
-    ::Embedly.extract(story.url)
-  end
-
-  def url_fetcher
-    UrlFetcher.run(story.url)
-  end
-
-  memoize :story, :embedly, :url_fetcher
+  memoize :story, :page
 end

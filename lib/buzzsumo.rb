@@ -9,7 +9,7 @@ class Buzzsumo
     get('/search/articles.json'.freeze, options)
   end
 
-  def self.all(method, options={})
+  def self.all(method, options = {})
     options[:query] ||= {}
     current_page = 0
     Array.new.tap do |resources|

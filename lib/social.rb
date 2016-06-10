@@ -7,7 +7,7 @@ module Social
       strategies.each do |strategy|
         counters = strategy.count(url)
         next if counters.blank?
-        break counters
+        return counters
       end
       nil
     end
