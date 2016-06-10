@@ -22,7 +22,7 @@ module Extract
 
         def find_entry(url)
           return unless Rails.env.production?
-          embedly = Embedly.extract(url)
+          embedly = ::Embedly.extract(url)
           return unless embedly.success?
           embedly.parsed_response
         end
