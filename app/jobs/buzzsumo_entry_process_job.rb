@@ -46,7 +46,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
   def enqueue_story_full_fetch
     return unless story.needs_full_fetch?
-    FullFetchStoryJob.perform_later(story.id)
+    # FullFetchStoryJob.perform_later(story.id)
   end
 
   memoize :publisher, :url, :story
