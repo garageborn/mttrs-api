@@ -13,10 +13,19 @@ class Story < ActiveRecord::Base
   validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
-  scope :published_at, -> (date) { published_between(date.at_beginning_of_day, date.end_of_day) }
-  scope :published_between, -> (start_at, end_at) { where(published_at: start_at..end_at) }
-  scope :published_since, -> (date) { where('stories.published_at >= ?', date) }
-  scope :published_until, -> (date) { where('stories.published_at <= ?', date) }
+  scope :published_at, lambda { |date|
+    date = parse_date(date)
+    published_between(date.at_beginning_of_day, date.end_of_day)
+  }
+  scope :published_between, lambda { |start_at, end_at|
+    where(published_at: parse_date(start_at)..parse_date(end_at))
+  }
+  scope :published_since, lambda { |date|
+    where('stories.published_at >= ?', parse_date(date))
+  }
+  scope :published_until, lambda { |date|
+    where('stories.published_at <= ?', parse_date(date))
+  }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :recent, -> { order(published_at: :desc) }
@@ -27,6 +36,13 @@ class Story < ActiveRecord::Base
   before_destroy do
     feeds.clear
     categories.clear
+  end
+
+  class << self
+    def parse_date(date)
+      return Time.at(date.to_i).utc if date.is_a?(Integer) || date.to_i > 0
+      Date.parse(date)
+    end
   end
 
   def uri
