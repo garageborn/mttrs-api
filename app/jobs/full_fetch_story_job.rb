@@ -26,7 +26,15 @@ class FullFetchStoryJob < ActiveJob::Base
   end
 
   def page
-    Extract.run(story.url, html: story.html)
+    current_page = Extract::Page.new(
+      content: story.content,
+      description: story.description,
+      image: story.image_source_url,
+      html: story.html,
+      title: story.title,
+      url: story.url
+    )
+    Extract.run(current_page)
   end
 
   memoize :story, :page
