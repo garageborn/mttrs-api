@@ -3,21 +3,24 @@ module Extract
   autoload :Strategies, './lib/extract/strategies'
 
   class << self
-    def run(url, options = {})
-      Extract::Page.new.tap do |page|
-        strategies.each do |strategy|
-          current_page = strategy.run(url, options)
-          next if current_page.blank?
-          page.merge(current_page)
-          break if page.complete?
-        end
+    def run(page)
+      available_strategies(page).each do |strategy|
+        strategy.run(page)
+        break if page.complete?
       end
+      page
     end
 
     private
 
     def strategies
       Extract::Strategies.ordered
+    end
+
+    def available_strategies(page)
+      strategies.select do |strategy|
+        strategy::AVAILABLE_ATTRIBUTES.any? { |attr| page.missing_attributes.include?(attr) }
+      end
     end
   end
 end
