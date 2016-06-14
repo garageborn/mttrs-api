@@ -13,6 +13,7 @@ class StoriesController < ApplicationController
       :last_week,
       :limit,
       :popular,
+      :published_at,
       :recent,
       :today,
       :yesterday
