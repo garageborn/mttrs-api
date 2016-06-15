@@ -13,6 +13,9 @@ class Story < ActiveRecord::Base
   validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
+  scope :last_month, -> { published_since(1.month.ago) }
+  scope :last_week, -> { published_since(1.week.ago) }
+  scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
     published_between(date.at_beginning_of_day, date.end_of_day)
@@ -26,12 +29,10 @@ class Story < ActiveRecord::Base
   scope :published_until, lambda { |date|
     where('stories.published_at <= ?', parse_date(date))
   }
-  scope :last_month, -> { published_since(1.month.ago) }
-  scope :last_week, -> { published_since(1.week.ago) }
+  scope :publisher_slug, -> (slug) { joins(:publisher).where(publishers: { slug: slug }) }
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
-  scope :popular, -> { order(total_social: :desc) }
 
   before_destroy do
     feeds.clear

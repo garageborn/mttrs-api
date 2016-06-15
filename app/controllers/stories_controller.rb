@@ -14,6 +14,7 @@ class StoriesController < ApplicationController
       :limit,
       :popular,
       :published_at,
+      :publisher_slug,
       :recent,
       :today,
       :yesterday
