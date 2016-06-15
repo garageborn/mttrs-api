@@ -5,7 +5,7 @@ module Extract
 
     class << self
       def ordered
-        [Extract::Strategies::Embedly, Extract::Strategies::Parser]
+        [Extract::Strategies::Parser]
       end
     end
   end
