@@ -21,7 +21,7 @@ namespace :postgresql do
 
   def cleanup
     system <<-CMD
-      rm -rf #{ POSTGRESQL_BACKUP_PATH } #{ POSTGRESQL_GZIP_PATH }
+      rm -rf /tmp/*.dump /tmp/*.dump.tar.gz
     CMD
   end
 
