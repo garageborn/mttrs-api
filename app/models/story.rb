@@ -1,5 +1,3 @@
-require 'elasticsearch/model'
-
 class Story < ActiveRecord::Base
   include Concerns::Filterable
   include Concerns::StoryMissingAttributes

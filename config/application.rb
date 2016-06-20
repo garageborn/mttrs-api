@@ -9,6 +9,7 @@ require 'rss'
 require 'open-uri'
 require 'httparty'
 require 'thread/pool'
+require 'elasticsearch/model'
 require 'elasticsearch/rails/instrumentation'
 
 Bundler.require(*Rails.groups)
