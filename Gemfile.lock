@@ -268,6 +268,8 @@ GEM
     guard-rubocop (1.2.0)
       guard (~> 2.0)
       rubocop (~> 0.20)
+    haml (4.0.7)
+      tilt
     hashie (3.4.4)
     httparty (0.13.7)
       json (~> 1.8)
@@ -476,6 +478,7 @@ DEPENDENCIES
   guard-bundler (= 2.1.0)
   guard-rspec (= 4.7.2)
   guard-rubocop (= 1.2.0)
+  haml
   httparty (= 0.13.7)
   logglier (= 0.5.0)
   memoist (= 0.14.0)

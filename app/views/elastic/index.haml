@@ -1,0 +1,32 @@
+:css
+  body { font-size: 15px; font-family: 'Lucida Grande'; margin: 0; padding: 20px 150px }
+  h1 { font-size: 18px; margin: 0; padding: 5px; background: #000; }
+  h1 a { color: #fff; }
+  strong { width: 110px; display: inline-block; background: red; color: #fff; padding: 3px; text-align: right; margin-right: 10px; margin-top: 1px }
+  strong.match { background: green }
+  a { text-decoration: none; color: #555 }
+  a:hover { text-decoration: underline }
+  div { font-size: 20px; text-align: center; padding: 10px; background: #ccc }
+  div a { margin: 0 20px; color: #000 }
+
+%div
+  - unless params[:offset].to_i == 0
+    %a{ href: "?offset=#{params[:offset].to_i - 30}" } << previous
+  %a{ href: "?offset=#{params[:offset].to_i + 30}" } next >>
+
+%br
+
+- for story in @stories
+  %h1
+    %a{ href: story.uri, target: '_blank' }= story.title
+  - for related_story in story.related
+    %span
+      %strong{ class: ('match' if related_story._score > 1.5) }= related_story._score
+      %a{ href: related_story.url, target: 'blank' }= related_story.title
+    %br
+
+  %br
+
+%div
+  %a{ href: '#' } << previous
+  %a{ href: '#' } next >>

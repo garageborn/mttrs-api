@@ -42,6 +42,22 @@ class Story < ActiveRecord::Base
     categories.clear
   end
 
+  def related
+    Story.search(
+      query: {
+        more_like_this: {
+          fields: [:title],
+          like: [
+            {
+              _id: id
+            }
+          ],
+          min_term_freq: 1
+        }
+      }
+    ).results
+  end
+
   class << self
     def parse_date(date)
       return Time.at(date.to_i).utc if date.is_a?(Integer) || date.to_i > 0
