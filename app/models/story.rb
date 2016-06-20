@@ -3,8 +3,7 @@ require 'elasticsearch/model'
 class Story < ActiveRecord::Base
   include Concerns::Filterable
   include Concerns::StoryMissingAttributes
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
+  include Concerns::Searchable
 
   belongs_to :publisher
   has_and_belongs_to_many :categories
