@@ -3,7 +3,9 @@ module Extract
     module Parser
       class Language < Base
         def value
-          meta_value("property='og:description'") || meta_value("name='description'")
+          Utils::Language.find(
+            meta_value("itemprop='inLanguage'") || document.xpath('/html').attribute('lang').value
+          )
         end
       end
     end

@@ -21,6 +21,7 @@ class FullFetchStoryJob < ActiveJob::Base
     story.content ||= page.content
     story.description ||= page.description
     story.image_source_url ||= page.image
+    story.language ||= page.language
     story.html ||= page.html
     story.title ||= page.title
   end
@@ -30,6 +31,7 @@ class FullFetchStoryJob < ActiveJob::Base
       content: story.content,
       description: story.description,
       image: story.image_source_url,
+      language: story.language,
       html: story.html,
       title: story.title,
       url: story.url
