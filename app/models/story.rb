@@ -11,6 +11,7 @@ class Story < ActiveRecord::Base
 
   validates :title, :publisher, :published_at, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
+  validates :language, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }, allow_blank: true
   validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }

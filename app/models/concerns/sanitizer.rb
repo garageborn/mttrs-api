@@ -6,7 +6,7 @@ module Concerns
       def self.sanitizer(*attributes)
         attributes.each do |attribute|
           define_method("#{ attribute }=") do |value|
-            write_attribute(attribute, ActionView::Base.full_sanitizer.sanitize(value.to_s).strip)
+            self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).strip
           end
         end
       end

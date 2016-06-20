@@ -6,6 +6,7 @@ RSpec.describe Story do
   it { should have_db_column(:description) }
   it { should have_db_column(:html) }
   it { should have_db_column(:image_source_url) }
+  it { should have_db_column(:language) }
   it { should have_db_column(:published_at).with_options(null: false) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:source_url).with_options(null: false) }
@@ -34,6 +35,7 @@ RSpec.describe Story do
     it { is_expected.to validate_presence_of(:url) }
     it { is_expected.to validate_uniqueness_of(:url).case_insensitive }
     it { is_expected.to validate_presence_of(:published_at) }
+    it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::EXISTING_LANGUAGES).allow_blank }
 
     describe '#validate_unique_story' do
       let!(:first_story) { create(:story) }

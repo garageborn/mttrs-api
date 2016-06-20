@@ -2,7 +2,7 @@ class Buzzsumo
   include HTTParty
   base_uri 'http://api.buzzsumo.com'.freeze
   format :json
-  parser OpenStructParser
+  parser Utils::OpenStructParser
   default_params api_key: ENV['BUZZSUMO_TOKEN']
 
   def self.articles(options)
