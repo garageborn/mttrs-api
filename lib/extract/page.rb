@@ -1,12 +1,13 @@
 module Extract
   class Page
-    attr_accessor :content, :description, :html, :image, :title, :url
+    attr_accessor :content, :description, :html, :image, :language, :title, :url
 
     def initialize(attributes = {})
       self.content = attributes[:content]
       self.description = attributes[:description]
       self.html = attributes[:html]
       self.image = attributes[:image]
+      self.language = attributes[:language]
       self.title = attributes[:title]
       self.url = attributes[:url]
     end
@@ -31,7 +32,7 @@ module Extract
     end
 
     def attributes
-      %i(content description html image title url)
+      %i(content description html language image title url)
     end
   end
 end

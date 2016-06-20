@@ -5,7 +5,7 @@ module Extract
       autoload :Description, './lib/extract/strategies/parser/description'
       autoload :Image, './lib/extract/strategies/parser/image'
       autoload :Title, './lib/extract/strategies/parser/title'
-      AVAILABLE_ATTRIBUTES = %i(description image title html).freeze
+      AVAILABLE_ATTRIBUTES = %i(description image language title html).freeze
 
       class << self
         def run(page)
@@ -33,7 +33,7 @@ module Extract
         end
 
         def get_html(url)
-          url_fetcher = UrlFetcher.run(url)
+          url_fetcher = Utils::UrlFetcher.run(url)
           return unless url_fetcher.success?
           url_fetcher.response.body.encode('UTF-8', 'ISO-8859-1')
         end

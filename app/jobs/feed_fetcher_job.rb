@@ -15,7 +15,7 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def rss
-    request = UrlFetcher.run(feed.url)
+    request = Utils::UrlFetcher.run(feed.url)
     Feedjira::Feed.parse(request.body)
   end
 
