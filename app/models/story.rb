@@ -42,25 +42,7 @@ class Story < ActiveRecord::Base
     categories.clear
   end
 
-<<<<<<< HEAD
-  def related
-    Story.search(
-      query: {
-        more_like_this: {
-          fields: [:title],
-          like: [
-            {
-              _id: id
-            }
-          ],
-          min_term_freq: 1
-        }
-      }
-    ).results
-  end
-=======
   sanitizer :title, :description
->>>>>>> master
 
   class << self
     def parse_date(date)
@@ -71,6 +53,22 @@ class Story < ActiveRecord::Base
 
   def uri
     Addressable::URI.parse(url)
+  end
+
+  def related
+    Story.search(
+      query: {
+        more_like_this: {
+          fields: [:title, :description],
+          like: [
+            {
+              _id: id
+            }
+          ],
+          min_term_freq: 1
+        }
+      }
+    ).results
   end
 
   private
