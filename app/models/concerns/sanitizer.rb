@@ -16,7 +16,8 @@ module Concerns
       end
 
       def sanitize_attribute(attribute, value)
-        self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).strip
+        self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).
+                          strip.gsub!(/[\r\n]+/, ' ')
       end
     end
   end
