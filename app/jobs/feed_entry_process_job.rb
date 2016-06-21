@@ -21,7 +21,7 @@ class FeedEntryProcessJob < ActiveJob::Base
   end
 
   def url
-    UrlDiscovery.run(entry[:url])
+    Utils::UrlDiscovery.run(entry[:url])
   end
 
   def story

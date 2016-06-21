@@ -2,6 +2,7 @@ class Story < ActiveRecord::Base
   include Concerns::Filterable
   include Concerns::StoryMissingAttributes
   include Concerns::Searchable
+  include Concerns::Sanitizer
 
   belongs_to :publisher
   has_and_belongs_to_many :categories
@@ -11,6 +12,7 @@ class Story < ActiveRecord::Base
 
   validates :title, :publisher, :published_at, presence: true
   validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
+  validates :language, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }, allow_blank: true
   validate :validate_unique_story
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
@@ -40,6 +42,7 @@ class Story < ActiveRecord::Base
     categories.clear
   end
 
+<<<<<<< HEAD
   def related
     Story.search(
       query: {
@@ -55,6 +58,9 @@ class Story < ActiveRecord::Base
       }
     ).results
   end
+=======
+  sanitizer :title, :description
+>>>>>>> master
 
   class << self
     def parse_date(date)
