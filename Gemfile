@@ -20,7 +20,6 @@ gem 'retries', '0.0.5'
 gem 'sidekiq', '4.1.2'
 gem 'sidekiq-unique-jobs', '4.0.17'
 gem 'sinatra', '1.4.7', require: false
-gem 'strip_attributes', '1.8.0'
 gem 'thread', '0.2.2'
 gem 'whenever', '0.9.4', require: false
 
