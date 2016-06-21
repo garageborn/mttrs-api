@@ -1,7 +1,6 @@
 class Story < ActiveRecord::Base
   include Concerns::Filterable
   include Concerns::StoryMissingAttributes
-  include Concerns::Sanitizer
 
   belongs_to :publisher
   has_and_belongs_to_many :categories
@@ -41,7 +40,8 @@ class Story < ActiveRecord::Base
     categories.clear
   end
 
-  sanitizer :title, :description
+  strip_attributes only: %i(title description), allow_empty: true,
+                   collapse_spaces: true, replace_newlines: true
 
   class << self
     def parse_date(date)
