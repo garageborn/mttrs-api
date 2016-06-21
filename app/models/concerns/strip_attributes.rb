@@ -1,10 +1,10 @@
 module Concerns
-  module Sanitizer
+  module StripAttributes
     extend ActiveSupport::Concern
 
     included do
       class << self
-        def sanitizer(*attributes)
+        def strip_attributes(*attributes)
           before_validation do
             attributes.each { |attribute| sanitize_attribute(attribute, self[attribute]) }
           end
@@ -16,7 +16,8 @@ module Concerns
       end
 
       def sanitize_attribute(attribute, value)
-        self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).strip
+        self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).
+                          strip.gsub(/[\r\n]+/, ' ')
       end
     end
   end
