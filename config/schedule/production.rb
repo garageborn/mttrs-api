@@ -1,7 +1,7 @@
 env :PATH, ENV['PATH']
 
 every 10.minutes do
-  rake 'stories:fetcher:run'
+  rake 'links:fetcher:run'
 end
 
 every 1.hour do

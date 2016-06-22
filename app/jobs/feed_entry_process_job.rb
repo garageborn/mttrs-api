@@ -8,10 +8,10 @@ class FeedEntryProcessJob < ActiveJob::Base
     return if entry.blank? || feed.blank? || url.blank?
 
     add_feed
-    return unless story.save
-    enqueue_story_categorizer
+    return unless link.save
+    enqueue_link_categorizer
     enqueue_social_counter_fetcher
-    enqueue_story_full_fetch
+    enqueue_link_full_fetch
   end
 
   private
@@ -24,34 +24,34 @@ class FeedEntryProcessJob < ActiveJob::Base
     Utils::UrlDiscovery.run(entry[:url])
   end
 
-  def story
-    Story.where(url: url).first_or_initialize.tap do |story|
-      story.description ||= entry[:summary]
-      story.image_source_url ||= entry[:image]
-      story.published_at ||= Time.zone.at(entry[:published].to_i) || Time.zone.now
-      story.publisher ||= feed.publisher
-      story.source_url ||= entry[:url]
-      story.title ||= entry[:title]
+  def link
+    Link.where(url: url).first_or_initialize.tap do |link|
+      link.description ||= entry[:summary]
+      link.image_source_url ||= entry[:image]
+      link.published_at ||= Time.zone.at(entry[:published].to_i) || Time.zone.now
+      link.publisher ||= feed.publisher
+      link.source_url ||= entry[:url]
+      link.title ||= entry[:title]
     end
   end
 
   def add_feed
-    return if story.feeds.include?(feed)
-    story.feeds << feed
+    return if link.feeds.include?(feed)
+    link.feeds << feed
   end
 
-  def enqueue_story_categorizer
-    StoryCategorizerJob.perform_later(story.id)
+  def enqueue_link_categorizer
+    LinkCategorizerJob.perform_later(link.id)
   end
 
   def enqueue_social_counter_fetcher
-    SocialCounterFetcherJob.perform_later(story.id)
+    SocialCounterFetcherJob.perform_later(link.id)
   end
 
-  def enqueue_story_full_fetch
-    return unless story.needs_full_fetch?
-    FullFetchStoryJob.perform_later(story.id)
+  def enqueue_link_full_fetch
+    return unless link.needs_full_fetch?
+    FullFetchLinkJob.perform_later(link.id)
   end
 
-  memoize :feed, :url, :story
+  memoize :feed, :url, :link
 end

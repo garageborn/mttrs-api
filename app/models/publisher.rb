@@ -1,7 +1,7 @@
 class Publisher < ActiveRecord::Base
   extend FriendlyId
 
-  has_many :stories, inverse_of: :publisher, dependent: :destroy
+  has_many :links, inverse_of: :publisher, dependent: :destroy
   has_many :feeds, inverse_of: :publisher, dependent: :destroy
   has_many :categories, through: :feeds
   has_many :category_matchers, inverse_of: :publisher, dependent: :destroy

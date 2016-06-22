@@ -1,5 +1,5 @@
 module Concerns
-  module StoryMissingAttributes
+  module LinkMissingAttributes
     extend ActiveSupport::Concern
 
     def missing_info?

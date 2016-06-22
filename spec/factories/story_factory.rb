@@ -1,10 +1,5 @@
 FactoryGirl.define do
   factory :story do
-    publisher
-    title { Faker::Lorem.sentence }
-    description { Faker::Lorem.paragraph }
-    url { generate(:url) }
-    source_url { generate(:url) }
-    published_at { Time.zone.now }
+    total_social { Faker::Number.number(5).to_i }
   end
 end

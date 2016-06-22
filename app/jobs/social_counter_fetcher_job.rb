@@ -1,23 +1,23 @@
 class SocialCounterFetcherJob < ActiveJob::Base
   extend Memoist
-  attr_reader :story_id
+  attr_reader :link_id
 
-  def perform(story_id)
-    @story_id = story_id
-    return if story.blank? || social.blank?
+  def perform(link_id)
+    @link_id = link_id
+    return if link.blank? || social.blank?
 
-    SocialCounterUpdateJob.perform_later(story.id, social.to_h)
+    SocialCounterUpdateJob.perform_later(link.id, social.to_h)
   end
 
   private
 
-  def story
-    Story.find_by_id(story_id)
+  def link
+    Link.find_by_id(link_id)
   end
 
   def social
-    Social.count(story.url) || Social.count(story.source_url)
+    Social.count(link.url) || Social.count(link.source_url)
   end
 
-  memoize :story, :social
+  memoize :link, :social
 end

@@ -1,24 +1,24 @@
 class SocialCounterUpdateJob < ActiveJob::Base
   extend Memoist
-  attr_reader :story_id, :counters
+  attr_reader :link_id, :counters
 
-  def perform(story_id, counters)
-    @story_id = story_id
+  def perform(link_id, counters)
+    @link_id = link_id
     @counters = counters
-    return if story.blank? || counters.blank?
+    return if link.blank? || counters.blank?
 
     update
   end
 
   private
 
-  def story
-    Story.find_by_id(story_id)
+  def link
+    Link.find_by_id(link_id)
   end
 
   def social_counter
-    return story.social_counters.build if last_social_counter.blank?
-    story.social_counters.build(parent: last_social_counter).tap do |social_counter|
+    return link.social_counters.build if last_social_counter.blank?
+    link.social_counters.build(parent: last_social_counter).tap do |social_counter|
       SocialCounter::PROVIDERS.each do |provider|
         social_counter[provider] = last_social_counter.read_attribute(provider)
       end
@@ -26,7 +26,7 @@ class SocialCounterUpdateJob < ActiveJob::Base
   end
 
   def last_social_counter
-    story.social_counter
+    link.social_counter
   end
 
   def update
@@ -42,5 +42,5 @@ class SocialCounterUpdateJob < ActiveJob::Base
     social_counter[provider] = value
   end
 
-  memoize :story, :social_counter, :last_social_counter
+  memoize :link, :social_counter, :last_social_counter
 end
