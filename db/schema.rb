@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20) do
+ActiveRecord::Schema.define(version: 22) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,11 @@ ActiveRecord::Schema.define(version: 20) do
 
   add_index "category_matchers", ["category_id", "publisher_id"], name: "index_category_matchers_on_category_id_and_publisher_id", using: :btree
   add_index "category_matchers", ["publisher_id", "category_id"], name: "index_category_matchers_on_publisher_id_and_category_id", using: :btree
+
+  create_table "clusters", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "feeds", force: :cascade do |t|
     t.integer  "publisher_id", null: false
@@ -112,8 +117,10 @@ ActiveRecord::Schema.define(version: 20) do
     t.datetime "published_at",                 null: false
     t.text     "html"
     t.string   "language"
+    t.integer  "cluster_id"
   end
 
+  add_index "stories", ["cluster_id"], name: "index_stories_on_cluster_id", using: :btree
   add_index "stories", ["publisher_id"], name: "index_stories_on_publisher_id", using: :btree
   add_index "stories", ["source_url"], name: "index_stories_on_source_url", unique: true, using: :btree
   add_index "stories", ["total_social"], name: "index_stories_on_total_social", using: :btree

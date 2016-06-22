@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'active_model_serializers', '0.9.5'
 gem 'addressable', '2.4.0'
 gem 'cloudinary', '1.1.6'
+gem 'elasticsearch-rails', '0.1.9'
+gem 'elasticsearch-model', '0.1.9'
 gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
@@ -22,6 +24,7 @@ gem 'sidekiq-unique-jobs', '4.0.17'
 gem 'sinatra', '1.4.7', require: false
 gem 'thread', '0.2.2'
 gem 'whenever', '0.9.4', require: false
+gem 'haml'
 
 group :production do
   gem 'sentry-raven', '0.15.2'

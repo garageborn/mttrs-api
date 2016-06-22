@@ -20,8 +20,10 @@ RSpec.describe Story do
   it { should have_db_index(:url).unique(true) }
 
   it { should belong_to(:publisher) }
+  it { should belong_to(:cluster) }
   it { should have_one(:social_counter).order(id: :desc) }
   it { should have_and_belong_to_many(:feeds) }
+  it { should have_many(:related).class_name('Story').through(:cluster).source(:stories) }
   it { should have_many(:social_counters).dependent(:destroy).inverse_of(:story) }
   it { should have_and_belong_to_many(:categories) }
 
