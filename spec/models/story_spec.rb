@@ -22,6 +22,7 @@ RSpec.describe Story do
   it { should belong_to(:publisher) }
   it { should have_one(:social_counter).order(id: :desc) }
   it { should have_and_belong_to_many(:feeds) }
+  it { should have_and_belong_to_many(:related).class_name('Story').join_table('related_stories').with_foreign_key(:related_id) }
   it { should have_many(:social_counters).dependent(:destroy).inverse_of(:story) }
   it { should have_and_belong_to_many(:categories) }
 

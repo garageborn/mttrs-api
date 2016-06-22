@@ -4,9 +4,12 @@ class Story < ActiveRecord::Base
   include Concerns::Searchable
   include Concerns::StripAttributes
 
+  belongs_to :cluster
   belongs_to :publisher
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :feeds
+  has_many :related, ->(story) { where.not(id: story.id) }, through: :cluster,
+           class_name: 'Story', source: :stories
   has_many :social_counters, inverse_of: :story, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
 
@@ -40,6 +43,7 @@ class Story < ActiveRecord::Base
   before_destroy do
     feeds.clear
     categories.clear
+    related.clear
   end
 
   strip_attributes :title, :description
@@ -55,21 +59,21 @@ class Story < ActiveRecord::Base
     Addressable::URI.parse(url)
   end
 
-  def related
-    Story.search(
-      query: {
-        more_like_this: {
-          fields: [:title, :description],
-          like: [
-            {
-              _id: id
-            }
-          ],
-          min_term_freq: 1
-        }
-      }
-    ).results
-  end
+  # def related
+  #   Story.search(
+  #     query: {
+  #       more_like_this: {
+  #         fields: [:description],
+  #         like: [
+  #           {
+  #             _id: id
+  #           }
+  #         ],
+  #         min_term_freq: 1
+  #       }
+  #     }
+  #   ).results
+  # end
 
   private
 
