@@ -4,7 +4,7 @@ class IndexerJob < ActiveJob::Base
   def perform(operation, klass, record_id, options = {})
     Rails.logger.debug [operation, "#{ klass }##{ record_id } #{ options.inspect }"]
 
-    case operation.to_s
+    case operation
     when /index|update/
       record = klass.constantize.find(record_id)
       record.__elasticsearch__.client = client
