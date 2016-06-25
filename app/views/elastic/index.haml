@@ -22,7 +22,9 @@
   - link.similar.each do |similar_link|
     %span
       %strong{ class: ('match' if similar_link._score > 1.5) }= similar_link._score
-      %a{ href: '#', target: 'blank' }= similar_link.title
+      %a{ href: '#', target: 'blank' }
+        = similar_link.title
+        %span= l(Date.parse(similar_link.published_at))
     %br
 
   %br
