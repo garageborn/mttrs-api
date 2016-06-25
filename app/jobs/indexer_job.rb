@@ -2,6 +2,7 @@ class IndexerJob < ActiveJob::Base
   extend Memoist
 
   def perform(operation, klass, record_id, options = {})
+    return unless Rails.env.production?
     Rails.logger.debug [operation, "#{ klass }##{ record_id } #{ options.inspect }"]
 
     case operation

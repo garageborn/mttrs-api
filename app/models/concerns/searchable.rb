@@ -21,6 +21,22 @@ module Concerns
       def as_indexed_json(options = {})
         as_json(options.merge(only: %i(title description published_at)))
       end
+
+      def similar
+        self.class.search(
+          min_score: 1.5,
+          query: {
+            more_like_this: {
+              fields: [:title, :description],
+              like: [{ _id: id }],
+              max_query_terms: 100,
+              # min_doc_freq: 1,
+              min_term_freq: 1,
+              minimum_should_match: '80%'
+            }
+          }
+        ).results
+      end
     end
   end
 end

@@ -7,9 +7,9 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     return if entry.blank? || publisher.blank? || url.blank?
 
     return unless link.save
+    enqueue_link_full_fetch
     enqueue_social_counter_update
     enqueue_link_categorizer
-    enqueue_link_full_fetch
   end
 
   private

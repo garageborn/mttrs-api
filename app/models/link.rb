@@ -56,18 +56,6 @@ class Link < ActiveRecord::Base
     Addressable::URI.parse(url)
   end
 
-  # def related
-  #   Story.search(
-  #     query: {
-  #       more_like_this: {
-  #         fields: [:title, :description],
-  #         like: [{ _id: id }],
-  #         min_term_freq: 1
-  #       }
-  #     }
-  #   ).results
-  # end
-
   private
 
   def validate_unique_link

@@ -18,6 +18,10 @@ module Concerns
       language.blank?
     end
 
+    def missing_story?
+      story_id.blank?
+    end
+
     def needs_full_fetch?
       missing_info? || missing_image? || missing_language? || missing_html?
     end

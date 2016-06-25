@@ -9,9 +9,9 @@ class FeedEntryProcessJob < ActiveJob::Base
 
     add_feed
     return unless link.save
-    enqueue_link_categorizer
-    enqueue_social_counter_fetcher
     enqueue_link_full_fetch
+    enqueue_social_counter_fetcher
+    enqueue_link_categorizer
   end
 
   private
