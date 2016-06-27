@@ -13,6 +13,9 @@ class Story < ActiveRecord::Base
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
+  scope :order_by_links_count, lambda {
+    joins(:links).group('stories.id').order('count(links.id) desc')
+  }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
