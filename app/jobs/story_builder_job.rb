@@ -30,7 +30,7 @@ class StoryBuilderJob < ActiveJob::Base
 
   def story
     return Story.create if similar.blank?
-    similar.records.find { |link| link.story.present? }.try(:story) || Story.create
+    similar.records.detect { |link| link.story.present? }.try(:story) || Story.create
   end
 
   memoize :link, :similar, :story

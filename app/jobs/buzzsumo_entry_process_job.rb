@@ -50,11 +50,6 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     LinkCategorizerJob.perform_later(link.id)
   end
 
-  def enqueue_link_full_fetch
-    return unless link.needs_full_fetch?
-    FullFetchLinkJob.perform_later(link.id)
-  end
-
   def enqueue_story_builder
     return unless link.missing_story?
     StoryBuilderJob.perform_later(link.id)

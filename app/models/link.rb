@@ -2,6 +2,7 @@ class Link < ActiveRecord::Base
   include Concerns::LinkMissingAttributes
   include Concerns::Searchable
   include Concerns::StripAttributes
+  include Concerns::ParseDate
 
   belongs_to :story
   belongs_to :publisher
@@ -45,13 +46,6 @@ class Link < ActiveRecord::Base
   end
 
   strip_attributes :title, :description
-
-  class << self
-    def parse_date(date)
-      return Time.at(date.to_i).utc if date.is_a?(Integer) || date.to_i > 0
-      Date.parse(date)
-    end
-  end
 
   def uri
     Addressable::URI.parse(url)
