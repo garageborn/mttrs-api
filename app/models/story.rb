@@ -3,7 +3,8 @@ class Story < ActiveRecord::Base
   include Concerns::ParseDate
 
   has_many :categories, -> { distinct }, through: :links
-  has_many :links, inverse_of: :story, dependent: :nullify
+  has_many :links, inverse_of: :story, dependent: :nullify,
+           after_remove: :refresh!, after_add: :refresh!
   has_many :publishers, -> { distinct }, through: :links
   has_one :main_link, -> { order(total_social: :desc) }, class_name: 'Link'
 
@@ -26,7 +27,7 @@ class Story < ActiveRecord::Base
   scope :publisher_slug, -> (slug) { joins(:publishers).where(publishers: { slug: slug }) }
   scope :recent, -> { joins(:main_link).order('links.published_at desc') }
 
-  def refresh!
+  def refresh!(_link = nil)
     update_attributes(
       total_social: links.sum(:total_social).to_i
     )
