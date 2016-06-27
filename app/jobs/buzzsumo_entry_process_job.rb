@@ -6,10 +6,11 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     @entry = entry
     return if entry.blank? || publisher.blank? || url.blank?
 
-    return unless story.save
+    return unless link.save
+    enqueue_link_full_fetch
     enqueue_social_counter_update
-    enqueue_story_categorizer
-    enqueue_story_full_fetch
+    enqueue_link_categorizer
+    enqueue_story_builder
   end
 
   private
@@ -24,30 +25,35 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     Utils::UrlDiscovery.run(entry[:url])
   end
 
-  def story
-    Story.where(url: url).first_or_initialize.tap do |story|
-      story.image_source_url ||= entry[:image_source_url]
-      story.published_at ||= Time.zone.at(entry[:published_date].to_i) || Time.zone.now
-      story.publisher = publisher
-      story.source_url ||= entry[:url]
-      story.title ||= entry[:title]
+  def link
+    Link.where(url: url).first_or_initialize.tap do |link|
+      link.image_source_url ||= entry[:image_source_url]
+      link.published_at ||= Time.zone.at(entry[:published_date].to_i) || Time.zone.now
+      link.publisher = publisher
+      link.source_url ||= entry[:url]
+      link.title ||= entry[:title]
     end
+  end
+
+  def enqueue_link_full_fetch
+    return unless link.needs_full_fetch?
+    FullFetchLinkJob.perform_later(link.id)
   end
 
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    SocialCounterUpdateJob.perform_later(story.id, counters.to_h)
+    SocialCounterUpdateJob.perform_later(link.id, counters.to_h)
   end
 
-  def enqueue_story_categorizer
-    StoryCategorizerJob.perform_later(story.id)
+  def enqueue_link_categorizer
+    LinkCategorizerJob.perform_later(link.id)
   end
 
-  def enqueue_story_full_fetch
-    return unless story.needs_full_fetch?
-    FullFetchStoryJob.perform_later(story.id)
+  def enqueue_story_builder
+    return unless link.missing_story?
+    StoryBuilderJob.perform_later(link.id)
   end
 
-  memoize :publisher, :url, :story
+  memoize :publisher, :url, :link
 end

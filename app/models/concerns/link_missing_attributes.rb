@@ -1,5 +1,5 @@
 module Concerns
-  module StoryMissingAttributes
+  module LinkMissingAttributes
     extend ActiveSupport::Concern
 
     def missing_info?
@@ -16,6 +16,10 @@ module Concerns
 
     def missing_language?
       language.blank?
+    end
+
+    def missing_story?
+      story_id.blank?
     end
 
     def needs_full_fetch?

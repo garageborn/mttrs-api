@@ -1,16 +1,16 @@
 class SocialCounter < ActiveRecord::Base
   PROVIDERS = %i(facebook linkedin twitter pinterest google_plus).freeze
-  belongs_to :story
+  belongs_to :link
   has_one :parent, class_name: 'SocialCounter', foreign_key: :parent_id
 
-  validates :story, presence: true
+  validates :link, presence: true
   validates :facebook, :linkedin, :twitter, :pinterest, :google_plus, :total,
             presence: true,
             numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :parent_id, uniqueness: true, allow_blank: true
 
   before_save :update_total
-  after_commit :update_total_social_on_story, on: :create
+  after_commit :update_total_social_on_link, on: :create
 
   scope :recent, -> { order(created_at: :desc) }
 
@@ -27,7 +27,7 @@ class SocialCounter < ActiveRecord::Base
     self.total = PROVIDERS.map { |provider| self[provider] }.sum
   end
 
-  def update_total_social_on_story
-    story.update_column(:total_social, total)
+  def update_total_social_on_link
+    link.update_column(:total_social, total)
   end
 end

@@ -6,3 +6,6 @@ production:
 :queues:
   - default
   - mailers
+  - story_builder
+:limits:
+  story_builder: 1

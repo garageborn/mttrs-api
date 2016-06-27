@@ -13,14 +13,39 @@ module Concerns
         end
       end
 
+      after_commit -> { IndexerJob.perform_later('index', self.class.to_s, id) }, on: :create
+      after_commit -> { IndexerJob.perform_later('update', self.class.to_s, id) }, on: :update
+      after_commit -> { IndexerJob.perform_later('delete', self.class.to_s, id) }, on: :destroy
+      after_touch -> { IndexerJob.perform_later('update', self.class.to_s, id) }
+
       def as_indexed_json(options = {})
         as_json(options.merge(only: %i(title description published_at)))
       end
 
-      protected
-
-      def description_text
-        ActionView::Base.full_sanitizer.sanitize(description).strip
+      def similar
+        self.class.search(
+          min_score: 1.5,
+          # query: {
+          #   more_like_this: {
+          #     fields: [:title, :description],
+          #     like: [{ _id: id }],
+          #     max_query_terms: 100,
+          #     # min_doc_freq: 1,
+          #     min_term_freq: 1,
+          #     minimum_should_match: '80%'
+          #   }
+          # }
+          query: {
+            bool: {
+              must: {
+                match: { title: title }
+              },
+              must_not: [
+                ids: { values: [id] }
+              ]
+            }
+          }
+        )
       end
     end
   end

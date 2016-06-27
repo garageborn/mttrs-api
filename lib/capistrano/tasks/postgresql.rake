@@ -6,6 +6,7 @@ namespace :postgresql do
     on roles(:db) do
       within current_path do
         rake_output = capture(:bundle, :exec, :rake, 'postgresql:backup')
+        puts rake_output
         backup_uri = URI.parse(URI.extract(rake_output).last)
 
         output = "#{ fetch(:root) }/tmp/#{ File.basename(backup_uri.path) }"

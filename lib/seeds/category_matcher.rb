@@ -11,22 +11,22 @@ module Seeds
     def run!
       return if publisher.blank?
       publisher.category_matchers.replace(category_matchers)
-      publisher.stories.each { |story| StoryCategorizerJob.perform_later(story.id) }
+      publisher.links.each { |link| LinkCategorizerJob.perform_later(link.id) }
     end
 
     def test
       logger << "\n"
       logger.info "## #{ publisher.name }"
       category_matchers.each do |category_matcher|
-        stories = publisher.stories.select do |story|
-          StoryCategorizer::Matcher.new(category_matcher, story).match?
+        links = publisher.links.select do |link|
+          LinkCategorizer::Matcher.new(category_matcher, link).match?
         end
 
         logger << "\n"
         logger.info "#{ category_matcher.category.name }: #{ category_matcher.url_matcher }"
-        logger.info "matching: #{ stories.size }/#{ publisher.stories.size }"
+        logger.info "matching: #{ links.size }/#{ publisher.links.size }"
 
-        stories.each { |story| logger.info story.url }
+        links.each { |link| logger.info link.url }
       end
     end
 

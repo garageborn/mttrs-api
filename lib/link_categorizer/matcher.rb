@@ -1,13 +1,13 @@
-class StoryCategorizer
+class LinkCategorizer
   class Matcher
     extend Memoist
 
-    attr_reader :category_matcher, :story
+    attr_reader :category_matcher, :link
     delegate :category, to: :category_matcher
 
-    def initialize(category_matcher, story)
+    def initialize(category_matcher, link)
       @category_matcher = category_matcher
-      @story = story
+      @link = link
     end
 
     def match?
@@ -19,7 +19,7 @@ class StoryCategorizer
     def match_url?
       return false if category_matcher.url_matcher.blank?
       regexp = Regexp.new(category_matcher.url_matcher, Regexp::IGNORECASE)
-      story.url.match(regexp).present?
+      link.url.match(regexp).present?
     end
 
     memoize :match?, :match_url?

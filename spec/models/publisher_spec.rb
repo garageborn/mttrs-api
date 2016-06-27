@@ -10,7 +10,7 @@ RSpec.describe Publisher do
   it { should have_db_index(:slug).unique(true) }
 
   it { should have_many(:feeds).dependent(:destroy) }
-  it { should have_many(:stories).dependent(:destroy) }
+  it { should have_many(:links).dependent(:destroy) }
   it { should have_many(:categories).through(:feeds) }
   it { should have_many(:category_matchers).inverse_of(:publisher).dependent(:destroy) }
 

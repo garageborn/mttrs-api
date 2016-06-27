@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe SocialCounterUpdateJob do
-  let(:story) { create(:story) }
-  let(:job) { SocialCounterUpdateJob.new(story.id) }
-  before { allow(job).to receive(:story).and_return(story) }
+  let(:link) { create(:link) }
+  let(:job) { SocialCounterUpdateJob.new(link.id) }
+  before { allow(job).to receive(:link).and_return(link) }
 
   describe '#update' do
-    let(:social_counter) { build(:social_counter, story: story, facebook: 3, linkedin: 3) }
+    let(:social_counter) { build(:social_counter, link: link, facebook: 3, linkedin: 3) }
 
     context 'all providers response' do
       before do
@@ -43,7 +43,7 @@ RSpec.describe SocialCounterUpdateJob do
   end
 
   describe '#update_counter' do
-    let(:social_counter) { build(:social_counter, story: story, facebook: 3, linkedin: 3) }
+    let(:social_counter) { build(:social_counter, link: link, facebook: 3, linkedin: 3) }
     before { allow(job).to receive(:social_counter).and_return(social_counter) }
     subject { social_counter }
 

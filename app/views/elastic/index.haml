@@ -16,13 +16,15 @@
 
 %br
 
-- for story in @stories
+- @links.each do |link|
   %h1
-    %a{ href: story.uri, target: '_blank' }= story.title
-  - story.related.each do |related_story|
+    %a{ href: link.uri, target: '_blank' }= link.title
+  - link.similar.records.each do |similar_link|
     %span
-      %strong{ class: ('match' if related_story._score > 1.5) }= related_story._score
-      %a{ href: '#', target: 'blank' }= related_story.title
+      %strong{ class: ('match' if similar_link._score > 1.5) }= similar_link._score
+      %a{ href: '#', target: 'blank' }
+        = similar_link.title
+        %span= l(Date.parse(similar_link.published_at))
     %br
 
   %br
