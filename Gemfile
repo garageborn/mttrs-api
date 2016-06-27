@@ -21,6 +21,7 @@ gem 'rails-api', '0.4.0'
 gem 'retries', '0.0.5'
 gem 'sidekiq', '4.1.2'
 gem 'sidekiq-unique-jobs', '4.0.17'
+gem 'sidekiq-limit_fetch', '3.3.0'
 gem 'sinatra', '1.4.7', require: false
 gem 'thread', '0.2.2'
 gem 'whenever', '0.9.7', require: false

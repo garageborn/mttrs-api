@@ -25,45 +25,27 @@ module Concerns
       def similar
         self.class.search(
           min_score: 1.5,
-          # aggregations: {
-          #   published: {
-          #     filter: { bool: { must: [match_all: {}] } },
-          #     # aggregations: {
-          #     #   published: { date_histogram: { field: 'published_at', interval: 'week' } }
-          #     # }
-          #     aggregations: {
-          #       range: {
-          #         field: :published_at,
-          #         ranges: [
-          #           { from: 'now-10m' },
-          #           { to: 'now-10m' }
-          #         ]
-          #       }
-          #     }
+          # query: {
+          #   more_like_this: {
+          #     fields: [:title, :description],
+          #     like: [{ _id: id }],
+          #     max_query_terms: 100,
+          #     # min_doc_freq: 1,
+          #     min_term_freq: 1,
+          #     minimum_should_match: '80%'
           #   }
-          # },
-          aggregations: {
-            range: {
-              date_range: {
-                field: :published_at,
-                ranges: [
-                  { from: 'now' },
-                  # { to: 'now-10m' }
-                ]
-              }
-            }
-          },
+          # }
           query: {
-            more_like_this: {
-              fields: [:title, :description],
-              like: [{ _id: id }],
-              max_query_terms: 100,
-              # min_doc_freq: 1,
-              min_term_freq: 1,
-              minimum_should_match: '80%'
+            bool: {
+              must: {
+                match: { title: title }
+              },
+              must_not: [
+                ids: { values: [id] }
+              ]
             }
           }
-        ).results
+        )
       end
     end
   end

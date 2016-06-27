@@ -12,6 +12,7 @@ class FeedEntryProcessJob < ActiveJob::Base
     enqueue_link_full_fetch
     enqueue_social_counter_fetcher
     enqueue_link_categorizer
+    enqueue_story_builder
   end
 
   private
@@ -40,17 +41,22 @@ class FeedEntryProcessJob < ActiveJob::Base
     link.feeds << feed
   end
 
-  def enqueue_link_categorizer
-    LinkCategorizerJob.perform_later(link.id)
+  def enqueue_link_full_fetch
+    return unless link.needs_full_fetch?
+    FullFetchLinkJob.perform_later(link.id)
   end
 
   def enqueue_social_counter_fetcher
     SocialCounterFetcherJob.perform_later(link.id)
   end
 
-  def enqueue_link_full_fetch
-    return unless link.needs_full_fetch?
-    FullFetchLinkJob.perform_later(link.id)
+  def enqueue_link_categorizer
+    LinkCategorizerJob.perform_later(link.id)
+  end
+
+  def enqueue_story_builder
+    return unless link.missing_story?
+    StoryBuilderJob.perform_later(link.id)
   end
 
   memoize :feed, :url, :link

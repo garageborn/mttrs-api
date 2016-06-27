@@ -38,6 +38,7 @@ class Link < ActiveRecord::Base
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
+  after_commit :instrument_commit
   before_destroy do
     feeds.clear
     categories.clear
@@ -63,5 +64,9 @@ class Link < ActiveRecord::Base
     other_link = publisher.links.where(title: title).where.not(id: id).first
     return if other_link.blank?
     errors.add(:url, :invalid) if other_link.uri.path == uri.path
+  end
+
+  def instrument_commit
+    ActiveSupport::Notifications.instrument('link.committed', self)
   end
 end

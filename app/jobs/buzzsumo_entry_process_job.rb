@@ -10,6 +10,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     enqueue_link_full_fetch
     enqueue_social_counter_update
     enqueue_link_categorizer
+    enqueue_story_builder
   end
 
   private
@@ -34,6 +35,11 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
     end
   end
 
+  def enqueue_link_full_fetch
+    return unless link.needs_full_fetch?
+    FullFetchLinkJob.perform_later(link.id)
+  end
+
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
@@ -47,6 +53,11 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
   def enqueue_link_full_fetch
     return unless link.needs_full_fetch?
     FullFetchLinkJob.perform_later(link.id)
+  end
+
+  def enqueue_story_builder
+    return unless link.missing_story?
+    StoryBuilderJob.perform_later(link.id)
   end
 
   memoize :publisher, :url, :link
