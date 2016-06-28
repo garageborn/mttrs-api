@@ -22,10 +22,10 @@ class Story < ActiveRecord::Base
     published_between(date.at_beginning_of_day, date.end_of_day)
   }
   scope :published_between, lambda { |start_at, end_at|
-    joins(:links).where(links: { published_at: parse_date(start_at)..parse_date(end_at) })
+    joins(:main_link).where(links: { published_at: parse_date(start_at)..parse_date(end_at) })
   }
   scope :published_since, lambda { |date|
-    joins(:links).where('links.published_at >= ?', parse_date(date))
+    joins(:main_link).where('links.published_at >= ?', parse_date(date))
   }
   scope :publisher_slug, -> (slug) { joins(:publishers).where(publishers: { slug: slug }) }
   scope :recent, -> { joins(:main_link).order('links.published_at desc') }

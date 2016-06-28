@@ -25,24 +25,22 @@ module Concerns
       def similar
         self.class.search(
           min_score: 1.5,
-          # query: {
-          #   more_like_this: {
-          #     fields: [:title, :description],
-          #     like: [{ _id: id }],
-          #     max_query_terms: 100,
-          #     # min_doc_freq: 1,
-          #     min_term_freq: 1,
-          #     minimum_should_match: '80%'
-          #   }
-          # }
           query: {
             bool: {
               must: {
                 match: { title: title }
               },
-              must_not: [
+              must_not: {
                 ids: { values: [id] }
-              ]
+              },
+              filter: {
+                range: {
+                  published_at: {
+                    lte: published_at + 3.days,
+                    gte: published_at - 3.days
+                  }
+                }
+              }
             }
           }
         )

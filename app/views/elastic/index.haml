@@ -18,7 +18,7 @@
 
 - @links.each do |link|
   %h1
-    %a{ href: link.uri, target: '_blank' }= link.title
+    %a{ href: link.uri, target: '_blank' } #{ link.title } (#{ link.total_social })
   - link.similar.results.each do |similar_link|
     %span
       %strong{ class: ('match' if similar_link._score > 1.5) }= similar_link._score
