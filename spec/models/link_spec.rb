@@ -7,6 +7,7 @@ RSpec.describe Link do
   it { should have_db_column(:html) }
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:language) }
+  it { should have_db_column(:main).with_options(null: false) }
   it { should have_db_column(:published_at).with_options(null: false) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:source_url).with_options(null: false) }

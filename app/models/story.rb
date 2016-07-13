@@ -6,7 +6,7 @@ class Story < ActiveRecord::Base
   has_many :links, inverse_of: :story, dependent: :nullify,
            after_remove: :refresh!, after_add: :refresh!
   has_many :publishers, -> { distinct }, through: :links
-  has_one :main_link, -> { order(total_social: :desc) }, class_name: 'Link'
+  has_one :main_link, -> { where(main: true) }, class_name: 'Link'
 
   delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
@@ -32,8 +32,19 @@ class Story < ActiveRecord::Base
 
   def refresh!(_link = nil)
     return destroy if links.blank?
-    update_attributes(
-      total_social: links.sum(:total_social).to_i
-    )
+    refresh_total_social
+    refresh_main_link
+  end
+
+  private
+
+  def refresh_total_social
+    update_attributes(total_social: links.sum(:total_social).to_i)
+  end
+
+  def refresh_main_link
+    main_link = links.popular.first
+    main_link.update_column(:main, true)
+    links.where.not(id: main_link).update_all(main: false)
   end
 end
