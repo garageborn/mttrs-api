@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 28) do
     t.string   "language"
     t.integer  "story_id"
     t.binary   "html"
-    t.boolean  "main",                         null: false
+    t.boolean  "main",             default: false, null: false
   end
 
   add_index "links", ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
