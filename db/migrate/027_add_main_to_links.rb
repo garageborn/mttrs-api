@@ -9,7 +9,7 @@ class AddMainToLinks < ActiveRecord::Migration
   end
 
   def change
-    add_column :links, :main, :boolean, defaut: false, null: false
+    add_column :links, :main, :boolean, default: false, null: false
     set_main_links
   end
 
