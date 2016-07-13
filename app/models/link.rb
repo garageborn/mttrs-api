@@ -46,6 +46,7 @@ class Link < ActiveRecord::Base
   end
 
   strip_attributes :title, :description
+  serialize :html, Utils::BinaryStringSerializer
 
   def uri
     Addressable::URI.parse(url)

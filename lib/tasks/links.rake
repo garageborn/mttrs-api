@@ -6,4 +6,11 @@ namespace :links do
       Rake::Task['feeds:fetcher:run'].invoke
     end
   end
+
+  desc 'Purge useless links'
+  task :purge do
+    links = Link.published_until(7.days.ago).where(total_social: 0)
+    Rails.logger.info "links:purge #{ links.count }"
+    links.destroy_all
+  end
 end

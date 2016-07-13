@@ -11,3 +11,7 @@ end
 every 1.day, at: '2am' do
   rake 'social_counters:since_7_days'
 end
+
+every 1.day, at: '3am' do
+  rake 'links:purge'
+end

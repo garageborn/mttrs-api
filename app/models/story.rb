@@ -31,6 +31,7 @@ class Story < ActiveRecord::Base
   scope :recent, -> { joins(:main_link).order('links.published_at desc') }
 
   def refresh!(_link = nil)
+    return destroy if links.blank?
     update_attributes(
       total_social: links.sum(:total_social).to_i
     )
