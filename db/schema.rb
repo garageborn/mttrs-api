@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 28) do
+ActiveRecord::Schema.define(version: 27) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,17 +72,17 @@ ActiveRecord::Schema.define(version: 28) do
   add_index "feeds_links", ["link_id", "feed_id"], name: "index_feeds_links_on_link_id_and_feed_id", unique: true, using: :btree
 
   create_table "links", force: :cascade do |t|
-    t.integer  "publisher_id",                 null: false
-    t.citext   "url",                          null: false
-    t.citext   "title",                        null: false
+    t.integer  "publisher_id",                     null: false
+    t.citext   "url",                              null: false
+    t.citext   "title",                            null: false
     t.text     "description"
     t.text     "content"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.citext   "source_url",                   null: false
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+    t.citext   "source_url",                       null: false
     t.citext   "image_source_url"
-    t.integer  "total_social",     default: 0, null: false
-    t.datetime "published_at",                 null: false
+    t.integer  "total_social",     default: 0,     null: false
+    t.datetime "published_at",                     null: false
     t.string   "language"
     t.integer  "story_id"
     t.binary   "html"
