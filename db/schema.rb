@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 27) do
+ActiveRecord::Schema.define(version: 28) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 27) do
     t.string   "language"
     t.integer  "story_id"
     t.binary   "html"
-    t.boolean  "main"
+    t.boolean  "main",                         null: false
   end
 
   add_index "links", ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
