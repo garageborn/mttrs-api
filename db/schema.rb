@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 27) do
+ActiveRecord::Schema.define(version: 28) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,9 +89,10 @@ ActiveRecord::Schema.define(version: 27) do
     t.boolean  "main",             default: false, null: false
   end
 
+  add_index "links", ["main", "story_id"], name: "index_links_on_main_and_story_id", using: :btree
   add_index "links", ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
   add_index "links", ["source_url"], name: "index_links_on_source_url", unique: true, using: :btree
-  add_index "links", ["story_id"], name: "index_links_on_story_id", using: :btree
+  add_index "links", ["story_id", "main"], name: "index_links_on_story_id_and_main", using: :btree
   add_index "links", ["total_social"], name: "index_links_on_total_social", using: :btree
   add_index "links", ["url"], name: "index_links_on_url", unique: true, using: :btree
 

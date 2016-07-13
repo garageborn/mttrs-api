@@ -18,7 +18,8 @@ RSpec.describe Link do
   it { should have_db_column(:url).with_options(null: false) }
   it { should have_db_index(:publisher_id) }
   it { should have_db_index(:source_url).unique(true) }
-  it { should have_db_index(:story_id) }
+  it { should have_db_index([:story_id, :main]) }
+  it { should have_db_index([:main, :story_id]) }
   it { should have_db_index(:total_social) }
   it { should have_db_index(:url).unique(true) }
 
