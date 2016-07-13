@@ -18,8 +18,7 @@ class AddMainToLinks < ActiveRecord::Migration
   def set_main_links
     Story.find_each do |story|
       main_link = story.links.popular.first
-      main_link.update_column(main: true)
-      story.links.where.not(id: main_link).update_all(:main, false)
+      main_link.update_column(:main, true)
     end
   end
 end
