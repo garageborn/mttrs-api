@@ -1,5 +1,5 @@
 class AddDomainToPublishers < ActiveRecord::Migration
-  class Publisher < ActiveRecord::Base
+  class Publisher < ApplicationRecord
     has_many :feeds
   end
 

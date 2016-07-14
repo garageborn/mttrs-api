@@ -1,4 +1,4 @@
-class Publisher < ActiveRecord::Base
+class Publisher < ApplicationRecord
   extend FriendlyId
 
   has_many :links, inverse_of: :publisher, dependent: :destroy

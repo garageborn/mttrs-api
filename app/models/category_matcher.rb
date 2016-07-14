@@ -1,4 +1,4 @@
-class CategoryMatcher < ActiveRecord::Base
+class CategoryMatcher < ApplicationRecord
   belongs_to :publisher
   belongs_to :category
 

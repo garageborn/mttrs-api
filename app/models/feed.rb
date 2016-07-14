@@ -1,4 +1,4 @@
-class Feed < ActiveRecord::Base
+class Feed < ApplicationRecord
   belongs_to :publisher
   belongs_to :category
   has_and_belongs_to_many :links

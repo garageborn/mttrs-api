@@ -1,4 +1,5 @@
-class Link < ActiveRecord::Base
+
+class Link < ApplicationRecord
   include Concerns::LinkMissingAttributes
   include Concerns::Searchable
   include Concerns::StripAttributes

@@ -1,5 +1,5 @@
 class AddPublishedAtToStories < ActiveRecord::Migration
-  class Story < ActiveRecord::Base; end
+  class Story < ApplicationRecord; end
 
   def change
     add_column :stories, :published_at, :datetime

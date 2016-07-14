@@ -1,9 +1,9 @@
 class AddMainToLinks < ActiveRecord::Migration
-  class Story < ActiveRecord::Base
+  class Story < ApplicationRecord
     has_many :links
   end
 
-  class Link < ActiveRecord::Base
+  class Link < ApplicationRecord
     belongs_to :story
     scope :popular, -> { order(total_social: :desc) }
   end

@@ -1,4 +1,4 @@
-class SocialCounter < ActiveRecord::Base
+class SocialCounter < ApplicationRecord
   PROVIDERS = %i(facebook linkedin twitter pinterest google_plus).freeze
   belongs_to :link
   has_one :parent, class_name: 'SocialCounter', foreign_key: :parent_id

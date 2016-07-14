@@ -1,5 +1,5 @@
 class AddSourceUrlToStories < ActiveRecord::Migration
-  class Story < ActiveRecord::Base; end
+  class Story < ApplicationRecord; end
 
   def change
     add_column :stories, :source_url, :citext
