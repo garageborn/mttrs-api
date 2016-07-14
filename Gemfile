@@ -21,6 +21,7 @@ gem 'retries', '0.0.5'
 gem 'sidekiq', '4.1.4'
 gem 'sidekiq-unique-jobs', '4.0.17'
 gem 'sidekiq-limit_fetch', '3.3.0'
+gem 'sidekiq-failures', '0.4.5'
 gem 'sinatra', github: 'sinatra', require: false
 gem 'thread', '0.2.2'
 gem 'whenever', '0.9.7', require: false
