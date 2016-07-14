@@ -8,7 +8,7 @@ gem 'elasticsearch-model', '0.1.9'
 gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
-gem 'friendly_id', '5.1.0'
+gem 'friendly_id', github: 'norman/friendly_id'
 gem 'httparty', '0.13.7'
 gem 'logglier', '0.5.0'
 gem 'memoist', '0.14.0'
@@ -17,7 +17,6 @@ gem 'nokogiri', '1.6.8'
 gem 'pg', '0.18.4'
 gem 'public_suffix', '2.0.2'
 gem 'rails', '5.0.0'
-# gem 'rails-api', '0.4.0'
 gem 'retries', '0.0.5'
 gem 'sidekiq', '4.1.4'
 gem 'sidekiq-unique-jobs', '4.0.17'
@@ -48,6 +47,7 @@ group :development do
   gem 'foreman', '0.82.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'slackistrano', '3.0.1', require: false
+  gem 'spring', '1.7.2'
 end
 
 group :test do
