@@ -10,7 +10,9 @@ class Story < ActiveRecord::Base
 
   delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
-  scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
+  scope :category_slug, lambda { |slug|
+    joins(:categories).group(:id).where(categories: { slug: slug })
+  }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :order_by_links_count, lambda {
