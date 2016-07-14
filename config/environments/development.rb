@@ -55,9 +55,7 @@ Rails.application.configure do
   config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins '*'
-      resource '*', headers: :any,
-      methods: [:get, :put, :post, :delete, :options, :patch],
-      expose: ['current-page', 'total-count', 'per-page', 'total-pages']
+      resource '*', headers: :any, methods: [:get, :put, :post, :delete, :options, :patch]
     end
   end
 end
