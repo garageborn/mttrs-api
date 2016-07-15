@@ -21,6 +21,6 @@ module Mttrs
     config.time_zone = 'Brasilia'
     config.active_job.queue_adapter = :sidekiq
     config.active_record.timestamped_migrations = false
-    config.autoload_paths += %W(#{ config.root }/lib)
+    config.eager_load_paths += %W(#{ config.root }/lib)
   end
 end
