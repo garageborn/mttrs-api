@@ -1,5 +1,5 @@
 class RemoveStatusFromStories < ActiveRecord::Migration
-  class Story < ActiveRecord::Base; end
+  class Story < ApplicationRecord; end
 
   def change
     remove_column :stories, :status

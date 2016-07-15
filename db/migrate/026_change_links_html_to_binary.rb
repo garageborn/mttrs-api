@@ -1,5 +1,5 @@
 class ChangeLinksHtmlToBinary < ActiveRecord::Migration
-  class Link < ActiveRecord::Base; end
+  class Link < ApplicationRecord; end
 
   def change
     add_column :links, :html_data, :binary
