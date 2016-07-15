@@ -5,5 +5,5 @@ module Utils
   autoload :OpenStructParser, './lib/utils/open_struct_parser'
   autoload :UrlDiscovery, './lib/utils/url_discovery'
   autoload :UrlFetcher, './lib/utils/url_fetcher'
-  autoload :UserAgeng, './lib/utils/user_agent'
+  autoload :UserAgent, './lib/utils/user_agent'
 end
