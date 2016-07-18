@@ -51,6 +51,7 @@ class FeedEntryProcessJob < ActiveJob::Base
   end
 
   def enqueue_link_categorizer
+    return unless link.missing_categories?
     LinkCategorizerJob.perform_later(link.id)
   end
 

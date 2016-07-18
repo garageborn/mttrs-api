@@ -4,7 +4,7 @@ class LinkCategorizerJob < ActiveJob::Base
 
   def perform(link_id)
     @link_id = link_id
-    return if link.blank?
+    return if link.blank? || !link.missing_categories?
 
     categories.each do |category|
       next if link.categories.include?(category)
