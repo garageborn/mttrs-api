@@ -4,8 +4,9 @@ development:
 production:
   :concurrency: 25
 :queues:
-  - default
-  - mailers
-  - story_builder
+  - [indexer, 5]
+  - [story_builder, 3]
+  - [default, 1]
+  - [mailers, 1]
 :limits:
   story_builder: 1

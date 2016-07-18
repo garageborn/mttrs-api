@@ -1,5 +1,6 @@
 class IndexerJob < ActiveJob::Base
   extend Memoist
+  queue_as :indexer
 
   def perform(operation, klass, record_id, options = {})
     return unless Rails.env.production?
