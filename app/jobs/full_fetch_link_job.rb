@@ -1,6 +1,9 @@
 class FullFetchLinkJob < ActiveJob::Base
   extend Memoist
+  include Concerns::MaxPerforms
+
   attr_reader :link_id
+  max_performs 2, key: proc { |link_id| link_id }
 
   def perform(link_id)
     @link_id = link_id
@@ -8,6 +11,7 @@ class FullFetchLinkJob < ActiveJob::Base
 
     set_missing_info
     link.save
+    !link.needs_full_fetch?
   end
 
   private

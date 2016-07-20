@@ -1,6 +1,9 @@
 class FeedEntryProcessJob < ActiveJob::Base
   extend Memoist
+  include Concerns::MaxPerforms
+
   attr_reader :feed_id, :entry
+  max_performs 2, key: proc { |_feed_id, entry| entry[:url] }
 
   def perform(feed_id, entry)
     @feed_id = feed_id
@@ -8,11 +11,13 @@ class FeedEntryProcessJob < ActiveJob::Base
     return if entry.blank? || feed.blank? || url.blank?
 
     add_feed
-    return unless link.save
+    result = link.save
+    return unless result
     enqueue_link_full_fetch
     enqueue_social_counter_fetcher
     enqueue_link_categorizer
     enqueue_story_builder
+    result
   end
 
   private
@@ -42,7 +47,7 @@ class FeedEntryProcessJob < ActiveJob::Base
   end
 
   def enqueue_link_full_fetch
-    return unless link.needs_full_fetch?
+    return unless link.missing_html?
     FullFetchLinkJob.perform_later(link.id)
   end
 

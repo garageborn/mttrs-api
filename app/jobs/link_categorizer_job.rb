@@ -1,6 +1,9 @@
 class LinkCategorizerJob < ActiveJob::Base
   extend Memoist
+  include Concerns::MaxPerforms
+
   attr_reader :link_id
+  max_performs 2, key: proc { |link_id| link_id }
 
   def perform(link_id)
     @link_id = link_id
@@ -10,6 +13,8 @@ class LinkCategorizerJob < ActiveJob::Base
       next if link.categories.include?(category)
       link.categories << category
     end
+
+    link.categories.present?
   end
 
   private

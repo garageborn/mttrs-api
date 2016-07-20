@@ -1,4 +1,3 @@
-
 class Link < ApplicationRecord
   include Concerns::LinkMissingAttributes
   include Concerns::Searchable
