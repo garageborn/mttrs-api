@@ -45,7 +45,9 @@ module Concerns
       return if max_performs_options.blank?
       key = max_performs_options[:key].call(*arguments)
       return if key.blank?
-      PerformedJob.where(type: max_performs_options[:type], key: key).first_or_initialize
+      PerformedJob.where(type: max_performs_options[:type], key: key).first_or_create
+    rescue ActiveRecord::RecordNotUnique
+      PerformedJob.find(type: max_performs_options[:type], key: key)
     end
 
     def should_enqueue?
