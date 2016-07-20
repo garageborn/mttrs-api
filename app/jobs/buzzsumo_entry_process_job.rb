@@ -1,16 +1,21 @@
 class BuzzsumoEntryProcessJob < ActiveJob::Base
   extend Memoist
+  include Concerns::MaxPerforms
+
   attr_reader :entry
+  max_performs 1, key: proc { |entry| entry[:url] }
 
   def perform(entry)
     @entry = entry
     return if entry.blank? || publisher.blank? || url.blank?
 
-    return unless link.save
+    result = link.save
+    return unless result
     enqueue_link_full_fetch
     enqueue_social_counter_update
     enqueue_link_categorizer
     enqueue_story_builder
+    result
   end
 
   private
@@ -36,7 +41,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
   end
 
   def enqueue_link_full_fetch
-    return unless link.needs_full_fetch?
+    return unless link.missing_html?
     FullFetchLinkJob.perform_later(link.id)
   end
 

@@ -1,7 +1,9 @@
 class StoryBuilderJob < ActiveJob::Base
   extend Memoist
+  include Concerns::MaxPerforms
 
   queue_as :story_builder
+  max_performs 2, key: proc { |link_id| link_id }
   attr_reader :link_id
 
   def perform(link_id)
@@ -16,6 +18,8 @@ class StoryBuilderJob < ActiveJob::Base
         story.links << similar
       end
     end
+
+    !link.missing_story?
   end
 
   private
