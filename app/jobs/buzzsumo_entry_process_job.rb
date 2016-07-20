@@ -48,7 +48,7 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    SocialCounterUpdateJob.perform_later(link.id, counters.to_h)
+    SocialCounterUpdateJob.perform_now(link.id, counters.to_h)
   end
 
   def enqueue_link_categorizer

@@ -6,7 +6,7 @@ class SocialCounterFetcherJob < ActiveJob::Base
     @link_id = link_id
     return if link.blank? || social.blank?
 
-    SocialCounterUpdateJob.perform_later(link.id, social.to_h)
+    SocialCounterUpdateJob.perform_now(link.id, social.to_h)
   end
 
   private
