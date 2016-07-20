@@ -10,13 +10,11 @@ class StoryBuilderJob < ActiveJob::Base
     @link_id = link_id
     return if link.blank? || !link.missing_story?
 
-    if similar.blank?
-      story.links << link
-    else
-      similar.each do |similar|
-        next if similar.story.present?
-        story.links << similar
-      end
+    link.update_attributes(story: story)
+
+    similar.to_a.each do |similar|
+      next if similar.story.present?
+      similar.update_attributes(story: story)
     end
 
     !link.missing_story?
