@@ -9,7 +9,7 @@ RSpec.describe PerformedJob do
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_index([:type, :key]).unique(true) }
 
-  it { should define_enum_for(:status).with(%i(pending running error success)) }
+  it { should define_enum_for(:status).with(%i(pending enqueued running error success)) }
 
   describe 'Validations' do
     subject { build(:performed_job) }
