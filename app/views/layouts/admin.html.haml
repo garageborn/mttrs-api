@@ -1,0 +1,15 @@
+!!!
+%html
+  %head
+    %meta{ content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type' }
+    %meta{ content: 'IE=edge', 'http-equiv' => 'X-UA-Compatible' }
+    %meta{ charset: 'utf-8' }
+
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+    %title mttrs admin
+
+    = stylesheet_link_tag 'admin/application'
+    = javascript_include_tag 'admin/application'
+
+  %body
+    = yield

@@ -22,5 +22,9 @@ module Mttrs
     config.active_job.queue_adapter = :sidekiq
     config.active_record.timestamped_migrations = false
     config.eager_load_paths += %W(#{ config.root }/lib)
+    config.assets.precompile += %w(
+      admin/application.css
+      admin/application.js
+    )
   end
 end
