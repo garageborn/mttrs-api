@@ -1,0 +1,12 @@
+li
+  p
+    h2= name
+    = link_to 'Edit', [:edit, :admin, model]
+    = link_to 'Add New', [:new, :admin, :category]
+
+  ul
+    - model.feeds.each do |feed|
+      li
+        = feed.publisher.name
+        = link_to 'Edit', [:edit, :admin, feed]
+        span= feed.url

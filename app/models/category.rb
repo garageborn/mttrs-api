@@ -4,7 +4,7 @@ class Category < ApplicationRecord
 
   has_and_belongs_to_many :links
   has_many :category_matchers, inverse_of: :category, dependent: :destroy
-  has_many :feeds, inverse_of: :category, dependent: :nullify
+  has_many :feeds, inverse_of: :category, dependent: :destroy
   has_many :publishers, through: :links
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
@@ -14,7 +14,7 @@ class Category < ApplicationRecord
     joins(:links).group('categories.id').order('count(categories.id) desc')
   }
 
-  before_destroy { links.clear }
+  # before_destroy { links.clear }
 
   friendly_id :name, use: %i(slugged finders)
 end

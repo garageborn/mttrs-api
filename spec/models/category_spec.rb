@@ -10,7 +10,7 @@ RSpec.describe Category do
 
   it { should have_and_belong_to_many(:links) }
   it { should have_many(:category_matchers).inverse_of(:category).dependent(:destroy) }
-  it { should have_many(:feeds).inverse_of(:category).dependent(:nullify) }
+  it { should have_many(:feeds).inverse_of(:category).dependent(:destroy) }
   it { should have_many(:publishers).through(:links) }
 
   describe 'Validations' do

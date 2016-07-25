@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   resources :stories, only: [:index]
 
   namespace :admin do
+    resources :categories
+    resources :feeds
     resources :stories
     get '/elastic', to: 'elastic#index'
   end
