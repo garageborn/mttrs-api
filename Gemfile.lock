@@ -133,6 +133,7 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.0.1)
     excon (0.51.0)
+    execjs (2.7.0)
     factory_girl (4.7.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.7.0)
@@ -550,6 +551,8 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uber (0.0.15)
+    uglifier (3.0.0)
+      execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.2)
@@ -628,6 +631,7 @@ DEPENDENCIES
   trailblazer-cells (= 0.0.3)
   trailblazer-rails (= 0.3.2)
   turbolinks (= 5.0.0)
+  uglifier (= 3.0.0)
   whenever (= 0.9.7)
 
 BUNDLED WITH

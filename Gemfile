@@ -37,6 +37,7 @@ gem 'thread', '0.2.2'
 gem 'trailblazer-cells', '0.0.3'
 gem 'trailblazer-rails', '0.3.2'
 gem 'turbolinks', '5.0.0'
+gem 'uglifier', '3.0.0'
 gem 'whenever', '0.9.7', require: false
 
 group :production do
