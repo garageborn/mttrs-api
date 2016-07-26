@@ -1,0 +1,12 @@
+= simple_form_for([:admin, @model]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :publisher, include_blank: false
+    = f.association :category, include_blank: false
+    = f.input :url
+
+  .form-actions
+    = f.button :submit
+    = link_to 'Delete', [:admin, @model], data: { confirm: 'Are you sure?' }, method: :delete
+

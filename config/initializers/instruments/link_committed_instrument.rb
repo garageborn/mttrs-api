@@ -8,5 +8,5 @@ ActiveSupport::Notifications.subscribe('link.committed') do |_name, _start, _fin
   stories = Story.where(id: story_ids)
   next if stories.blank?
 
-  stories.each { |story| story.refresh! }
+  stories.each(&:refresh!)
 end

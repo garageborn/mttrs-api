@@ -1,0 +1,5 @@
+h1 Feeds
+h2= link_to 'New Feed', [:new, :admin, :feed]
+ul= concept('admin/feed/cell/show', collection: model)
+= paginate(model)
+

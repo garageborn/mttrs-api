@@ -1,0 +1,4 @@
+h1 Categories (#{ model.size })
+h2= link_to 'New Category', [:new, :admin, :category]
+ul= concept('admin/category/cell/show', collection: model)
+= paginate(model)

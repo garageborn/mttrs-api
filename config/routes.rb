@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   resources :publishers, only: [:index]
   resources :stories, only: [:index]
 
-  get '/elastic', to: 'elastic#index'
+  namespace :admin do
+    resources :categories
+    resources :feeds
+    resources :stories
+    get '/elastic', to: 'elastic#index'
+  end
 
   mount Sidekiq::Web => '/sidekiq'
 end
