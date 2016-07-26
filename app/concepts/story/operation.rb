@@ -1,9 +1,14 @@
 class Story
   class Index < Trailblazer::Operation
     include Collection
+    DEFAULT_PARAMS = { page: 1, per: 10, recent: true }.freeze
 
-    def model!(_params)
-      ::Story.all.limit(10)
+    def model!(params)
+      ::Story.filter(params)
+    end
+
+    def params!(params)
+      DEFAULT_PARAMS.merge(params.permit(:page))
     end
   end
 end

@@ -97,7 +97,7 @@ GEM
       cells (>= 4.0.1, < 6.0.0)
       slim (~> 3.0)
     chronic (0.10.2)
-    cloudinary (1.1.6)
+    cloudinary (1.2.2)
       aws_cf_signer
       rest-client
     coderay (1.1.1)
@@ -576,7 +576,7 @@ DEPENDENCIES
   cells (= 4.1.2)
   cells-rails (= 0.0.6)
   cells-slim (= 0.0.5)
-  cloudinary (= 1.1.6)
+  cloudinary (= 1.2.2)
   database_cleaner (= 1.5.3)
   elasticsearch-model (= 0.1.9)
   elasticsearch-rails (= 0.1.9)

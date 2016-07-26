@@ -3,12 +3,6 @@ module Admin
     module Cell
       class Index < Trailblazer::Cell
         include Kaminari::Cells
-
-        private
-
-        def page
-          options[:page] || 1
-        end
       end
 
       class Show < Trailblazer::Cell

@@ -3,7 +3,7 @@ require 'reform/form/validation/unique_validator'
 class Category
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
+    DEFAULT_PARAMS = { page: 1, per: 20 }.freeze
 
     def model!(params)
       ::Category.filter(params)
