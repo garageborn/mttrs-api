@@ -4,14 +4,18 @@ class Category
   class Index < Trailblazer::Operation
     include Collection
 
-    def model!(_params)
-      ::Category.all.limit(10)
+    def model!(params)
+      ::Category.filter(params)
+    end
+
+    def params!(params)
+      params.permit(:page).reverse_merge(page: 1, per: 10)
     end
   end
 
-  class Create < Trailblazer::Operation
+  class Form < Trailblazer::Operation
     include Model
-    model Category, :create
+    model Category
 
     contract do
       property :name
@@ -25,6 +29,10 @@ class Category
     end
   end
 
+  class Create < Form
+    action :create
+  end
+
   class Update < Create
     action :update
   end
@@ -33,7 +41,7 @@ class Category
     include Model
     model Category, :find
 
-    def process(params)
+    def process(*)
       model.destroy
       model.links.clear
     end

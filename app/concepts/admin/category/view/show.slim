@@ -2,7 +2,7 @@ li
   p
     h2= name
     = link_to 'Edit', [:edit, :admin, model]
-    = link_to 'Add New', [:new, :admin, :category]
+    = link_to 'Add New', [:new, :admin, :feed]
 
   ul
     - model.feeds.each do |feed|
