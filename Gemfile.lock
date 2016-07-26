@@ -101,6 +101,7 @@ GEM
       aws_cf_signer
       rest-client
     coderay (1.1.1)
+    colorize (0.8.1)
     concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     database_cleaner (1.5.3)
@@ -312,6 +313,11 @@ GEM
     guard-rubocop (1.2.0)
       guard (~> 2.0)
       rubocop (~> 0.20)
+    guard-slimlint (1.2.1)
+      colorize
+      guard
+      guard-compat
+      slim_lint
     hashie (3.4.4)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -514,6 +520,11 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       slim (~> 3.0)
+    slim_lint (0.8.2)
+      rake (>= 10, < 12)
+      rubocop (>= 0.36.0)
+      slim (~> 3.0)
+      sysexits (~> 1.1)
     slop (3.6.0)
     sprockets (3.6.3)
       concurrent-ruby (~> 1.0)
@@ -525,6 +536,7 @@ GEM
     sshkit (1.11.1)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
+    sysexits (1.2.0)
     temple (0.7.7)
     terminal-notifier (1.6.3)
     terminal-notifier-guard (1.7.0)
@@ -594,6 +606,7 @@ DEPENDENCIES
   guard-livereload (= 2.5.2)
   guard-rspec (= 4.7.2)
   guard-rubocop (= 1.2.0)
+  guard-slimlint (= 1.2.1)
   httparty (= 0.13.7)
   jquery-rails (= 4.1.1)
   kaminari (= 0.17.0)

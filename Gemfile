@@ -49,6 +49,7 @@ group :development, :test do
   gem 'guard-bundler', '2.1.0'
   gem 'guard-rspec', '4.7.2'
   gem 'guard-rubocop', '1.2.0'
+  gem 'guard-slimlint', '1.2.1'
   gem 'guard-livereload', '2.5.2'
   gem 'rspec-rails', '3.5.1'
 end

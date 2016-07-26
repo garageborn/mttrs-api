@@ -2,11 +2,26 @@ li
   p
     h2= name
     = link_to 'Edit', [:edit, :admin, model]
-    = link_to 'Add New', [:new, :admin, :feed]
 
-  ul
-    - model.feeds.each do |feed|
-      li
-        = feed.publisher.name
-        span= feed.url
-        = link_to 'Edit', [:edit, :admin, feed]
+  h3 Feeds (#{ feeds_count })
+  = link_to 'Add New', [:new, :admin, :feed, { category_id: id }]
+  - feeds.each do |publisher, feeds|
+    p
+      span= publisher.name
+      ul
+        - feeds.each do |feed|
+          li
+            span= feed.url
+            = link_to 'Edit', [:edit, :admin, feed]
+
+  h3 Matchers (#{ category_matchers_count })
+  = link_to 'Add New', [:new, :admin, :category_matcher, { category_id: id }]
+
+  - category_matchers.each do |publisher, category_matchers|
+    p
+      span= publisher.name
+      ul
+        - category_matchers.each do |category_matcher|
+          li
+            span ##{ category_matcher.order } #{ category_matcher.url_matcher }
+            = link_to 'Edit', [:edit, :admin, category_matcher]
