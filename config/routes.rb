@@ -6,11 +6,13 @@ Rails.application.routes.draw do
   resources :stories, only: [:index]
 
   namespace :admin do
+    root to: redirect('/admin/stories')
     resources :categories
     resources :feeds
     resources :stories
     get '/elastic', to: 'elastic#index'
   end
 
-  mount Sidekiq::Web => '/sidekiq'
+  Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
+  mount Sidekiq::Web => '/admin/sidekiq'
 end

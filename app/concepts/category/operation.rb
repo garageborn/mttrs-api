@@ -3,13 +3,14 @@ require 'reform/form/validation/unique_validator'
 class Category
   class Index < Trailblazer::Operation
     include Collection
+    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
 
     def model!(params)
       ::Category.filter(params)
     end
 
     def params!(params)
-      params.permit(:page).reverse_merge(page: 1, per: 10)
+      DEFAULT_PARAMS.merge(params.permit(:page))
     end
   end
 
