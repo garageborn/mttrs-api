@@ -1,4 +1,5 @@
 class Publisher < ApplicationRecord
+  include Concerns::Filterable
   extend FriendlyId
 
   has_many :links, inverse_of: :publisher, dependent: :destroy

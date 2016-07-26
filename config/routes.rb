@@ -9,10 +9,11 @@ Rails.application.routes.draw do
     root to: redirect('/admin/stories')
     resources :categories
     resources :feeds
+    resources :publishers
     resources :stories
     get '/elastic', to: 'elastic#index'
-  end
 
-  Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
-  mount Sidekiq::Web => '/admin/sidekiq'
+    Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end

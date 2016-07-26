@@ -5,7 +5,7 @@ module Admin
         include Kaminari::Cells
       end
 
-      class Show < Trailblazer::Cell
+      class Item < Trailblazer::Cell
         property :name
       end
 

@@ -8,5 +8,5 @@ li
     - model.feeds.each do |feed|
       li
         = feed.publisher.name
-        = link_to 'Edit', [:edit, :admin, feed]
         span= feed.url
+        = link_to 'Edit', [:edit, :admin, feed]
