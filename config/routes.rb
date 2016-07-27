@@ -7,11 +7,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: redirect('/admin/stories')
-    resources :categories
-    resources :category_matchers
-    resources :feeds
-    resources :publishers
-    resources :stories
+    resources :categories, except: :show
+    resources :category_matchers, except: :show
+    resources :feeds, except: :show
+    resources :publishers, except: :show
+    resources :stories, except: :show
     get '/elastic', to: 'elastic#index'
 
     Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }

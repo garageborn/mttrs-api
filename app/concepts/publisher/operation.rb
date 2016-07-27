@@ -3,7 +3,7 @@ require 'reform/form/validation/unique_validator'
 class Publisher
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 50 }.freeze
+    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
 
     def model!(params)
       ::Publisher.filter(params)

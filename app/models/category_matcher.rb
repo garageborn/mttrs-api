@@ -1,4 +1,5 @@
 class CategoryMatcher < ApplicationRecord
+  include Concerns::Filterable
   belongs_to :publisher
   belongs_to :category
 

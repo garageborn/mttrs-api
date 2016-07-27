@@ -14,7 +14,7 @@ class ChangeLinksHtmlToBinary < ActiveRecord::Migration
     Link.find_each.with_index do |link, index|
       next unless link.html.present?
       result = link.update_column(:html_data, Zlib::Deflate.deflate(link.html.to_s))
-      Rails.logger.info "ChangeLinksHtmlToBinary #{ index + 1 }/#{ Link.count }"
+      Rails.logger.info "ChangeLinksHtmlToBinary: #{ result } #{ index + 1 }/#{ Link.count }"
     end
   end
 end

@@ -1,12 +1,12 @@
 require 'reform/form/validation/unique_validator'
 
-class Feed
+class CategoryMatcher
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 20 }.freeze
+    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
 
     def model!(params)
-      ::Feed.filter(params)
+      ::CategoryMatcher.filter(params)
     end
 
     def params!(params)
@@ -15,17 +15,19 @@ class Feed
   end
 
   class Form < Trailblazer::Operation
-    include Callback
     include Model
-    model Feed
+    model CategoryMatcher
 
     contract do
       include Reform::Form::ModelReflections
       property :publisher_id
       property :category_id
-      property :url
+      property :url_matcher
+
       validates :publisher_id, :category_id, presence: true
-      validates :url, presence: true, unique: { case_sensitive: false }
+      validates :url_matcher,
+                unique: { case_sensitive: false, scope: :publisher_id },
+                allow_blank: true
 
       def prepopulate!(options)
         self.publisher_id ||= options[:params][:publisher_id]
@@ -33,21 +35,10 @@ class Feed
       end
     end
 
-    callback :after_save do
-      on_change :enqueue_feed_fetcher
-    end
-
     def process(params)
-      validate(params[:feed]) do
+      validate(params[:category_matcher]) do
         contract.save
-        callback!(:after_save)
       end
-    end
-
-    private
-
-    def enqueue_feed_fetcher(*)
-      FeedFetcherJob.perform_later(model.id)
     end
   end
 
@@ -61,11 +52,10 @@ class Feed
 
   class Destroy < Trailblazer::Operation
     include Model
-    model Feed, :find
+    model CategoryMatcher, :find
 
     def process(*)
       model.destroy
-      model.links.clear
     end
   end
 end

@@ -14,7 +14,5 @@ class Category < ApplicationRecord
     joins(:links).group('categories.id').order('count(categories.id) desc')
   }
 
-  # before_destroy { links.clear }
-
   friendly_id :name, use: %i(slugged finders)
 end

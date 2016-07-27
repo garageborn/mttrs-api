@@ -4,9 +4,4 @@ li
     = link_to 'Edit', [:edit, :admin, model]
     p Total Links: #{ links_count } Total Feeds: #{ feeds_count }
 
-  ul
-    - model.feeds.each do |feed|
-      li
-        = feed.category.name
-        span= feed.url
-        = link_to 'Edit', [:edit, :admin, feed]
+  ul= concept('admin/feed/cell/item', collection: model.feeds)
