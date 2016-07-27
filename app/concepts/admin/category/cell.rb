@@ -27,6 +27,20 @@ module Admin
         end
       end
 
+      class Feed < Trailblazer::Cell
+        include ActionView::Helpers::NumberHelper
+        property :url
+
+        def links_count
+          number_with_delimiter(model.links.size)
+        end
+      end
+
+      class CategoryMatcher < Trailblazer::Cell
+        property :order
+        property :url_matcher
+      end
+
       class Form < Trailblazer::Cell
       end
     end

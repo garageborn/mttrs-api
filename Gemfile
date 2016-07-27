@@ -6,6 +6,7 @@ gem 'cells', '4.1.2'
 gem 'cells-rails', '0.0.6'
 gem 'cells-slim', '0.0.5'
 gem 'cloudinary', '1.2.2'
+gem 'compass-rails', '3.0.2'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 gem 'feedjira', '2.0.0'
@@ -47,10 +48,10 @@ end
 group :development, :test do
   gem 'byebug', '9.0.5'
   gem 'guard-bundler', '2.1.0'
+  gem 'guard-livereload', '2.5.2'
   gem 'guard-rspec', '4.7.2'
   gem 'guard-rubocop', '1.2.0'
   gem 'guard-slimlint', '1.2.1'
-  gem 'guard-livereload', '2.5.2'
   gem 'rspec-rails', '3.5.1'
 end
 

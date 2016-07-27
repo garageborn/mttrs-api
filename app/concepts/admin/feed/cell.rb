@@ -9,6 +9,14 @@ module Admin
         include ActionView::Helpers::NumberHelper
         property :url
 
+        def publisher_name
+          model.publisher.name
+        end
+
+        def category_name
+          model.category.name
+        end
+
         def links_count
           number_with_delimiter(model.links.size)
         end

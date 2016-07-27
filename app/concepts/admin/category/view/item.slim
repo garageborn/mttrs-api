@@ -1,23 +1,24 @@
 li
-  p
-    h2= name
-    = link_to 'Edit', [:edit, :admin, model]
+  .categories-item-title
+    strong= name
+    = link_to 'Edit', [:edit, :admin, model], class: 'categories-edit-button'
 
-  h3 Feeds (#{ feeds_count })
-  = link_to 'Add New', [:new, :admin, :feed, { category_id: id }]
-  - feeds.each do |publisher, feeds|
-    p
-      span= publisher.name
-      ul= concept('admin/feed/cell/item', collection: feeds)
+  section.categories-item-section
+    strong Feeds (#{ feeds_count })
+    = link_to 'Add New', [:new, :admin, :feed, { category_id: id }], class: 'categories-add-button'
 
-  h3 Matchers (#{ category_matchers_count })
-  = link_to 'Add New', [:new, :admin, :category_matcher, { category_id: id }]
+    .categories-item-subsection
+      - feeds.each do |publisher, feeds|
+        strong= publisher.name
+        ul.categories-list= concept('admin/category/cell/feed', collection: feeds)
 
-  - category_matchers.each do |publisher, category_matchers|
-    p
-      span= publisher.name
-      ul
-        - category_matchers.each do |category_matcher|
-          li
-            span ##{ category_matcher.order } #{ category_matcher.url_matcher }
-            = link_to 'Edit', [:edit, :admin, category_matcher]
+  section.categories-item-section
+    strong Matchers (#{ category_matchers_count })
+    = link_to 'Add New', [:new, :admin, :category_matcher, { category_id: id }],
+      class: 'categories-add-button'
+
+    .categories-item-subsection
+      - category_matchers.each do |publisher, category_matchers|
+        strong= publisher.name
+        ul.categories-list
+          = concept('admin/category/cell/category_matcher', collection: category_matchers)

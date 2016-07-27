@@ -1,0 +1,54 @@
+// *************************************
+//
+//   Button
+//
+// -------------------------------------
+//   Template
+// -------------------------------------
+//
+// .button[.button--modifier](.is-state)(.has-context)
+//   .button-scaffolding
+//
+// *************************************
+
+// .structure
+%button
+  font-size: em(14px)
+  text-decoration: underline
+
+// -------------------------------------
+//   Modifiers
+// -------------------------------------
+
+// .structure--modifier
+%button--add
+  @extend %button
+  color: $green
+  &:hover,
+  &:focus
+    color: darken($green, 10%)
+
+%button--edit
+  @extend %button
+  color: $blue
+  &:hover,
+  &:focus
+    color: darken($blue, 10%)
+
+// -------------------------------------
+//   States
+// -------------------------------------
+
+// .structure.is-state
+
+// -------------------------------------
+//   Context
+// -------------------------------------
+
+// .has-structure
+
+// -------------------------------------
+//   Scaffolding
+// -------------------------------------
+
+// .structure-scaffolding

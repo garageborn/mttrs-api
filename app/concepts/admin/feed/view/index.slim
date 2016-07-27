@@ -1,5 +1,3 @@
-h1 Feeds
-h2= link_to 'New Feed', [:new, :admin, :feed]
+h2= link_to 'New Feed', [:new, :admin, :feed], class: 'feeds-add-button'
 ul= concept('admin/feed/cell/item', collection: model)
 = paginate(model)
-
