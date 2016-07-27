@@ -1,0 +1,9 @@
+li
+  .links-item-title
+    strong= title
+    = link_to 'Edit', [:edit, :admin, model], class: 'links-edit-button'
+
+    .links-item-stats
+      span= publisher_name
+      span= categories_names
+      = concept('admin/link/cell/social_counter', model)

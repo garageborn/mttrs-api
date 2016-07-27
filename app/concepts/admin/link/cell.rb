@@ -1,6 +1,23 @@
 module Admin
   module Link
     module Cell
+      class Index < Trailblazer::Cell
+        include Kaminari::Cells
+      end
+
+      class Item < Trailblazer::Cell
+        include ActionView::Helpers::NumberHelper
+        property :title
+
+        def categories_names
+          model.categories.pluck(:name).to_sentence
+        end
+
+        def publisher_name
+          model.publisher.name
+        end
+      end
+
       class SocialCounter < Trailblazer::Cell
         include ActionView::Helpers::NumberHelper
 

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :categories, except: :show
     resources :category_matchers, except: :show
     resources :feeds, except: :show
+    resources :links, except: :show
     resources :publishers, except: :show
     resources :stories, except: :show
     get '/elastic', to: 'elastic#index'

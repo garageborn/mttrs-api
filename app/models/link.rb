@@ -1,4 +1,5 @@
 class Link < ApplicationRecord
+  include Concerns::Filterable
   include Concerns::LinkMissingAttributes
   include Concerns::Searchable
   include Concerns::StripAttributes

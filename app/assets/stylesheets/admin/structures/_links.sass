@@ -1,17 +1,17 @@
 // *************************************
 //
-//   List
+//   Links
 //
 // -------------------------------------
 //   Template
 // -------------------------------------
 //
-// .list[.list--modifier](.is-state)(.has-context)
-//   .list-scaffolding
+// .links[.links--modifier](.is-state)(.has-context)
+//   .links-scaffolding
 //
 // *************************************
 
-%list
+.links
 
 // -------------------------------------
 //   Modifiers
@@ -35,22 +35,14 @@
 //   Scaffolding
 // -------------------------------------
 
-%list-item-title
-  strong
-    font-size: $b-fontSize-h3
-    margin-right: $b-space
+.links-add-button
+  @extend %button--add
 
-%list-item-stats
-  span
-    margin-right: $b-space
+.links-edit-button
+  @extend %button--edit
 
-%list-item-section
-  margin-top: $b-space
-  margin-left: $b-space
-  strong
-    font-size: $b-fontSize-h5
-    margin-right: $b-space
+.links-item-title
+  @extend %list-item-title
 
-%list-item-subsection
-  margin-left: $b-space
-
+.links-item-stats
+  @extend %list-item-stats
