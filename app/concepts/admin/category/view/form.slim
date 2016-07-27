@@ -1,4 +1,4 @@
-= simple_form_for([:admin, @model]) do |f|
+= simple_form_for([:admin, model]) do |f|
   = f.error_notification
 
   .form-inputs
@@ -6,5 +6,5 @@
 
   .form-actions
     = f.button :submit
-    = link_to 'Delete', [:admin, @model], data: { confirm: 'Are you sure?' }, method: :delete
+    = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
