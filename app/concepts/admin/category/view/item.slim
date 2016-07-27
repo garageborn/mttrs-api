@@ -8,7 +8,7 @@ li
   - feeds.each do |publisher, feeds|
     p
       span= publisher.name
-      ul= concept('admin/feed/cell/item', collection: model.feeds)
+      ul= concept('admin/feed/cell/item', collection: feeds)
 
   h3 Matchers (#{ category_matchers_count })
   = link_to 'Add New', [:new, :admin, :category_matcher, { category_id: id }]
