@@ -3,10 +3,10 @@ li
     strong= name
     = link_to 'Edit', [:edit, :admin, model], class: 'publishers-edit-button'
 
-    .publishers-item-stats
-      span= domain
-      span Links: #{ links_count }
-      span Today Links: #{ today_links_count }
+  .publishers-item-stats
+    span= domain
+    span Links: #{ links_count }
+    span Today Links: #{ today_links_count }
 
   section.publishers-item-section
     strong Feeds (#{ feeds_count })

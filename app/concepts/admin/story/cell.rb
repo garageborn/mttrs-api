@@ -7,33 +7,62 @@ module Admin
 
       class Item < Trailblazer::Cell
         include ActionView::Helpers::NumberHelper
+
         property :title
+        property :links
 
         def image
-          return if image_url.blank?
-          image_tag(image_url)
+          return if model.image_source_url.blank?
+          image_tag(model.image_source_url, size: '150x100')
         end
 
-        def categories
+        def categories_names
           model.categories.pluck(:name).to_sentence
         end
 
-        def social_counter
-          concept('admin/link/cell/social_counter', main_link)
+        def publishers_names
+          model.publishers.pluck(:name).to_sentence
+        end
+      end
+
+      class SocialCounter < Trailblazer::Cell
+        include ActionView::Helpers::NumberHelper
+
+        def total_social
+          number_with_delimiter(model.total_social)
         end
 
-        private
-
-        def main_link
-          model.main_link || model.links.order(total_social: :desc).first
+        def total_facebook
+          number_with_delimiter(model.total_facebook)
         end
 
-        def image_url
-          return if model.image_source_url.blank?
-          Cloudinary::Utils.cloudinary_url(
-            model.image_source_url,
-            type: 'fetch', width: 200, height: 200, crop: 'fit'
-          )
+        def total_linkedin
+          number_with_delimiter(model.total_linkedin)
+        end
+
+        def total_twitter
+          number_with_delimiter(model.total_twitter)
+        end
+
+        def total_pinterest
+          number_with_delimiter(model.total_pinterest)
+        end
+
+        def total_google_plus
+          number_with_delimiter(model.total_google_plus)
+        end
+      end
+
+      class Link < Trailblazer::Cell
+        include ActionView::Helpers::NumberHelper
+        property :title
+
+        def categories_names
+          model.categories.pluck(:name).to_sentence
+        end
+
+        def publisher_name
+          model.publisher.name
         end
       end
     end

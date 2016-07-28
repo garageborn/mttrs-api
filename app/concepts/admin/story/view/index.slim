@@ -1,3 +1,3 @@
-h1 Stories
+h2= link_to 'New Story', [:new, :admin, :link], class: 'stories-add-button'
 ul= concept('admin/story/cell/item', collection: model)
 = paginate(model)

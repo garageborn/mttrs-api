@@ -10,20 +10,14 @@ class Publisher
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
     end
   end
 
   class Form < Trailblazer::Operation
     include Model
     model Publisher
-
-    contract do
-      property :name
-      property :domain
-      validates :name, presence: true, unique: { case_sensitive: false }
-      validates :domain, presence: true
-    end
+    contract Contract
 
     def process(params)
       validate(params[:publisher]) do

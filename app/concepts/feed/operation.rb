@@ -10,7 +10,7 @@ class Feed
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
     end
   end
 
@@ -18,20 +18,7 @@ class Feed
     include Callback
     include Model
     model Feed
-
-    contract do
-      include Reform::Form::ModelReflections
-      property :publisher_id
-      property :category_id
-      property :url
-      validates :publisher_id, :category_id, presence: true
-      validates :url, presence: true, unique: { case_sensitive: false }
-
-      def prepopulate!(options)
-        self.publisher_id ||= options[:params][:publisher_id]
-        self.category_id ||= options[:params][:category_id]
-      end
-    end
+    contract Contract
 
     callback :after_save do
       on_change :enqueue_feed_fetcher

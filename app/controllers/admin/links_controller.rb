@@ -17,7 +17,7 @@ module Admin
 
     def create
       run ::Link::Create do |op|
-        flash[:notice] = "Link '#{ op.model.name }' created"
+        flash[:notice] = "Link '#{ op.model.title }' created"
         return redirect_to [:admin, :links]
       end
       render_form
@@ -25,7 +25,7 @@ module Admin
 
     def update
       run ::Link::Update do |op|
-        flash[:notice] = "Link '#{ op.model.name }' updated"
+        flash[:notice] = "Link '#{ op.model.title }' updated"
         return redirect_to [:admin, :links]
       end
       render_form
@@ -33,7 +33,15 @@ module Admin
 
     def destroy
       run ::Link::Destroy do |op|
-        flash[:notice] = "Link '#{ op.model.name }' destroyed"
+        flash[:notice] = "Link '#{ op.model.title }' destroyed"
+        return redirect_to [:admin, :links]
+      end
+      render_form
+    end
+
+    def remove_from_story
+      run ::Link::RemoveFromStory do |op|
+        flash[:notice] = "Link '#{ op.model.title }' removed from story"
         return redirect_to [:admin, :links]
       end
       render_form

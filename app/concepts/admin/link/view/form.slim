@@ -2,7 +2,12 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :name
+    = f.input :title
+    = f.association :publisher
+    = f.association :categories, as: :check_boxes
+    = f.input :published_at
+    = f.input :source_url
+    = f.input :url
 
   .form-actions
     = f.button :submit

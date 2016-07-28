@@ -10,21 +10,20 @@ class Link
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
     end
   end
 
-  class Form < Trailblazer::Operation
+  class Operation < Trailblazer::Operation
     include Model
     model Link
+  end
 
-    contract do
-      property :name
-      validates :name, presence: true, unique: { case_sensitive: false }
-    end
+  class Form < Operation
+    contract Contract
 
     def process(params)
-      validate(params[:category]) do
+      validate(params[:link]) do
         contract.save
       end
     end
@@ -38,13 +37,21 @@ class Link
     action :update
   end
 
-  class Destroy < Trailblazer::Operation
-    include Model
-    model Link, :find
+  class Destroy < Operation
+    action :find
 
     def process(*)
       model.destroy
       model.links.clear
+    end
+  end
+
+  class RemoveFromStory < Operation
+    action :find
+
+    def process(*)
+      model.update_attributes(story_id: nil)
+      StoryBuilderJob.perform_later(model.id)
     end
   end
 end

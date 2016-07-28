@@ -1,6 +1,13 @@
 li
-  = image
-  h2= title
-  p
-    = categories
-    = social_counter
+  .stories-item-title
+    = image
+    strong= title
+    = link_to 'Edit', [:edit, :admin, model], class: 'stories-edit-button'
+
+    .stories-item-stats
+      span= publishers_names
+      span= categories_names
+      = concept('admin/story/cell/social_counter', model)
+
+  section.stories-item-section
+    ul= concept('admin/story/cell/link', collection: links)

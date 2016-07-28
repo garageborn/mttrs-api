@@ -1,17 +1,17 @@
 // *************************************
 //
-//   List
+//   Stories
 //
 // -------------------------------------
 //   Template
 // -------------------------------------
 //
-// .list[.list--modifier](.is-state)(.has-context)
-//   .list-scaffolding
+// .stories[.stories--modifier](.is-state)(.has-context)
+//   .stories-scaffolding
 //
 // *************************************
 
-%list
+.stories
 
 // -------------------------------------
 //   Modifiers
@@ -35,23 +35,34 @@
 //   Scaffolding
 // -------------------------------------
 
-%list-item-title
-  strong
-    font-size: $b-fontSize-h3
-    margin-right: $b-space
+.stories-add-button
+  @extend %button--add
 
-%list-item-stats
-  span
-    margin-right: $b-space
+.stories-edit-button
+  @extend %button--edit
 
-%list-item-section
-  clear: both
-  margin-top: $b-space
-  margin-left: $b-space
-  strong
-    font-size: $b-fontSize-h5
-    margin-right: $b-space
+.stories-change-story-button
+  @extend %button--edit
 
-%list-item-subsection
-  clear: both
-  margin-left: $b-space
+.stories-remove-from-story-button
+  @extend %button--destroy
+
+.stories-item-title
+  @extend %list-item-title
+
+  img
+    float: left
+    height: 100px
+    margin-right: $b-space
+    overflow: hidden
+    width: 150px
+
+.stories-item-stats
+  @extend %list-item-stats
+
+.stories-item-section
+  @extend %list-item-section
+  margin-left: em(200px)
+
+.stories-item-subsection
+  @extend %list-item-subsection

@@ -10,18 +10,14 @@ class Category
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
     end
   end
 
   class Form < Trailblazer::Operation
     include Model
     model Category
-
-    contract do
-      property :name
-      validates :name, presence: true, unique: { case_sensitive: false }
-    end
+    contract Contract
 
     def process(params)
       validate(params[:category]) do

@@ -45,6 +45,26 @@ class Story < ApplicationRecord
     refresh_main_link
   end
 
+  def total_facebook
+    links.map { |link| link.social_counter.try(:facebook).to_i }.sum
+  end
+
+  def total_linkedin
+    links.map { |link| link.social_counter.try(:linkedin).to_i }.sum
+  end
+
+  def total_twitter
+    links.map { |link| link.social_counter.try(:twitter).to_i }.sum
+  end
+
+  def total_pinterest
+    links.map { |link| link.social_counter.try(:pinterest).to_i }.sum
+  end
+
+  def total_google_plus
+    links.map { |link| link.social_counter.try(:google_plus).to_i }.sum
+  end
+
   private
 
   def refresh_total_social

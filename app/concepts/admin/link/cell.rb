@@ -41,6 +41,11 @@ module Admin
           model.social_counter
         end
       end
+
+      class Form < Trailblazer::Cell
+        include ActionView::Helpers::FormOptionsHelper
+        include ActionView::Helpers::DateHelper
+      end
     end
   end
 end
