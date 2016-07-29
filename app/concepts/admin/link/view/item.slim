@@ -4,6 +4,9 @@ li
     = link_to 'Edit', [:edit, :admin, model], class: 'links-edit-button'
 
     .links-item-stats
+      span= story_id
       span= publisher_name
       span= categories_names
-      = concept('admin/link/cell/social_counter', model)
+      span Published At: #{ published_at }
+      - social_counters.try(:join) do |cell|
+        p= cell

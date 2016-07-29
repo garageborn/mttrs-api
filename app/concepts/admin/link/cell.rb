@@ -7,7 +7,12 @@ module Admin
 
       class Item < Trailblazer::Cell
         include ActionView::Helpers::NumberHelper
+        include ActionView::Helpers::TranslationHelper
         property :title
+
+        def published_at
+          localize(model.published_at)
+        end
 
         def categories_names
           model.categories.pluck(:name).to_sentence
@@ -16,29 +21,51 @@ module Admin
         def publisher_name
           model.publisher.name
         end
+
+        def story_id
+          return 'None' if model.story_id.blank?
+          model.story_id
+        end
+
+        def social_counters
+          return if model.social_counters.blank?
+          concept(
+            'admin/link/cell/social_counter',
+            collection: model.social_counters.recent.limit(5)
+          )
+        end
       end
 
       class SocialCounter < Trailblazer::Cell
         include ActionView::Helpers::NumberHelper
+        include ActionView::Helpers::TranslationHelper
 
-        def social_counter
-          return if social_counter.blank?
-          keys = SocialCounter::PROVIDERS + [:total]
-          keys.each do |key|
-            value = number_with_delimiter(social_counter.read_attribute(key))
-            define_method(key) { value }
-          end
+        def total
+          number_with_delimiter(model.total)
         end
 
-        def show
-          return if social_counter.blank?
-          super
+        def facebook
+          number_with_delimiter(model.facebook)
         end
 
-        private
+        def linkedin
+          number_with_delimiter(model.linkedin)
+        end
 
-        def social_counter
-          model.social_counter
+        def twitter
+          number_with_delimiter(model.twitter)
+        end
+
+        def pinterest
+          number_with_delimiter(model.pinterest)
+        end
+
+        def google_plus
+          number_with_delimiter(model.google_plus)
+        end
+
+        def created_at
+          localize(model.created_at)
         end
       end
 
