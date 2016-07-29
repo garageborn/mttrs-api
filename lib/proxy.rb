@@ -64,7 +64,7 @@ module Proxy
       ActiveSupport::Notifications.instrument('proxy.logger', payload.merge(status: :success))
       response
     rescue StandardError => e
-      payload.merge(
+      payload.merge!(
         type: :error,
         status: :error,
         exception: { message: e.message, backtrace: e.backtrace.join("\n") }
