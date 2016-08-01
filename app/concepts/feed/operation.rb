@@ -1,5 +1,3 @@
-require 'reform/form/validation/unique_validator'
-
 class Feed
   class Index < Trailblazer::Operation
     include Collection

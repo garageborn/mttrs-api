@@ -1,5 +1,3 @@
-require 'reform/form/validation/unique_validator'
-
 class Category
   class Index < Trailblazer::Operation
     include Collection

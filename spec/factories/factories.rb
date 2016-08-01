@@ -6,4 +6,8 @@ FactoryGirl.define do
   sequence :sentence do |n|
     "#{ Faker::Lorem.sentence } #{ n }"
   end
+
+  sequence :ip do |n|
+    (1..4).map { n }.join('.')
+  end
 end
