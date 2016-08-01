@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 29) do
+ActiveRecord::Schema.define(version: 30) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,6 +97,17 @@ ActiveRecord::Schema.define(version: 29) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.index ["type", "key"], name: "index_performed_jobs_on_type_and_key", unique: true, using: :btree
+  end
+
+  create_table "proxies", force: :cascade do |t|
+    t.inet     "ip",                          null: false
+    t.string   "port",                        null: false
+    t.boolean  "active",       default: true, null: false
+    t.datetime "requested_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["active"], name: "index_proxies_on_active", using: :btree
+    t.index ["ip", "port"], name: "index_proxies_on_ip_and_port", unique: true, using: :btree
   end
 
   create_table "publishers", force: :cascade do |t|

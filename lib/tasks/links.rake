@@ -8,7 +8,7 @@ namespace :links do
   end
 
   desc 'Purge useless links'
-  task :purge do
+  task purge: :environment do
     links = Link.published_until(7.days.ago).where(total_social: 0)
     Rails.logger.info "links:purge #{ links.count }"
     links.destroy_all
