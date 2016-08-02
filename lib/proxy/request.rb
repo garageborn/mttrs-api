@@ -32,7 +32,7 @@ class Proxy
     def call(method, url, options)
       logging do
         HTTParty.send(method, url, options).tap do |request|
-          touch_current_proxy!
+          touch_current_proxy!(request.success?)
           raise Errno::ECONNREFUSED unless request.success?
         end
       end
@@ -60,8 +60,8 @@ class Proxy
       @current_proxy = nil
     end
 
-    def touch_current_proxy!
-      ::Proxy::Touch.run(id: current_proxy.id)
+    def touch_current_proxy!(active)
+      ::Proxy::Touch.run(id: current_proxy.id, active: active)
     end
 
     def retry_handler

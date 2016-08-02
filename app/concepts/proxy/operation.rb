@@ -34,8 +34,8 @@ class Proxy
   class Touch < Operation
     action :find
 
-    def process(*)
-      model.update_attributes(requested_at: Time.zone.now)
+    def process(params = {})
+      model.update_attributes(requested_at: Time.zone.now, active: params[:active])
     end
   end
 end

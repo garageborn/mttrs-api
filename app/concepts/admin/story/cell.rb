@@ -56,6 +56,7 @@ module Admin
       class Link < Trailblazer::Cell
         include ActionView::Helpers::NumberHelper
         property :title
+        property :social_counter
 
         def categories_names
           model.categories.pluck(:name).to_sentence

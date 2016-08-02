@@ -42,7 +42,7 @@ gem 'uglifier', '3.0.0'
 gem 'whenever', '0.9.7', require: false
 
 group :production do
-  gem 'sentry-raven', '0.15.2'
+  gem 'sentry-raven', '1.2.2'
 end
 
 group :development, :test do

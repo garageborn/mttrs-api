@@ -5,7 +5,7 @@ li
     .links-item-stats
       span= publisher_name
       span= categories_names
-      = concept('admin/link/cell/social_counter', model)
+      = concept('admin/link/cell/social_counter', social_counter)
       p
         span= link_to 'Edit Info', [:edit, :admin, model], class: 'links-edit-button'
         span= link_to 'Change Story', '#', class: 'stories-change-cluster-button'
