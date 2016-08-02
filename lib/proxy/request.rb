@@ -53,7 +53,7 @@ class Proxy
     end
 
     def current_proxy
-      @current_proxy ||= Proxy.sample
+      @current_proxy ||= ::Proxy.sample
     end
 
     def reload_current_proxy!
@@ -66,7 +66,7 @@ class Proxy
 
     def retry_handler
       proc do
-        ::Proxy::Desactivate.run(id: current_proxy.id)
+        # ::Proxy::Desactivate.run(id: current_proxy.id)
         reload_current_proxy!
       end
     end
