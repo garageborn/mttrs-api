@@ -516,7 +516,7 @@ GEM
       sidekiq (>= 2.16.0)
     sidekiq-limit_fetch (3.3.0)
       sidekiq (>= 4)
-    sidekiq-unique-jobs (4.0.17)
+    sidekiq-unique-jobs (4.0.18)
       sidekiq (>= 2.6)
       thor
     simple_form (3.2.1)
@@ -650,7 +650,7 @@ DEPENDENCIES
   sidekiq (= 4.1.4)
   sidekiq-failures (= 0.4.5)
   sidekiq-limit_fetch (= 3.3.0)
-  sidekiq-unique-jobs (= 4.0.17)
+  sidekiq-unique-jobs (= 4.0.18)
   simple_form (= 3.2.1)
   simplecov (= 0.12.0)
   sinatra!

@@ -30,7 +30,7 @@ gem 'sass-rails', '5.0.5'
 gem 'sidekiq', '4.1.4'
 gem 'sidekiq-failures', '0.4.5'
 gem 'sidekiq-limit_fetch', '3.3.0'
-gem 'sidekiq-unique-jobs', '4.0.17'
+gem 'sidekiq-unique-jobs', '4.0.18'
 gem 'simple_form', '3.2.1'
 gem 'sinatra', github: 'sinatra', require: false
 gem 'slim-rails', '3.1.0'
