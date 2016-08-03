@@ -5,9 +5,21 @@ ENV DATABASE_URL $DATABASE_URL
 
 # install dependencies
 RUN apt-get update -qq
-RUN apt-get install -y ruby ruby-dev build-essential patch wget curl
+RUN apt-get install -y build-essential patch git-core wget curl
 
-RUN ruby -v
+# ruby
+RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+RUN exec $SHELL
+
+RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+RUN exec $SHELL
+
+RUN rbenv install 2.3.1
+RUN rbenv global 2.3.1
+RUN gem install bundler
 
 # postgresql
 RUN apt-get install -y postgresql-common libpq-dev
