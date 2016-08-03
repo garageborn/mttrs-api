@@ -1,8 +1,8 @@
 machine:
   # services:
   #   - docker
-  post:
-    - eval `aws ecr get-login`
+  # post:
+  #   - eval `aws ecr get-login`
 
 dependencies:
   cache_directories:
