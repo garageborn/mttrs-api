@@ -1,11 +1,13 @@
-FROM ruby:2.3.1
+FROM debian:jessie
 
 ENV RAILS_ENV $RAILS_ENV
 ENV DATABASE_URL $DATABASE_URL
 
 # install dependencies
 RUN apt-get update -qq
-RUN apt-get install -y build-essential patch wget curl
+RUN apt-get install -y ruby ruby-dev build-essential patch wget curl
+
+RUN ruby -v
 
 # postgresql
 RUN apt-get install -y postgresql-common libpq-dev
