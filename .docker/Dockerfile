@@ -8,14 +8,15 @@ RUN apt-get update -qq
 RUN apt-get install -y build-essential patch git-core wget curl
 
 # ruby
-RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
-RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
-RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-RUN . ~/.bashrc
+RUN apt-get install -y rbenv
+# RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+# RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+# RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+# RUN . ~/.bashrc
 
-RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-RUN . ~/.bashrc
+# RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+# RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+# RUN . ~/.bashrc
 
 RUN rbenv install 2.3.1
 RUN rbenv global 2.3.1
