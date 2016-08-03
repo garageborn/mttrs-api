@@ -9,14 +9,14 @@ dependencies:
     - ~/docker
 
   override:
-    - ./.docker/build
+    - ./.docker/build.sh
 
 deployment:
   hub:
     branch: features/docker
     commands:
-      - ./.docker/push
-      - ./.docker/publish
+      - ./.docker/push.sh
+      - ./.docker/publish.sh
 
 test:
   override:
