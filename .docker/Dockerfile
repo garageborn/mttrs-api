@@ -17,14 +17,15 @@ RUN apt-get install -y libxslt-dev libxml2-dev zlib1g-dev liblzma-dev
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN ~/.rbenv/plugins/ruby-build/install.sh
-ENV PATH /root/.rbenv/bin:$PATH
+ENV PATH /root/.rbenv/bin:/root/.rbenv/shims/:$PATH:
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+
 RUN rbenv install 2.3.1
 RUN rbenv global 2.3.1
+RUN exec $SHELL
 RUN gem install bundler
-RUN rbenv rehash
 
 # build mttrs-api
 ENV MTTRS_API /mttrs-api
