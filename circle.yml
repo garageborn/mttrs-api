@@ -15,6 +15,7 @@ deployment:
   hub:
     branch: features/docker
     commands:
+      - eval `aws ecr get-login`
       - ./.docker/build.sh
       - ./.docker/push.sh
       - ./.docker/publish.sh
