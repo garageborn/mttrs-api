@@ -5,8 +5,8 @@ machine:
     - eval `aws ecr get-login`
 
 dependencies:
-  # cache_directories:
-  #   - ~/docker
+  cache_directories:
+    - ~/docker
 
   override:
     - ./.docker/build.sh

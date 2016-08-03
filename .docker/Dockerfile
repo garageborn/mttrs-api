@@ -11,11 +11,11 @@ RUN apt-get install -y build-essential patch git-core wget curl
 RUN git clone https://github.com/rbenv/rbenv.git ~/.rbenv
 RUN echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 RUN echo 'eval "$(rbenv init -)"' >> ~/.bashrc
-RUN source ~/.bashrc
+RUN exec bash
 
 RUN git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 RUN echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
-RUN source ~/.bashrc
+RUN exec bash
 
 RUN rbenv install 2.3.1
 RUN rbenv global 2.3.1
