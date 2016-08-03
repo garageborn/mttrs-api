@@ -11,7 +11,7 @@ RUN apt-get install -y build-essential patch wget curl
 RUN apt-get install -y postgresql-common libpq-dev
 
 # nokogiri
-RUN apt-get install -y -dev zlib1g-dev liblzma-dev
+RUN apt-get install -y libxslt-dev libxml2-dev zlib1g-dev liblzma-dev
 
 # build mttrs-api
 ENV MTTRS_API /mttrs-api
