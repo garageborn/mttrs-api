@@ -13,7 +13,6 @@ deployment:
       - eval `aws ecr get-login`
       - ./.docker/build.sh
       - ./.docker/push.sh
-      - ./.docker/publish.sh
 
 test:
   override:
