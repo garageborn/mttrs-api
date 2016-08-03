@@ -6,9 +6,6 @@ dependencies:
   cache_directories:
     - ~/docker
 
-  # override:
-  #   - ./.docker/build.sh
-
 deployment:
   hub:
     branch: features/docker
