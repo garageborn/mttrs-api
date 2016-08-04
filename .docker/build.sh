@@ -1,7 +1,7 @@
 #!/bin/bash
 # if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
 mkdir -p ~/docker/repo
-git clone -b master git@github.com:garageborn/mttrs-api.git ~/docker/repo
+git clone -b $CIRCLE_BRANCH git@github.com:garageborn/mttrs-api.git ~/docker/repo
 
 cd ~/docker/repo && docker build \
   --tag mttrs-api \
