@@ -1,8 +1,5 @@
 FROM ruby:2.3.1-slim
 
-ENV RAILS_ENV $RAILS_ENV
-ENV DATABASE_URL $DATABASE_URL
-
 # install dependencies
 RUN apt-get update -qq && apt-get install -y \
   build-essential \
@@ -13,8 +10,7 @@ RUN apt-get update -qq && apt-get install -y \
 # build mttrs-api
 ENV MTTRS_API /mttrs-api
 RUN mkdir $MTTRS_API
-# COPY . $MTTRS_API
-RUN git clone -b master git@github.com:garageborn/mttrs-api.git $MTTRS_API
+COPY . $MTTRS_API
 
 WORKDIR $MTTRS_API
 
