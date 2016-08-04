@@ -14,7 +14,7 @@ RUN apt-get update -qq && apt-get install -y \
 ENV MTTRS_API /mttrs-api
 RUN mkdir $MTTRS_API
 # COPY . $MTTRS_API
-RUN git clone -b git@github.com:garageborn/mttrs-api.git $MTTRS_API
+RUN git clone -b master git@github.com:garageborn/mttrs-api.git $MTTRS_API
 
 WORKDIR $MTTRS_API
 
