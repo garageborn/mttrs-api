@@ -9,7 +9,6 @@ namespace :deploy do
     branch = ENV['branch'] || ENV['CIRCLE_BRANCH'] || `git rev-parse --abbrev-ref HEAD`.chomp
     repo = `git config --get remote.origin.url`.chomp
 
-    p '---------bra', branch, repo
     system <<-CMD
       mkdir -p /tmp/docker /tmp/docker/repo
       if [[ -e /tmp/docker/image.tar ]]; then docker load -i /tmp/docker/image.tar; fi
@@ -19,7 +18,7 @@ namespace :deploy do
     CMD
   end
 
-  desc 'Puch docker image to amazon'
+  desc 'Push docker image to amazon'
   task :push do
     system <<-CMD
       docker tag mttrs-api:latest 845270614438.dkr.ecr.us-east-1.amazonaws.com/mttrs-api:latest
@@ -27,7 +26,9 @@ namespace :deploy do
     CMD
   end
 
+  desc 'Publish application'
   task :publish do
+    # todo
   end
 
   task :run do
