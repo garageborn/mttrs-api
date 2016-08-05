@@ -30,17 +30,15 @@ module Social
         end
 
         def find_entry(url)
-          pool = Thread.pool(sources.size)
+          # pool = Thread.pool(sources.size)
           Hash.new.tap do |counters|
             sources.each do |source|
-              pool.process do
-                ActiveRecord::Base.connection_pool.with_connection do
-                  social = fetch_social(source, url)
-                  counters.merge!(social) unless social.blank?
-                end
-              end
+              # pool.process do
+                social = fetch_social(source, url)
+                counters.merge!(social) unless social.blank?
+              # end
             end
-            pool.shutdown
+            # pool.shutdown
             break if counters.blank?
           end
         end
