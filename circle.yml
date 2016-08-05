@@ -10,7 +10,7 @@ deployment:
   hub:
     branch: features/docker
     commands:
-      - rake deploy
+      - bin/rails deploy
 
 test:
   override:
