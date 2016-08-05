@@ -1,7 +1,7 @@
 namespace :deploy do
   desc 'Load aws login'
   task :setup do
-    # system "eval `aws ecr get-login`"
+    system "eval `aws ecr get-login`"
   end
 
   desc 'Build docker image'
