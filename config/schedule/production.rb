@@ -1,5 +1,8 @@
 env :PATH, ENV['PATH']
 
+set :output, 'log/cron.log'
+job_type :rake, "cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output"
+
 # Social Counters
 every 20.minutes do
   rake 'social_counters:today'
