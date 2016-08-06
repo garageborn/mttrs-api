@@ -1,13 +1,13 @@
 def logger
-  if Rails.env.production? && ENV['LOGGLY_TOKEN'].present?
-    @logger ||= Logglier.new(
-      "https://logs-01.loggly.com/inputs/#{ ENV['LOGGLY_TOKEN'] }/tag/proxy/",
-      threaded: true,
-      format: :json
-    )
-  else
+  # if Rails.env.production? && ENV['LOGGLY_TOKEN'].present?
+  #   @logger ||= Logglier.new(
+  #     "https://logs-01.loggly.com/inputs/#{ ENV['LOGGLY_TOKEN'] }/tag/proxy/",
+  #     threaded: true,
+  #     format: :json
+  #   )
+  # else
     @logger ||= Logger.new("#{ Rails.root }/log/proxy.log")
-  end
+  # end
 end
 
 def debug_log(type, payload)
