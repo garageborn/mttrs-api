@@ -19,3 +19,4 @@ production:
   host: <%= ENV['DB_HOSTNAME'] %>
   port: <%= ENV['DB_PORT'] %>
   pool: <%= ENV['DB_POOL'] %>
+  reaping_frequency: 10
