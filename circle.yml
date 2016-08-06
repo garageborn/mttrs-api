@@ -1,8 +1,16 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  cache_directories:
+    - /tmp/docker
+
 deployment:
-  production:
-    branch: master
+  hub:
+    branch: features/docker
     commands:
-      - bundle exec cap production deploy branch=master
+      - bin/rails deploy
 
 test:
   override:

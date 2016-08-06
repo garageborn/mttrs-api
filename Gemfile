@@ -56,15 +56,9 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '3.5.0'
-  gem 'capistrano-passenger', '0.2.0'
-  gem 'capistrano-rails', '1.1.7'
-  gem 'capistrano-rbenv', '2.0.4'
-  gem 'capistrano-sidekiq', '0.5.4'
   gem 'foreman', '0.82.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
-  gem 'slackistrano', '3.0.1', require: false
 end
 
 group :test do
