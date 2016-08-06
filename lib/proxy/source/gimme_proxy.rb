@@ -27,14 +27,13 @@ class Proxy
       def all
         return if proxies.size >= rate_limit
         (rate_limit - proxies.size).times { request_new_proxy }
-        pool.shutdown
         proxies
       end
 
       private
 
       def request_new_proxy
-        pool.process { new_proxy_proc.call }
+        new_proxy_proc.call
       end
 
       def fetch_proxy!
@@ -84,11 +83,7 @@ class Proxy
         []
       end
 
-      def pool
-        Thread.pool(rate_limit)
-      end
-
-      memoize :proxies, :pool, :new_proxy_proc
+      memoize :proxies, :new_proxy_proc
     end
   end
 end
