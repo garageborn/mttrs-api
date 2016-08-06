@@ -4,7 +4,7 @@ machine:
 
 dependencies:
   cache_directories:
-    - /tmp/docker
+    - ~/docker
 
 deployment:
   hub:

@@ -10,11 +10,11 @@ namespace :deploy do
     repo = `git config --get remote.origin.url`.chomp
 
     system <<-CMD
-      mkdir -p /tmp/docker /tmp/docker/repo
-      if [[ -e /tmp/docker/image.tar ]]; then docker load -i /tmp/docker/image.tar; fi
-      git clone -b #{ branch } #{ repo } /tmp/docker/repo
-      cd /tmp/docker/repo && docker build --tag mttrs-api .
-      docker save mttrs-api > /tmp/docker/image.tar
+      mkdir -p ~/docker ~/docker/repo
+      if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+      git clone -b #{ branch } #{ repo } ~/docker/repo
+      cd ~/docker/repo && docker build --tag mttrs-api .
+      docker save mttrs-api > ~/docker/image.tar
     CMD
   end
 
