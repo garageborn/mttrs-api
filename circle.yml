@@ -8,7 +8,7 @@ dependencies:
 
 deployment:
   hub:
-    branch: features/docker
+    branch: master
     commands:
       - bin/rails deploy
 
