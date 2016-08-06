@@ -4,8 +4,8 @@ if defined? Raven
     config.environments = %w(production)
     config.tags = { environment: Rails.env }
     config.processors = [Raven::Processor::SanitizeData]
-    config.async = lambda do |event|
-      Thread.new { Raven.send(event) }
-    end
+    # config.async = lambda do |event|
+    #   Thread.new { Raven.send(event) }
+    # end
   end
 end
