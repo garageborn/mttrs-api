@@ -15,6 +15,7 @@ test:
 
 production:
   <<: *default
+  checkout_timeout: <%= ENV['DB_CHECKOUT_TIMEOUT'] %>
   database: <%= ENV['DB_NAME'] %>
   host: <%= ENV['DB_HOSTNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
