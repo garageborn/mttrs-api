@@ -61,12 +61,12 @@ class Proxy
     end
 
     def touch_current_proxy!(active)
-      # ::Proxy::Touch.run(id: current_proxy.id, active: active)
+      ::Proxy::Touch.run(id: current_proxy.id, active: active)
     end
 
     def retry_handler
       proc do
-        # ::Proxy::Desactivate.run(id: current_proxy.id)
+        ::Proxy::Desactivate.run(id: current_proxy.id)
         reload_current_proxy!
       end
     end
