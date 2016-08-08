@@ -1,7 +1,7 @@
 FROM ruby:2.3.1-slim
 
 # install dependencies
-RUN apt-get update -qq && apt-get install -y \
+RUN apt-get update -qq && apt-get install --fix-missing -y \
   build-essential \
   git-core \
   postgresql-common \
