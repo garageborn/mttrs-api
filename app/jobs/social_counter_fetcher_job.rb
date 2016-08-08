@@ -2,6 +2,8 @@ class SocialCounterFetcherJob < ActiveJob::Base
   extend Memoist
   attr_reader :link_id
 
+  queue_as :social_counter
+
   def perform(link_id)
     @link_id = link_id
     return if link.blank? || social.blank?

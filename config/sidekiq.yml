@@ -6,7 +6,8 @@ production:
 :queues:
   - [indexer, 5]
   - [story_builder, 3]
-  - [default, 1]
+  - [default, 2]
   - [mailers, 1]
+  - [social_counter, 1]
 :limits:
   story_builder: 1
