@@ -5,7 +5,8 @@ module Social
 
     class << self
       def ordered
-        [Social::Strategies::Buzzsumo, Social::Strategies::Direct]
+        # [Social::Strategies::Buzzsumo, Social::Strategies::Direct]
+        [Social::Strategies::Direct]
       end
     end
   end

@@ -38,10 +38,8 @@ module Social
 
         def process_source(source)
           pool.process do
-            Utils::Thread.with_connection do
-              social = fetch_social(source)
-              entry.merge!(social) unless social.blank?
-            end
+            social = fetch_social(source)
+            entry.merge!(social) unless social.blank?
           end
         end
 

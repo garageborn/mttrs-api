@@ -53,7 +53,9 @@ class Proxy
     end
 
     def current_proxy
-      @current_proxy ||= ::Proxy.sample
+      Utils::Thread.with_connection do
+        @current_proxy ||= ::Proxy.sample
+      end
     end
 
     def reload_current_proxy!
@@ -61,12 +63,16 @@ class Proxy
     end
 
     def touch_current_proxy!(active)
-      ::Proxy::Touch.run(id: current_proxy.id, active: active)
+      Utils::Thread.with_connection do
+        ::Proxy::Touch.run(id: current_proxy.id, active: active)
+      end
     end
 
     def retry_handler
       proc do
-        ::Proxy::Desactivate.run(id: current_proxy.id)
+        Utils::Thread.with_connection do
+          ::Proxy::Desactivate.run(id: current_proxy.id)
+        end
         reload_current_proxy!
       end
     end
