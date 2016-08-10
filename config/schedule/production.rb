@@ -24,8 +24,3 @@ end
 every 1.day, at: '3am' do
   rake 'links:purge'
 end
-
-# Proxies
-every 90.minutes do # 1.000 requests per 24 hours allowed, 60 requests per minute
-  rake 'proxies:import:gimme_proxy'
-end

@@ -417,6 +417,8 @@ GEM
       nokogiri (>= 1.4.1)
       trollop
     redis (3.3.0)
+    redis-namespace (1.5.2)
+      redis (~> 3.0, >= 3.0.4)
     reform (2.2.1)
       disposable (>= 0.3.0, < 0.4.0)
       representable (>= 2.4.0, < 3.1.0)
@@ -603,6 +605,7 @@ DEPENDENCIES
   rack-cors (= 0.4.0)
   rack-livereload (= 0.3.16)
   rails (= 5.0.0)
+  redis-namespace (= 1.5.2)
   reform-rails (= 0.1.4)
   retries (= 0.0.5)
   rspec-its (= 1.2.0)
