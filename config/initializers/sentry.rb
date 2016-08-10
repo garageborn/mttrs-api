@@ -1,6 +1,6 @@
 if defined? Raven
   Raven.configure do |config|
-    config.dsn = ENV.fetch('MTTRS_API_SENTRY_DNS')
+    config.dsn = ENV.fetch('MTTRS_API_SENTRY_DSN')
     config.environments = %w(production)
     config.tags = { environment: Rails.env }
     config.processors = [Raven::Processor::SanitizeData]
