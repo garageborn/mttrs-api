@@ -10,7 +10,6 @@ module Social
             return unless request && request.success?
             return if request.parsed_response.blank?
             parse(request.body).to_i
-          rescue *Proxy::RESCUE_FROM
           end
 
           private

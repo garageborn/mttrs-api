@@ -11,7 +11,6 @@ module Social
           )
           return unless request && request.parsed_response
           request.parsed_response.try(:[], 'count').to_i
-        rescue *Proxy::RESCUE_FROM
         end
       end
     end
