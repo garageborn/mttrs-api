@@ -4,6 +4,7 @@ FROM ruby:2.3.1-slim
 RUN apt-get update -qq && apt-get install --fix-missing -y \
   build-essential \
   git-core \
+  cron \
   postgresql-common \
   libpq-dev \
   nodejs
