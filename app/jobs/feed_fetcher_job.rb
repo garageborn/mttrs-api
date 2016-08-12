@@ -20,6 +20,7 @@ class FeedFetcherJob < ActiveJob::Base
   end
 
   def proccess(entry)
+    return if Link.where(url: entry.url).or(Link.where(source_url: entry.url)).exists?
     FeedEntryProcessJob.perform_later(
       feed.id,
       title: entry.title,
