@@ -3,7 +3,7 @@ default: &default
   encoding: unicode
   pool: 5
   reaping_frequency: 10
-  timeout: 10000
+  timeout: 5000
 
 development:
   <<: *default

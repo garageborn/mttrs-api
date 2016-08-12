@@ -18,7 +18,7 @@ class SocialCounterFetcherJob < ActiveJob::Base
   end
 
   def social
-    Social.count(link.url) || Social.count(link.source_url)
+    Social.count(link.url)
   end
 
   memoize :link, :social
