@@ -4,6 +4,6 @@ class Proxy
 
   def self.request(url, options: {}, verb: :get)
     params = options.to_h.merge(url: url)
-    HTTParty.send(verb, PROXY_URL, query: params, timeout: TIMEOUT )
+    HTTParty.send(verb, PROXY_URL, query: params, timeout: TIMEOUT)
   end
 end
