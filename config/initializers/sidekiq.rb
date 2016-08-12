@@ -14,7 +14,7 @@ end
 Sidekiq.configure_server do |config|
   config.redis = {
     url: REDIS_URL,
-    size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 30).to_i,
+    size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i,
     namespace: REDIS_NAMESPACE
   }
 end
