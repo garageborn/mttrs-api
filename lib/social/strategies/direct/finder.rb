@@ -19,10 +19,10 @@ module Social
         end
 
         def run
-          SOURCES.each { |source| process_source(source) }
-          pool.shutdown
-          return if entry.blank?
-          entry
+          # SOURCES.each { |source| process_source(source) }
+          # pool.shutdown
+          # return if entry.blank?
+          # entry
         end
 
         def counters
