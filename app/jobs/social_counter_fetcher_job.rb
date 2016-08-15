@@ -7,8 +7,9 @@ class SocialCounterFetcherJob < ActiveJob::Base
   def perform(link_id)
     @link_id = link_id
     return if link.blank? || social.blank?
+    Rails.logger.info social.to_h
 
-    SocialCounterUpdateJob.perform_now(link.id, social.to_h)
+    # SocialCounterUpdateJob.perform_now(link.id, social.to_h)
   end
 
   private
