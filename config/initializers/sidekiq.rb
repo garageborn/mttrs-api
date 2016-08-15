@@ -1,22 +1,21 @@
 require 'sidekiq'
+require 'redis-namespace'
 
-REDIS_URL = ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379')
-REDIS_NAMESPACE = "mttrs-api_#{ ENV['RAILS_ENV'] }"
+REDIS_OPTIONS = {
+  url: ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379'),
+  namespace: "mttrs-api:#{ ENV['RAILS_ENV'] }"
+}
 
 Sidekiq.configure_client do |config|
-  config.redis = {
-    url: REDIS_URL,
-    size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 1).to_i,
-    namespace: REDIS_NAMESPACE
-  }
+  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 1).to_i)
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = {
-    url: REDIS_URL,
-    size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i,
-    namespace: REDIS_NAMESPACE
-  }
+  config.server_middleware do |chain|
+    chain.remove Sidekiq::Middleware::Server::RetryJobs
+  end
+
+  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i)
 end
 
 Sidekiq.default_worker_options = {
