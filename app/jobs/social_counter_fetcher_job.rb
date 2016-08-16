@@ -6,14 +6,10 @@ class SocialCounterFetcherJob
   attr_reader :link_id
 
   def perform(link_id)
-    puts "\n perform #{ link_id }"
-    sleep 20
+    @link_id = link_id
+    return if link.blank? || social.blank?
 
-    # @link_id = link_id
-    # return if link.blank? || social.blank?
-    # Rails.logger.info social.to_h
-
-    # SocialCounterUpdateJob.new.perform(link.id, social.to_h)
+    SocialCounterUpdateJob.new.perform(link.id, social.to_h)
   end
 
   private
