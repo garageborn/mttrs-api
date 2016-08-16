@@ -1,7 +1,7 @@
 namespace :social_counters do
   def enqueue_social_counter_fetcher(scope)
     scope.find_each(batch_size: 50) do |link|
-      SocialCounterFetcherJob.perform_later(link.id)
+      SocialCounterFetcherJob.perform_async(link.id)
     end
   end
 

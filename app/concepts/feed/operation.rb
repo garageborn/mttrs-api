@@ -32,7 +32,7 @@ class Feed
     private
 
     def enqueue_feed_fetcher(*)
-      FeedFetcherJob.perform_later(model.id)
+      FeedFetcherJob.perform_async(model.id)
     end
   end
 

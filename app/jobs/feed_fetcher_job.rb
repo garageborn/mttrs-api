@@ -1,5 +1,8 @@
-class FeedFetcherJob < ActiveJob::Base
+class FeedFetcherJob
+  include Sidekiq::Worker
   extend Memoist
+
+  attr_reader :feed_id
 
   def perform(feed_id)
     @feed_id = feed_id
@@ -11,7 +14,7 @@ class FeedFetcherJob < ActiveJob::Base
   private
 
   def feed
-    Feed.find_by_id(@feed_id)
+    Feed.find_by_id(feed_id)
   end
 
   def rss
@@ -21,7 +24,7 @@ class FeedFetcherJob < ActiveJob::Base
 
   def proccess(entry)
     return if Link.where(url: entry.url).or(Link.where(source_url: entry.url)).exists?
-    FeedEntryProcessJob.perform_later(
+    FeedEntryProcessJob.perform_async(
       feed.id,
       title: entry.title,
       url: entry.url,

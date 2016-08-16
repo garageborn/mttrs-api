@@ -49,7 +49,7 @@ class Link
 
     def process(*)
       model.update_attributes(story_id: nil)
-      StoryBuilderJob.perform_later(model.id)
+      StoryBuilderJob.perform_async(model.id)
     end
   end
 end

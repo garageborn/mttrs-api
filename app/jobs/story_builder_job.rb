@@ -1,8 +1,9 @@
-class StoryBuilderJob < ActiveJob::Base
-  extend Memoist
+class StoryBuilderJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  queue_as :story_builder
+  sidekiq_options queue: :story_builder
   max_performs 2, key: proc { |link_id| link_id }
   attr_reader :link_id
 

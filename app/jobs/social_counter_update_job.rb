@@ -1,5 +1,7 @@
-class SocialCounterUpdateJob < ActiveJob::Base
+class SocialCounterUpdateJob
+  include Sidekiq::Worker
   extend Memoist
+
   attr_reader :link_id, :counters
 
   def perform(link_id, counters)

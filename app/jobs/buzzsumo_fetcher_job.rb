@@ -1,5 +1,7 @@
-class BuzzsumoFetcherJob < ActiveJob::Base
+class BuzzsumoFetcherJob
+  include Sidekiq::Worker
   extend Memoist
+
   attr_reader :publisher_id
 
   def perform(publisher_id)
@@ -21,7 +23,7 @@ class BuzzsumoFetcherJob < ActiveJob::Base
   end
 
   def proccess(entry)
-    BuzzsumoEntryProcessJob.perform_later(entry.to_h)
+    BuzzsumoEntryProcessJob.perform_async(entry.to_h)
   end
 
   memoize :publisher, :entries

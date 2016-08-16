@@ -1,9 +1,10 @@
-class FeedEntryProcessJob < ActiveJob::Base
-  extend Memoist
+class FeedEntryProcessJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  attr_reader :feed_id, :entry
   max_performs 2, key: proc { |_feed_id, entry| entry[:url] }
+  attr_reader :feed_id, :entry
 
   def perform(feed_id, entry)
     @feed_id = feed_id
@@ -48,21 +49,21 @@ class FeedEntryProcessJob < ActiveJob::Base
 
   def enqueue_link_full_fetch
     return unless link.missing_html?
-    FullFetchLinkJob.perform_later(link.id)
+    FullFetchLinkJob.perform_async(link.id)
   end
 
   def enqueue_social_counter_fetcher
-    SocialCounterFetcherJob.perform_later(link.id)
+    SocialCounterFetcherJob.perform_async(link.id)
   end
 
   def enqueue_link_categorizer
     return unless link.missing_categories?
-    LinkCategorizerJob.perform_later(link.id)
+    LinkCategorizerJob.perform_async(link.id)
   end
 
   def enqueue_story_builder
     return unless link.missing_story?
-    StoryBuilderJob.perform_later(link.id)
+    StoryBuilderJob.perform_async(link.id)
   end
 
   memoize :feed, :url, :link

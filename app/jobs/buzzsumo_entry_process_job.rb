@@ -1,9 +1,10 @@
-class BuzzsumoEntryProcessJob < ActiveJob::Base
-  extend Memoist
+class BuzzsumoEntryProcessJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  attr_reader :entry
   max_performs 1, key: proc { |entry| entry[:url] }
+  attr_reader :entry
 
   def perform(entry)
     @entry = entry
@@ -42,22 +43,22 @@ class BuzzsumoEntryProcessJob < ActiveJob::Base
 
   def enqueue_link_full_fetch
     return unless link.missing_html?
-    FullFetchLinkJob.perform_later(link.id)
+    FullFetchLinkJob.perform_async(link.id)
   end
 
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    SocialCounterUpdateJob.perform_now(link.id, counters.to_h)
+    SocialCounterUpdateJob.new.perform(link.id, counters.to_h)
   end
 
   def enqueue_link_categorizer
-    LinkCategorizerJob.perform_later(link.id)
+    LinkCategorizerJob.perform_async(link.id)
   end
 
   def enqueue_story_builder
     return unless link.missing_story?
-    StoryBuilderJob.perform_later(link.id)
+    StoryBuilderJob.perform_async(link.id)
   end
 
   memoize :publisher, :url, :link
