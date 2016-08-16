@@ -8,7 +8,7 @@ class FeedEntryProcessJob
 
   def perform(feed_id, entry)
     @feed_id = feed_id
-    @entry = entry
+    @entry = entry.with_indifferent_access
     return if entry.blank? || feed.blank? || url.blank?
 
     add_feed

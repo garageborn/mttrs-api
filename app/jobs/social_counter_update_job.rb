@@ -6,7 +6,7 @@ class SocialCounterUpdateJob
 
   def perform(link_id, counters)
     @link_id = link_id
-    @counters = counters
+    @counters = counters.with_indifferent_access
     return if link.blank? || counters.blank?
 
     update

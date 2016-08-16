@@ -7,7 +7,7 @@ class BuzzsumoEntryProcessJob
   attr_reader :entry
 
   def perform(entry)
-    @entry = entry
+    @entry = entry.with_indifferent_access
     return if entry.blank? || publisher.blank? || url.blank?
 
     result = link.save
