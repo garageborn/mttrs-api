@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SocialCounterUpdateJob do
   let(:link) { create(:link) }
-  let(:job) { SocialCounterUpdateJob.new(link.id) }
+  let(:job) { SocialCounterUpdateJob.new }
   before { allow(job).to receive(:link).and_return(link) }
 
   describe '#update' do
