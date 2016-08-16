@@ -1,9 +1,9 @@
 require 'sidekiq'
 require 'redis-namespace'
+Sidekiq.remove_delay!
 
 REDIS_OPTIONS = {
-  url: ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379'),
-  namespace: "mttrs-api:#{ ENV['RAILS_ENV'] }"
+  url: ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379')
 }
 
 Sidekiq.configure_client do |config|

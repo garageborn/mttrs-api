@@ -1,5 +1,7 @@
-class BuzzsumoFetcherJob < ActiveJob::Base
+class BuzzsumoFetcherJob
+  include Sidekiq::Worker
   extend Memoist
+
   attr_reader :publisher_id
 
   def perform(publisher_id)

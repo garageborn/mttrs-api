@@ -1,9 +1,10 @@
-class BuzzsumoEntryProcessJob < ActiveJob::Base
-  extend Memoist
+class BuzzsumoEntryProcessJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  attr_reader :entry
   max_performs 1, key: proc { |entry| entry[:url] }
+  attr_reader :entry
 
   def perform(entry)
     @entry = entry

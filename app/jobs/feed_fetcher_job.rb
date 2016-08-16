@@ -1,5 +1,8 @@
-class FeedFetcherJob < ActiveJob::Base
+class FeedFetcherJob
+  include Sidekiq::Worker
   extend Memoist
+
+  attr_reader :feed_id
 
   def perform(feed_id)
     @feed_id = feed_id
@@ -11,7 +14,7 @@ class FeedFetcherJob < ActiveJob::Base
   private
 
   def feed
-    Feed.find_by_id(@feed_id)
+    Feed.find_by_id(feed_id)
   end
 
   def rss

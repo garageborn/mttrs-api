@@ -1,9 +1,10 @@
-class FeedEntryProcessJob < ActiveJob::Base
-  extend Memoist
+class FeedEntryProcessJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  attr_reader :feed_id, :entry
   max_performs 2, key: proc { |_feed_id, entry| entry[:url] }
+  attr_reader :feed_id, :entry
 
   def perform(feed_id, entry)
     @feed_id = feed_id

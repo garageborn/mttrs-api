@@ -1,9 +1,10 @@
-class LinkCategorizerJob < ActiveJob::Base
-  extend Memoist
+class LinkCategorizerJob
+  include Sidekiq::Worker
   include Concerns::MaxPerforms
+  extend Memoist
 
-  attr_reader :link_id
   max_performs 2, key: proc { |link_id| link_id }
+  attr_reader :link_id
 
   def perform(link_id)
     @link_id = link_id
