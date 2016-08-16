@@ -7,7 +7,7 @@ module Social
       Hash.new.tap do |entry|
         strategies.each do |strategy|
           counters = strategy.count(url)
-          entry.merge(conters) if counters.present?
+          entry.merge!(counters.to_h) if counters.present?
         end
       end
     end
