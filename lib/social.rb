@@ -4,12 +4,12 @@ module Social
 
   class << self
     def count(url)
-      strategies.each do |strategy|
-        counters = strategy.count(url)
-        next if counters.blank?
-        return counters
+      Hash.new.tap do |entry|
+        strategies.each do |strategy|
+          counters = strategy.count(url)
+          entry.merge(conters) if counters.present?
+        end
       end
-      nil
     end
 
     private
