@@ -23,7 +23,7 @@ class BuzzsumoFetcherJob
   end
 
   def proccess(entry)
-    BuzzsumoEntryProcessJob.perform_later(entry.to_h)
+    BuzzsumoEntryProcessJob.perform_async(entry.to_h)
   end
 
   memoize :publisher, :entries

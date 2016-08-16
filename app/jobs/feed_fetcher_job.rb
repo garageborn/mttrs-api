@@ -24,7 +24,7 @@ class FeedFetcherJob
 
   def proccess(entry)
     return if Link.where(url: entry.url).or(Link.where(source_url: entry.url)).exists?
-    FeedEntryProcessJob.perform_later(
+    FeedEntryProcessJob.perform_async(
       feed.id,
       title: entry.title,
       url: entry.url,

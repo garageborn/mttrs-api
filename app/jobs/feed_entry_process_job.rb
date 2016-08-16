@@ -49,21 +49,21 @@ class FeedEntryProcessJob
 
   def enqueue_link_full_fetch
     return unless link.missing_html?
-    FullFetchLinkJob.perform_later(link.id)
+    FullFetchLinkJob.perform_async(link.id)
   end
 
   def enqueue_social_counter_fetcher
-    SocialCounterFetcherJob.perform_later(link.id)
+    SocialCounterFetcherJob.perform_async(link.id)
   end
 
   def enqueue_link_categorizer
     return unless link.missing_categories?
-    LinkCategorizerJob.perform_later(link.id)
+    LinkCategorizerJob.perform_async(link.id)
   end
 
   def enqueue_story_builder
     return unless link.missing_story?
-    StoryBuilderJob.perform_later(link.id)
+    StoryBuilderJob.perform_async(link.id)
   end
 
   memoize :feed, :url, :link
