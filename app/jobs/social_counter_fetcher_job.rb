@@ -15,7 +15,9 @@ class SocialCounterFetcherJob
   private
 
   def link
-    Link.find_by_id(link_id)
+    Utils::Thread.with_connection do
+      Link.find_by_id(link_id)
+    end
   end
 
   def social
