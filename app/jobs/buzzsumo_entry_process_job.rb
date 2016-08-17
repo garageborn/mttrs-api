@@ -4,7 +4,7 @@ class BuzzsumoEntryProcessJob
 
   sidekiq_options max_performs: {
     count: 1,
-    key: proc { |entry| entry[:url]
+    key: proc { |entry| entry[:url] }
   }
   attr_reader :entry
 
