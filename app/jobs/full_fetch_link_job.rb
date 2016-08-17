@@ -1,9 +1,11 @@
 class FullFetchLinkJob
   include Sidekiq::Worker
-  include Concerns::MaxPerforms
   extend Memoist
 
-  max_performs 2, key: proc { |link_id| link_id }
+  sidekiq_options max_performs: {
+    count: 2,
+    key: proc { |link_id| link_id }
+  }
   attr_reader :link_id
 
   def perform(link_id)
