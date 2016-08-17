@@ -1,5 +1,6 @@
 require 'sidekiq'
 require 'redis-namespace'
+require ::File.expand_path('../../../lib/max_performs', __FILE__)
 
 REDIS_URL = ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379')
 REDIS_NAMESPACE = "mttrs-api:#{ ENV['RAILS_ENV'] }"
@@ -8,14 +9,20 @@ REDIS_OPTIONS = { url: REDIS_URL, namespace: REDIS_NAMESPACE, network_timeout: R
 
 Sidekiq.configure_client do |config|
   config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 1).to_i)
+  config.client_middleware do |chain|
+    chain.add MaxPerforms::Client
+  end
 end
 
 Sidekiq.configure_server do |config|
+  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i)
+  config.client_middleware do |chain|
+    chain.add MaxPerforms::Client
+  end
   config.server_middleware do |chain|
+    chain.add MaxPerforms::Server
     chain.remove Sidekiq::Middleware::Server::RetryJobs
   end
-
-  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i)
 end
 
 Sidekiq.default_worker_options = {

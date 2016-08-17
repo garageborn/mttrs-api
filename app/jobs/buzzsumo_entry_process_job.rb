@@ -1,9 +1,11 @@
 class BuzzsumoEntryProcessJob
   include Sidekiq::Worker
-  include Concerns::MaxPerforms
   extend Memoist
 
-  max_performs 1, key: proc { |entry| entry[:url] }
+  sidekiq_options max_performs: {
+    count: 1,
+    key: proc { |entry| entry[:url] }
+  }
   attr_reader :entry
 
   def perform(entry)

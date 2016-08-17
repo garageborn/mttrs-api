@@ -1,13 +1,15 @@
 class FeedEntryProcessJob
   include Sidekiq::Worker
-  include Concerns::MaxPerforms
   extend Memoist
 
-  max_performs 2, key: proc { |_feed_id, entry| entry[:url] }
-  attr_reader :feed_id, :entry
+  sidekiq_options max_performs: {
+    count: 2,
+    key: proc { |entry| entry[:url] }
+  }
 
-  def perform(feed_id, entry)
-    @feed_id = feed_id
+  attr_reader :entry
+
+  def perform(entry)
     @entry = entry.with_indifferent_access
     return if entry.blank? || feed.blank? || url.blank?
 
@@ -24,7 +26,8 @@ class FeedEntryProcessJob
   private
 
   def feed
-    Feed.find_by_id(feed_id)
+    return if entry[:feed_id].blank?
+    Feed.find_by_id(entry[:feed_id])
   end
 
   def url
