@@ -3,7 +3,8 @@ require 'redis-namespace'
 
 REDIS_OPTIONS = {
   url: ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379'),
-  namespace: "mttrs-api:#{ ENV['RAILS_ENV'] }"
+  namespace: "mttrs-api:#{ ENV['RAILS_ENV'] }",
+  network_timeout: ENV.fetch('REDIS_TIMEOUT', 5)
 }
 
 Sidekiq.configure_client do |config|
