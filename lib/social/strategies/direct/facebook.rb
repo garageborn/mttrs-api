@@ -6,7 +6,7 @@ module Social
           def count(url)
             request = Proxy.request("http://graph.facebook.com/?id=#{ url }")
             return unless request && request.success?
-            parse(request.body).try(:[], 'shares').to_i
+            parse(request.body).try(:[], 'share_count').to_i
           end
 
           private
@@ -14,7 +14,7 @@ module Social
           def parse(body)
             json = body.to_s.scan(/(\{.+\})/).flatten.first
             return if json.blank?
-            JSON.parse(json)
+            JSON.parse(json).try(:[], 'share')
           end
         end
       end
