@@ -28,6 +28,6 @@ class SocialCounter < ApplicationRecord
   end
 
   def update_total_social_on_link
-    link.update_column(:total_social, total)
+    link.update_attributes(total_social: total)
   end
 end
