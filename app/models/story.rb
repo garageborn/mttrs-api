@@ -38,6 +38,8 @@ class Story < ApplicationRecord
   scope :recent, lambda {
     joins(:main_link).where(links: { main: true }).order('links.published_at desc')
   }
+  scope :today, -> { published_at(Time.zone.now) }
+  scope :yesterday, -> { published_at(1.day.ago) }
 
   def refresh!(_link = nil)
     return destroy if links.blank?
