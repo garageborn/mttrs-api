@@ -6,7 +6,7 @@ class FeedFetcherJob
 
   def perform(feed_id)
     @feed_id = feed_id
-    return if feed.blank?
+    return if feed.blank? || rss.blank?
 
     rss.entries.each { |entry| proccess(entry) }
   end
@@ -18,7 +18,7 @@ class FeedFetcherJob
   end
 
   def rss
-    request = Utils::UrlFetcher.run(feed.url)
+    return if request.blank? || request.body.blank?
     Feedjira::Feed.parse(request.body)
   end
 
@@ -34,5 +34,19 @@ class FeedFetcherJob
     )
   end
 
-  memoize :feed, :rss
+  def request
+    direct_request || proxied_request
+  end
+
+  def direct_request
+    request = Utils::UrlFetcher.run(feed.url)
+    return request if request.success?
+  end
+
+  def proxied_request
+    request = Proxy.request(feed.url)
+    return request if request.success?
+  end
+
+  memoize :feed, :rss, :request, :direct_request, :proxied_request
 end
