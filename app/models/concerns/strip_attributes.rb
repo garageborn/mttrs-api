@@ -1,6 +1,11 @@
 module Concerns
   module StripAttributes
     extend ActiveSupport::Concern
+    REPLACEMENTS = {
+      /[\r\n]+/ => ' ',
+      '  ' => ' ',
+      '&amp;' => '&'
+    }.freeze
 
     included do
       class << self
@@ -16,8 +21,9 @@ module Concerns
       end
 
       def sanitize_attribute(attribute, value)
-        self[attribute] = ActionView::Base.full_sanitizer.sanitize(value.to_s).
-                          strip.gsub(/[\r\n]+/, ' ').gsub('  ', ' ')
+        new_value = ActionView::Base.full_sanitizer.sanitize(value.to_s)
+        REPLACEMENTS.each { |regexp, value| new_value.gsub!(regexp, value) }
+        self[attribute] = new_value
       end
     end
   end
