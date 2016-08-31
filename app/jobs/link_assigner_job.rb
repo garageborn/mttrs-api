@@ -6,8 +6,10 @@ class LinkAssignerJob
     count: 2,
     key: proc { |link_id| link_id }
   }
+  attr_reader :link_id
 
   def perform(link_id)
+    @link_id = link_id
     return if link_id.blank?
     categories_assigned = assign_categories
     namespaces_assigned = assign_namespaces
