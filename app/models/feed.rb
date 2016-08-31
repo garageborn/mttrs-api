@@ -7,6 +7,7 @@ class Feed < ApplicationRecord
 
   validates :publisher, :category, presence: true
   validates :url, presence: true, uniqueness: { case_sensitive: false }
+  validates :language, presence: true, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }
 
   scope :order_by_links_count, lambda {
     joins(:links).group('feeds.id').order('count(feeds.id) desc')

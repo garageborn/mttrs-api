@@ -51,7 +51,6 @@ class FeedEntryProcessJob
   end
 
   def enqueue_link_full_fetch
-    return unless link.missing_html?
     FullFetchLinkJob.perform_async(link.id)
   end
 

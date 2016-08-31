@@ -22,7 +22,7 @@ module Concerns
 
       def sanitize_attribute(attribute, value)
         new_value = ActionView::Base.full_sanitizer.sanitize(value.to_s)
-        REPLACEMENTS.each { |regexp, value| new_value.gsub!(regexp, value) }
+        REPLACEMENTS.each { |regexp, replacement_value| new_value.gsub!(regexp, replacement_value) }
         self[attribute] = new_value
       end
     end

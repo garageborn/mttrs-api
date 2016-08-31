@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 35) do
+ActiveRecord::Schema.define(version: 36) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,11 +55,12 @@ ActiveRecord::Schema.define(version: 35) do
   end
 
   create_table "feeds", force: :cascade do |t|
-    t.integer  "publisher_id", null: false
-    t.integer  "category_id",  null: false
-    t.citext   "url",          null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "publisher_id",                null: false
+    t.integer  "category_id",                 null: false
+    t.citext   "url",                         null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "language",     default: "en", null: false
     t.index ["category_id", "publisher_id"], name: "index_feeds_on_category_id_and_publisher_id", using: :btree
     t.index ["publisher_id", "category_id"], name: "index_feeds_on_publisher_id_and_category_id", using: :btree
     t.index ["url"], name: "index_feeds_on_url", unique: true, using: :btree

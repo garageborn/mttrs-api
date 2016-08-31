@@ -6,7 +6,6 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
         property :id
         property :name
 
@@ -28,7 +27,6 @@ module Admin
       end
 
       class Feed < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
         property :url
 
         def links_count

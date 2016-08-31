@@ -17,7 +17,7 @@ module Admin
 
     def create
       run ::Namespace::Create do |op|
-        flash[:notice] = "Namespace '#{ op.model.url }' created"
+        flash[:notice] = "Namespace '#{ op.model.slug }' created"
         return redirect_to [:admin, :namespaces]
       end
       render_form
@@ -25,7 +25,7 @@ module Admin
 
     def update
       run ::Namespace::Update do |op|
-        flash[:notice] = "Namespace '#{ op.model.url }' updated"
+        flash[:notice] = "Namespace '#{ op.model.slug }' updated"
         return redirect_to [:admin, :namespaces]
       end
       render_form
@@ -33,7 +33,7 @@ module Admin
 
     def destroy
       run ::Namespace::Destroy do |op|
-        flash[:notice] = "Namespace '#{ op.model.url }' destroyed"
+        flash[:notice] = "Namespace '#{ op.model.slug }' destroyed"
         return redirect_to [:admin, :namespaces]
       end
       render_form

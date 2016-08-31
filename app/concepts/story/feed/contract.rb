@@ -1,9 +1,5 @@
-require 'reform/form/validation/unique_validator'
-
 class Feed
   class Contract < Reform::Form
-    include Reform::Form::ModelReflections
-
     property :publisher_id
     property :category_id
     property :url

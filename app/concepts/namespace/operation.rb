@@ -1,10 +1,10 @@
-class Feed
+class Namespace
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 20, order_by_links_count: true }.freeze
+    DEFAULT_PARAMS = { page: 1, per: 20, order_by_slug: true }.freeze
 
     def model!(params)
-      ::Feed.filter(params)
+      ::Namespace.filter(params)
     end
 
     def params!(params)
@@ -12,27 +12,18 @@ class Feed
     end
   end
 
-  class Form < Trailblazer::Operation
-    include Callback
+  class Operation < Trailblazer::Operation
     include Model
-    model Feed
+    model Namespace
+  end
+
+  class Form < Operation
     contract Contract
 
-    callback :after_save do
-      on_change :enqueue_feed_fetcher
-    end
-
     def process(params)
-      validate(params[:feed]) do
+      validate(params[:namespace]) do
         contract.save
-        callback!(:after_save)
       end
-    end
-
-    private
-
-    def enqueue_feed_fetcher(*)
-      FeedFetcherJob.perform_async(model.id)
     end
   end
 
@@ -40,13 +31,13 @@ class Feed
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
   end
 
-  class Destroy < Trailblazer::Operation
+  class Destroy < Operation
     include Model
-    model Feed, :find
+    action :find
 
     def process(*)
       model.destroy
