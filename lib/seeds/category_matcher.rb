@@ -11,7 +11,7 @@ module Seeds
     def run!
       return if publisher.blank?
       publisher.category_matchers.replace(category_matchers)
-      publisher.links.each { |link| LinkCategorizerJob.perform_async(link.id) }
+      publisher.links.each { |link| LinkAssignerJob.perform_async(link.id) }
     end
 
     def test

@@ -4,6 +4,7 @@ class Story < ApplicationRecord
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, inverse_of: :story, dependent: :nullify, after_remove: :refresh!, after_add: :refresh!
+  has_many :namespaces, -> { distinct }, through: :links
   has_many :publishers, -> { distinct }, through: :links
   has_one :main_link, -> { where(main: true) }, class_name: 'Link'
 

@@ -6,4 +6,8 @@ RSpec.describe Story do
   it { should have_db_column(:updated_at).with_options(null: false) }
 
   it { should have_many(:links).dependent(:nullify).inverse_of(:story) }
+  it { should have_many(:publishers).through(:links) }
+  it { should have_many(:categories).through(:links) }
+  it { should have_many(:namespaces).through(:links) }
+  it { should have_one(:main_link).class_name('Link') }
 end
