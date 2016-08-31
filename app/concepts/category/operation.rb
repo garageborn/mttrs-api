@@ -39,6 +39,7 @@ class Category
     def process(*)
       model.destroy
       model.links.clear
+      model.namespaces.clear
     end
   end
 end

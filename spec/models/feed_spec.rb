@@ -12,6 +12,7 @@ RSpec.describe Feed do
   it { should belong_to(:publisher) }
   it { should belong_to(:category) }
   it { should have_and_belong_to_many(:links) }
+  it { should have_and_belong_to_many(:namespaces) }
 
   describe 'Validations' do
     subject { build(:feed) }

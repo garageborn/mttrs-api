@@ -18,7 +18,7 @@ class FeedEntryProcessJob
     return unless result
     enqueue_link_full_fetch
     enqueue_social_counter_fetcher
-    enqueue_link_categorizer
+    enqueue_link_assigner
     enqueue_story_builder
     result
   end
@@ -59,9 +59,8 @@ class FeedEntryProcessJob
     SocialCounterFetcherJob.perform_async(link.id)
   end
 
-  def enqueue_link_categorizer
-    return unless link.missing_categories?
-    LinkCategorizerJob.perform_async(link.id)
+  def enqueue_link_assigner
+    LinkAssignerJob.perform_async(link.id)
   end
 
   def enqueue_story_builder

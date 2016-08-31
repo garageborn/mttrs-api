@@ -30,6 +30,7 @@ RSpec.describe Link do
   it { should have_many(:related).class_name('Link').through(:story).source(:links) }
   it { should have_many(:social_counters).dependent(:destroy).inverse_of(:link) }
   it { should have_and_belong_to_many(:categories) }
+  it { should have_and_belong_to_many(:namespaces) }
 
   describe 'Validations' do
     subject { build(:link) }

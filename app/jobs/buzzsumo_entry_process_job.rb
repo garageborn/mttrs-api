@@ -16,7 +16,7 @@ class BuzzsumoEntryProcessJob
     return unless result
     enqueue_link_full_fetch
     enqueue_social_counter_update
-    enqueue_link_categorizer
+    enqueue_link_assigner
     enqueue_story_builder
     result
   end
@@ -54,8 +54,8 @@ class BuzzsumoEntryProcessJob
     SocialCounterUpdateJob.new.perform(link.id, counters.to_h)
   end
 
-  def enqueue_link_categorizer
-    LinkCategorizerJob.perform_async(link.id)
+  def enqueue_link_assigner
+    LinkAssignerJob.perform_async(link.id)
   end
 
   def enqueue_story_builder

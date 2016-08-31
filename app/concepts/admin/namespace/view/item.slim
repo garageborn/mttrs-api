@@ -1,0 +1,12 @@
+li
+  .feeds-item-title
+    strong= url
+    = link_to 'Edit', [:edit, :admin, model], class: 'feeds-edit-button'
+
+    .feeds-item-stats
+      span #{ publisher_name }/#{ category_name }
+      span Total: #{ links_count }
+      span Today: #{ today_links_count }
+      span Yesterday: #{ yesterday_links_count }
+      span Last week: #{ last_week_links_count }
+      span Last month: #{ last_month_links_count }

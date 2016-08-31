@@ -3,6 +3,7 @@ class Feed < ApplicationRecord
   belongs_to :publisher
   belongs_to :category
   has_and_belongs_to_many :links
+  has_and_belongs_to_many :namespaces
 
   validates :publisher, :category, presence: true
   validates :url, presence: true, uniqueness: { case_sensitive: false }
