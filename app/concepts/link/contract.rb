@@ -2,6 +2,7 @@ class Link
   class Contract < Reform::Form
     property :category_ids
     property :language
+    property :namespace_ids
     property :published_at
     property :publisher_id
     property :source_url
