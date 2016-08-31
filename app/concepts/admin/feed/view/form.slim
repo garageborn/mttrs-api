@@ -4,7 +4,9 @@
   .form-inputs
     = f.association :publisher, include_blank: false
     = f.association :category, include_blank: false
+    = f.association :namespaces, as: :check_boxes, label_method: :slug
     = f.input :url
+    = f.input :language
 
   .form-actions
     = f.button :submit

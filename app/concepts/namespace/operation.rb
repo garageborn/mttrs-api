@@ -1,10 +1,10 @@
-class Category
+class Namespace
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
+    DEFAULT_PARAMS = { page: 1, per: 20, order_by_slug: true }.freeze
 
     def model!(params)
-      ::Category.filter(params)
+      ::Namespace.filter(params)
     end
 
     def params!(params)
@@ -12,13 +12,16 @@ class Category
     end
   end
 
-  class Form < Trailblazer::Operation
+  class Operation < Trailblazer::Operation
     include Model
-    model Category
+    model Namespace
+  end
+
+  class Form < Operation
     contract Contract
 
     def process(params)
-      validate(params[:category]) do
+      validate(params[:namespace]) do
         contract.save
       end
     end
@@ -28,13 +31,13 @@ class Category
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
   end
 
-  class Destroy < Trailblazer::Operation
+  class Destroy < Operation
     include Model
-    model Category, :find
+    action :find
 
     def process(*)
       model.destroy

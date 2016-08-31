@@ -1,13 +1,10 @@
-class CategoryMatcher
+class Feed
   class Contract < Reform::Form
     property :publisher_id
     property :category_id
-    property :url_matcher
-
+    property :url
     validates :publisher_id, :category_id, presence: true
-    validates :url_matcher,
-              unique: { case_sensitive: false, scope: :publisher_id },
-              allow_blank: true
+    validates :url, presence: true, unique: { case_sensitive: false }
 
     def prepopulate!(options)
       self.publisher_id ||= options[:params][:publisher_id]

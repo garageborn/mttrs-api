@@ -1,5 +1,3 @@
-require 'reform/form/validation/unique_validator'
-
 class Publisher
   class Contract < Reform::Form
     property :name

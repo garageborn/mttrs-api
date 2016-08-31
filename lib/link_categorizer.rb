@@ -15,7 +15,7 @@ class LinkCategorizer
   end
 
   def categories
-    matchers.select(&:match?).map(&:category)
+    (feeds_categories + matchers_categories).flatten.compact.uniq
   end
 
   private
@@ -26,5 +26,13 @@ class LinkCategorizer
     end
   end
 
-  memoize :matchers, :categories
+  def matchers_categories
+    matchers.select(&:match?).map(&:category).to_a
+  end
+
+  def feeds_categories
+    link.feeds.map(&:category).to_a
+  end
+
+  memoize :matchers, :matchers_categories, :feeds_categories, :categories
 end

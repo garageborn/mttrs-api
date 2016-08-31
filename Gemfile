@@ -33,7 +33,7 @@ gem 'sidekiq-limit_fetch', '3.3.0'
 gem 'sidekiq-unique-jobs', '4.0.18'
 gem 'simple_form', '3.3.1'
 gem 'sinatra', github: 'sinatra', require: false
-gem 'slim-rails', '3.1.0'
+gem 'slim-rails', '3.1.1'
 gem 'thread', '0.2.2'
 gem 'trailblazer-cells', '0.0.3'
 gem 'trailblazer-rails', '0.3.2'

@@ -2,8 +2,8 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :name
-    = f.association :namespaces, as: :check_boxes, label_method: :slug
+    = f.input :slug
+    = f.association :categories, as: :check_boxes
 
   .form-actions
     = f.button :submit

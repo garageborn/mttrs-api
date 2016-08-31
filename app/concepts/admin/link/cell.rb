@@ -6,8 +6,6 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
-        include ActionView::Helpers::TranslationHelper
         property :title
 
         def published_at
@@ -37,9 +35,6 @@ module Admin
       end
 
       class SocialCounter < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
-        include ActionView::Helpers::TranslationHelper
-
         def total
           number_with_delimiter(model.total)
         end
@@ -70,8 +65,6 @@ module Admin
       end
 
       class Form < Trailblazer::Cell
-        include ActionView::Helpers::FormOptionsHelper
-        include ActionView::Helpers::DateHelper
       end
     end
   end

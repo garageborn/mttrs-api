@@ -6,7 +6,6 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
         property :url
 
         def publisher_name
@@ -39,7 +38,6 @@ module Admin
       end
 
       class Form < Trailblazer::Cell
-        include ActionView::Helpers::FormOptionsHelper
       end
     end
   end

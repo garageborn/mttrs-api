@@ -6,8 +6,6 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
-
         property :title
         property :links
 
@@ -26,8 +24,6 @@ module Admin
       end
 
       class SocialCounter < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
-
         def total_social
           number_with_delimiter(model.total_social)
         end
@@ -54,7 +50,6 @@ module Admin
       end
 
       class Link < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
         property :title
 
         def categories_names

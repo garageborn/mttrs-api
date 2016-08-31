@@ -7,41 +7,41 @@ module Seeds
         category = Category.find_or_initialize_by(name: feed[0])
 
         if category.new_record?
-          print '* '
+          Rails.logger.info '* '
           category.save
         else
-          print '- '
+          Rails.logger.info '- '
         end
 
-        puts category.name
+        Rails.logger.info category.name
 
         feed[1].each do |publisher, url|
           publisher = Publisher.find_or_initialize_by(name: publisher)
           feed = Feed.find_or_initialize_by(url: url)
 
           if publisher.new_record?
-            print '  * '
+            Rails.logger.info '  * '
             publisher.save
           else
-            print '  - '
+            Rails.logger.info '  - '
           end
 
-          puts publisher.name
+          Rails.logger.info publisher.name
 
           if feed.new_record?
-            print '    * '
+            Rails.logger.info '    * '
             feed.category = category
             feed.publisher = publisher
             feed.save
           else
-            print '    - '
+            Rails.logger.info '    - '
           end
 
-          puts feed.url
-          puts
+          Rails.logger.info feed.url
+          Rails.logger.info
         end
 
-        puts
+        Rails.logger.info
       end
     end
   end

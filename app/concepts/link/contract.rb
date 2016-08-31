@@ -1,9 +1,5 @@
-require 'reform/form/validation/unique_validator'
-
 class Link
   class Contract < Reform::Form
-    include Reform::Form::ModelReflections
-
     property :category_ids
     property :language
     property :published_at
