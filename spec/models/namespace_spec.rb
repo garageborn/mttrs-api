@@ -8,4 +8,5 @@ RSpec.describe Namespace do
   it { should have_and_belong_to_many(:categories) }
   it { should have_and_belong_to_many(:feeds) }
   it { should have_and_belong_to_many(:links) }
+  it { should have_many(:stories).through(:links) }
 end

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
+  include Tenant::Concerns::Controller
 
   private
 
