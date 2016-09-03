@@ -1,32 +1,42 @@
 module Namespaced
   module Model
     extend ActiveSupport::Concern
-    extend Memoist
+
+    module InstanceMethods
+      extend Memoist
+
+      def namespaces
+        ::Namespaced::Association.new(self)
+      end
+
+      def namespaces=(value)
+        namespaces.set(value)
+      end
+
+      def namespace_ids=(value)
+        namespaces.set(value)
+        write_attribute(:namespace_ids, value.to_a)
+      end
+
+      memoize :namespaces
+    end
 
     included do
-      scope :namespace, lambda { |id|
-        where("#{ table_name }.namespace_ids @> '{?}'", id)
-      }
+      class << self
+        def namespaced_model(options = {})
+          include InstanceMethods unless options[:through].present?
 
-      default_scope lambda {
-        return all if ::Namespaced.current.blank?
-        namespace(::Namespaced.current.id)
-      }
+          define_singleton_method(:namespace) do |id|
+            return joins(options[:through]) if options[:through].present?
+            where("#{ table_name }.namespace_ids @> '{?}'", id)
+          end
+
+          default_scope lambda {
+            return all if ::Namespaced.current.blank?
+            namespace(::Namespaced.current.id)
+          }
+        end
+      end
     end
-
-    def namespaces
-      ::Namespaced::Association.new(self)
-    end
-
-    def namespaces=(value)
-      namespaces.set(value)
-    end
-
-    def namespace_ids=(value)
-      namespaces.set(value)
-      write_attribute(:namespace_ids, value.to_a)
-    end
-
-    memoize :namespaces
   end
 end

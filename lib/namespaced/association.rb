@@ -1,7 +1,8 @@
 module Namespaced
   class Association
     attr_reader :model
-    delegate :compact, :each, :include?, :inspect, :map, :to_a, :to_s, to: :namespaces
+    delegate :blank?, :compact, :each, :include?, :inspect, :map,
+             :present?, :to_a, :to_s, to: :namespaces
     delegate :namespace_ids, to: :model
 
     def initialize(model)

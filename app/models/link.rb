@@ -47,6 +47,7 @@ class Link < ApplicationRecord
     categories.clear
   end
 
+  namespaced_model
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 

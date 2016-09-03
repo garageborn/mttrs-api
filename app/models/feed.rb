@@ -14,6 +14,8 @@ class Feed < ApplicationRecord
     joins(:links).group('feeds.id').order('count(feeds.id) desc')
   }
 
+  namespaced_model
+
   def uri
     Addressable::URI.parse(url)
   end
