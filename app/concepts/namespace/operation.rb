@@ -41,8 +41,18 @@ class Namespace
 
     def process(*)
       model.destroy
-      model.links.clear
-      model.namespaces.clear
+      clear_association(model.categories)
+      clear_association(model.feeds)
+      clear_association(model.links)
+    end
+
+    private
+
+    def clear_association(association)
+      association.each do |model|
+        model.delete(model)
+        model.save
+      end
     end
   end
 end

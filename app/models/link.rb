@@ -4,7 +4,7 @@ class Link < ApplicationRecord
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
-  include Tenant::Concerns::Model
+  include Namespaced::Model
 
   belongs_to :story
   belongs_to :publisher
@@ -45,10 +45,8 @@ class Link < ApplicationRecord
   before_destroy do
     feeds.clear
     categories.clear
-    namespaces.clear
   end
 
-  # tenant namespace: :namespace
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 

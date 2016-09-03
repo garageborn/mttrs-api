@@ -1,9 +1,9 @@
 class Category < ApplicationRecord
   include Concerns::Filterable
+  include Namespaced::Model
   extend FriendlyId
 
   has_and_belongs_to_many :links
-  has_and_belongs_to_many :namespaces
   has_many :category_matchers, inverse_of: :category, dependent: :destroy
   has_many :feeds, inverse_of: :category, dependent: :destroy
   has_many :publishers, through: :links

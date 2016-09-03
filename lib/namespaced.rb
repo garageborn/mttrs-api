@@ -1,6 +1,7 @@
 module Namespaced
-  autoload :Concerns, './lib/namespaced/concerns'
-  autoload :Scopes, './lib/namespaced/scopes'
+  autoload :Association, './lib/namespaced/association'
+  autoload :Controller, './lib/namespaced/controller'
+  autoload :Model, './lib/namespaced/model'
 
   class << self
     def current=(namespace)
