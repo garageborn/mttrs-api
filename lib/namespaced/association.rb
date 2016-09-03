@@ -1,7 +1,7 @@
 module Namespaced
   class Association
     attr_reader :model
-    delegate :to_a, :to_s, :each, :map, :inspect, to: :namespaces
+    delegate :compact, :each, :include?, :inspect, :map, :to_a, :to_s, to: :namespaces
     delegate :namespace_ids, to: :model
 
     def initialize(model)
@@ -10,7 +10,7 @@ module Namespaced
 
     def set(values)
       @namespaces = nil
-      model.write_attribute(:namespace_ids, values_to_namespaces(values))
+      model.write_attribute(:namespace_ids, values_to_namespace_ids(values))
       namespaces
     end
 
@@ -19,7 +19,12 @@ module Namespaced
     end
 
     def <<(namespace)
-      set(namespace_ids.push(namespace.id))
+      values = values_to_namespace_ids(namespace)
+      set(namespace_ids + values)
+    end
+
+    def +(other)
+      (namespaces + other.namespaces).compact.uniq
     end
 
     def delete(value)
@@ -30,12 +35,15 @@ module Namespaced
 
     private
 
-    def values_to_namespaces(values)
-      case
-      when values.is_a?(Namespace) then values.id
-      when values.try(:first).respond_to?(:id) then values.map(&:id)
-      else values
-      end.to_a.compact.uniq.sort
+    def values_to_namespace_ids(values)
+      ids = case
+            when values.is_a?(Namespace) then [values.id]
+            when values.try(:first).respond_to?(:id) then values.map(&:id)
+            when values.is_a?(Integer) then [values]
+            else values
+            end
+      return ids.compact.uniq.sort if ids.is_a?(Array)
+      ids
     end
   end
 end

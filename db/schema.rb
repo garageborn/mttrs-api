@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 40) do
     t.citext   "slug",                       null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
-    t.jsonb    "namespace_ids", default: [], null: false
+    t.integer  "namespace_ids", default: [], null: false, array: true
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
     t.index ["namespace_ids"], name: "index_categories_on_namespace_ids", using: :gin
     t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 40) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.string   "language",      default: "en", null: false
-    t.jsonb    "namespace_ids", default: [],   null: false
+    t.integer  "namespace_ids", default: [],   null: false, array: true
     t.index ["category_id", "publisher_id"], name: "index_feeds_on_category_id_and_publisher_id", using: :btree
     t.index ["namespace_ids"], name: "index_feeds_on_namespace_ids", using: :gin
     t.index ["publisher_id", "category_id"], name: "index_feeds_on_publisher_id_and_category_id", using: :btree
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 40) do
     t.integer  "story_id"
     t.binary   "html"
     t.boolean  "main",             default: false, null: false
-    t.jsonb    "namespace_ids",    default: [],    null: false
+    t.integer  "namespace_ids",    default: [],    null: false, array: true
     t.index ["main", "story_id"], name: "index_links_on_main_and_story_id", using: :btree
     t.index ["namespace_ids"], name: "index_links_on_namespace_ids", using: :gin
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree

@@ -4,8 +4,8 @@ module Namespaced
     extend Memoist
 
     included do
-      scope :namespace, lambda { |ids|
-        where("namespace_ids @> '[?]'", [ids].flatten)
+      scope :namespace, lambda { |id|
+        where("#{ table_name }.namespace_ids @> '{?}'", id)
       }
 
       default_scope lambda {

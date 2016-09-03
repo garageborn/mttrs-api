@@ -1,7 +1,6 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
-  include Namespaced::Model
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, inverse_of: :story, dependent: :nullify, after_remove: :refresh!, after_add: :refresh!
