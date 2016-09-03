@@ -1,6 +1,7 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
+  include Tenant::Concerns::Model
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, inverse_of: :story, dependent: :nullify, after_remove: :refresh!, after_add: :refresh!
@@ -15,6 +16,12 @@ class Story < ApplicationRecord
   }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
+  scope :namespace, lambda { |id|
+    p '---------story namespace', id
+    all
+    # joins(links: :namespaces).where(namespaces: { id: id })
+    # joins(links: :links_namespaces).where(links: { links_namespaces: { namespace_id: id } })
+  }
   scope :order_by_links_count, lambda {
     joins(:links).group(:id).order('count(links.id) desc')
   }
@@ -41,6 +48,8 @@ class Story < ApplicationRecord
   }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
+
+  # tenant namespace: :namespace
 
   def refresh!(_link = nil)
     return destroy if links.blank?

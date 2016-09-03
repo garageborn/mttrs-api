@@ -8,6 +8,7 @@ RSpec.describe Link do
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:language) }
   it { should have_db_column(:main).with_options(null: false) }
+  it { should have_db_column(:namespace_ids).with_options(null: false, default: []) }
   it { should have_db_column(:published_at).with_options(null: false) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:source_url).with_options(null: false) }
@@ -20,6 +21,7 @@ RSpec.describe Link do
   it { should have_db_index(:source_url).unique(true) }
   it { should have_db_index([:story_id, :main]) }
   it { should have_db_index([:main, :story_id]) }
+  it { should have_db_index(:namespace_ids) }
   it { should have_db_index(:total_social) }
   it { should have_db_index(:url).unique(true) }
 
@@ -30,7 +32,6 @@ RSpec.describe Link do
   it { should have_many(:related).class_name('Link').through(:story).source(:links) }
   it { should have_many(:social_counters).dependent(:destroy).inverse_of(:link) }
   it { should have_and_belong_to_many(:categories) }
-  it { should have_and_belong_to_many(:namespaces) }
 
   describe 'Validations' do
     subject { build(:link) }

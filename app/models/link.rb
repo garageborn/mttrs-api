@@ -10,7 +10,6 @@ class Link < ApplicationRecord
   belongs_to :publisher
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :feeds
-  has_and_belongs_to_many :namespaces
   has_many :related, through: :story, class_name: 'Link', source: :links
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
@@ -20,15 +19,9 @@ class Link < ApplicationRecord
   validates :language, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }, allow_blank: true
   validate :validate_unique_link
 
-  # default_scope {
-  #   joins(:links_namespaces).where(links_namespaces: { namespace_id: 2 })
-  # }
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
-  scope :namespace, lambda { |id|
-    joins(:links_namespaces).where(links_namespaces: { namespace_id: id })
-  }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
@@ -48,7 +41,6 @@ class Link < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-
   after_commit :instrument_commit
   before_destroy do
     feeds.clear
@@ -56,7 +48,7 @@ class Link < ApplicationRecord
     namespaces.clear
   end
 
-  tenant namespace: :namespace
+  # tenant namespace: :namespace
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 

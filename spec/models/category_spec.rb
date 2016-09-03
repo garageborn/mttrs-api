@@ -3,13 +3,14 @@ require 'rails_helper'
 RSpec.describe Category do
   it { should have_db_column(:name).with_options(null: false) }
   it { should have_db_column(:slug).with_options(null: false) }
+  it { should have_db_column(:namespace_ids).with_options(null: false, default: []) }
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_index(:name).unique(true) }
+  it { should have_db_index(:namespace_ids) }
   it { should have_db_index(:slug).unique(true) }
 
   it { should have_and_belong_to_many(:links) }
-  it { should have_and_belong_to_many(:namespaces) }
   it { should have_many(:category_matchers).inverse_of(:category).dependent(:destroy) }
   it { should have_many(:feeds).inverse_of(:category).dependent(:destroy) }
   it { should have_many(:publishers).through(:links) }
