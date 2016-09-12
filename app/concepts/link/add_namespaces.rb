@@ -4,11 +4,10 @@ class Link
 
     def process(_params)
       return invalid! if model.blank?
-
-      namespaces.each do |namespace|
-        next if model.namespaces.include?(namespace)
-        model.namespaces << namespace
+      namespace_ids.each do |namespace_id|
+        model.namespaces << namespace_id
       end
+      model.save
     end
 
     private
@@ -17,18 +16,18 @@ class Link
       ::Link.find_by_id(params[:id])
     end
 
-    def namespaces
-      (feeds_namespaces + categories_namespaces).flatten.compact.uniq
+    def namespace_ids
+      (feeds_namespace_ids + categories_namespace_ids).flatten.compact.uniq
     end
 
-    def feeds_namespaces
-      model.feeds.map(&:namespaces).flatten.compact.uniq
+    def feeds_namespace_ids
+      model.feeds.map(&:namespace_ids).flatten.compact.uniq
     end
 
-    def categories_namespaces
-      model.categories.map(&:namespaces).flatten.compact.uniq
+    def categories_namespace_ids
+      model.categories.map(&:namespace_ids).flatten.compact.uniq
     end
 
-    memoize :namespaces, :feeds_namespaces, :categories_namespaces
+    memoize :namespace_ids, :feeds_namespace_ids, :categories_namespace_ids
   end
 end

@@ -10,18 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 36) do
+ActiveRecord::Schema.define(version: 40) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
 
   create_table "categories", force: :cascade do |t|
-    t.citext   "name",       null: false
-    t.citext   "slug",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.citext   "name",                       null: false
+    t.citext   "slug",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.integer  "namespace_ids", default: [], null: false, array: true
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
+    t.index ["namespace_ids"], name: "index_categories_on_namespace_ids", using: :gin
     t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
   end
 
@@ -32,15 +34,6 @@ ActiveRecord::Schema.define(version: 36) do
     t.datetime "updated_at",  null: false
     t.index ["category_id", "link_id"], name: "index_categories_links_on_category_id_and_link_id", unique: true, using: :btree
     t.index ["link_id", "category_id"], name: "index_categories_links_on_link_id_and_category_id", unique: true, using: :btree
-  end
-
-  create_table "categories_namespaces", id: false, force: :cascade do |t|
-    t.integer  "category_id",  null: false
-    t.integer  "namespace_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["category_id", "namespace_id"], name: "index_categories_namespaces_on_category_id_and_namespace_id", unique: true, using: :btree
-    t.index ["namespace_id", "category_id"], name: "index_categories_namespaces_on_namespace_id_and_category_id", unique: true, using: :btree
   end
 
   create_table "category_matchers", force: :cascade do |t|
@@ -55,13 +48,15 @@ ActiveRecord::Schema.define(version: 36) do
   end
 
   create_table "feeds", force: :cascade do |t|
-    t.integer  "publisher_id",                null: false
-    t.integer  "category_id",                 null: false
-    t.citext   "url",                         null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.string   "language",     default: "en", null: false
+    t.integer  "publisher_id",                 null: false
+    t.integer  "category_id",                  null: false
+    t.citext   "url",                          null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "language",      default: "en", null: false
+    t.integer  "namespace_ids", default: [],   null: false, array: true
     t.index ["category_id", "publisher_id"], name: "index_feeds_on_category_id_and_publisher_id", using: :btree
+    t.index ["namespace_ids"], name: "index_feeds_on_namespace_ids", using: :gin
     t.index ["publisher_id", "category_id"], name: "index_feeds_on_publisher_id_and_category_id", using: :btree
     t.index ["url"], name: "index_feeds_on_url", unique: true, using: :btree
   end
@@ -73,15 +68,6 @@ ActiveRecord::Schema.define(version: 36) do
     t.datetime "updated_at", null: false
     t.index ["feed_id", "link_id"], name: "index_feeds_links_on_feed_id_and_link_id", unique: true, using: :btree
     t.index ["link_id", "feed_id"], name: "index_feeds_links_on_link_id_and_feed_id", unique: true, using: :btree
-  end
-
-  create_table "feeds_namespaces", id: false, force: :cascade do |t|
-    t.integer  "feed_id",      null: false
-    t.integer  "namespace_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["feed_id", "namespace_id"], name: "index_feeds_namespaces_on_feed_id_and_namespace_id", unique: true, using: :btree
-    t.index ["namespace_id", "feed_id"], name: "index_feeds_namespaces_on_namespace_id_and_feed_id", unique: true, using: :btree
   end
 
   create_table "links", force: :cascade do |t|
@@ -100,21 +86,14 @@ ActiveRecord::Schema.define(version: 36) do
     t.integer  "story_id"
     t.binary   "html"
     t.boolean  "main",             default: false, null: false
+    t.integer  "namespace_ids",    default: [],    null: false, array: true
     t.index ["main", "story_id"], name: "index_links_on_main_and_story_id", using: :btree
+    t.index ["namespace_ids"], name: "index_links_on_namespace_ids", using: :gin
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
     t.index ["source_url"], name: "index_links_on_source_url", unique: true, using: :btree
     t.index ["story_id", "main"], name: "index_links_on_story_id_and_main", using: :btree
     t.index ["total_social"], name: "index_links_on_total_social", using: :btree
     t.index ["url"], name: "index_links_on_url", unique: true, using: :btree
-  end
-
-  create_table "links_namespaces", id: false, force: :cascade do |t|
-    t.integer  "link_id",      null: false
-    t.integer  "namespace_id", null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.index ["link_id", "namespace_id"], name: "index_links_namespaces_on_link_id_and_namespace_id", unique: true, using: :btree
-    t.index ["namespace_id", "link_id"], name: "index_links_namespaces_on_namespace_id_and_link_id", unique: true, using: :btree
   end
 
   create_table "namespaces", force: :cascade do |t|

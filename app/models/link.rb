@@ -4,12 +4,12 @@ class Link < ApplicationRecord
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
+  include Namespaced::Model
 
   belongs_to :story
   belongs_to :publisher
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :feeds
-  has_and_belongs_to_many :namespaces
   has_many :related, through: :story, class_name: 'Link', source: :links
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
@@ -45,9 +45,9 @@ class Link < ApplicationRecord
   before_destroy do
     feeds.clear
     categories.clear
-    namespaces.clear
   end
 
+  namespaced_model
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 

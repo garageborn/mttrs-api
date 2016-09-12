@@ -3,7 +3,7 @@
 
   .form-inputs
     = f.input :name
-    = f.association :namespaces, as: :check_boxes, label_method: :slug
+    = f.collection_check_boxes :namespace_ids, Namespace.all, :id, :slug
 
   .form-actions
     = f.button :submit

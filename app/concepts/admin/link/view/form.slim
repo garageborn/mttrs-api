@@ -5,7 +5,7 @@
     = f.input :title
     = f.association :publisher
     = f.association :categories, as: :check_boxes
-    = f.association :namespaces, as: :check_boxes, label_method: :slug
+    = f.collection_check_boxes :namespace_ids, Namespace.all, :id, :slug
     = f.input :published_at
     = f.input :source_url
     = f.input :url

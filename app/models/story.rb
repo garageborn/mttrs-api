@@ -1,13 +1,12 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
+  include Namespaced::Model
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, inverse_of: :story, dependent: :nullify, after_remove: :refresh!, after_add: :refresh!
   has_many :publishers, -> { distinct }, through: :links
   has_one :main_link, -> { where(main: true) }, class_name: 'Link'
-
-  delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
   scope :category_slug, lambda { |slug|
     joins(:categories).group(:id).where(categories: { slug: slug })
@@ -40,6 +39,9 @@ class Story < ApplicationRecord
   }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
+
+  namespaced_model through: :links
+  delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
   def refresh!(_link = nil)
     return destroy if links.blank?
