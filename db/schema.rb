@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 40) do
+ActiveRecord::Schema.define(version: 41) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 40) do
     t.integer  "namespace_ids",    default: [],    null: false, array: true
     t.index ["main", "story_id"], name: "index_links_on_main_and_story_id", using: :btree
     t.index ["namespace_ids"], name: "index_links_on_namespace_ids", using: :gin
+    t.index ["published_at"], name: "index_links_on_published_at", using: :btree
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
     t.index ["source_url"], name: "index_links_on_source_url", unique: true, using: :btree
     t.index ["story_id", "main"], name: "index_links_on_story_id_and_main", using: :btree

@@ -17,13 +17,14 @@ RSpec.describe Link do
   it { should have_db_column(:total_social).with_options(null: false, default: 0) }
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:url).with_options(null: false) }
+  it { should have_db_index(:namespace_ids) }
+  it { should have_db_index(:published_at) }
   it { should have_db_index(:publisher_id) }
   it { should have_db_index(:source_url).unique(true) }
-  it { should have_db_index([:story_id, :main]) }
-  it { should have_db_index([:main, :story_id]) }
-  it { should have_db_index(:namespace_ids) }
   it { should have_db_index(:total_social) }
   it { should have_db_index(:url).unique(true) }
+  it { should have_db_index([:main, :story_id]) }
+  it { should have_db_index([:story_id, :main]) }
 
   it { should belong_to(:publisher) }
   it { should belong_to(:story) }
