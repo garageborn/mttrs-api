@@ -1,5 +1,0 @@
-class RemoveMainFromLinks < ActiveRecord::Migration
-  def change
-    remove_column :links, :main, :bolean, null: false, default: false
-  end
-end

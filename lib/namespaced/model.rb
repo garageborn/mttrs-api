@@ -26,14 +26,16 @@ module Namespaced
         def namespaced_model(options = {})
           include InstanceMethods unless options[:through].present?
 
-          define_singleton_method(:namespace) do |id|
-            return joins(options[:through]) if options[:through].present?
-            where("#{ table_name }.namespace_ids @> '{?}'", id)
+          unless defined?(namespace)
+            define_singleton_method(:namespace) do |id|
+              return joins(options[:through]) if options[:through].present?
+              where("#{ table_name }.namespace_ids @> '{?}'", id)
+            end
           end
 
           default_scope lambda {
             return all if ::Namespaced.current.blank?
-            namespace(::Namespaced.current.id)
+            send(:namespace, ::Namespaced.current.id)
           }
         end
       end
