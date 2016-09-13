@@ -22,5 +22,5 @@ every 10.minutes do
 end
 
 every 1.day, at: '3am' do
-  rake 'links:purge'
+  rake 'links:purge:run'
 end

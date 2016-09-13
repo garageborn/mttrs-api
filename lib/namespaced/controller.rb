@@ -8,7 +8,7 @@ module Namespaced
       private
 
       def set_namespace
-        Namespaced.current = params.delete(:namespace)
+        Namespaced.current = request.headers['X-Namespace']
       end
     end
   end

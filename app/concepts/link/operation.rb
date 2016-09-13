@@ -40,7 +40,14 @@ class Link
 
     def process(*)
       model.destroy
-      model.links.clear
+      destroy_image
+    end
+
+    private
+
+    def destroy_image
+      return if model.image_source_url.blank?
+      Cloudinary::Uploader.destroy(model.image_source_url, type: :fetch)
     end
   end
 
