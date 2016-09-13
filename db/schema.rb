@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 41) do
+ActiveRecord::Schema.define(version: 43) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,28 +71,25 @@ ActiveRecord::Schema.define(version: 41) do
   end
 
   create_table "links", force: :cascade do |t|
-    t.integer  "publisher_id",                     null: false
-    t.citext   "url",                              null: false
-    t.citext   "title",                            null: false
+    t.integer  "publisher_id",                  null: false
+    t.citext   "url",                           null: false
+    t.citext   "title",                         null: false
     t.text     "description"
     t.text     "content"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.citext   "source_url",                       null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.citext   "source_url",                    null: false
     t.citext   "image_source_url"
-    t.integer  "total_social",     default: 0,     null: false
-    t.datetime "published_at",                     null: false
+    t.integer  "total_social",     default: 0,  null: false
+    t.datetime "published_at",                  null: false
     t.string   "language"
     t.integer  "story_id"
     t.binary   "html"
-    t.boolean  "main",             default: false, null: false
-    t.integer  "namespace_ids",    default: [],    null: false, array: true
-    t.index ["main", "story_id"], name: "index_links_on_main_and_story_id", using: :btree
+    t.integer  "namespace_ids",    default: [], null: false, array: true
     t.index ["namespace_ids"], name: "index_links_on_namespace_ids", using: :gin
     t.index ["published_at"], name: "index_links_on_published_at", using: :btree
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
     t.index ["source_url"], name: "index_links_on_source_url", unique: true, using: :btree
-    t.index ["story_id", "main"], name: "index_links_on_story_id_and_main", using: :btree
     t.index ["total_social"], name: "index_links_on_total_social", using: :btree
     t.index ["url"], name: "index_links_on_url", unique: true, using: :btree
   end
@@ -144,6 +141,15 @@ ActiveRecord::Schema.define(version: 41) do
     t.datetime "updated_at",               null: false
     t.integer  "total_social", default: 0, null: false
     t.index ["total_social"], name: "index_stories_on_total_social", using: :btree
+  end
+
+  create_table "story_namespaces", force: :cascade do |t|
+    t.integer "story_id",                 null: false
+    t.integer "namespace_id",             null: false
+    t.integer "main_link_id",             null: false
+    t.integer "total_social", default: 0, null: false
+    t.index ["namespace_id", "story_id"], name: "index_story_namespaces_on_namespace_id_and_story_id", unique: true, using: :btree
+    t.index ["story_id", "namespace_id"], name: "index_story_namespaces_on_story_id_and_namespace_id", unique: true, using: :btree
   end
 
 end
