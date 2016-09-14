@@ -1,21 +1,18 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
-  include Namespaced::Model
 
   has_many :categories, -> { distinct }, through: :links
-  has_many :links, inverse_of: :story, dependent: :nullify, after_remove: :refresh!, after_add: :refresh!
+  has_many :story_links, inverse_of: :story, dependent: :destroy, after_remove: :refresh!, after_add: :refresh!
+  has_many :links, through: :story_links
   has_many :publishers, -> { distinct }, through: :links
-  has_one :main_link, -> { where(main: true) }, class_name: 'Link'
+  # has_one :main_link, -> { where(main: true) }, class_name: 'Link'
 
   scope :category_slug, lambda { |slug|
     joins(:categories).group(:id).where(categories: { slug: slug })
   }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
-  scope :order_by_links_count, lambda {
-    joins(:links).group(:id).order('count(links.id) desc')
-  }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
@@ -40,7 +37,6 @@ class Story < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-  namespaced_model through: :links
   delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
   def refresh!(_link = nil)
