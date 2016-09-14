@@ -133,8 +133,8 @@ ActiveRecord::Schema.define(version: 11) do
     t.integer  "link_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["link_id", "story_id"], name: "index_story_links_on_link_id_and_story_id", using: :btree
-    t.index ["story_id", "link_id"], name: "index_story_links_on_story_id_and_link_id", using: :btree
+    t.index ["link_id", "story_id"], name: "index_story_links_on_link_id_and_story_id", unique: true, using: :btree
+    t.index ["story_id", "link_id"], name: "index_story_links_on_story_id_and_link_id", unique: true, using: :btree
   end
 
 end
