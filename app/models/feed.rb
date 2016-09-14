@@ -2,6 +2,8 @@ class Feed < ApplicationRecord
   include Concerns::Filterable
 
   belongs_to :publisher
+  has_many :categories, through: :category_feeds
+  has_many :category_feeds, inverse_of: :feed, dependent: :destroy
   has_many :feed_links, inverse_of: :feed, dependent: :destroy
   has_many :links, through: :feed_links
 

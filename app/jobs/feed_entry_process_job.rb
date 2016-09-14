@@ -13,10 +13,8 @@ class FeedEntryProcessJob
     @entry = entry.with_indifferent_access
     return if entry.blank? || feed.blank? || urls.blank?
 
-    Link::Create.run(link: attributes) do |op|
-      @link = op.model
-      add_feed
-    end
+    result, _op = Link::Create.run(link: attributes)
+    result
   end
 
   private
@@ -34,26 +32,41 @@ class FeedEntryProcessJob
   end
 
   def attributes
-    description = link.try(:description) || entry[:summary]
-    image_source_url = link.try(:image_source_url) || entry[:image]
-    published_at = link.try(:published_at) || Time.zone.at(entry[:published].to_i) || Time.zone.now
-    publisher_id = link.try(:publisher_id) || feed.publisher_id
-    title = link.try(:title) || entry[:title]
-
     {
       description: description,
       image_source_url: image_source_url,
       published_at: published_at,
       publisher_id: publisher_id,
       title: title,
-      urls: urls
+      urls: urls,
+      feed_ids: feed_ids
     }
   end
 
-  def add_feed
-    return if link.feeds.include?(feed)
-    link.feeds << feed
+  def description
+    link.try(:description) || entry[:summary]
   end
 
-  memoize :urls, :attributes
+  def image_source_url
+    link.try(:image_source_url) || entry[:image]
+  end
+
+  def published_at
+    link.try(:published_at) || Time.zone.at(entry[:published].to_i) || Time.zone.now
+  end
+
+  def publisher_id
+    link.try(:publisher_id) || feed.publisher_id
+  end
+
+  def title
+    link.try(:title) || entry[:title]
+  end
+
+  def feed_ids
+    (link.try(:feed_ids).to_a + [feed.id]).compact.uniq
+  end
+
+
+  memoize :link, :feed, :urls, :attributes
 end

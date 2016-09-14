@@ -8,8 +8,10 @@ RSpec.describe Category do
   it { should have_db_index(:name).unique(true) }
   it { should have_db_index(:slug).unique(true) }
 
+  it { should have_many(:category_feeds).inverse_of(:category).dependent(:destroy) }
   it { should have_many(:category_links).inverse_of(:category).dependent(:destroy) }
   it { should have_many(:category_matchers).inverse_of(:category).dependent(:destroy) }
+  it { should have_many(:feeds).through(:category_feeds) }
   it { should have_many(:links).through(:category_links) }
 
   # describe 'Validations' do

@@ -27,8 +27,11 @@ class Link
     def enqueue_jobs(*)
       enqueue_link_full_fetch
       enqueue_social_counter_fetcher
-      enqueue_link_assigner
       enqueue_story_builder
+    end
+
+    def perform_add_categories
+      Apartment::Tenant.each { Link::AddCategories.run(id: model.id) }
     end
 
     def enqueue_link_full_fetch
@@ -38,10 +41,6 @@ class Link
 
     def enqueue_social_counter_fetcher
       SocialCounterFetcherJob.perform_async(model.id)
-    end
-
-    def enqueue_link_assigner
-      LinkAssignerJob.perform_async(model.id)
     end
 
     def enqueue_story_builder

@@ -54,10 +54,6 @@ class BuzzsumoEntryProcessJob
     Link::UpdateSocialCounter.run(id: link.id, counters: counters)
   end
 
-  def enqueue_link_assigner
-    LinkAssignerJob.perform_async(link.id)
-  end
-
   def enqueue_story_builder
     return unless link.missing_story?
     StoryBuilderJob.perform_async(link.id)

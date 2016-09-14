@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 12) do
+ActiveRecord::Schema.define(version: 13) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 12) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
+  end
+
+  create_table "category_feeds", force: :cascade do |t|
+    t.integer  "category_id", null: false
+    t.integer  "feed_id",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["category_id", "feed_id"], name: "index_category_feeds_on_category_id_and_feed_id", unique: true, using: :btree
+    t.index ["feed_id", "category_id"], name: "index_category_feeds_on_feed_id_and_category_id", unique: true, using: :btree
   end
 
   create_table "category_links", force: :cascade do |t|
