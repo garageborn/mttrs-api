@@ -67,6 +67,5 @@ class FeedEntryProcessJob
     (link.try(:feed_ids).to_a + [feed.id]).compact.uniq
   end
 
-
   memoize :link, :feed, :urls, :attributes
 end
