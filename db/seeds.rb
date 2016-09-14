@@ -1,5 +1,6 @@
-Apartment::Tenant.create(:default)
-Apartment::Tenant.create(:mttrs_br)
+Apartment.tenant_names.each do |tenant|
+  Apartment::Tenant.create(tenant)
+end
 
 tech_crunch = Publisher.create(
   name: 'TechCrunch',

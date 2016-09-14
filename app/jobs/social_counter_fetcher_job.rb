@@ -7,9 +7,9 @@ class SocialCounterFetcherJob
 
   def perform(link_id)
     @link_id = link_id
-    return if link.blank? || social.blank?
+    return if link.blank? || counters.blank?
 
-    SocialCounterUpdateJob.new.perform(link.id, social.to_h)
+    Link::UpdateSocialCounter.run(id: link.id, counters: counters)
   end
 
   private
@@ -20,9 +20,9 @@ class SocialCounterFetcherJob
     end
   end
 
-  def social
-    Social.count(link.url)
+  def counters
+    Social.count(link.uri)
   end
 
-  memoize :link, :social
+  memoize :link, :counters
 end

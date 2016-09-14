@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 11) do
+ActiveRecord::Schema.define(version: 12) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,13 +64,20 @@ ActiveRecord::Schema.define(version: 11) do
     t.index ["url"], name: "index_feeds_on_url", unique: true, using: :btree
   end
 
+  create_table "link_urls", force: :cascade do |t|
+    t.integer  "link_id",    null: false
+    t.citext   "url",        null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["link_id", "url"], name: "index_link_urls_on_link_id_and_url", unique: true, using: :btree
+    t.index ["url"], name: "index_link_urls_on_url", unique: true, using: :btree
+  end
+
   create_table "links", force: :cascade do |t|
     t.integer  "publisher_id",                 null: false
-    t.citext   "url",                          null: false
     t.citext   "title",                        null: false
     t.text     "description"
     t.text     "content"
-    t.citext   "source_url",                   null: false
     t.citext   "image_source_url"
     t.integer  "total_social",     default: 0, null: false
     t.datetime "published_at",                 null: false
@@ -80,9 +87,7 @@ ActiveRecord::Schema.define(version: 11) do
     t.datetime "updated_at",                   null: false
     t.index ["published_at"], name: "index_links_on_published_at", using: :btree
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
-    t.index ["source_url"], name: "index_links_on_source_url", unique: true, using: :btree
     t.index ["total_social"], name: "index_links_on_total_social", using: :btree
-    t.index ["url"], name: "index_links_on_url", unique: true, using: :btree
   end
 
   create_table "performed_jobs", force: :cascade do |t|

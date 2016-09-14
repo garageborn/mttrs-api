@@ -10,6 +10,7 @@ class Link < ApplicationRecord
   has_many :category_links, inverse_of: :link, dependent: :destroy
   has_many :feed_links, inverse_of: :link, dependent: :destroy
   has_many :feeds, through: :feed_links
+  has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
 
@@ -39,8 +40,24 @@ class Link < ApplicationRecord
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 
+  def self.find_by_url(url)
+    joins(:link_urls).find_by(link_urls: { url: url })
+  end
+
   def uri
-    Addressable::URI.parse(url)
+    return if link_urls.blank?
+    Addressable::URI.parse(link_urls.last.url)
+  end
+
+  def urls
+    link_urls.map(&:url)
+  end
+
+  def urls=(value)
+    value.each do |url|
+      next if urls.include?(url)
+      link_urls.build(url: url)
+    end
   end
 
   private

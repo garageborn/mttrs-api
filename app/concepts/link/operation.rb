@@ -17,21 +17,11 @@ class Link
     model Link
   end
 
-  class Form < Operation
-    contract Contract
-
-    def process(params)
-      validate(params[:link]) do
-        contract.save
-      end
-    end
-  end
-
   class Create < Form
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
   end
 

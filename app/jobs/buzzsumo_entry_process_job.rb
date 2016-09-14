@@ -51,7 +51,7 @@ class BuzzsumoEntryProcessJob
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    SocialCounterUpdateJob.new.perform(link.id, counters.to_h)
+    Link::UpdateSocialCounter.run(id: link.id, counters: counters)
   end
 
   def enqueue_link_assigner

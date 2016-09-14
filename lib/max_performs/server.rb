@@ -21,6 +21,7 @@ module MaxPerforms
     private
 
     def should_perform?(performed_job, options)
+      return true if Rails.env.development?
       return false if performed_job.running? || performed_job.success?
       performed_job.performs < options[:count].to_i
     end

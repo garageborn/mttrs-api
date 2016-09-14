@@ -4,11 +4,9 @@ class CreateLinks < ActiveRecord::Migration
 
     create_table :links do |t|
       t.integer :publisher_id, null: false
-      t.citext :url, null: false
       t.citext :title, null: false
       t.text :description
       t.text :content
-      t.citext :source_url, null: false
       t.citext :image_source_url
       t.integer :total_social, default: 0, null: false
       t.datetime :published_at, null: false
@@ -19,8 +17,6 @@ class CreateLinks < ActiveRecord::Migration
 
     add_index :links, :published_at
     add_index :links, :publisher_id
-    add_index :links, :source_url, unique: true
     add_index :links, :total_social
-    add_index :links, :url, unique: true
   end
 end

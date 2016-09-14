@@ -15,6 +15,7 @@ Apartment.configure do |config|
     Feed
     FeedLink
     Link
+    LinkUrl
     Publisher
     SocialCounter
     PerformedJob
