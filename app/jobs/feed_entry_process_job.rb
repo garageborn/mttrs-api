@@ -11,38 +11,43 @@ class FeedEntryProcessJob
 
   def perform(entry)
     @entry = entry.with_indifferent_access
-    return if entry.blank? || feed.blank? || url.blank?
+    return if entry.blank? || feed.blank? || urls.blank?
 
-    add_feed
-    result = link.save
-    return unless result
-    enqueue_link_full_fetch
-    enqueue_social_counter_fetcher
-    enqueue_link_assigner
-    enqueue_story_builder
-    result
+    Link::Create.run(link: attributes) do |op|
+      @link = op.model
+      add_feed
+    end
   end
 
   private
 
+  def link
+    @link ||= ::Link.find_by_url(entry[:url])
+  end
+
   def feed
-    return if entry[:feed_id].blank?
     Feed.find_by_id(entry[:feed_id])
   end
 
-  def url
+  def urls
     Utils::UrlDiscovery.run(entry[:url])
   end
 
-  def link
-    Link.where(url: url).first_or_initialize.tap do |link|
-      link.description ||= entry[:summary]
-      link.image_source_url ||= entry[:image]
-      link.published_at ||= Time.zone.at(entry[:published].to_i) || Time.zone.now
-      link.publisher ||= feed.publisher
-      link.source_url ||= entry[:url]
-      link.title ||= entry[:title]
-    end
+  def attributes
+    description = link.try(:description) || entry[:summary]
+    image_source_url = link.try(:image_source_url) || entry[:image]
+    published_at = link.try(:published_at) || Time.zone.at(entry[:published].to_i) || Time.zone.now
+    publisher_id = link.try(:publisher_id) || feed.publisher_id
+    title = link.try(:title) || entry[:title]
+
+    {
+      description: description,
+      image_source_url: image_source_url,
+      published_at: published_at,
+      publisher_id: publisher_id,
+      title: title,
+      urls: urls
+    }
   end
 
   def add_feed
@@ -50,22 +55,5 @@ class FeedEntryProcessJob
     link.feeds << feed
   end
 
-  def enqueue_link_full_fetch
-    FullFetchLinkJob.perform_async(link.id)
-  end
-
-  def enqueue_social_counter_fetcher
-    SocialCounterFetcherJob.perform_async(link.id)
-  end
-
-  def enqueue_link_assigner
-    LinkAssignerJob.perform_async(link.id)
-  end
-
-  def enqueue_story_builder
-    return unless link.missing_story?
-    StoryBuilderJob.perform_async(link.id)
-  end
-
-  memoize :feed, :url, :link
+  memoize :urls, :attributes
 end

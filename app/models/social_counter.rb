@@ -3,12 +3,6 @@ class SocialCounter < ApplicationRecord
   belongs_to :link
   has_one :parent, class_name: 'SocialCounter', foreign_key: :parent_id
 
-  validates :link, presence: true
-  validates :facebook, :linkedin, :twitter, :pinterest, :google_plus, :total,
-            presence: true,
-            numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-  validates :parent_id, uniqueness: true, allow_blank: true
-
   before_save :update_total
   after_commit :update_total_social_on_link, on: :create
 

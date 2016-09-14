@@ -4,20 +4,15 @@ class Link < ApplicationRecord
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
-  include Namespaced::Model
 
-  belongs_to :story
   belongs_to :publisher
-  has_and_belongs_to_many :categories
-  has_and_belongs_to_many :feeds
-  has_many :related, through: :story, class_name: 'Link', source: :links
+  has_many :categories, through: :category_links
+  has_many :category_links, inverse_of: :link, dependent: :destroy
+  has_many :feed_links, inverse_of: :link, dependent: :destroy
+  has_many :feeds, through: :feed_links
+  has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :social_counter, -> { order(id: :desc) }
-
-  validates :title, :publisher, :published_at, presence: true
-  validates :source_url, :url, presence: true, uniqueness: { case_sensitive: false }
-  validates :language, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }, allow_blank: true
-  validate :validate_unique_link
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
@@ -42,27 +37,30 @@ class Link < ApplicationRecord
   scope :yesterday, -> { published_at(1.day.ago) }
 
   after_commit :instrument_commit
-  before_destroy do
-    feeds.clear
-    categories.clear
-  end
-
-  namespaced_model
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 
+  def self.find_by_url(url)
+    joins(:link_urls).find_by(link_urls: { url: url })
+  end
+
   def uri
-    Addressable::URI.parse(url)
+    return if link_urls.blank?
+    Addressable::URI.parse(link_urls.last.url)
+  end
+
+  def urls
+    link_urls.map(&:url)
+  end
+
+  def urls=(value)
+    value.each do |url|
+      next if urls.include?(url)
+      link_urls.build(url: url)
+    end
   end
 
   private
-
-  def validate_unique_link
-    return if publisher.blank?
-    other_link = publisher.links.where(title: title).where.not(id: id).first
-    return if other_link.blank?
-    errors.add(:url, :invalid) if other_link.uri.path == uri.path
-  end
 
   def instrument_commit
     ActiveSupport::Notifications.instrument('link.committed', self)

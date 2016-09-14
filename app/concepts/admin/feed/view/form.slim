@@ -4,7 +4,6 @@
   .form-inputs
     = f.association :publisher, include_blank: false
     = f.association :category, include_blank: false
-    = f.collection_check_boxes :namespace_ids, Namespace.all, :id, :slug
     = f.input :url
     = f.input :language
 

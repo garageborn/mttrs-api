@@ -50,7 +50,6 @@ class Feed
 
     def process(*)
       model.destroy
-      model.links.clear
     end
   end
 end

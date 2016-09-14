@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     resources :links, except: :show do
       put :remove_from_story, on: :member
     end
-    resources :namespaces, except: :show
     resources :publishers, except: :show
     resources :stories, except: :show
     get '/elastic', to: 'elastic#index'

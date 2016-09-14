@@ -1,52 +1,28 @@
-if Rails.env.development?
-  world_news = Category.find_or_create_by(name: 'World News')
-  business = Category.find_or_create_by(name: 'Business')
+Apartment.tenant_names.each do |tenant|
+  Apartment::Tenant.create(tenant)
+end
+
+tech_crunch = Publisher.create(
+  name: 'TechCrunch',
+  domain: 'techcrunch.com',
+  feeds: [
+    Feed.new(url: 'http://feeds.feedburner.com/TechCrunch/startups')
+  ]
+)
+buzz_feed = Publisher.create(
+  name: 'BuzzFeed',
+  domain: 'buzzfeed.com',
+  feeds: [
+    Feed.new(url: 'https://www.buzzfeed.com/index.xml'),
+    Feed.new(url: 'https://www.buzzfeed.com/index.xml?country=pt-br', language: 'pt')
+  ]
+)
+
+Apartment::Tenant.switch(:default) do
   technology = Category.find_or_create_by(name: 'Technology')
-  entertainment = Category.find_or_create_by(name: 'Entertainment')
   humor = Category.find_or_create_by(name: 'Humor')
-  science = Category.find_or_create_by(name: 'Science')
+end
 
-  Publisher.create(
-    name: 'CNN',
-    feeds: [
-      Feed.new(category: world_news, url: 'http://rss.cnn.com/rss/edition.rss')
-    ]
-  )
-
-  Publisher.create(
-    name: 'TechCrunch',
-    feeds: [
-      Feed.new(category: business, url: 'http://feeds.feedburner.com/TechCrunch/startups'),
-    ]
-  )
-
-  Publisher.create(
-    name: 'Forbes',
-    feeds: [
-      Feed.new(category: business, url: 'http://www.forbes.com/business/feed2/')
-    ]
-  )
-
-  Publisher.create(
-    name: 'Mashable',
-    feeds: [
-      Feed.new(category: technology, url: 'http://feeds.mashable.com/mashable/tech'),
-      Feed.new(category: business, url: 'http://feeds.mashable.com/mashable/business'),
-      Feed.new(category: entertainment, url: 'http://feeds.mashable.com/mashable/entertainment')
-    ]
-  )
-
-  Publisher.create(
-    name: 'BuzzFeed',
-    feeds: [
-      Feed.new(category: humor, url: 'https://www.buzzfeed.com/index.xml'),
-    ]
-  )
-
-  Publisher.create(
-    name: 'Popular Science',
-    feeds: [
-      Feed.new(category: science, url: 'http://www.popsci.com/rss.xml'),
-    ]
-  )
+Apartment::Tenant.switch(:mttrs_br) do
+  humor = Category.find_or_create_by(name: 'Diversão')
 end
