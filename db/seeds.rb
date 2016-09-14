@@ -1,4 +1,4 @@
-Apartment.tenant_names.each do |tenant|
+Apartment::Tenant.each do |tenant|
   Apartment::Tenant.create(tenant)
 end
 
