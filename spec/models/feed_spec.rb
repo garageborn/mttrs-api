@@ -10,6 +10,8 @@ RSpec.describe Feed do
   it { should have_db_index(:url).unique(true) }
 
   it { should belong_to(:publisher) }
+  it { should have_many(:category_feeds).inverse_of(:feed).dependent(:destroy) }
+  it { should have_many(:categories).through(:category_feeds) }
   it { should have_many(:feed_links).dependent(:destroy).inverse_of(:feed) }
   it { should have_many(:links).through(:feed_links) }
 

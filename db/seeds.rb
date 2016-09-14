@@ -1,4 +1,4 @@
-Apartment::Tenant.each do |tenant|
+Apartment.tenant_names.each do |tenant|
   Apartment::Tenant.create(tenant)
 end
 
@@ -21,8 +21,12 @@ buzz_feed = Publisher.create(
 Apartment::Tenant.switch(:default) do
   technology = Category.find_or_create_by(name: 'Technology')
   humor = Category.find_or_create_by(name: 'Humor')
+
+  technology.feeds << tech_crunch.feeds.first
+  humor.feeds << buzz_feed.feeds.first
 end
 
 Apartment::Tenant.switch(:mttrs_br) do
   humor = Category.find_or_create_by(name: 'Diversão')
+  humor.feeds << buzz_feed.feeds.last
 end
