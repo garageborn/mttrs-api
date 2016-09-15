@@ -3,17 +3,13 @@ class Link
     action :find
 
     def process(params)
-      return invalid! if model.blank? || params[:counters].blank?
+      return invalid! if params[:counters].blank?
 
       params[:counters].each { |provider, count| update_counter(provider, count) }
       social_counter.save if social_counter.increased?
     end
 
     private
-
-    def model!(params)
-      ::Link.find_by_id(params[:id])
-    end
 
     def social_counter
       return model.social_counters.build if last_social_counter.blank?

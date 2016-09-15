@@ -4,6 +4,7 @@ module Concerns
 
     module ClassMethods
       def parse_date(date)
+        return date if date.is_a?(Date)
         return Time.zone.at(date.to_i) if date.is_a?(Integer) || date.to_i.positive?
         Date.parse(date)
       end

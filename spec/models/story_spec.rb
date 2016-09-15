@@ -9,5 +9,6 @@ RSpec.describe Story do
   it { should have_many(:story_links).inverse_of(:story).dependent(:destroy) }
   it { should have_many(:links).through(:story_links) }
   it { should have_many(:publishers).through(:links) }
-  # it { should have_one(:main_link).class_name('Link') }
+  it { should have_one(:main_story_link).class_name('StoryLink') }
+  it { should have_one(:main_link).through(:main_story_link).source(:link) }
 end

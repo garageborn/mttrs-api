@@ -2,9 +2,9 @@ class Link
   class AddCategories < Operation
     extend Memoist
 
-    def process(_params)
-      return invalid! if model.blank?
+    action :find
 
+    def process(_params)
       categories.each do |category|
         next if model.categories.include?(category)
         model.categories << category
@@ -12,10 +12,6 @@ class Link
     end
 
     private
-
-    def model!(params)
-      ::Link.find_by_id(params[:id])
-    end
 
     def categories
       LinkCategorizer.run(model).to_a
