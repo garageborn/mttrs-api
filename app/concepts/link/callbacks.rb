@@ -1,5 +1,3 @@
-require 'disposable'
-
 class Link
   module Callbacks
     class Base
@@ -25,7 +23,6 @@ class Link
       end
 
       def perform_story_builder!
-        byebug
         Story::Builder.run(link_id: contract.model.id)
       end
 
