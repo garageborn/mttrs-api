@@ -34,12 +34,6 @@ class Story < ApplicationRecord
 
   delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
 
-  def refresh!(_link = nil)
-    return destroy if links.blank?
-    refresh_total_social
-    refresh_main_link
-  end
-
   def total_facebook
     links.map { |link| link.social_counter.try(:facebook).to_i }.sum
   end
@@ -58,17 +52,5 @@ class Story < ApplicationRecord
 
   def total_google_plus
     links.map { |link| link.social_counter.try(:google_plus).to_i }.sum
-  end
-
-  private
-
-  def refresh_total_social
-    update_attributes(total_social: links.sum(:total_social).to_i)
-  end
-
-  def refresh_main_link
-    main_link = links.popular.first
-    main_link.update_column(:main, true)
-    links.where.not(id: main_link).update_all(main: false)
   end
 end

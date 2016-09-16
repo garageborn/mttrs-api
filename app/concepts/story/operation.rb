@@ -11,4 +11,9 @@ class Story
       DEFAULT_PARAMS.merge(params.permit(:page).to_h)
     end
   end
+
+  class Operation < Trailblazer::Operation
+    include Model
+    model Story
+  end
 end

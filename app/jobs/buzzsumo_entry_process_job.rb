@@ -50,7 +50,7 @@ class BuzzsumoEntryProcessJob
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    Link::UpdateSocialCounter.run(id: link.id, counters: counters)
+    Link::UpdateCounters.run(link_id: link.id, counters: counters)
   end
 
   memoize :publisher, :url, :link

@@ -1,3 +1,5 @@
+require ::File.expand_path('../callbacks', __FILE__)
+
 class Link
   class Index < Trailblazer::Operation
     include Collection
@@ -14,7 +16,11 @@ class Link
 
   class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model Link
+
+    callback :after_create, ::Link::Callbacks::AfterCreate
+    callback :after_save, ::Link::Callbacks::AfterSave
   end
 
   class Create < Form
@@ -46,7 +52,7 @@ class Link
 
     def process(*)
       model.update_attributes(story_id: nil)
-      StoryBuilderJob.perform_async(model.id)
+      Story::Builder.run(link_id: model.id)
     end
   end
 end

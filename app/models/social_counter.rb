@@ -4,7 +4,6 @@ class SocialCounter < ApplicationRecord
   has_one :parent, class_name: 'SocialCounter', foreign_key: :parent_id
 
   before_save :update_total
-  after_commit :update_total_social_on_link, on: :create
 
   scope :recent, -> { order(created_at: :desc) }
 
@@ -19,9 +18,5 @@ class SocialCounter < ApplicationRecord
 
   def update_total
     self.total = PROVIDERS.map { |provider| self[provider] }.sum
-  end
-
-  def update_total_social_on_link
-    link.update_attributes(total_social: total)
   end
 end

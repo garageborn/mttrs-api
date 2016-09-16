@@ -1,22 +1,30 @@
 class Link
   class AddCategories < Operation
-    extend Memoist
-
-    action :find
-
-    def process(_params)
-      categories.each do |category|
-        next if model.categories.include?(category)
-        model.categories << category
+    def process(params)
+      Apartment::Tenant.each do
+        Link::AddCategories::Tenant.run(id: params[:id])
       end
     end
 
-    private
+    class Tenant < Operation
+      extend Memoist
 
-    def categories
-      LinkCategorizer.run(model).to_a
+      action :find
+
+      def process(_params)
+        categories.each do |category|
+          next if model.categories.include?(category)
+          model.categories << category
+        end
+      end
+
+      private
+
+      def categories
+        LinkCategorizer.run(model).to_a
+      end
+
+      memoize :categories
     end
-
-    memoize :categories
   end
 end
