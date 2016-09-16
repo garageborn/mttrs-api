@@ -143,11 +143,13 @@ ActiveRecord::Schema.define(version: 13) do
   end
 
   create_table "story_links", force: :cascade do |t|
-    t.integer  "story_id",   null: false
-    t.integer  "link_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "story_id",               null: false
+    t.integer  "link_id",                null: false
+    t.integer  "main",       default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.index ["link_id", "story_id"], name: "index_story_links_on_link_id_and_story_id", unique: true, using: :btree
+    t.index ["main", "story_id"], name: "index_story_links_on_main_and_story_id", using: :btree
     t.index ["story_id", "link_id"], name: "index_story_links_on_story_id_and_link_id", unique: true, using: :btree
   end
 

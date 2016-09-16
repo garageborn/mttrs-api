@@ -3,7 +3,7 @@ module Concerns
     extend ActiveSupport::Concern
 
     included do
-      include Elasticsearch::Model
+      include ::Elasticsearch::Model
 
       settings index: {} do
         mapping do

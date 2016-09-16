@@ -19,7 +19,7 @@ module Concerns
     end
 
     def missing_story?
-      story_id.blank?
+      story.blank?
     end
 
     def missing_categories?

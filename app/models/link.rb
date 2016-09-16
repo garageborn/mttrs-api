@@ -12,6 +12,8 @@ class Link < ApplicationRecord
   has_many :feeds, through: :feed_links
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_many :social_counters, inverse_of: :link, dependent: :destroy
+  has_one :story_link, inverse_of: :link, dependent: :destroy
+  has_one :story, through: :story_link
   has_one :social_counter, -> { order(id: :desc) }
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
@@ -36,7 +38,6 @@ class Link < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-  after_commit :instrument_commit
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 
@@ -58,11 +59,5 @@ class Link < ApplicationRecord
       next if urls.include?(url)
       link_urls.build(url: url)
     end
-  end
-
-  private
-
-  def instrument_commit
-    ActiveSupport::Notifications.instrument('link.committed', self)
   end
 end

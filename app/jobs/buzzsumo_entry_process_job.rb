@@ -17,7 +17,6 @@ class BuzzsumoEntryProcessJob
     enqueue_link_full_fetch
     enqueue_social_counter_update
     enqueue_link_assigner
-    enqueue_story_builder
     result
   end
 
@@ -51,12 +50,7 @@ class BuzzsumoEntryProcessJob
   def enqueue_social_counter_update
     counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
     return if counters.blank?
-    Link::UpdateSocialCounter.run(id: link.id, counters: counters)
-  end
-
-  def enqueue_story_builder
-    return unless link.missing_story?
-    StoryBuilderJob.perform_async(link.id)
+    Link::UpdateCounters.run(link_id: link.id, counters: counters)
   end
 
   memoize :publisher, :url, :link
