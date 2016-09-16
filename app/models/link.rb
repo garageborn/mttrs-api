@@ -50,6 +50,11 @@ class Link < ApplicationRecord
     Addressable::URI.parse(link_urls.last.url)
   end
 
+  def url
+    return if uri.blank?
+    uri.to_s
+  end
+
   def urls
     link_urls.map(&:url)
   end
