@@ -14,6 +14,7 @@ class SocialCounter
     private
 
     def link
+      return @params[:link] if @params[:link].present?
       ::Link.find_by_id(@params[:link_id])
     end
 

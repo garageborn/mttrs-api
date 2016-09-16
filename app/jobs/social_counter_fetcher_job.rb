@@ -9,7 +9,7 @@ class SocialCounterFetcherJob
     @link_id = link_id
     return if link.blank? || counters.blank?
 
-    SocialCounter::UpdateCounters.run(link_id: link.id, counters: counters)
+    SocialCounter::UpdateCounters.run(link: link, counters: counters)
   end
 
   private

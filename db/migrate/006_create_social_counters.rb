@@ -4,10 +4,10 @@ class CreateSocialCounters < ActiveRecord::Migration
 
     create_table :social_counters do |t|
       t.integer :link_id, null: false
+      t.integer :parent_id
+      t.integer :total, default: 0, null: false
       t.integer :facebook, default: 0, null: false
       t.integer :linkedin, default: 0, null: false
-      t.integer :total, default: 0, null: false
-      t.integer :parent_id
       t.integer :twitter, default: 0, null: false
       t.integer :pinterest, default: 0, null: false
       t.integer :google_plus, default: 0, null: false

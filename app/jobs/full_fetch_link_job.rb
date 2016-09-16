@@ -41,7 +41,7 @@ class FullFetchLinkJob
       language: link.language || link.feeds.first.try(:language),
       html: link.html,
       title: link.title,
-      url: link.url
+      url: link.uri
     )
     Extract.run(current_page)
   end

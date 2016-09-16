@@ -14,9 +14,8 @@ class SocialCounter
       private
 
       def update_total_social_on_link!
-        p '-------------update_total_social_on_link!', contract.model
         Link::UpdateTotalSocial.run(
-          id: contract.model.link_id,
+          model: contract.model.link,
           total_social: contract.model.total
         )
       end

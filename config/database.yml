@@ -1,7 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  pool: 10
   reaping_frequency: 10
   schema_search_path: 'public,shared_extensions'
   timeout: 5000

@@ -7,5 +7,10 @@ class Link
       model.update_attributes(total_social: params[:total_social].to_i)
       callback!(:after_save)
     end
+
+    def model!(params)
+      return params[:model] if params[:model].present?
+      super(params)
+    end
   end
 end

@@ -11,7 +11,7 @@ class Link
     class AfterCreate < Base
       def call(_options)
         perform_add_categories!
-        perform_story_builder!
+        enqueue_story_builder!
         enqueue_link_full_fetch!
         enqueue_social_counter_fetcher!
       end
@@ -22,8 +22,8 @@ class Link
         Link::AddCategories.run(id: contract.model.id)
       end
 
-      def perform_story_builder!
-        Story::Builder.run(link_id: contract.model.id)
+      def enqueue_story_builder!
+        StoryBuilderJob.perform_async(contract.model.id)
       end
 
       def enqueue_link_full_fetch!
