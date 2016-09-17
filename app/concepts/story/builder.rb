@@ -19,6 +19,8 @@ class Story
           link.update_attributes(story: model)
         end
 
+        Story::Refresh.run(id: model.id)
+
         invalid! if link.missing_story?
       end
 
