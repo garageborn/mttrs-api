@@ -38,6 +38,7 @@ class Link < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
+  before_destroy :destroy_tenant_associations!
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
 
@@ -63,6 +64,16 @@ class Link < ApplicationRecord
     value.each do |url|
       next if urls.include?(url)
       link_urls.build(url: url)
+    end
+  end
+
+  private
+
+  def destroy_tenant_associations!
+    Apartment::Tenant.each do
+      model = contract.model.reload
+      model.category_links.try(:destroy_all)
+      model.story_link.try(:destroy)
     end
   end
 end

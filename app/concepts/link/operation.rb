@@ -21,6 +21,7 @@ class Link
 
     callback :after_create, ::Link::Callbacks::AfterCreate
     callback :after_save, ::Link::Callbacks::AfterSave
+    callback :before_destroy, ::Link::Callbacks::BeforeDestroy
   end
 
   class Create < Form
@@ -35,15 +36,8 @@ class Link
     action :find
 
     def process(*)
+      callback!(:before_destroy)
       model.destroy
-      destroy_image
-    end
-
-    private
-
-    def destroy_image
-      return if model.image_source_url.blank?
-      Cloudinary::Uploader.destroy(model.image_source_url, type: :fetch)
     end
   end
 

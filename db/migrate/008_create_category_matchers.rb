@@ -7,7 +7,7 @@ class CreateCategoryMatchers < ActiveRecord::Migration
       t.text :url_matcher
       t.timestamps null: false
     end
-    add_index :category_matchers, [:publisher_id, :category_id], unique: true
-    add_index :category_matchers, [:category_id, :publisher_id], unique: true
+    add_index :category_matchers, [:publisher_id, :category_id]
+    add_index :category_matchers, [:category_id, :publisher_id]
   end
 end

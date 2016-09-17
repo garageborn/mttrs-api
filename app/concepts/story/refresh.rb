@@ -14,6 +14,7 @@ class Story
       private
 
       def model!(params)
+        return Story.where(id: params[:id]) if params[:id].present?
         Story.joins(:story_links).where(story_links: { link_id: params[:link_id] }).distinct
       end
 

@@ -47,5 +47,24 @@ class Link
         Story::Refresh.run(link_id: contract.model.id)
       end
     end
+
+    class BeforeDestroy < Base
+      def call(options)
+        destroy_image!
+        destroy_tenant_associations!
+        refresh_story!
+      end
+
+      private
+
+      def destroy_image!
+        return if contract.model.image_source_url.blank?
+        Cloudinary::Uploader.destroy(contract.model.image_source_url, type: :fetch)
+      end
+
+      def refresh_story!
+        Story::Refresh.run(id: contract.model.story.id)
+      end
+    end
   end
 end

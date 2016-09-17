@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 13) do
     t.text     "url_matcher"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
-    t.index ["category_id", "publisher_id"], name: "index_category_matchers_on_category_id_and_publisher_id", unique: true, using: :btree
-    t.index ["publisher_id", "category_id"], name: "index_category_matchers_on_publisher_id_and_category_id", unique: true, using: :btree
+    t.index ["category_id", "publisher_id"], name: "index_category_matchers_on_category_id_and_publisher_id", using: :btree
+    t.index ["publisher_id", "category_id"], name: "index_category_matchers_on_publisher_id_and_category_id", using: :btree
   end
 
   create_table "feed_links", force: :cascade do |t|
@@ -122,10 +122,10 @@ ActiveRecord::Schema.define(version: 13) do
 
   create_table "social_counters", force: :cascade do |t|
     t.integer  "link_id",                 null: false
+    t.integer  "parent_id"
+    t.integer  "total",       default: 0, null: false
     t.integer  "facebook",    default: 0, null: false
     t.integer  "linkedin",    default: 0, null: false
-    t.integer  "total",       default: 0, null: false
-    t.integer  "parent_id"
     t.integer  "twitter",     default: 0, null: false
     t.integer  "pinterest",   default: 0, null: false
     t.integer  "google_plus", default: 0, null: false
