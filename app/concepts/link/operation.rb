@@ -32,6 +32,13 @@ class Link
     action :update
   end
 
+  class DestroyAll < Operation
+    def process(params)
+      return if params.blank?
+      params.each { |id| Destroy.run(id: id) }
+    end
+  end
+
   class Destroy < Operation
     action :find
 

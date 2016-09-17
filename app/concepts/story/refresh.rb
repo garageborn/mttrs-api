@@ -8,6 +8,7 @@ class Story
 
     class Tenant < Operation
       def process(_params)
+        byebug
         model.each { |story| process_story(story) }
       end
 
