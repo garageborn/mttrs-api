@@ -11,6 +11,7 @@ class Story
 
       def process(_params)
         return unless link.present? && link.missing_story?
+        return unless link.belongs_to_current_tenant?
 
         link.update_attributes(story: model)
         similar.each do |link|

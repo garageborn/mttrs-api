@@ -44,7 +44,7 @@ class Link
       private
 
       def refresh_story!
-        Story::Refresh.run(link_id: contract.model.id)
+        Link::RefreshStory.run(id: contract.model.id)
       end
     end
 
@@ -52,7 +52,6 @@ class Link
       def call(_options)
         destroy_image!
         destroy_tenant_associations!
-        refresh_story!
       end
 
       private
@@ -68,22 +67,6 @@ class Link
           CategoryLink::DestroyAll.run(model.category_link_ids)
           StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
         end
-      end
-
-      def refresh_story!
-        Story::Refresh.run(link_id: contract.model.id)
-      end
-    end
-
-    class AfterDestroy < Base
-      def call(_options)
-        refresh_story!
-      end
-
-      private
-
-      def refresh_story!
-        Story::Refresh.run(link_id: contract.model.id)
       end
     end
   end

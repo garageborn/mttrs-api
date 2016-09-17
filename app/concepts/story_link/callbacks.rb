@@ -14,8 +14,7 @@ class StoryLink
       private
 
       def refresh_story!
-        p '---------------after destroy', contract.model
-        Story::Refresh.run(link_id: contract.model.link_id)
+        Story::Refresh.run(id: contract.model.story_id)
       end
     end
   end
