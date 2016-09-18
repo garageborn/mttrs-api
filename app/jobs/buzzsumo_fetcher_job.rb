@@ -8,7 +8,7 @@ class BuzzsumoFetcherJob
     @publisher_id = publisher_id
     return if publisher.blank?
 
-    entries.each { |entry| proccess(entry) }
+    entries.each { |entry| process(entry) }
   end
 
   private
@@ -22,7 +22,7 @@ class BuzzsumoFetcherJob
     Buzzsumo.all(:articles, query: query)
   end
 
-  def proccess(entry)
+  def process(entry)
     BuzzsumoEntryProcessJob.perform_async(entry.to_h)
   end
 

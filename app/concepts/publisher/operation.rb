@@ -12,11 +12,16 @@ class Publisher
     end
   end
 
-  class Form < Trailblazer::Operation
+  class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model Publisher
     contract Contract
 
+    callback :before_destroy, ::Publisher::Callbacks::BeforeDestroy
+  end
+
+  class Form < Operation
     def process(params)
       validate(params[:publisher]) do
         contract.save
@@ -28,15 +33,15 @@ class Publisher
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
   end
 
-  class Destroy < Trailblazer::Operation
-    include Model
-    model Publisher, :find
+  class Destroy < Operation
+    action :find
 
     def process(*)
+      callback!(:before_destroy)
       model.destroy
     end
   end

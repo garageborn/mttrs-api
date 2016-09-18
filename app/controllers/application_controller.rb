@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::API
   include ActionController::Serialization
-  include Namespaced::Controller
 
   private
 

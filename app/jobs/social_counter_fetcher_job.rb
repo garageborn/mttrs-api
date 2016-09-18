@@ -6,10 +6,12 @@ class SocialCounterFetcherJob
   attr_reader :link_id
 
   def perform(link_id)
-    @link_id = link_id
-    return if link.blank? || social.blank?
+    return if Rails.env.development?
 
-    SocialCounterUpdateJob.new.perform(link.id, social.to_h)
+    @link_id = link_id
+    return if link.blank? || counters.blank?
+
+    SocialCounter::UpdateCounters.run(link: link, counters: counters)
   end
 
   private
@@ -20,9 +22,9 @@ class SocialCounterFetcherJob
     end
   end
 
-  def social
-    Social.count(link.url)
+  def counters
+    Social.count(link.uri)
   end
 
-  memoize :link, :social
+  memoize :link, :counters
 end

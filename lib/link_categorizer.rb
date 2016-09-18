@@ -31,7 +31,7 @@ class LinkCategorizer
   end
 
   def feeds_categories
-    link.feeds.map(&:category).to_a
+    link.feeds.map(&:categories).to_a
   end
 
   memoize :matchers, :matchers_categories, :feeds_categories, :categories

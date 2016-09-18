@@ -8,7 +8,7 @@ class FeedFetcherJob
     @feed_id = feed_id
     return if feed.blank? || rss.blank?
 
-    rss.entries.each { |entry| proccess(entry) }
+    rss.entries.each { |entry| process(entry) }
   end
 
   private
@@ -22,8 +22,8 @@ class FeedFetcherJob
     Feedjira::Feed.parse(request.body)
   end
 
-  def proccess(entry)
-    return if Link.where(url: entry.url).or(Link.where(source_url: entry.url)).exists?
+  def process(entry)
+    return if Link.find_by_url(entry.url)
     FeedEntryProcessJob.perform_async(
       feed_id: feed.id,
       title: entry.title,
