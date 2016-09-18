@@ -1,3 +1,5 @@
+require ::File.expand_path('../callbacks', __FILE__)
+
 class Link
   class Index < Trailblazer::Operation
     include Collection
@@ -14,40 +16,35 @@ class Link
 
   class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model Link
-  end
 
-  class Form < Operation
-    contract Contract
-
-    def process(params)
-      validate(params[:link]) do
-        contract.save
-      end
-    end
+    callback :after_create, ::Link::Callbacks::AfterCreate
+    callback :after_save, ::Link::Callbacks::AfterSave
+    callback :before_destroy, ::Link::Callbacks::BeforeDestroy
   end
 
   class Create < Form
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
+  end
+
+  class DestroyAll < Operation
+    def process(params)
+      return if params.blank?
+      params.each { |id| Destroy.run(id: id) }
+    end
   end
 
   class Destroy < Operation
     action :find
 
     def process(*)
+      callback!(:before_destroy)
       model.destroy
-      destroy_image
-    end
-
-    private
-
-    def destroy_image
-      return if model.image_source_url.blank?
-      Cloudinary::Uploader.destroy(model.image_source_url, type: :fetch)
     end
   end
 
@@ -56,7 +53,7 @@ class Link
 
     def process(*)
       model.update_attributes(story_id: nil)
-      StoryBuilderJob.perform_async(model.id)
+      Story::Builder.run(link_id: model.id)
     end
   end
 end

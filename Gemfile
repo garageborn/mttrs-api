@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'active_model_serializers', '0.9.5'
 gem 'addressable', '2.4.0'
+gem 'apartment', '1.2.0'
 gem 'cells', '4.1.2'
 gem 'cells-rails', '0.0.6'
 gem 'cells-slim', '0.0.5'

@@ -12,27 +12,22 @@ class Feed
     end
   end
 
-  class Form < Trailblazer::Operation
-    include Callback
+  class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model Feed
     contract Contract
 
-    callback :after_save do
-      on_change :enqueue_feed_fetcher
-    end
+    callback :after_save, ::Feed::Callbacks::AfterSave
+    callback :before_destroy, ::Feed::Callbacks::BeforeDestroy
+  end
 
+  class Form < Operation
     def process(params)
       validate(params[:feed]) do
         contract.save
         callback!(:after_save)
       end
-    end
-
-    private
-
-    def enqueue_feed_fetcher(*)
-      FeedFetcherJob.perform_async(model.id)
     end
   end
 
@@ -40,17 +35,23 @@ class Feed
     action :create
   end
 
-  class Update < Create
+  class Update < Form
     action :update
   end
 
-  class Destroy < Trailblazer::Operation
-    include Model
-    model Feed, :find
+  class DestroyAll < Operation
+    def process(params)
+      return if params.blank?
+      params.each { |id| Destroy.run(id: id) }
+    end
+  end
+
+  class Destroy < Operation
+    action :find
 
     def process(*)
+      callback!(:before_destroy)
       model.destroy
-      model.links.clear
     end
   end
 end
