@@ -131,3 +131,9 @@ Apartment::Tenant.switch(:mttrs_us) do
     { publisher_id: 9, category_id: 1, url_matcher: '/world/\\d{4}/', order: 0 }
   ])
 end
+
+Apartment::Tenant.switch(:mttrs_br) do
+  Category.create([
+    { id: 5, name: 'Humor', feed_ids: [48] }
+  ])
+end
