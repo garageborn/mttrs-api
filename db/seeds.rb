@@ -18,7 +18,7 @@ buzz_feed = Publisher.create(
   ]
 )
 
-Apartment::Tenant.switch(:default) do
+Apartment::Tenant.switch(:mttrs_us) do
   technology = Category.find_or_create_by(name: 'Technology')
   humor = Category.find_or_create_by(name: 'Humor')
 

@@ -65,4 +65,16 @@ class Link < ApplicationRecord
       link_urls.build(url: url)
     end
   end
+
+  def belongs_to_current_tenant?
+    belongs_to_tenant?(Apartment::Tenant.current)
+  end
+
+  def belongs_to_tenant?(tenant_name)
+    return if new_record?
+
+    Apartment::Tenant.switch(tenant_name) do
+      CategoryLink.where(link_id: id).exists?
+    end
+  end
 end

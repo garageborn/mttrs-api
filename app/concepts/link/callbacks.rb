@@ -37,14 +37,36 @@ class Link
     end
 
     class AfterSave < Base
-      def call(options)
+      def call(_options)
         refresh_story!
       end
 
       private
 
       def refresh_story!
-        Story::Refresh.run(link_id: contract.model.id)
+        Link::RefreshStory.run(id: contract.model.id)
+      end
+    end
+
+    class BeforeDestroy < Base
+      def call(_options)
+        destroy_image!
+        destroy_tenant_associations!
+      end
+
+      private
+
+      def destroy_image!
+        return if contract.model.image_source_url.blank?
+        Cloudinary::Uploader.destroy(contract.model.image_source_url, type: :fetch)
+      end
+
+      def destroy_tenant_associations!
+        Apartment::Tenant.each do
+          model = contract.model.reload
+          CategoryLink::DestroyAll.run(model.category_link_ids)
+          StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
+        end
       end
     end
   end

@@ -6,6 +6,8 @@ class SocialCounterFetcherJob
   attr_reader :link_id
 
   def perform(link_id)
+    return if Rails.env.development?
+
     @link_id = link_id
     return if link.blank? || counters.blank?
 
