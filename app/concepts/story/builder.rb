@@ -31,7 +31,7 @@ class Story
       end
 
       def similar
-        link.similar.records.to_a
+        link.similar.records.to_a.select(&:belongs_to_current_tenant?)
       end
 
       def model!(_params)
