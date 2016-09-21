@@ -2,7 +2,7 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
-  resources :publishers, only: [:index]
+  resources :publishers, only: [:index, :show]
   resources :stories, only: [:index]
 
   namespace :admin do

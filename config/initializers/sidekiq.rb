@@ -31,6 +31,6 @@ end
 
 Sidekiq.default_worker_options = {
   retry: false,
-  unique: :until_executed,
+  unique: :until_and_while_executing,
   unique_args: ->(args) { args.first.except('job_id') }
 }
