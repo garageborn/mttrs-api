@@ -4,7 +4,7 @@ set :output, 'log/cron.log'
 job_type :rake, 'cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output'
 
 # Social Counters
-every 20.minutes do
+every 25.minutes do
   rake 'social_counters:today'
 end
 
