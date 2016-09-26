@@ -1,5 +1,5 @@
 class BuzzsumoFetcherJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
   attr_reader :publisher_id

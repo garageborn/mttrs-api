@@ -1,4 +1,4 @@
 web: bundle exec rails s -p 4000
-worker: bundle exec sidekiq
+worker: bundle exec shoryuken
 elasticsearch: elasticsearch
 guard: bundle exec guard -i

@@ -1,8 +1,8 @@
 class FullFetchLinkJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
-  sidekiq_options max_performs: {
+  shoryuken_options max_performs: {
     count: 2,
     key: proc { |link_id| link_id }
   }

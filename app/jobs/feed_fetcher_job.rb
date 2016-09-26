@@ -1,5 +1,5 @@
 class FeedFetcherJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
   attr_reader :feed_id

@@ -2,8 +2,8 @@ module MaxPerforms
   module Helper
     class << self
       def parse_options(worker_class, job)
-        sidekiq_options = worker_class.sidekiq_options.with_indifferent_access
-        sidekiq_options[:max_performs].to_h.merge(
+        shoryuken_options = worker_class.shoryuken_options.with_indifferent_access
+        shoryuken_options[:max_performs].to_h.merge(
           type: worker_class.to_s,
           args: job.deep_symbolize_keys[:args]
         ).deep_symbolize_keys

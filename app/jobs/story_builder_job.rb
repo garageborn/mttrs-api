@@ -1,7 +1,7 @@
 class StoryBuilderJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
 
-  sidekiq_options queue: :story_builder, max_performs: {
+  shoryuken_options queue: :story_builder, max_performs: {
     count: 2,
     key: proc { |link_id| link_id }
   }

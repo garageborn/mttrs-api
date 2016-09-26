@@ -1,0 +1,16 @@
+aws:
+  access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+  region: <%= ENV['AWS_REGION'] %>
+  receive_message:
+    attribute_names:
+      - ApproximateReceiveCount
+      - SentTimestamp
+concurrency: 25
+delay: 25
+queues:
+  - [indexer, 15]
+  - [story_builder, 10]
+  - [default, 5]
+  - [mailers, 1]
+  - [social_counter, 1]

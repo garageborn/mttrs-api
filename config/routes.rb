@@ -1,5 +1,3 @@
-require 'sidekiq/web'
-
 Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :publishers, only: [:index, :show]
@@ -16,8 +14,5 @@ Rails.application.routes.draw do
     resources :publishers, except: :show
     resources :stories, except: :show
     get '/elastic', to: 'elastic#index'
-
-    Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
-    mount Sidekiq::Web => '/sidekiq'
   end
 end

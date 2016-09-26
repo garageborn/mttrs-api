@@ -1,8 +1,8 @@
 class IndexerJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
-  sidekiq_options queue: :indexer
+  shoryuken_options queue: :indexer
 
   def perform(operation, klass, record_id, options = {})
     return unless Rails.env.production?

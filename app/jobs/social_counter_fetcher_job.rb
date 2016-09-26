@@ -1,8 +1,8 @@
 class SocialCounterFetcherJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
-  sidekiq_options queue: :social_counter
+  shoryuken_options queue: :social_counter
   attr_reader :link_id
 
   def perform(link_id)

@@ -1,8 +1,8 @@
 class BuzzsumoEntryProcessJob
-  include Sidekiq::Worker
+  include Shoryuken::Worker
   extend Memoist
 
-  sidekiq_options max_performs: {
+  shoryuken_options max_performs: {
     count: 1,
     key: proc { |entry| entry[:url] }
   }
