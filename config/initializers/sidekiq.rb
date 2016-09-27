@@ -1,6 +1,6 @@
 require 'sidekiq'
 require 'redis-namespace'
-require ::File.expand_path('../../../lib/max_performs', __FILE__)
+require ::File.expand_path('../../../lib/middleware', __FILE__)
 
 REDIS_URL = ENV.fetch('REDIS_URL', 'redis://127.0.0.1:6379').freeze
 REDIS_NAMESPACE = ENV['MTTRS_API_REDIS_NAMESPACE'].freeze
@@ -15,17 +15,20 @@ REDIS_OPTIONS = {
 Sidekiq.configure_client do |config|
   config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 1).to_i)
   config.client_middleware do |chain|
-    chain.add MaxPerforms::Client
+    chain.add Middleware::MaxPerforms::Client
+    chain.add Middleware::UniqueJobs::Client
   end
 end
 
 Sidekiq.configure_server do |config|
   config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i)
   config.client_middleware do |chain|
-    chain.add MaxPerforms::Client
+    chain.add Middleware::MaxPerforms::Client
+    chain.add Middleware::UniqueJobs::Client
   end
   config.server_middleware do |chain|
-    chain.add MaxPerforms::Server
+    chain.add Middleware::MaxPerforms::Server
+    chain.add Middleware::UniqueJobs::Server
     chain.remove Sidekiq::Middleware::Server::RetryJobs
   end
 end
@@ -33,5 +36,6 @@ end
 Sidekiq.default_worker_options = {
   retry: false,
   unique: :until_and_while_executing,
-  unique_args: ->(args) { args.first.except('job_id') }
+  unique_args: ->(args) { args.first.except('job_id') },
+  log_duplicate_payload: true
 }
