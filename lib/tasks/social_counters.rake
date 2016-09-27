@@ -1,6 +1,5 @@
 namespace :social_counters do
   def enqueue_social_counter_fetcher(link_ids)
-    p link_ids
     link_ids.each { |id| SocialCounterFetcherJob.perform_async(id) }
   end
 
