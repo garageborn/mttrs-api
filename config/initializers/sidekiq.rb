@@ -13,7 +13,7 @@ REDIS_OPTIONS = {
 }.freeze
 
 Sidekiq.configure_client do |config|
-  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 1).to_i)
+  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_CLIENT_SIZE', 2).to_i)
   config.client_middleware do |chain|
     chain.add Middleware::MaxPerforms::Client
     chain.add Middleware::UniqueJobs::Client
@@ -21,7 +21,7 @@ Sidekiq.configure_client do |config|
 end
 
 Sidekiq.configure_server do |config|
-  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 35).to_i)
+  config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 40).to_i)
   config.client_middleware do |chain|
     chain.add Middleware::MaxPerforms::Client
     chain.add Middleware::UniqueJobs::Client
