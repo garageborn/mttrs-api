@@ -2,7 +2,7 @@
 development:
   :concurrency: 10
 production:
-  :concurrency: 35
+  :concurrency: 30
 :queues:
   - [indexer, 15]
   - [story_builder, 10]
