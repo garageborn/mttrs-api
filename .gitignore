@@ -3,7 +3,7 @@
 .DS_Store
 /.bundle
 /config/application.yml
-/log/*
+
 /tmp
 coverage
 dump.rdb
