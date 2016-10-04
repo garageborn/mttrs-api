@@ -24,5 +24,7 @@ module Mttrs
       admin/application.css
       admin/application.js
     )
+
+    config.cells.with_assets = ['admin/layout/cell/navigation']
   end
 end

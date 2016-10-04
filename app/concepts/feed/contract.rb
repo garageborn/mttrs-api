@@ -2,6 +2,7 @@ class Feed
   class Contract < Reform::Form
     property :language
     property :publisher_id
+    property :category_ids
     property :url
 
     validates :publisher_id, presence: true

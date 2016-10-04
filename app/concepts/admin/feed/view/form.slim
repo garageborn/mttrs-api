@@ -3,11 +3,10 @@
 
   .form-inputs
     = f.association :publisher, include_blank: false
-    = f.association :category, include_blank: false
+    = f.association :categories, as: :check_boxes
     = f.input :url
     = f.input :language
 
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
-

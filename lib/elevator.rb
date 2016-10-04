@@ -18,6 +18,8 @@ class Elevator < Apartment::Elevators::Generic
   end
 
   def path_tenant(request)
-    # todo
+    routes = request.path.split('/')
+    return unless routes.include?('admin')
+    Apartment.tenant_names.find { |tenant_name| routes.include?(tenant_name) }
   end
 end
