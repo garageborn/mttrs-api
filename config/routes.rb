@@ -9,7 +9,6 @@ Rails.application.routes.draw do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
 
     scope '/:tenant_name' do
-      # root to: redirect('/admin/:tenant_name/stories')
       get '/', to: 'stories#index'
       resources :categories, except: :show
       resources :category_matchers, except: :show
