@@ -19,9 +19,9 @@ class Link
     include Callback
     model Link
 
-    callback :after_create, ::Link::Callbacks::AfterCreate
-    callback :after_save, ::Link::Callbacks::AfterSave
-    callback :before_destroy, ::Link::Callbacks::BeforeDestroy
+    callback :after_create, Callbacks::AfterCreate
+    callback :after_save, Callbacks::AfterSave
+    callback :before_destroy, Callbacks::BeforeDestroy
   end
 
   class Create < Form

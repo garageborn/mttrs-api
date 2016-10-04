@@ -5,6 +5,8 @@ class Link
     property :language
     property :published_at
     property :publisher_id
+    property :category_ids
+    property :link_url_ids
     property :title
     property :urls
 

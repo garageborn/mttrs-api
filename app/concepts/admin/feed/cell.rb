@@ -13,7 +13,7 @@ module Admin
         end
 
         def category_name
-          model.category.name
+          # model.category.name
         end
 
         def links_count
