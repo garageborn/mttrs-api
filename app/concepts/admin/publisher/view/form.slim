@@ -1,9 +1,10 @@
-= simple_form_for([:admin, model]) do |f|
+= simple_form_for([:admin, model], html: { multipart: true }) do |f|
   = f.error_notification
 
   .form-inputs
     = f.input :name
     = f.input :domain
+    = f.input :icon_id, as: :file
 
   .form-actions
     = f.button :submit
