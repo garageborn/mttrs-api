@@ -4,6 +4,7 @@ require 'reform/form/active_model/model_reflections'
 require 'reform/form/active_model/model_validations'
 require 'reform/form/active_model/validations'
 require 'reform/form/validation/unique_validator'
+require 'cloudinary/helper'
 
 Trailblazer::Cell.class_eval do
   extend Trailblazer::Cell::ViewName::Flat
@@ -15,6 +16,7 @@ Trailblazer::Cell.class_eval do
   include SimpleForm::ActionViewExtensions::FormHelper
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::TranslationHelper
+  include CloudinaryHelper
 end
 
 Reform::Form.class_eval do

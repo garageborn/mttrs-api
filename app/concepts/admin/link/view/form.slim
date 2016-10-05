@@ -6,7 +6,7 @@
     = f.association :publisher
     = f.association :categories, as: :check_boxes
     = f.input :published_at
-    = f.simple_fields_for :link_urls do |link_form|
+    - f.simple_fields_for :link_urls do |link_form|
       = link_form.input :url
 
   .form-actions
