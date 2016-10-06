@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :publishers, only: [:index, :show]
   resources :stories, only: [:index]
+  resources :graphql, via: [:post, :options]
 
   namespace :admin do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
+
+    Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
+    mount Sidekiq::Web => '/sidekiq'
+    mount GraphiQL::Rails::Engine => '/graphql', graphql_path: '/graphql'
 
     scope '/:tenant_name' do
       get '/', to: 'stories#index'
@@ -20,8 +25,5 @@ Rails.application.routes.draw do
       resources :stories, except: :show
       get '/elastic', to: 'elastic#index'
     end
-
-    Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
-    mount Sidekiq::Web => '/sidekiq'
   end
 end
