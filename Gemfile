@@ -14,6 +14,8 @@ gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', github: 'norman/friendly_id'
+gem 'graphql', '0.19.1'
+gem 'graphiql-rails', '1.3.0'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'jquery-rails', '4.2.1'
@@ -44,7 +46,7 @@ gem 'uglifier', '3.0.2'
 gem 'whenever', '0.9.7', require: false
 
 group :production do
-  gem 'puma', '3.6.0'
+  # gem 'puma', '3.6.0'
   gem 'sentry-raven', '0.15.2'
 end
 

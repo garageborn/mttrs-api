@@ -19,7 +19,11 @@ module Mttrs
   class Application < Rails::Application
     config.time_zone = 'Brasilia'
     config.active_record.timestamped_migrations = false
-    config.eager_load_paths += %W(#{ config.root }/lib)
+    config.eager_load_paths += %W(
+      #{ config.root }/lib
+      #{ config.root }/app/graph/types
+      #{ config.root }/app/graph
+    )
     config.assets.precompile += %w(
       admin/application.css
       admin/application.js
