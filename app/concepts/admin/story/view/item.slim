@@ -1,7 +1,7 @@
 li
   .stories-item-title
     = image
-    strong= title
+    strong= main_link.title
     = link_to 'Edit', [:edit, :admin, model], class: 'stories-edit-button'
 
     .stories-item-stats
@@ -10,4 +10,4 @@ li
       = concept('admin/story/cell/social_counter', model)
 
   section.stories-item-section
-    ul= concept('admin/story/cell/link', collection: links)
+    ul= concept('admin/story/cell/link', collection: other_links)
