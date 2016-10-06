@@ -8,9 +8,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
+
     Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
     mount Sidekiq::Web => '/sidekiq'
-    # mount GraphiQL::Rails::Engine => '/graphql', graphql_path: '/graphql'
+    mount GraphiQL::Rails::Engine => '/graphql', graphql_path: '/graphql'
 
     scope '/:tenant_name' do
       get '/', to: 'stories#index'
