@@ -34,8 +34,6 @@ class Story < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-  delegate :uri, :url, :title, :image_source_url, :published_at, to: :main_link
-
   def total_facebook
     links.map { |link| link.social_counter.try(:facebook).to_i }.sum
   end

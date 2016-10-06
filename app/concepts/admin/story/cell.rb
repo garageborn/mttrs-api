@@ -6,12 +6,12 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        property :title
-        property :links
+        property :main_link
+        property :other_links
 
         def image
-          return if model.image_source_url.blank?
-          image_tag(model.image_source_url, size: '150x100')
+          return if model.main_link.image_source_url.blank?
+          image_tag(model.main_link.image_source_url, size: '150x100')
         end
 
         def categories_names
