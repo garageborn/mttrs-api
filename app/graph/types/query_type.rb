@@ -3,15 +3,37 @@ QueryType = GraphQL::ObjectType.define do
   description 'Query Type'
 
   field :categories, !types[CategoryType] do
-    resolve -> (obj, args, ctx) { Category.all }
+    argument :order_by_name, types.Boolean
+    argument :order_by_stories_count, types.Boolean
+    resolve -> (obj, args, ctx) { Category.filter(args) }
   end
 
   field :publishers, !types[PublisherType] do
-    resolve -> (obj, args, ctx) { Publisher.all }
+    argument :limit, types.Int
+    resolve -> (obj, args, ctx) { Publisher.filter(args) }
   end
 
   field :publisher, PublisherType do
     argument :id, !types.ID
     resolve -> (obj, args, ctx) { Publisher.find(args['id']) }
+  end
+
+  field :story, StoryType do
+    argument :id, !types.ID
+    resolve -> (obj, args, ctx) { Story.find(args['id']) }
+  end
+
+  field :stories, !types[StoryType] do
+    argument :category_slug, types.String
+    argument :last_month, types.Boolean
+    argument :last_week, types.Boolean
+    argument :limit, types.Int
+    argument :popular, types.Boolean
+    argument :published_at, types.Int
+    argument :publisher_slug, types.String
+    argument :recent, types.Boolean
+    argument :today, types.Boolean
+    argument :yesterday, types.Boolean
+    resolve -> (obj, args, ctx) { Story.filter(args) }
   end
 end
