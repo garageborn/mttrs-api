@@ -1,7 +1,7 @@
 class CategoryMatcher
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 10 }.freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10).freeze
 
     def model!(params)
       ::CategoryMatcher.filter(params)

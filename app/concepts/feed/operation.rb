@@ -1,7 +1,9 @@
 class Feed
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 20, order_by_links_count: true }.freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(
+      page: 1, per: 20, order_by_links_count: true
+    ).freeze
 
     def model!(params)
       ::Feed.filter(params)
