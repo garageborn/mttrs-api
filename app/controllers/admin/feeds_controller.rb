@@ -1,5 +1,5 @@
 module Admin
-  class FeedsController < ApplicationController
+  class FeedsController < BaseController
     def index
       present ::Feed::Index
       render html: concept('admin/feed/cell/index', @model)

@@ -1,5 +1,5 @@
 module Admin
-  class LinksController < ApplicationController
+  class LinksController < BaseController
     def index
       present ::Link::Index
       render html: concept('admin/link/cell/index', @model)

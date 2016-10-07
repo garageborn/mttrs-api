@@ -1,5 +1,5 @@
 module Admin
-  class PublishersController < ApplicationController
+  class PublishersController < BaseController
     def index
       present ::Publisher::Index
       render html: concept('admin/publisher/cell/index', @model)

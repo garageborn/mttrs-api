@@ -1,5 +1,5 @@
 module Admin
-  class StoriesController < ApplicationController
+  class StoriesController < BaseController
     def index
       present ::Story::Index
       render html: concept('admin/story/cell/index', @model)

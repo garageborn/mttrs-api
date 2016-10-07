@@ -1,5 +1,5 @@
 module Admin
-  class CategoriesController < ApplicationController
+  class CategoriesController < BaseController
     def index
       present ::Category::Index
       render html: concept('admin/category/cell/index', @model)

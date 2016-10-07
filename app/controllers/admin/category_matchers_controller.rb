@@ -1,5 +1,5 @@
 module Admin
-  class CategoryMatchersController < ApplicationController
+  class CategoryMatchersController < BaseController
     def index
       present ::CategoryMatcher::Index
       render html: concept('admin/category_matcher/cell/index', @model)

@@ -1,5 +1,5 @@
 module Admin
-  class ApplicationController < ActionController::Base
+  class BaseController < ActionController::Base
     include Admin::Concerns::Authentication
     include Admin::Concerns::Tenant
 
