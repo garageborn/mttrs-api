@@ -13,3 +13,5 @@ ELASTICSEARCH_CLIENT = Elasticsearch::Client.new(ELASTICSEARCH_OPTIONS) do |f|
     region: ENV['AWS_DEFAULT_REGION']
   )
 end
+
+Elasticsearch::Model.client = ELASTICSEARCH_CLIENT
