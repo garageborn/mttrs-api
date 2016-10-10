@@ -10,6 +10,6 @@ ELASTICSEARCH_CLIENT = Elasticsearch::Client.new(ELASTICSEARCH_OPTIONS) do |f|
     :aws_signers_v4,
     credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY_ID'], ENV['AWS_SECRET_ACCESS_KEY']),
     service_name: 'es',
-    region: ENV['AWS_REGION']
+    region: ENV['AWS_DEFAULT_REGION']
   )
 end
