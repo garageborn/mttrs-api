@@ -27,10 +27,7 @@ class IndexerJob
   private
 
   def client
-    Elasticsearch::Client.new(
-      host: ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200'),
-      logger: Rails.logger
-    )
+    ELASTICSEARCH_CLIENT
   end
 
   memoize :client
