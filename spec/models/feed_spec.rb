@@ -19,7 +19,7 @@ RSpec.describe Feed do
   #   subject { build(:feed) }
   #   it { is_expected.to validate_presence_of(:publisher) }
   #   it { is_expected.to validate_presence_of(:url) }
-  #   it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::EXISTING_LANGUAGES).allow_blank }
+  #   it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::AVAILABLE_LANGUAGES).allow_blank }
   #   it { is_expected.to validate_uniqueness_of(:url).case_insensitive }
   # end
 end
