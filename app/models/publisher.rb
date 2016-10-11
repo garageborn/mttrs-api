@@ -7,4 +7,10 @@ class Publisher < ApplicationRecord
   has_many :links, inverse_of: :publisher, dependent: :destroy
 
   friendly_id :name, use: %i(slugged finders)
+
+  def self.find_by_host(url)
+    host = Addressable::URI.parse(url).host
+    public_suffix = PublicSuffix.domain(host)
+    where(domain: [host, public_suffix].uniq).first
+  end
 end

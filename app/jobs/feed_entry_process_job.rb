@@ -11,7 +11,7 @@ class FeedEntryProcessJob
 
   def perform(entry)
     @entry = entry.with_indifferent_access
-    return if entry.blank? || feed.blank? || urls.blank?
+    return if entry.blank? || feed.blank?
 
     result, _op = Link::Create.run(link: attributes)
     result
@@ -20,7 +20,7 @@ class FeedEntryProcessJob
   private
 
   def link
-    @link ||= ::Link.find_by_url(entry[:url])
+    Link.find_by_url(entry[:url])
   end
 
   def feed

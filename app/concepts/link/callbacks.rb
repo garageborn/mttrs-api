@@ -13,7 +13,6 @@ class Link
         perform_add_categories!
         enqueue_story_builder!
         enqueue_link_full_fetch!
-        enqueue_social_counter_fetcher!
       end
 
       private
@@ -29,10 +28,6 @@ class Link
       def enqueue_link_full_fetch!
         return unless contract.model.needs_full_fetch?
         FullFetchLinkJob.perform_async(contract.model.id)
-      end
-
-      def enqueue_social_counter_fetcher!
-        SocialCounterFetcherJob.perform_async(contract.model.id)
       end
     end
 

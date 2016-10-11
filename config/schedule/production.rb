@@ -3,22 +3,22 @@ env :PATH, ENV['PATH']
 set :output, 'log/cron.log'
 job_type :rake, 'cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output'
 
-# Social Counters
-every 25.minutes do
-  rake 'social_counters:today'
+# Buzzsumo
+every 10.minutes do
+  rake 'buzzsumo:fetcher:today'
 end
 
 every 1.hour do
-  rake 'social_counters:yesterday'
+  rake 'buzzsumo:fetcher:yesterday'
 end
 
 every 1.day, at: '2am' do
-  rake 'social_counters:since_7_days'
+  rake 'buzzsumo:fetcher:since_7_days'
 end
 
-# Links
+# Feeds
 every 10.minutes do
-  rake 'links:fetcher:run'
+  rake 'feeds:fetcher:run'
 end
 
 every 1.day, at: '3am' do
