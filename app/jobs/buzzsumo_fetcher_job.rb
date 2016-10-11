@@ -33,6 +33,7 @@ class BuzzsumoFetcherJob
     options.clone.tap do |query|
       query[:q] = publisher.domain
       query[:language] = language
+      query[:max_pages] ||= 2
       query[:num_results] ||= 100
       query[:num_days] ||= 7 if query[:begin_date].blank? && query[:end_date].blank?
     end

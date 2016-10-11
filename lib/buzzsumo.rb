@@ -5,21 +5,34 @@ class Buzzsumo
   parser Utils::OpenStructParser
   default_params api_key: ENV['BUZZSUMO_TOKEN']
 
-  def self.articles(options)
-    get('/search/articles.json'.freeze, options)
-  end
+  class << self
+    def articles(options)
+      get('/search/articles.json'.freeze, options)
+    end
 
-  def self.all(method, options = {})
-    options[:query] ||= {}
-    current_page = 0
-    Array.new.tap do |resources|
-      loop do
-        options[:query][:page] = current_page
-        request = send(method, options)
-        resources.concat(request.parsed_response.results.to_a)
-        current_page += 1
-        break unless current_page < request.parsed_response.total_pages.to_i
-      end
-    end.compact.uniq
+    def all(method, options = {})
+      options[:query] ||= {}
+      current_page = 0
+      Array.new.tap do |resources|
+        loop do
+          options[:query][:page] = current_page
+          request = send(method, options)
+          resources.concat(request.parsed_response.results.to_a)
+          current_page += 1
+          break if end_reached?(current_page, request: request, options: options)
+        end
+      end.compact.uniq
+    end
+
+    private
+
+    def end_reached?(current_page:, request:, options: {})
+      total_pages = request.parsed_response.total_pages.to_i
+      max_pages = options[:max_pages]
+
+      return true if current_page >= total_pages
+      return true if max_pages.present? && current_page >= max_pages
+      false
+    end
   end
 end
