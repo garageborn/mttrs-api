@@ -8,18 +8,21 @@ class BuzzsumoEntryProcessJob
     @entry = entry.with_indifferent_access
     return if entry.blank? || publisher.blank?
 
-    result, _op = Link::Create.run(link: attributes)
-    result
+    Link::Create.run(link: attributes) do |op|
+      enqueue_update_counters!(op.model)
+    end
+  end
+
+  def enqueue_update_counters!(model)
+    counters = Social::Strategies::Buzzsumo.counters_from_entry(entry)
+    return if counters.blank?
+    Link::UpdateCounters.run(link: model, counters: counters)
   end
 
   private
 
   def publisher
     Publisher.find_by_host(entry[:url])
-  end
-
-  def urls
-    Utils::UrlDiscovery.run(entry[:url])
   end
 
   def link
@@ -31,8 +34,8 @@ class BuzzsumoEntryProcessJob
       image_source_url: image_source_url,
       published_at: published_at,
       publisher_id: publisher_id,
-      urls: urls,
-      title: title
+      title: title,
+      urls: urls
     }
   end
 
@@ -50,6 +53,10 @@ class BuzzsumoEntryProcessJob
 
   def title
     link.try(:title) || entry[:title]
+  end
+
+  def urls
+    link.try(:urls) || Utils::UrlDiscovery.run(entry[:url])
   end
 
   memoize :link, :publisher, :urls, :attributes

@@ -27,10 +27,6 @@ class FeedEntryProcessJob
     Feed.find_by_id(entry[:feed_id])
   end
 
-  def urls
-    Utils::UrlDiscovery.run(entry[:url])
-  end
-
   def attributes
     {
       description: description,
@@ -61,6 +57,10 @@ class FeedEntryProcessJob
 
   def title
     link.try(:title) || entry[:title]
+  end
+
+  def urls
+    link.try(:urls) || Utils::UrlDiscovery.run(entry[:url])
   end
 
   def feed_ids
