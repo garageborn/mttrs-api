@@ -19,7 +19,7 @@ class BuzzsumoFetcherJob
   end
 
   def languages
-    publisher.feeds.map(&:language)
+    publisher.feeds.map(&:language).compact.uniq
   end
 
   def entries

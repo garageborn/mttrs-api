@@ -3,6 +3,11 @@ env :PATH, ENV['PATH']
 set :output, 'log/cron.log'
 job_type :rake, 'cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output'
 
+# Feeds
+every 10.minutes do
+  rake 'feeds:fetcher:run'
+end
+
 # Buzzsumo
 every 10.minutes do
   rake 'buzzsumo:fetcher:today'
@@ -16,11 +21,7 @@ every 1.day, at: '2am' do
   rake 'buzzsumo:fetcher:since_7_days'
 end
 
-# Feeds
-every 10.minutes do
-  rake 'feeds:fetcher:run'
-end
-
+# Links
 every 1.day, at: '3am' do
   rake 'links:purge:run'
 end
