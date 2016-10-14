@@ -1,3 +1,3 @@
 li
-  span ##{ order } #{ url_matcher }
-  = link_to 'Edit', [:edit, :admin, model]
+  span ##{ order } #{ category_name } #{ url_matcher }
+  = link_to 'Edit', [:edit, :admin, model], class: 'category-matchers-edit-button'

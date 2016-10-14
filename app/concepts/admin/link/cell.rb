@@ -21,8 +21,8 @@ module Admin
         end
 
         def story_id
-          return 'None' if model.story_id.blank?
-          model.story_id
+          return 'None' if model.story.blank?
+          model.story.id
         end
 
         def social_counters

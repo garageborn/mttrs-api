@@ -39,6 +39,11 @@ module Admin
       render_form
     end
 
+    def uncategorized
+      present ::Link::Index
+      render html: concept('admin/link/cell/index', @model)
+    end
+
     def remove_from_story
       run ::Link::RemoveFromStory do |op|
         flash[:notice] = "Link '#{ op.model.title }' removed from story"

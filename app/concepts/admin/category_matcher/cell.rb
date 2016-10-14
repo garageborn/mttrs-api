@@ -9,6 +9,10 @@ module Admin
         include ActionView::Helpers::NumberHelper
         property :order
         property :url_matcher
+
+        def category_name
+          model.category.name
+        end
       end
 
       class Form < Trailblazer::Cell

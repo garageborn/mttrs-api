@@ -1,3 +1,5 @@
-h2= link_to 'New Category', [:new, :admin, :category], class: 'categories-add-button'
+h2
+  = link_to 'New Category', [:new, :admin, :category], class: 'categories-add-button'
+  = link_to 'Matchers', [:admin, :category_matchers], class: 'categories-add-button'
 ul= concept('admin/category/cell/item', collection: model)
 = paginate(model)
