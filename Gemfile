@@ -15,7 +15,7 @@ gem 'feedjira', '2.0.0'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', github: 'norman/friendly_id'
-gem 'graphql', '0.19.1'
+gem 'graphql', '0.19.3'
 gem 'graphiql-rails', '1.3.0'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
@@ -25,9 +25,9 @@ gem 'kaminari-cells', '0.0.4'
 gem 'logglier', '0.5.0'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
-gem 'nokogiri', '1.6.8'
+gem 'nokogiri', '1.6.8.1'
 gem 'pg', '0.19.0'
-gem 'public_suffix', '2.0.2'
+gem 'public_suffix', '2.0.3'
 gem 'rails', '5.0.0.1'
 gem 'redis-namespace', '1.5.2'
 gem 'reform-rails', '0.1.5'
@@ -52,7 +52,7 @@ group :production do
 end
 
 group :development, :test do
-  gem 'byebug', '9.0.5'
+  gem 'byebug', '9.0.6'
   gem 'guard-bundler', '2.1.0'
   gem 'guard-livereload', '2.5.2'
   gem 'guard-rspec', '4.7.3'
@@ -77,6 +77,6 @@ group :test do
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
   gem 'simplecov', '0.12.0', require: false
-  gem 'terminal-notifier', '1.6.3', require: false
+  gem 'terminal-notifier', '1.7.1', require: false
   gem 'terminal-notifier-guard', '1.7.0', require: false
 end
