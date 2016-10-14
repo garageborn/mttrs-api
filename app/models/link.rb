@@ -17,7 +17,7 @@ class Link < ApplicationRecord
   has_one :social_counter, -> { order(id: :desc) }
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
-  # scope :find_by_url_regexp, -> (regexp) { joins(:link_urls).where('link_urls.url ~ ?', regexp) }
+  scope :find_by_url_regexp, -> (regexp) { joins(:link_urls).where('link_urls.url ~ ?', regexp) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :popular, -> { order(total_social: :desc) }
