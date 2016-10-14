@@ -3,10 +3,23 @@ require ::File.expand_path('../callbacks', __FILE__)
 class Link
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = { page: 1, per: 30, recent: true }.freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 30, recent: true).freeze
 
     def model!(params)
       ::Link.filter(params)
+    end
+
+    def params!(params)
+      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
+    end
+  end
+
+  class Uncategorized < Trailblazer::Operation
+    include Collection
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 30, popular: true).freeze
+
+    def model!(params)
+      ::Link.uncategorized.filter(params)
     end
 
     def params!(params)

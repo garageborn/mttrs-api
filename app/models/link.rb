@@ -17,6 +17,7 @@ class Link < ApplicationRecord
   has_one :social_counter, -> { order(id: :desc) }
 
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
+  scope :find_by_url_regexp, -> (regexp) { joins(:link_urls).where('link_urls.url ~* ?', regexp) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :popular, -> { order(total_social: :desc) }
@@ -36,6 +37,7 @@ class Link < ApplicationRecord
   scope :publisher_slug, -> (slug) { joins(:publisher).where(publishers: { slug: slug }) }
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
+  scope :uncategorized, -> { left_outer_joins(:category_links).where(category_links: { id: nil }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
   strip_attributes :title, :description

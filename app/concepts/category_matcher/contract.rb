@@ -1,6 +1,7 @@
 class CategoryMatcher
   class Contract < Reform::Form
     property :publisher_id
+    property :publisher
     property :category_id
     property :url_matcher
 

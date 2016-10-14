@@ -1,0 +1,4 @@
+h2 Total: #{ number_with_delimiter(model.total_count) }
+ul= concept('admin/link/cell/uncategorized_item', collection: model)
+
+= paginate(model)

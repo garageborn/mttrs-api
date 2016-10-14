@@ -1,17 +1,17 @@
 // *************************************
 //
-//   Links
+//   Categories
 //
 // -------------------------------------
 //   Template
 // -------------------------------------
 //
-// .links[.links--modifier](.is-state)(.has-context)
-//   .links-scaffolding
+// .category-matchers[.category-matchers--modifier](.is-state)(.has-context)
+//   .category-matchers-scaffolding
 //
 // *************************************
 
-.links
+.category-matchers
 
 // -------------------------------------
 //   Modifiers
@@ -35,19 +35,20 @@
 //   Scaffolding
 // -------------------------------------
 
-.links-add-button
+.category-matchers-add-button
   @extend %button--add
 
-.links-edit-button
+.category-matchers-edit-button
   @extend %button--edit
 
-.links-item-title
+.category-matchers-item-title
   @extend %list-item-title
 
-.links-item-stats
-  @extend %list-item-stats
+.category-matchers-item-section
+  @extend %list-item-section
 
-.links-uncategorized-item-title
-  @extend %list-item-title
-  span
-    margin: 0 em(5px)
+.category-matchers-item-subsection
+  @extend %list-item-subsection
+
+.category-matchers-list-title
+  margin-top: $b-space

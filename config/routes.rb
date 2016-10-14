@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :category_matchers, except: :show
       resources :feeds, except: :show
       resources :links, except: :show do
+        get :uncategorized, on: :collection
         put :remove_from_story, on: :member
       end
       resources :publishers, except: :show

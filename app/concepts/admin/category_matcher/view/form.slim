@@ -9,3 +9,8 @@
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
+
+  - if links.present?
+    ul
+      - links.each do |link|
+        li= link.url

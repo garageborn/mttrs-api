@@ -6,13 +6,19 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        include ActionView::Helpers::NumberHelper
         property :order
         property :url_matcher
+
+        def category_name
+          model.category.name
+        end
       end
 
       class Form < Trailblazer::Cell
-        include ActionView::Helpers::FormOptionsHelper
+        def links
+          return if model.publisher.blank? || model.url_matcher.blank?
+          model.publisher.links.find_by_url_regexp(model.url_matcher).recent.limit(30)
+        end
       end
     end
   end

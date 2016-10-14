@@ -1,3 +1,5 @@
-h2= link_to 'New Link', [:new, :admin, :link], class: 'links-add-button'
+h2
+  = link_to 'New Link', [:new, :admin, :link], class: 'links-add-button'
+  = link_to 'Uncategorized links', [:uncategorized, :admin, :links], class: 'links-add-button'
 ul= concept('admin/link/cell/item', collection: model)
 = paginate(model)
