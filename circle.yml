@@ -15,7 +15,11 @@ deployment:
     commands:
       - bin/rails deploy
 
+database:
+  override:
+    - echo "Skipping DB section."
+
 test:
   override:
-    - postgres --version
-    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
+    - echo "Skipping Test section."
+    # - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
