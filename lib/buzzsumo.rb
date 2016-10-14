@@ -19,7 +19,7 @@ class Buzzsumo
           request = send(method, options)
           resources.concat(request.parsed_response.results.to_a)
           current_page += 1
-          break if end_reached?(current_page, request: request, options: options)
+          break if end_reached?(current_page: current_page, request: request, options: options)
         end
       end.compact.uniq
     end
@@ -28,7 +28,7 @@ class Buzzsumo
 
     def end_reached?(current_page:, request:, options: {})
       total_pages = request.parsed_response.total_pages.to_i
-      max_pages = options[:max_pages]
+      max_pages = options[:query][:max_pages]
 
       return true if current_page >= total_pages
       return true if max_pages.present? && current_page >= max_pages
