@@ -14,14 +14,18 @@ class CategoryMatcher
 
   class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model CategoryMatcher
     contract Contract
+
+    callback :after_save, Callbacks::AfterSave
   end
 
   class Form < Operation
     def process(params)
       validate(params[:category_matcher]) do
         contract.save
+        callback!(:after_save)
       end
     end
   end

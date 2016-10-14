@@ -40,8 +40,8 @@ module Admin
     end
 
     def uncategorized
-      present ::Link::Index
-      render html: concept('admin/link/cell/index', @model)
+      present ::Link::Uncategorized
+      render html: concept('admin/link/cell/uncategorized', @model)
     end
 
     def remove_from_story

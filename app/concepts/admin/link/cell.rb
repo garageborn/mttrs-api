@@ -5,6 +5,10 @@ module Admin
         include Kaminari::Cells
       end
 
+      class Uncategorized < Trailblazer::Cell
+        include Kaminari::Cells
+      end
+
       class Item < Trailblazer::Cell
         property :title
 
@@ -31,6 +35,18 @@ module Admin
             'admin/link/cell/social_counter',
             collection: model.social_counters.recent.limit(5)
           )
+        end
+      end
+
+      class UncategorizedItem < Trailblazer::Cell
+        property :url
+
+        def publisher_name
+          model.publisher.name
+        end
+
+        def total_social
+          number_with_delimiter(model.total_social)
         end
       end
 
