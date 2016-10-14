@@ -17,7 +17,7 @@ deployment:
 
 dependencies:
   pre:
-    - postgresql --version
+    - postgres --version
 
 test:
   override:
