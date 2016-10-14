@@ -1,13 +1,15 @@
 class Publisher
   class Contract < Reform::Form
-    property :name
-    property :slug
     property :domain
     property :icon_id, populator: :icon_id!
+    property :language
+    property :name
+    property :slug
 
+    validates :domain, presence: true, unique: { case_sensitive: false }
+    validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
     validates :name, presence: true, unique: { case_sensitive: false }
     validates :slug, presence: true, unique: { case_sensitive: false }
-    validates :domain, presence: true, unique: { case_sensitive: false }
 
     private
 

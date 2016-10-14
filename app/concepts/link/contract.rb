@@ -12,7 +12,7 @@ class Link
     end
 
     validates :title, :publisher_id, :published_at, presence: true
-    validates :language, inclusion: { in: Utils::Language::EXISTING_LANGUAGES }, allow_blank: true
+    validates :language, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }, allow_blank: true
 
     def prepopulate!(_options)
       link_urls << LinkUrl.new if link_urls.blank?

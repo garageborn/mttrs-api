@@ -32,6 +32,6 @@ RSpec.describe Link do
   #   it { is_expected.to validate_presence_of(:title) }
   #   it { is_expected.to_not validate_presence_of(:description) }
   #   it { is_expected.to validate_presence_of(:published_at) }
-  #   it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::EXISTING_LANGUAGES).allow_blank }
+  #   it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::AVAILABLE_LANGUAGES).allow_blank }
   # end
 end
