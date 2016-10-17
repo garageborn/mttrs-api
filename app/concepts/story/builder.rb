@@ -35,7 +35,7 @@ class Story
       end
 
       def model!(_params)
-        return Story.new if similar.blank?
+        return Story.new(published_at: link.published_at) if similar.blank?
         similar.detect { |link| link.story.present? }.try(:story) || Story.new
       end
 
