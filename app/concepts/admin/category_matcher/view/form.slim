@@ -2,8 +2,8 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :category, collection: Category.order_by_name, include_blank: false
-    = f.association :publisher, collection: Publisher.order_by_name, include_blank: false
+    = f.association :category, collection: Category.order_by_name
+    = f.association :publisher, collection: Publisher.order_by_name
     = f.input :url_matcher, input_html: { rows: 1, cols: 100 }
     = f.input :try_out, as: :boolean
 
@@ -11,16 +11,16 @@
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
-  - if matching_links.present?
-    .category-matchers-links
-      strong Matching links
-      ul
-        - matching_links.each do |link|
-          li= link.url
+  .category-matchers-links
+    - if matching_links.present?
+      strong Matching links (#{ matching_links_count })
+      ul= concept('admin/link/cell/uncategorized_item', collection: matching_links)
+    - else
+      strong No links matching
 
-  - if uncategorized_links.present?
-    .category-matchers-links
-      strong Uncategorized links
-      ul
-        - uncategorized_links.each do |link|
-          li= link.url
+  .category-matchers-links
+    - if uncategorized_links.present?
+      strong Uncategorized links (#{ uncategorized_links_count })
+      ul= concept('admin/link/cell/uncategorized_item', collection: uncategorized_links)
+    - else
+      strong No uncategorized links

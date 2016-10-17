@@ -1,3 +1,12 @@
 li
-  span ##{ order } #{ category_name } #{ url_matcher }
-  = link_to 'Edit', [:edit, :admin, model], class: 'category-matchers-edit-button'
+  section
+    strong #{ publisher.name }
+    = link_to 'Add New', [:new, :admin, :category_matcher, { publisher_id: publisher.id }],
+      class: 'category-matchers-add-button'
+    | (#{ uncategorized_links } uncategorized)
+
+  ol
+    - category_matchers.each do |category_matcher|
+      li
+        span ##{ category_matcher.order } #{ category_matcher.category.name } #{ category_matcher.url_matcher }
+        = link_to 'Edit', [:edit, :admin, category_matcher], class: 'category-matchers-edit-button'

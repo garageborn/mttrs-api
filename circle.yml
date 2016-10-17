@@ -15,11 +15,6 @@ deployment:
     commands:
       - bin/rails deploy
 
-database:
-  override:
-    - echo "Skipping DB section."
-
 test:
   override:
-    - echo "Skipping Test section."
-    # - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml
+    - RAILS_ENV=test bundle exec rspec -r rspec_junit_formatter --format RspecJunitFormatter -o $CIRCLE_TEST_REPORTS/rspec/junit.xml

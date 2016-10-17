@@ -3,28 +3,53 @@ module Admin
     module Cell
       class Index < Trailblazer::Cell
         include Kaminari::Cells
+
+        def publishers_matchers
+          model.all.group_by(&:publisher)
+        end
       end
 
       class Item < Trailblazer::Cell
-        property :order
-        property :url_matcher
+        def publisher
+          model.first
+        end
 
-        def category_name
-          model.category.name
+        def uncategorized_links
+          number_with_delimiter(publisher.links.uncategorized.count)
+        end
+
+        def category_matchers
+          model.second
         end
       end
 
       class Form < Trailblazer::Cell
         def matching_links
-          publisher = ::Publisher.find_by(id: model.publisher_id)
-          return if publisher.blank? || model.url_matcher.blank?
-          publisher.links.find_by_url_regexp(model.url_matcher).recent.limit(50)
+          return if model.url_matcher.blank?
+
+          publisher_uncategorized_links.to_a.select do |link|
+            LinkCategorizer::Matcher.new(model, link).match?
+          end
+        end
+
+        def matching_links_count
+          number_with_delimiter(matching_links.try(:size))
         end
 
         def uncategorized_links
+          publisher_uncategorized_links.popular.limit(50)
+        end
+
+        def uncategorized_links_count
+          number_with_delimiter(publisher_uncategorized_links.size)
+        end
+
+        private
+
+        def publisher_uncategorized_links
           publisher = ::Publisher.find_by(id: model.publisher_id)
-          return ::Link.uncategorized.popular.limit(50) if publisher.blank?
-          publisher.links.uncategorized.popular.limit(50)
+          return ::Link.uncategorized.includes(:link_urls) if publisher.blank?
+          publisher.links.uncategorized.includes(:link_urls)
         end
       end
     end
