@@ -74,7 +74,6 @@ group :test do
   gem 'faker', '1.6.6'
   gem 'rspec-its', '1.2.0'
   gem 'rspec-sidekiq', '2.2.0'
-  gem 'rspec_junit_formatter', '0.2.3'
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
   gem 'simplecov', '0.12.0', require: false
