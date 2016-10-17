@@ -22,15 +22,15 @@ class Story < ApplicationRecord
     published_between(date.at_beginning_of_day, date.end_of_day)
   }
   scope :published_between, lambda { |start_at, end_at|
-    joins(:main_link).where(links: { published_at: parse_date(start_at)..parse_date(end_at) })
+    where(published_at: parse_date(start_at)..parse_date(end_at))
   }
   scope :published_since, lambda { |date|
-    joins(:main_link).where(links: { published_at: parse_date(date)..Float::INFINITY })
+    where(published_at: parse_date(date)..Float::INFINITY)
   }
   scope :publisher_slug, lambda { |slug|
     joins(:publishers).group(:id).where(publishers: { slug: slug })
   }
-  scope :recent, -> { joins(:main_link).order('links.published_at DESC') }
+  scope :recent, -> { order('stories.published_at DESC') }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 

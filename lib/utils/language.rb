@@ -9,8 +9,8 @@ module Utils
 
     def self.find(name)
       return if name.blank?
-      language = name.to_s.scan(/^[a-z]{2}/).first.downcase
-      return language if EXISTING_LANGUAGES.include?(language)
+      language = name.to_s.scan(/^[a-z]{2}/).first
+      return language if language.present? && EXISTING_LANGUAGES.include?(language.downcase)
     end
   end
 end
