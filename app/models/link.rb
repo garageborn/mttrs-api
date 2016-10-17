@@ -35,6 +35,7 @@ class Link < ApplicationRecord
     where('links.published_at <= ?', parse_date(date))
   }
   scope :publisher_slug, -> (slug) { joins(:publisher).where(publishers: { slug: slug }) }
+  scope :random, -> { order('RANDOM()') }
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
   scope :uncategorized, -> { left_outer_joins(:category_links).where(category_links: { id: nil }) }

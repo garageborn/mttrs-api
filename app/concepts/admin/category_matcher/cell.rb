@@ -16,7 +16,7 @@ module Admin
 
       class Form < Trailblazer::Cell
         def links
-          return if model.publisher.blank? || model.url_matcher.blank?
+          return ::Link.popular.limit(30) if model.publisher.blank? || model.url_matcher.blank?
           model.publisher.links.find_by_url_regexp(model.url_matcher).recent.limit(30)
         end
       end
