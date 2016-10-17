@@ -2,15 +2,25 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :category, include_blank: false
-    = f.association :publisher, include_blank: false
-    = f.input :url_matcher
+    = f.association :category, collection: Category.order_by_name, include_blank: false
+    = f.association :publisher, collection: Publisher.order_by_name, include_blank: false
+    = f.input :url_matcher, input_html: { rows: 1, cols: 100 }
+    = f.input :try_out, as: :boolean
 
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
-  - if links.present?
-    ul
-      - links.each do |link|
-        li= link.url
+  - if matching_links.present?
+    .category-matchers-links
+      strong Matching links
+      ul
+        - matching_links.each do |link|
+          li= link.url
+
+  - if uncategorized_links.present?
+    .category-matchers-links
+      strong Uncategorized links
+      ul
+        - uncategorized_links.each do |link|
+          li= link.url

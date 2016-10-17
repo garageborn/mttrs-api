@@ -16,6 +16,7 @@ class CategoryMatcher
       private
 
       def perform_add_link_categories!
+        byebug
         contract.model.publisher.links.uncategorized.find_each do |link|
           Link::AddCategories.run(id: link.id)
         end

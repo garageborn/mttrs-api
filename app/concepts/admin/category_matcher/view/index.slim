@@ -1,2 +1,3 @@
 h2= link_to 'New Category Matcher', [:new, :admin, :category_matcher], class: 'category-matchers-add-button'
 ul= concept('admin/category_matcher/cell/item', collection: model)
+= paginate(model)

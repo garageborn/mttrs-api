@@ -8,6 +8,8 @@ class Publisher < ApplicationRecord
 
   friendly_id :name, use: %i(slugged finders)
 
+  scope :order_by_name, -> { order(:name) }
+
   def self.find_by_host(url)
     host = Addressable::URI.parse(url).host
     public_suffix = PublicSuffix.domain(host)
