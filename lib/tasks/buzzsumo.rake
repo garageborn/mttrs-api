@@ -14,11 +14,11 @@ namespace :buzzsumo do
       )
     end
 
-    desc 'Fetch all yesterday links'
-    task yesterday: :environment do
+    desc 'Fetch all recent links'
+    task recent: :environment do
       enqueue_buzzsumo_fetcher(
-        begin_date: Date.yesterday.at_beginning_of_day.utc.to_i,
-        end_date: Date.yesterday.end_of_day.utc.to_i
+        begin_date: 3.days.ago.at_beginning_of_day.utc.to_i,
+        end_date: 1.day.ago.end_of_day.utc.to_i
       )
     end
 
@@ -26,7 +26,7 @@ namespace :buzzsumo do
     task since_7_days: :environment do
       enqueue_buzzsumo_fetcher(
         begin_date: 7.days.ago.at_beginning_of_day.utc.to_i,
-        end_date: 3.days.ago.end_of_day.utc.to_i
+        end_date: 4.days.ago.end_of_day.utc.to_i
       )
     end
   end

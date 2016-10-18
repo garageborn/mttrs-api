@@ -13,8 +13,8 @@ every 20.minutes do
   rake 'buzzsumo:fetcher:today'
 end
 
-every 12.hours do
-  rake 'buzzsumo:fetcher:yesterday'
+every 2.hours do
+  rake 'buzzsumo:fetcher:recent'
 end
 
 every 1.day, at: '2am' do
