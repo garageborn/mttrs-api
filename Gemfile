@@ -49,7 +49,7 @@ gem 'whenever', '0.9.7', require: false
 
 group :production do
   gem 'puma', '3.6.0'
-  gem 'sentry-raven', '2.0.2'
+  gem 'sentry-raven', '0.15.2'
 end
 
 group :development, :test do
