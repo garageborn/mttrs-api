@@ -19,7 +19,7 @@ class FeedFetcherJob
 
   def rss
     return if request.blank? || request.body.blank?
-    Feedjira::Feed.parse(request.body)
+    Feedjira::Feed.parse(request.body.encode('utf-8'))
   end
 
   def process(entry)
