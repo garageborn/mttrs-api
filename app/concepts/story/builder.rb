@@ -35,8 +35,8 @@ class Story
       end
 
       def model!(_params)
-        return Story.new(published_at: link.published_at) if similar.blank?
-        similar.detect { |link| link.story.present? }.try(:story) || Story.new
+        similar_link = similar.detect { |link| link.story.present? }
+        similar_link.try(:story) || Story.create(published_at: link.published_at)
       end
 
       memoize :link, :similar
