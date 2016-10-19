@@ -1,4 +1,5 @@
 h2 Total: #{ number_with_delimiter(model.total_count) }
+= select('uncategorized_links', 'publisher_id', all_publishers, { prompt: 'All Publishers' })
 ul= concept('admin/link/cell/uncategorized_item', collection: model)
 
 = paginate(model)

@@ -5,6 +5,7 @@ require 'active_model/railtie'
 require 'active_record/railtie'
 require 'action_controller/railtie'
 require 'sprockets/railtie'
+require 'sprockets/es6'
 
 require 'rss'
 require 'open-uri'
@@ -28,6 +29,5 @@ module Mttrs
       admin/application.css
       admin/application.js
     )
-    config.cells.with_assets = ['admin/layout/cell/navigation']
   end
 end

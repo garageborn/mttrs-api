@@ -8,7 +8,7 @@ class Story
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page).to_h)
+      DEFAULT_PARAMS.merge(params.permit(:page))
     end
   end
 

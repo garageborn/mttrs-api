@@ -2,7 +2,6 @@ module Admin
   module Story
     module Cell
       class Index < Trailblazer::Cell
-        include Kaminari::Cells
       end
 
       class Item < Trailblazer::Cell
