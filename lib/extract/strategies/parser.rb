@@ -34,7 +34,7 @@ module Extract
 
         def get_html(url)
           url_fetcher = Utils::UrlFetcher.run(url)
-          return unless url_fetcher.success?
+          return unless url_fetcher&.success?
           url_fetcher.response.body.encode('UTF-8', 'ISO-8859-1')
         end
       end

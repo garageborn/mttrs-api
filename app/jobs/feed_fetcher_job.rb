@@ -40,7 +40,7 @@ class FeedFetcherJob
 
   def direct_request
     request = Utils::UrlFetcher.run(feed.url)
-    return request if request.success?
+    return request if request&.success?
   end
 
   def proxied_request

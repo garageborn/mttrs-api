@@ -7,6 +7,7 @@ module Utils
         headers: { 'User-Agent' => Utils::UserAgent.sample },
         verify: false
       )
+    rescue HTTParty::RedirectionTooDeep
     end
   end
 end
