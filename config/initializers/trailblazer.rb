@@ -18,6 +18,7 @@ Trailblazer::Cell.class_eval do
   include SimpleForm::ActionViewExtensions::FormHelper
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::TranslationHelper
+  include Kaminari::Cells
   include CloudinaryHelper
 end
 

@@ -2,8 +2,6 @@ module Admin
   module CategoryMatcher
     module Cell
       class Index < Trailblazer::Cell
-        include Kaminari::Cells
-
         def publishers_matchers
           model.all.group_by(&:publisher)
         end
@@ -41,7 +39,11 @@ module Admin
         end
 
         def uncategorized_links_count
-          number_with_delimiter(publisher_uncategorized_links.size)
+          count = number_with_delimiter(publisher_uncategorized_links.size)
+          publisher = ::Publisher.find_by(id: model.publisher_id)
+          return count if publisher.blank?
+          path = uncategorized_admin_links_path(publisher_slug: publisher.slug)
+          link_to(count, path, target: :_blank)
         end
 
         private

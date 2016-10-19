@@ -1,6 +1,6 @@
 class PublishersController < ApplicationController
   def index
-    publishers = Publisher.all
+    publishers = Publisher.filter(filter_params)
     render json: publishers
   end
 
@@ -13,5 +13,9 @@ class PublishersController < ApplicationController
 
   def publisher_params
     params.permit(:id)
+  end
+
+  def filter_params
+    params.permit(:order_by_name)
   end
 end
