@@ -1,5 +1,21 @@
 module Utils
   class UrlFetcher
+    RESCUE_FROM = [
+      EOFError,
+      Errno::ECONNREFUSED,
+      Errno::ECONNRESET,
+      Errno::EHOSTUNREACH,
+      Errno::ENETUNREACH,
+      Errno::EPIPE,
+      HTTParty::RedirectionTooDeep,
+      Net::HTTPFatalError,
+      Net::HTTPRetriableError,
+      Net::HTTPServerException,
+      OpenSSL::SSL::SSLError,
+      SocketError,
+      Timeout::Error
+    ].freeze
+
     def self.run(url)
       HTTParty.get(
         url,
@@ -7,7 +23,7 @@ module Utils
         headers: { 'User-Agent' => Utils::UserAgent.sample },
         verify: false
       )
-    rescue HTTParty::RedirectionTooDeep
+    rescue *RESCUE_FROM
     end
   end
 end
