@@ -18,8 +18,8 @@ class FeedFetcherJob
   end
 
   def rss
-    return if request.blank? || request.body.blank?
-    Feedjira::Feed.parse(request.body.encode('utf-8'))
+    return if request_body.blank?
+    Feedjira::Feed.parse(request_body)
   end
 
   def process(entry)
@@ -46,6 +46,13 @@ class FeedFetcherJob
   def proxied_request
     request = Proxy.request(feed.url)
     return request if request.success?
+  end
+
+  def request_body
+    return if request&.body.blank?
+    request.body.encode('utf-8')
+  rescue Encoding::UndefinedConversionError
+    request.body
   end
 
   memoize :feed, :rss, :request, :direct_request, :proxied_request
