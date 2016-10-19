@@ -2,6 +2,7 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :order, as: :integer
     = f.association :category, collection: Category.order_by_name
     = f.association :publisher, collection: Publisher.order_by_name
     = f.input :url_matcher, input_html: { rows: 1, cols: 100 }

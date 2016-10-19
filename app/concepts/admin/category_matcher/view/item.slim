@@ -5,7 +5,7 @@ li
       class: 'category-matchers-add-button'
     | (#{ uncategorized_links } uncategorized)
 
-  ol
+  ul
     - category_matchers.each do |category_matcher|
       li
         span ##{ category_matcher.order } #{ category_matcher.category.name } #{ category_matcher.url_matcher }

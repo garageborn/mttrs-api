@@ -2,10 +2,11 @@ class CategoryMatcher
   class Contract < Reform::Form
     feature Coercion
 
-    property :publisher_id
     property :category_id
-    property :url_matcher
+    property :order
+    property :publisher_id
     property :try_out, virtual: true, type: Types::Form::Bool
+    property :url_matcher
 
     validates :publisher_id, :category_id, presence: true
     validates :url_matcher,
