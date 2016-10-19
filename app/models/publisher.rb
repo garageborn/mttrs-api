@@ -14,6 +14,6 @@ class Publisher < ApplicationRecord
   def self.find_by_host(url)
     host = Addressable::URI.parse(url).host
     public_suffix = PublicSuffix.domain(host)
-    where(domain: [host, public_suffix].uniq).first
+    find_by(domain: [host, public_suffix].uniq)
   end
 end

@@ -1,2 +1,4 @@
-h2= link_to 'New Category Matcher', [:new, :admin, :category_matcher], class: 'category-matchers-add-button'
+h2
+  = link_to [:new, :admin, :category_matcher], class: 'category-matchers-add-button' do
+    | New Category Matcher
 ul= concept('admin/category_matcher/cell/item', collection: publishers_matchers)

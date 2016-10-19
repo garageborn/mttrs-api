@@ -9,8 +9,8 @@ namespace :buzzsumo do
     desc 'Fetch all today links'
     task today: :environment do
       enqueue_buzzsumo_fetcher(
-        begin_date: Date.today.at_beginning_of_day.utc.to_i,
-        end_date: Date.today.end_of_day.utc.to_i
+        begin_date: Time.zone.today.at_beginning_of_day.utc.to_i,
+        end_date: Time.zone.today.end_of_day.utc.to_i
       )
     end
 

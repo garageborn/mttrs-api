@@ -1,7 +1,7 @@
 module Middleware
   module UniqueJobs
     class Client
-      def call(worker_class, job, queue_name, _redis_pool)
+      def call(_worker_class, job, queue_name, _redis_pool)
         return yield if job['unique'].blank?
 
         Sidekiq::Queue.new(queue_name).to_a.each do |r|

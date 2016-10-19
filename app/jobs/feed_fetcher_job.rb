@@ -14,7 +14,7 @@ class FeedFetcherJob
   private
 
   def feed
-    Feed.find_by_id(feed_id)
+    Feed.find_by(id: feed_id)
   end
 
   def rss

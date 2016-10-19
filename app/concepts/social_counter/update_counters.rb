@@ -15,7 +15,7 @@ class SocialCounter
 
     def link
       return @params[:link] if @params[:link].present?
-      ::Link.find_by_id(@params[:link_id])
+      ::Link.find_by(id: @params[:link_id])
     end
 
     def model!(_params)

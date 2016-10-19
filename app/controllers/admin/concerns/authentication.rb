@@ -3,7 +3,7 @@ module Admin
     module Authentication
       extend ActiveSupport::Concern
 
-      included do |base|
+      included do
         before_action :authenticate
       end
 

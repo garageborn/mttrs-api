@@ -8,7 +8,7 @@ module Utils
       raise e
     ensure
       # Check the connection back in to the connection pool
-      ActiveRecord::Base.connection.close if ActiveRecord::Base.connection
+      ActiveRecord::Base.connection&.close
     end
   end
 end

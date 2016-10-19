@@ -15,7 +15,7 @@ class BuzzsumoFetcherJob
   private
 
   def publisher
-    Publisher.find_by_id(publisher_id)
+    Publisher.find_by(id: publisher_id)
   end
 
   def languages

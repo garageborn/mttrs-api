@@ -24,7 +24,7 @@ class FeedEntryProcessJob
   end
 
   def feed
-    Feed.find_by_id(entry[:feed_id])
+    Feed.find_by(id: entry[:feed_id])
   end
 
   def attributes

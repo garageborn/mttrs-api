@@ -20,7 +20,7 @@ class FullFetchLinkJob
   private
 
   def link
-    Link.find_by_id(link_id)
+    Link.find_by(id: link_id)
   end
 
   def set_missing_info

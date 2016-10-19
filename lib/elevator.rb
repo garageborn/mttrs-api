@@ -12,7 +12,7 @@ class Elevator < Apartment::Elevators::Generic
   end
 
   def header_tenant(request)
-    Apartment.tenant_names.find do |tenant_name|
+    Apartment.tenant_names.detect do |tenant_name|
       tenant_name.downcase == request.env['HTTP_X_TENANT']
     end
   end
@@ -20,6 +20,6 @@ class Elevator < Apartment::Elevators::Generic
   def path_tenant(request)
     routes = request.path.split('/')
     return unless routes.include?('admin')
-    Apartment.tenant_names.find { |tenant_name| routes.include?(tenant_name) }
+    Apartment.tenant_names.detect { |tenant_name| routes.include?(tenant_name) }
   end
 end

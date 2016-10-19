@@ -5,22 +5,22 @@ QueryType = GraphQL::ObjectType.define do
   field :categories, !types[CategoryType] do
     argument :order_by_name, types.Boolean
     argument :order_by_stories_count, types.Boolean
-    resolve -> (obj, args, ctx) { Category.filter(args) }
+    resolve -> (_obj, args, _ctx) { Category.filter(args) }
   end
 
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
-    resolve -> (obj, args, ctx) { Publisher.filter(args) }
+    resolve -> (_obj, args, _ctx) { Publisher.filter(args) }
   end
 
   field :publisher, PublisherType do
     argument :id, !types.ID
-    resolve -> (obj, args, ctx) { Publisher.find(args['id']) }
+    resolve -> (_obj, args, _ctx) { Publisher.find(args['id']) }
   end
 
   field :story, StoryType do
     argument :id, !types.ID
-    resolve -> (obj, args, ctx) { Story.find(args['id']) }
+    resolve -> (_obj, args, _ctx) { Story.find(args['id']) }
   end
 
   field :stories, !types[StoryType] do
@@ -34,6 +34,6 @@ QueryType = GraphQL::ObjectType.define do
     argument :recent, types.Boolean
     argument :today, types.Boolean
     argument :yesterday, types.Boolean
-    resolve -> (obj, args, ctx) { Story.filter(args) }
+    resolve -> (_obj, args, _ctx) { Story.filter(args) }
   end
 end

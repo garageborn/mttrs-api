@@ -21,7 +21,7 @@
 
   .category-matchers-links
     - if uncategorized_links.present?
-      strong Uncategorized links (#{ uncategorized_links_count.html_safe })
+      strong Uncategorized links (#{ uncategorized_links_count.safe_join })
       ul= concept('admin/link/cell/uncategorized_item', collection: uncategorized_links)
     - else
       strong No uncategorized links

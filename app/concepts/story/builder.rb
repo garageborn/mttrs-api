@@ -13,13 +13,13 @@ class Story
         return unless link.present? && link.missing_story?
         return unless link.belongs_to_current_tenant?
 
-        link.update_attributes(story: model)
-        similar.each do |link|
-          next unless link.missing_story?
-          link.update_attributes(story: model)
+        begin
+          if build_story!
+            Story::Refresh.run(id: model.id)
+          end
+        ensure
+          model.destroy unless model.reload.links.exists?
         end
-
-        Story::Refresh.run(id: model.id)
 
         invalid! if link.missing_story?
       end
@@ -27,7 +27,7 @@ class Story
       private
 
       def link
-        ::Link.find_by_id(@params[:link_id])
+        ::Link.find_by(id: @params[:link_id])
       end
 
       def similar
@@ -37,6 +37,21 @@ class Story
       def model!(_params)
         similar_link = similar.detect { |link| link.story.present? }
         similar_link.try(:story) || Story.new(published_at: link.published_at)
+      end
+
+      def build_story!
+        begin
+          link.update_attributes(story: model)
+        rescue ActiveRecord::RecordNotUnique
+          return false
+        end
+
+        similar.each do |similar_link|
+          next unless similar_link.missing_story?
+          begin
+            similar_link.update_attributes(story: model)
+          rescue ActiveRecord::RecordNotUnique; end
+        end
       end
 
       memoize :link, :similar
