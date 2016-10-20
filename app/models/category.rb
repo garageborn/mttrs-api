@@ -9,6 +9,7 @@ class Category < ApplicationRecord
   has_many :links, through: :category_links
 
   scope :order_by_name, -> { order(:name) }
+  scope :ordered, -> { order(:order) }
 
   friendly_id :name, use: %i(slugged finders)
 end

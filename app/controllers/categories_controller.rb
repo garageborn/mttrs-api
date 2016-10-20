@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   private
 
   def filter_params
-    params.permit(:order_by_name, :order_by_stories_count)
+    params.permit(:order_by_name, :order_by_stories_count, :ordered)
   end
 
   def category_params

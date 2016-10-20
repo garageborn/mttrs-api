@@ -7,6 +7,7 @@ module Admin
       class Item < Trailblazer::Cell
         property :id
         property :name
+        property :order
 
         def feeds
           model.feeds.group_by(&:publisher)

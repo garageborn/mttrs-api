@@ -1,8 +1,9 @@
 class Category
   class Contract < Reform::Form
-    property :name
     property :color
     property :icon_id, populator: :icon_id!
+    property :name
+    property :order
 
     validates :name, presence: true, unique: { case_sensitive: false }
 

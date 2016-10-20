@@ -1,13 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Category do
-  it { should have_db_column(:name).with_options(null: false) }
-  it { should have_db_column(:slug).with_options(null: false) }
-  it { should have_db_column(:created_at).with_options(null: false) }
-  it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:color) }
+  it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:icon_id) }
+  it { should have_db_column(:name).with_options(null: false) }
+  it { should have_db_column(:order).with_options(null: false, default: 0) }
+  it { should have_db_column(:slug).with_options(null: false) }
+  it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_index(:name).unique(true) }
+  it { should have_db_index(:order) }
   it { should have_db_index(:slug).unique(true) }
 
   it { should have_many(:category_feeds).inverse_of(:category).dependent(:destroy) }
