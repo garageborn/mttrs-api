@@ -3,7 +3,6 @@ class CategoryMatcher
     feature Coercion
 
     property :category_id
-    property :order
     property :publisher_id
     property :try_out, virtual: true, type: Types::Form::Bool
     property :url_matcher

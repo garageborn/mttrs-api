@@ -47,7 +47,6 @@ module Admin
       end
 
       class CategoryMatcher < Trailblazer::Cell
-        property :order
         property :url_matcher
       end
 

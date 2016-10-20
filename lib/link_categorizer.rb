@@ -21,7 +21,7 @@ class LinkCategorizer
   private
 
   def matchers
-    link.publisher.category_matchers.ordered.map do |category_matcher|
+    link.publisher.category_matchers.map do |category_matcher|
       LinkCategorizer::Matcher.new(category_matcher, link)
     end
   end

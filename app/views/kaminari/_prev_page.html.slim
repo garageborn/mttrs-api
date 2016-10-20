@@ -7,4 +7,4 @@
     remote       : data-remote
 span.prev
   - unless current_page.first?
-    = link_to t('views.pagination.previous').safe_join, url, rel: 'prev', remote: remote
+    = link_to t('views.pagination.previous').html_safe, url, rel: 'prev', remote: remote

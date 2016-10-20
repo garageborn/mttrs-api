@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe CategoryMatcher do
   it { should have_db_column(:category_id).with_options(null: false) }
   it { should have_db_column(:created_at).with_options(null: false) }
-  it { should have_db_column(:order).with_options(null: false, default: 0) }
   it { should have_db_column(:publisher_id).with_options(null: false) }
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:url_matcher) }

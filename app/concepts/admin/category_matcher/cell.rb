@@ -17,7 +17,7 @@ module Admin
         end
 
         def category_matchers
-          model.second.sort_by(&:order)
+          model.second
         end
       end
 
