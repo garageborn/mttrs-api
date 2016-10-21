@@ -40,11 +40,11 @@ class BuzzsumoEntryProcessJob
   end
 
   def image_source_url
-    link.try(:image_source_url) || entry[:thumbnail]
+    entry[:thumbnail] || link.try(:image_source_url)
   end
 
   def published_at
-    link.try(:published_at) || Time.zone.at(entry[:published_date].to_i) || Time.zone.now
+    Time.zone.at(entry[:published_date].to_i) || link.try(:published_at) || Time.zone.now
   end
 
   def publisher_id
@@ -52,7 +52,7 @@ class BuzzsumoEntryProcessJob
   end
 
   def title
-    link.try(:title) || entry[:title]
+    entry[:title] || link.try(:title)
   end
 
   def urls
