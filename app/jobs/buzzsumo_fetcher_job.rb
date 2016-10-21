@@ -15,7 +15,9 @@ class BuzzsumoFetcherJob
   private
 
   def publisher
-    Publisher.find_by(id: publisher_id)
+    Utils::Thread::with_connection do
+      Publisher.find_by(id: publisher_id)
+    end
   end
 
   def languages

@@ -14,7 +14,9 @@ class FeedFetcherJob
   private
 
   def feed
-    Feed.find_by(id: feed_id)
+    Utils::Thread::with_connection do
+      Feed.find_by(id: feed_id)
+    end
   end
 
   def rss
