@@ -9,6 +9,5 @@ li
     - category_matchers.each do |category_matcher|
       li
         span
-          | ##{ category_matcher.order }
           | #{ category_matcher.category.name } #{ category_matcher.url_matcher }
         = link_to 'Edit', [:edit, :admin, category_matcher], class: 'category-matchers-edit-button'
