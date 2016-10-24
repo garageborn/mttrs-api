@@ -44,7 +44,7 @@ class BuzzsumoEntryProcessJob
     entry[:thumbnail] || link.try(:image_source_url)
   end
 
-  def image_source_url
+  def language
     entry[:language] || link.try(:language)
   end
 
