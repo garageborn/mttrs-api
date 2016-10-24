@@ -1,0 +1,12 @@
+= simple_form_for([:admin, model]) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :headline
+    = f.input :summary, input_html: { cols: 80, rows: 10 }
+
+  .form-actions
+    = f.button :submit
+    = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
+
+  ul= concept('admin/story/cell/form_link', collection: links)
