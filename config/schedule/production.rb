@@ -9,11 +9,11 @@ every 10.minutes do
 end
 
 # Buzzsumo
-every 20.minutes do
+every 25.minutes do
   rake 'buzzsumo:fetcher:today'
 end
 
-every 2.hours do
+every 6.hours do
   rake 'buzzsumo:fetcher:recent'
 end
 
