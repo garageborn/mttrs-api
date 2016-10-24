@@ -32,6 +32,7 @@ class BuzzsumoEntryProcessJob
   def attributes
     {
       image_source_url: image_source_url,
+      language: language,
       published_at: published_at,
       publisher_id: publisher_id,
       title: title,
@@ -41,6 +42,10 @@ class BuzzsumoEntryProcessJob
 
   def image_source_url
     entry[:thumbnail] || link.try(:image_source_url)
+  end
+
+  def image_source_url
+    entry[:language] || link.try(:language)
   end
 
   def published_at
