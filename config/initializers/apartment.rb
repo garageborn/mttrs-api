@@ -22,6 +22,10 @@ Apartment.configure do |config|
   )
 
   config.tenant_names = %w(mttrs_us mttrs_br)
+  config.tenant_options = {
+    mttrs_us: { languages: %w(en) },
+    mttrs_br: { languages: %w(pt) },
+  }
 
   #
   # ==> PostgreSQL only options

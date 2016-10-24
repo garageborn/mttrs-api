@@ -1,6 +1,7 @@
 class Link < ApplicationRecord
   include Concerns::Filterable
   include Concerns::LinkMissingAttributes
+  include Concerns::TenantLink
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
@@ -65,18 +66,6 @@ class Link < ApplicationRecord
     value.each do |url|
       next if urls.include?(url)
       link_urls.build(url: url)
-    end
-  end
-
-  def belongs_to_current_tenant?
-    belongs_to_tenant?(Apartment::Tenant.current)
-  end
-
-  def belongs_to_tenant?(tenant_name)
-    return if new_record?
-
-    Apartment::Tenant.switch(tenant_name) do
-      CategoryLink.where(link_id: id).exists?
     end
   end
 end
