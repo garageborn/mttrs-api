@@ -17,7 +17,7 @@ class CategoryMatcher
 
       def perform_add_link_categories!
         contract.model.publisher.links.uncategorized.find_each do |link|
-          Link::AddCategories.run(id: link.id)
+          LinkCategorizerJob.perform_async(link.id)
         end
       end
     end
