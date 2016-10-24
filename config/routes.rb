@@ -23,7 +23,7 @@ Rails.application.routes.draw do
         put :remove_from_story, on: :member
       end
       resources :publishers, except: :show
-      resources :stories, except: :show
+      resources :stories, only: %i(index edit update destroy)
       get '/elastic', to: 'elastic#index'
     end
   end

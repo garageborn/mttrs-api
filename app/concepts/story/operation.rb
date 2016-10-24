@@ -15,5 +15,30 @@ class Story
   class Operation < Trailblazer::Operation
     include Model
     model Story
+    contract Contract
+  end
+
+  class Form < Operation
+    def process(params)
+      validate(params[:story]) do
+        contract.save
+      end
+    end
+  end
+
+  class Create < Form
+    action :create
+  end
+
+  class Update < Form
+    action :update
+  end
+
+  class Destroy < Operation
+    action :find
+
+    def process(*)
+      model.destroy
+    end
   end
 end

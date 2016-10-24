@@ -64,6 +64,32 @@ module Admin
           concept('admin/link/cell/social_counter', model.social_counter)
         end
       end
+
+      class Form < Trailblazer::Cell
+        property :links
+      end
+
+      class FormLink < Trailblazer::Cell
+        property :title
+
+        def categories_names
+          model.categories.pluck(:name).to_sentence
+        end
+
+        def publisher_name
+          model.publisher.name
+        end
+
+        def social_counter
+          return if model.social_counter.blank?
+          concept('admin/link/cell/social_counter', model.social_counter)
+        end
+
+        def image
+          return if model.image_source_url.blank?
+          image_tag(model.image_source_url, size: '75x75')
+        end
+      end
     end
   end
 end
