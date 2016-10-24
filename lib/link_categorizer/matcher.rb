@@ -11,6 +11,7 @@ class LinkCategorizer
     end
 
     def match?
+      return false unless link.available_to_current_tenant?
       match_url?
     end
 

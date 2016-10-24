@@ -15,7 +15,6 @@ class LinkCategorizer
   end
 
   def categories
-    return [] unless link.available_to_current_tenant?
     (feeds_categories + matchers_categories).flatten.compact.uniq
   end
 
