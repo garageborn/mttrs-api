@@ -51,9 +51,9 @@ gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
 gem 'uglifier', '3.0.3'
 
+  gem 'sentry-raven', '2.1.2'
 group :production do
   gem 'puma', '3.6.0'
-  gem 'sentry-raven', '0.15.2'
 end
 
 group :development, :test do

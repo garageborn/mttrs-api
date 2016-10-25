@@ -1,11 +1,7 @@
-if defined? Raven
+MTTRS_API_SENTRY_DSN = ENV['MTTRS_API_SENTRY_DSN'].freeze
+
+if defined?(Raven) && MTTRS_API_SENTRY_DSN.present?
   Raven.configure do |config|
-    config.dsn = ENV.fetch('MTTRS_API_SENTRY_DSN')
-    config.environments = %w(production)
-    config.tags = { environment: Rails.env }
-    config.processors = [Raven::Processor::SanitizeData]
-    config.async = lambda do |event|
-      Thread.new { Raven.send(event) }
-    end
+    config.dsn = MTTRS_API_SENTRY_DSN
   end
 end
