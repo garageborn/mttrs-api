@@ -29,6 +29,7 @@ gem 'public_suffix', '2.0.3'
 gem 'rails', '5.0.0.1'
 gem 'redis-namespace', '1.5.2'
 gem 'reform-rails', '0.1.7'
+gem 'retries', '0.0.5'
 gem 'sidekiq', '4.2.3'
 gem 'sidekiq-failures', '0.4.5'
 gem 'sidekiq-limit_fetch', '3.4.0'
@@ -39,7 +40,6 @@ gem 'slim-rails', '3.1.1'
 gem 'thread', '0.2.2'
 gem 'trailblazer-cells', '0.0.3'
 gem 'trailblazer-rails', '0.3.2'
-gem 'turbolinks', '5.0.1'
 gem 'whenever', '0.9.7', require: false
 
 # Assets
@@ -49,6 +49,7 @@ gem 'js-routes', '1.3.0'
 gem 'paloma', '5.0.0'
 gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
+gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.0.3'
 
 group :production do
