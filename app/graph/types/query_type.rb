@@ -10,6 +10,7 @@ QueryType = GraphQL::ObjectType.define do
 
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
+    argument :order_by_name, types.Boolean
     resolve -> (_obj, args, _ctx) { Publisher.filter(args) }
   end
 
