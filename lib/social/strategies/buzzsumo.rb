@@ -23,7 +23,7 @@ module Social
 
         def find_entries(url)
           query = { q: url, num_results: 1 }
-          response = ::Buzzsumo.articles(query: query)
+          response = ::Buzzsumo::Api.articles(query: query)
           return unless response.success?
           return if response.parsed_response.blank?
           response.parsed_response.results.to_a

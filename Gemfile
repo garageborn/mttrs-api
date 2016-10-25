@@ -53,7 +53,7 @@ gem 'uglifier', '3.0.3'
 
 group :production do
   gem 'puma', '3.6.0'
-  gem 'sentry-raven', '0.15.2'
+  gem 'sentry-raven', '2.1.2'
 end
 
 group :development, :test do

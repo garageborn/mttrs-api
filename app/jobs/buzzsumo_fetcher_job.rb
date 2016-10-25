@@ -15,7 +15,7 @@ class BuzzsumoFetcherJob
   private
 
   def publisher
-    Utils::Thread::with_connection do
+    Utils::Thread.with_connection do
       Publisher.find_by(id: publisher_id)
     end
   end
@@ -27,7 +27,7 @@ class BuzzsumoFetcherJob
 
   def entries
     languages.map do |language|
-      Buzzsumo.all(:articles, query: query(language))
+      Buzzsumo::Api.all(:articles, query: query(language))
     end.flatten.compact.uniq
   end
 
