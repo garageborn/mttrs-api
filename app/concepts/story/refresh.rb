@@ -3,7 +3,7 @@ class Story
     action :find
 
     def process(_params)
-      return model.destroy if model.story_links.blank?
+      return model.destroy unless model.reload.story_links.exists?
       update_total_social
       set_main_story_link
     end
