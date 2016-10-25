@@ -2,6 +2,7 @@ class BuzzsumoFetcherJob
   include Sidekiq::Worker
   extend Memoist
 
+  sidekiq_options queue: :buzzsumo_fetcher
   attr_reader :publisher_id, :options
 
   def perform(publisher_id, options = {})

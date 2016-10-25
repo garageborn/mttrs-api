@@ -11,3 +11,4 @@ production:
   - [social_counter, 1]
 :limits:
   story_builder: 1
+  buzzsumo_fetcher: 2

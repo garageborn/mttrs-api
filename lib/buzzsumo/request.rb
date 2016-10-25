@@ -9,7 +9,7 @@ module Buzzsumo
     DEFAULT_RATELIMIT_MONTH = 2_000
     DEFAULT_RATELIMIT_WINDOW = 10.seconds.to_i
     MAX_RATELIMIT_WINDOW = 1.minute.to_i
-    MAX_RETRIES = 2
+    MAX_RETRIES = 3
 
     attr_accessor :method, :path, :options, :response
 
