@@ -9,13 +9,7 @@ module Buzzsumo
 
     class << self
       def articles(options)
-        # do_request(:get, ARTICLES_PATH, options)
-        begin
-          do_request(:get, ARTICLES_PATH, options)
-        rescue Exception => exception
-          p '-aaaaaaaa'
-          Raven.capture_exception(exception)
-        end
+        do_request(:get, ARTICLES_PATH, options)
       end
 
       def all(method, options = {})
