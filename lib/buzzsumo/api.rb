@@ -45,7 +45,7 @@ module Buzzsumo
 
       def do_request(method, path, options)
         request = send(method, path, options)
-        raise RateLimitError.new(request) unless request.success?
+        raise ::Buzzsumo::Error.new(request) unless request.success?
         request
       end
     end

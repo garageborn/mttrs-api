@@ -1,6 +1,7 @@
 module Buzzsumo
-  class RateLimitError < StandardError
+  class Error < StandardError
     attr_reader :path, :headers
+
     def initialize(response)
       @path = response.request.last_uri.to_s
       @headers = response.headers.select do |key, _value|
@@ -8,6 +9,10 @@ module Buzzsumo
       end
       @status = response.code
       super(response.error)
+    end
+
+    def raven_context
+      { extra: { path: path, headers: headers } }
     end
   end
 end

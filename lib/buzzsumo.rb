@@ -1,4 +1,4 @@
 module Buzzsumo
-  autoload :RateLimitError, './lib/buzzsumo/rate_limit_error'
+  autoload :Error, './lib/buzzsumo/error'
   autoload :Api, './lib/buzzsumo/api'
 end
