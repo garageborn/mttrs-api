@@ -8,4 +8,5 @@ LinkType = GraphQL::ObjectType.define do
   field :created_at, !types.Int
   field :publisher, !PublisherType
   field :categories, types[CategoryType]
+  field :image_source_url, types.String
 end
