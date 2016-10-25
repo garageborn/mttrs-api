@@ -27,7 +27,7 @@ class BuzzsumoFetcherJob
 
   def entries
     languages.map do |language|
-      Buzzsumo::Api.all(:articles, query: query(language))
+      Buzzsumo::Articles.all(:articles, query: query(language))
     end.flatten.compact.uniq
   end
 

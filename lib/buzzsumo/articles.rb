@@ -1,24 +1,19 @@
 module Buzzsumo
-  class Api
-    include HTTParty
-    base_uri 'http://api.buzzsumo.com'.freeze
-    format :json
-    parser Utils::OpenStructParser
-    default_params api_key: ENV['BUZZSUMO_TOKEN']
+  class Articles
     ARTICLES_PATH = '/search/articles.json'.freeze
 
     class << self
-      def articles(options)
-        do_request(:get, ARTICLES_PATH, options)
+      def get(options)
+        ::Buzzsumo::Request.new(:get, ARTICLES_PATH, options).response
       end
 
-      def all(method, options = {})
+      def all(options = {})
         options[:query] ||= {}
         current_page = 0
         Array.new.tap do |resources|
           loop do
             options[:query][:page] = current_page
-            request = send(method, options)
+            request = get(options)
             resources.concat(request.parsed_response.results.to_a)
             current_page += 1
             break if end_reached?(current_page: current_page, request: request, options: options)
@@ -35,12 +30,6 @@ module Buzzsumo
         return true if current_page >= total_pages
         return true if max_pages.present? && current_page >= max_pages
         false
-      end
-
-      def do_request(method, path, options)
-        request = send(method, path, options)
-        raise ::Buzzsumo::Error.new(request) unless request.success?
-        request
       end
     end
   end
