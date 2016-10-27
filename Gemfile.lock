@@ -103,7 +103,7 @@ GEM
       representable (>= 2.4.0, <= 3.1.0)
       uber
     docile (1.1.5)
-    domain_name (0.5.20160826)
+    domain_name (0.5.20161021)
       unf (>= 0.0.5, < 1.0.0)
     dry-configurable (0.3.0)
       concurrent-ruby (~> 1.0)
