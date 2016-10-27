@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20) do
+ActiveRecord::Schema.define(version: 21) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,16 +100,6 @@ ActiveRecord::Schema.define(version: 20) do
     t.index ["published_at"], name: "index_links_on_published_at", using: :btree
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
     t.index ["total_social"], name: "index_links_on_total_social", using: :btree
-  end
-
-  create_table "performed_jobs", force: :cascade do |t|
-    t.string   "type",                   null: false
-    t.string   "key",                    null: false
-    t.integer  "status",     default: 0, null: false
-    t.integer  "performs",   default: 0, null: false
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.index ["type", "key"], name: "index_performed_jobs_on_type_and_key", unique: true, using: :btree
   end
 
   create_table "publishers", force: :cascade do |t|
