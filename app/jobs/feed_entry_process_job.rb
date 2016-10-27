@@ -2,19 +2,13 @@ class FeedEntryProcessJob
   include Sidekiq::Worker
   extend Memoist
 
-  sidekiq_options max_performs: {
-    count: 2,
-    key: proc { |entry| entry[:url] }
-  }
-
   attr_reader :entry
 
   def perform(entry)
     @entry = entry.with_indifferent_access
     return if entry.blank? || feed.blank?
 
-    result, _op = Link::Create.run(link: attributes)
-    result
+    Link::Create.run(link: attributes)
   end
 
   private

@@ -2,10 +2,6 @@ class FullFetchLinkJob
   include Sidekiq::Worker
   extend Memoist
 
-  sidekiq_options max_performs: {
-    count: 2,
-    key: proc { |link_id| link_id }
-  }
   attr_reader :link_id
 
   def perform(link_id)
@@ -14,7 +10,6 @@ class FullFetchLinkJob
 
     set_missing_info
     link.save
-    !link.needs_full_fetch?
   end
 
   private
