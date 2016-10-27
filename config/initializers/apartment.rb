@@ -18,7 +18,6 @@ Apartment.configure do |config|
     LinkUrl
     Publisher
     SocialCounter
-    PerformedJob
   )
 
   config.tenant_names = %w(mttrs_us mttrs_br)
