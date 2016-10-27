@@ -2,7 +2,11 @@ require 'faraday_middleware/aws_signers_v4'
 
 ELASTICSEARCH_URL = ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200')
 
-ELASTICSEARCH_OPTIONS = { host: ELASTICSEARCH_URL, logger: Rails.logger }.freeze
+ELASTICSEARCH_OPTIONS = {
+  host: ELASTICSEARCH_URL,
+  logger: Rails.logger,
+  request_timeout: 300
+}.freeze
 
 if /amazonaws\.com/ =~ ELASTICSEARCH_URL
   ELASTICSEARCH_CLIENT = Elasticsearch::Client.new(ELASTICSEARCH_OPTIONS.dup) do |f|
