@@ -6,9 +6,10 @@ module Buzzsumo
     parser Utils::OpenStructParser
     default_params api_key: ENV['BUZZSUMO_TOKEN']
 
+    DEFAULT_RATELIMIT = 10
     DEFAULT_RATELIMIT_MONTH = 2_000
     DEFAULT_RATELIMIT_WINDOW = 10.seconds.to_i
-    MAX_RATELIMIT_WINDOW = 1.minute.to_i
+    MAX_RATELIMIT_WINDOW = 2.minute.to_i
     MAX_RETRIES = 5
 
     attr_accessor :method, :path, :options, :response
@@ -37,7 +38,7 @@ module Buzzsumo
 
     def at_ratelimit?
       return false if response.blank?
-      response.code == 420
+      response.code == 420 || ratelimit_remaining.zero?
     end
 
     def ratelimit_reset
@@ -51,6 +52,11 @@ module Buzzsumo
     def ratelimit_month_remaining
       return DEFAULT_RATELIMIT_MONTH if response.blank?
       response.headers['x-ratelimit-month-remaining'].to_i
+    end
+
+    def ratelimit_remaining
+      return DEFAULT_RATELIMIT if response.blank?
+      response.headers['x-ratelimit-remaining'].to_i
     end
 
     def next_rate_limit_window
