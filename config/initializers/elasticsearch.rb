@@ -3,9 +3,10 @@ require 'faraday_middleware/aws_signers_v4'
 ELASTICSEARCH_URL = ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200')
 
 ELASTICSEARCH_OPTIONS = {
+  adapter: :net_http_persistent,
   host: ELASTICSEARCH_URL,
   logger: Rails.logger,
-  request_timeout: 300
+  request_timeout: 500
 }.freeze
 
 if /amazonaws\.com/ =~ ELASTICSEARCH_URL
