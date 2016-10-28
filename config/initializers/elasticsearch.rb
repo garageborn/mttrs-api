@@ -3,7 +3,7 @@ require 'faraday_middleware/aws_signers_v4'
 ELASTICSEARCH_URL = ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200')
 
 ELASTICSEARCH_OPTIONS = {
-  adapter: :net_http_persistent,
+  adapter: :patron,
   host: ELASTICSEARCH_URL,
   logger: Rails.logger,
   request_timeout: 500
