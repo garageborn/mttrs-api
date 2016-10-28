@@ -3,9 +3,9 @@ FROM ruby:2.3.1-slim
 # install dependencies
 RUN apt-get update -qq && apt-get install --fix-missing -y \
   build-essential \
-  curl \
   cron \
   git-core \
+  libcurl-dev \
   libpq-dev \
   locales \
   nodejs \
