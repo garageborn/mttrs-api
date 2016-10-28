@@ -24,7 +24,6 @@ gem 'kaminari-cells', '0.0.4'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
 gem 'nokogiri', '1.6.8.1'
-gem 'patron', '0.8.0'
 gem 'pg', '0.19.0'
 gem 'public_suffix', '2.0.3'
 gem 'rails', '5.0.0.1'
@@ -41,6 +40,7 @@ gem 'slim-rails', '3.1.1'
 gem 'thread', '0.2.2'
 gem 'trailblazer-cells', '0.0.3'
 gem 'trailblazer-rails', '0.3.2'
+gem 'typhoeus', '1.1.0'
 gem 'whenever', '0.9.7', require: false
 
 # Assets
