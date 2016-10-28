@@ -7,8 +7,8 @@ production:
   - [indexer, 15]
   - [story_builder, 10]
   - [default, 5]
-  - [buzzsumo_fetcher, 2]
+  - [link_fetcher, 2]
   - [mailers, 1]
 :limits:
   story_builder: 1
-  buzzsumo_fetcher: 2
+  link_fetcher: 2

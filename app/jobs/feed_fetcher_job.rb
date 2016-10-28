@@ -2,6 +2,7 @@ class FeedFetcherJob
   include Sidekiq::Worker
   extend Memoist
 
+  sidekiq_options queue: :link_fetcher
   attr_reader :feed_id
 
   def perform(feed_id)
