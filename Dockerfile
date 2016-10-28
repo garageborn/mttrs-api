@@ -5,7 +5,7 @@ RUN apt-get update -qq && apt-get install --fix-missing -y \
   build-essential \
   cron \
   git-core \
-  libcurl-dev \
+  libcurl4-openssl-dev \
   libpq-dev \
   locales \
   nodejs \
