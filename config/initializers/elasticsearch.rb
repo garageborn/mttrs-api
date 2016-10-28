@@ -1,3 +1,5 @@
+require 'faraday'
+require 'typhoeus/adapters/faraday'
 require 'faraday_middleware/aws_signers_v4'
 
 ELASTICSEARCH_URL = ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200')
@@ -5,8 +7,7 @@ ELASTICSEARCH_URL = ENV.fetch('ELASTICSEARCH_URL', 'http://localhost:9200')
 ELASTICSEARCH_OPTIONS = {
   adapter: :typhoeus,
   host: ELASTICSEARCH_URL,
-  logger: Rails.logger,
-  request_timeout: 500
+  logger: Rails.logger
 }.freeze
 
 if /amazonaws\.com/ =~ ELASTICSEARCH_URL
