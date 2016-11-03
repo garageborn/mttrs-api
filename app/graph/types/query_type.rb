@@ -3,6 +3,7 @@ QueryType = GraphQL::ObjectType.define do
   description 'Query Type'
 
   field :categories, !types[CategoryType] do
+    argument :ordered, types.Boolean
     argument :order_by_name, types.Boolean
     argument :order_by_stories_count, types.Boolean
     resolve -> (_obj, args, _ctx) { Category.filter(args) }
