@@ -24,17 +24,16 @@ QueryType = GraphQL::ObjectType.define do
     resolve -> (_obj, args, _ctx) { Story.find(args['id']) }
   end
 
-  field :stories, !types[StoryType] do
-    argument :category_slug, types.String
-    argument :last_month, types.Boolean
-    argument :last_week, types.Boolean
-    argument :limit, types.Int
-    argument :popular, types.Boolean
-    argument :published_at, types.Int
-    argument :publisher_slug, types.String
-    argument :recent, types.Boolean
-    argument :today, types.Boolean
-    argument :yesterday, types.Boolean
-    resolve -> (_obj, args, _ctx) { Story.filter(args) }
+  field :timeline, !types[TimelineItemType] do
+    argument :days, !types.Int
+    argument :offset, types.Int
+    resolve -> (_obj, args, _ctx) do
+      start_at = args['offset'].to_i
+      end_at = start_at + args['days'].to_i
+
+      (start_at...end_at).map do |day|
+        OpenStruct.new(date: day.days.ago.utc.to_i)
+      end
+    end
   end
 end

@@ -13,6 +13,7 @@ module Concerns
       def filter(filtering_params)
         results = where(nil) # create an anonymous scope
         filtering_params.each do |key, value|
+          next if value.blank?
           begin
             results = results.public_send(key, value)
           rescue ArgumentError # if we have a scope with arity 0 or enum query
