@@ -33,7 +33,7 @@ QueryType = GraphQL::ObjectType.define do
       end_at = start_at + args['days'].to_i
 
       (start_at...end_at).map do |day|
-        OpenStruct.new(date: day.days.ago.utc.to_i)
+        OpenStruct.new(date: day.days.ago.at_beginning_of_day.utc.to_i)
       end
     end
   end
