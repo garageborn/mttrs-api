@@ -12,9 +12,9 @@ StoryType = GraphQL::ObjectType.define do
     argument :publisher_slug, types.String
     resolve -> (obj, args, _ctx) {
       publisher_slug = args['publisher_slug']
-      return obj.main_link if publisher_slug.blank?
       filter = args.to_h.except('publisher_slug')
-      obj.links.publisher_slug(publisher_slug).popular.filter(filter).first
+      return obj.main_link if publisher_slug.blank?
+      obj.main_publisher_link(publisher_slug)
     }
   end
   field :other_links, types[LinkType] do
@@ -22,10 +22,9 @@ StoryType = GraphQL::ObjectType.define do
     argument :publisher_slug, types.String
     resolve -> (obj, args, _ctx) {
       publisher_slug = args['publisher_slug']
-      return obj.other_links if publisher_slug.blank?
       filter = args.to_h.except('publisher_slug')
-      main_link = obj.links.publisher_slug(publisher_slug).popular.filter(filter).first
-      obj.links.where.not(id: main_link).filter(filter)
+      return obj.other_links.filter(filter) if publisher_slug.blank?
+      obj.links.where.not(id: obj.main_publisher_link(publisher_slug)).filter(filter)
     }
   end
 end

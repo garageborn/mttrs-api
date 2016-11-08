@@ -1,6 +1,7 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
+  extend Memoist
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, through: :story_links
@@ -53,4 +54,10 @@ class Story < ApplicationRecord
   def total_google_plus
     links.map { |link| link.social_counter.try(:google_plus).to_i }.sum
   end
+
+  def main_publisher_link(slug)
+    links.publisher_slug(slug).popular.first
+  end
+
+  memoize :main_publisher_link
 end
