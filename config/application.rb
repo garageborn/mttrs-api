@@ -18,7 +18,7 @@ Bundler.require(*Rails.groups)
 
 module Mttrs
   class Application < Rails::Application
-    config.time_zone = 'Brasilia'
+    config.time_zone = 'UTC'
     config.active_record.timestamped_migrations = false
     config.eager_load_paths += %W(
       #{ config.root }/lib
