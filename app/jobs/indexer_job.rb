@@ -22,6 +22,7 @@ class IndexerJob
     else
       raise ArgumentError, "Unknown operation '#{ operation }'"
     end
+  rescue Elasticsearch::Transport::Transport::Errors::NotFound
   end
 
   private
