@@ -5,6 +5,7 @@ StoryType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :total_social, !types.Int
   field :created_at, !types.Int
+  field :summary, !types.String
   field :main_category, !CategoryType do
     resolve -> (obj, _args, _ctx) { obj.categories.first }
   end
