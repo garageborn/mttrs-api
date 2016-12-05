@@ -3,7 +3,7 @@ machine:
     - docker
     - redis
   ruby:
-    version: 2.3.1
+    version: 2.3.3
 
 dependencies:
   cache_directories:
