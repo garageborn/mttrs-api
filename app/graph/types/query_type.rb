@@ -28,12 +28,16 @@ QueryType = GraphQL::ObjectType.define do
   field :timeline, !types[TimelineItemType] do
     argument :days, !types.Int
     argument :offset, types.Int
+    argument :timezone, types.String
+
     resolve -> (_obj, args, _ctx) do
       start_at = args['offset'].to_i
       end_at = start_at + args['days'].to_i
 
       (start_at...end_at).map do |day|
-        OpenStruct.new(date: day.days.ago.at_beginning_of_day.utc.to_i)
+        timezone = args['timezone'] || 'UTC'
+        date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
+        OpenStruct.new(date: date, timezone: timezone)
       end
     end
   end
