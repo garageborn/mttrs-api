@@ -9,6 +9,11 @@ QueryType = GraphQL::ObjectType.define do
     resolve -> (_obj, args, _ctx) { Category.filter(args) }
   end
 
+  field :category, CategoryType do
+    argument :slug, !types.String
+    resolve -> (_obj, args, _ctx) { Category.find(args['slug'])}
+  end
+
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
     argument :order_by_name, types.Boolean
@@ -16,8 +21,8 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :publisher, PublisherType do
-    argument :id, !types.ID
-    resolve -> (_obj, args, _ctx) { Publisher.find(args['id']) }
+    argument :slug, !types.String
+    resolve -> (_obj, args, _ctx) { Publisher.find(args['slug']) }
   end
 
   field :story, StoryType do
