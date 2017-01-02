@@ -4,31 +4,6 @@ module Admin
       class Index < Trailblazer::Cell
       end
 
-      class Uncategorized < Trailblazer::Cell
-        def all_publishers
-          grouped_options_for_select(all_publishers_options, params[:publisher_slug])
-        end
-
-        private
-
-        def publisher_option(publisher)
-          uncategorized_links = number_with_delimiter(publisher.links.uncategorized.size)
-          ["#{ publisher.name } (#{ uncategorized_links })", publisher.slug]
-        end
-
-        def all_publishers_options
-          with_stories = []
-          without_stories = []
-
-          ::Publisher.order_by_name.each do |publisher|
-            option = publisher_option(publisher)
-            publisher.stories.exists? ? with_stories.push(option) : without_stories.push(option)
-          end
-
-          [['With Stories', with_stories], ['Without Stories', without_stories]]
-        end
-      end
-
       class Item < Trailblazer::Cell
         property :title
 
