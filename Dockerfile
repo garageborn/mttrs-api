@@ -5,11 +5,14 @@ RUN apt-get update -qq && apt-get install --fix-missing -y \
   build-essential \
   cron \
   git-core \
+  libbz2-dev \
   libcurl4-openssl-dev \
   libpq-dev \
+  libssl-dev \
   locales \
   nodejs \
-  postgresql-common
+  postgresql-common \
+  zlib1g-dev
 
 # setup locale
 run echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen && dpkg-reconfigure --frontend=noninteractive locales
