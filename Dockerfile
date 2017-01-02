@@ -1,4 +1,4 @@
-FROM ruby:2.3.3-slim
+FROM ruby:2.4.0-slim
 
 # install dependencies
 RUN apt-get update -qq && apt-get install --fix-missing -y \
