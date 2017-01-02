@@ -4,6 +4,9 @@ module Admin
       class Index < Trailblazer::Cell
       end
 
+      class Uncategorized < Trailblazer::Cell
+      end
+
       class Item < Trailblazer::Cell
         property :title
 
