@@ -6,6 +6,8 @@ class CategoryMatcher
     property :publisher_id
     property :try_out, virtual: true, type: Types::Form::Bool
     property :url_matcher
+    property :body_matcher
+    property :body_matcher_xpath
 
     validates :publisher_id, :category_id, presence: true
     validates :url_matcher,
