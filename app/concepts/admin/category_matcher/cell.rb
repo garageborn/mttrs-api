@@ -53,7 +53,7 @@ module Admin
         def publisher_uncategorized_links
           publisher = ::Publisher.find_by(id: model.publisher_id)
           links = publisher.blank? ? ::Link.all : publisher.links
-          links.available_on_current_tenant.uncategorized.popular
+          links.available_on_current_tenant.uncategorized.order_by_url
         end
 
         memoize :matching_links, :matching_links_count, :uncategorized_links,

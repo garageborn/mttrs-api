@@ -12,6 +12,7 @@ class Link < ApplicationRecord
   has_many :feed_links, inverse_of: :link, dependent: :destroy
   has_many :feeds, through: :feed_links
   has_many :link_urls, inverse_of: :link, dependent: :destroy
+  has_one :link_url, -> { order(id: :desc) }
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :story_link, inverse_of: :link, dependent: :destroy
   has_one :story, through: :story_link
@@ -20,6 +21,7 @@ class Link < ApplicationRecord
   scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
+  scope :order_by_url, -> { joins(:link_url).order('link_urls.url') }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
@@ -49,12 +51,12 @@ class Link < ApplicationRecord
   end
 
   def uri
-    return if link_urls.blank?
-    Addressable::URI.parse(link_urls.last.url)
+    return if link_url.blank?
+    Addressable::URI.parse(link_url.url)
   end
 
   def url
-    return if uri.blank?
+    return if link_url.blank?
     uri.to_s
   end
 
