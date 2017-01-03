@@ -7,7 +7,7 @@ RSpec.describe CategoryMatcher do
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:url_matcher) }
   it { should have_db_column(:html_matcher) }
-  it { should have_db_column(:html_matcher_xpath) }
+  it { should have_db_column(:html_matcher_selector) }
   it { should have_db_index([:category_id, :publisher_id]) }
   it { should have_db_index([:publisher_id, :category_id]) }
 
