@@ -6,7 +6,7 @@ class Link
     DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 30, recent: true).freeze
 
     def model!(params)
-      ::Link.filter(params)
+      ::Link.available_on_current_tenant.filter(params)
     end
 
     def params!(params)
@@ -19,7 +19,7 @@ class Link
     DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 30, popular: true).freeze
 
     def model!(params)
-      ::Link.uncategorized.filter(params)
+      ::Link.available_on_current_tenant.uncategorized.filter(params)
     end
 
     def params!(params)

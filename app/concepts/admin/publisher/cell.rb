@@ -77,15 +77,18 @@ module Admin
 
         def publisher_option(publisher)
           value = options[:value] || :id
-          uncategorized_links = number_with_delimiter(publisher.links.uncategorized.size)
-          ["#{ publisher.name } (#{ uncategorized_links })", publisher.send(value)]
+          uncategorized_links = publisher.links.available_on_current_tenant.uncategorized.size
+          [
+            "#{ publisher.name } (#{ number_with_delimiter(uncategorized_links) })",
+            publisher.send(value)
+          ]
         end
 
         def all_publishers_options
           with_stories = []
           without_stories = []
 
-          ::Publisher.order_by_name.each do |publisher|
+          ::Publisher.available_on_current_tenant.order_by_name.each do |publisher|
             option = publisher_option(publisher)
             publisher.stories.exists? ? with_stories.push(option) : without_stories.push(option)
           end
