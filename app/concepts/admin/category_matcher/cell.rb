@@ -13,7 +13,7 @@ module Admin
         end
 
         def uncategorized_links
-          number_with_delimiter(publisher.links.uncategorized.count)
+          number_with_delimiter(publisher.links.available_on_current_tenant.uncategorized.count)
         end
 
         def category_matchers
@@ -23,7 +23,7 @@ module Admin
 
       class Form < Trailblazer::Cell
         def matching_links
-          return if model.url_matcher.blank?
+          return [] if model.url_matcher.blank?
 
           publisher_uncategorized_links.to_a.select do |link|
             LinkCategorizer::Matcher.new(model, link).match?
@@ -35,7 +35,8 @@ module Admin
         end
 
         def uncategorized_links
-          publisher_uncategorized_links.popular.limit(50)
+          matching_links_ids = matching_links.map(&:id)
+          publisher_uncategorized_links.where.not(id: matching_links_ids).popular.limit(50)
         end
 
         def uncategorized_links_count
@@ -50,8 +51,8 @@ module Admin
 
         def publisher_uncategorized_links
           publisher = ::Publisher.find_by(id: model.publisher_id)
-          return ::Link.uncategorized.includes(:link_urls) if publisher.blank?
-          publisher.links.uncategorized.includes(:link_urls)
+          links = publisher.blank? ? ::Link.all : publisher.links
+          links.available_on_current_tenant.uncategorized.includes(:link_urls)
         end
       end
     end

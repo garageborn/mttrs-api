@@ -16,9 +16,8 @@ class CategoryMatcher
       private
 
       def perform_add_link_categories!
-        contract.model.publisher.links.uncategorized.find_each do |link|
-          LinkCategorizerJob.perform_async(link.id)
-        end
+        links = contract.model.publisher.links.available_on_current_tenant.uncategorized
+        links.find_each { |link| LinkCategorizerJob.perform_async(link.id) }
       end
     end
   end
