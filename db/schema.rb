@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 22) do
+ActiveRecord::Schema.define(version: 23) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,11 +48,13 @@ ActiveRecord::Schema.define(version: 22) do
   end
 
   create_table "category_matchers", force: :cascade do |t|
-    t.integer  "publisher_id", null: false
-    t.integer  "category_id",  null: false
+    t.integer  "publisher_id",          null: false
+    t.integer  "category_id",           null: false
     t.text     "url_matcher"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.text     "html_matcher"
+    t.text     "html_matcher_selector"
     t.index ["category_id", "publisher_id"], name: "index_category_matchers_on_category_id_and_publisher_id", using: :btree
     t.index ["publisher_id", "category_id"], name: "index_category_matchers_on_publisher_id_and_category_id", using: :btree
   end

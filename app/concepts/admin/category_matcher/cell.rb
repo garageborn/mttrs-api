@@ -22,9 +22,10 @@ module Admin
       end
 
       class Form < Trailblazer::Cell
-        def matching_links
-          return [] if model.url_matcher.blank?
+        extend Memoist
 
+        def matching_links
+          return [] if model.url_matcher.blank? && model.html_matcher.blank?
           publisher_uncategorized_links.to_a.select do |link|
             LinkCategorizer::Matcher.new(model, link).match?
           end
@@ -36,7 +37,7 @@ module Admin
 
         def uncategorized_links
           matching_links_ids = matching_links.map(&:id)
-          publisher_uncategorized_links.where.not(id: matching_links_ids).popular.limit(50)
+          publisher_uncategorized_links.where.not(id: matching_links_ids).limit(50)
         end
 
         def uncategorized_links_count
@@ -52,8 +53,11 @@ module Admin
         def publisher_uncategorized_links
           publisher = ::Publisher.find_by(id: model.publisher_id)
           links = publisher.blank? ? ::Link.all : publisher.links
-          links.available_on_current_tenant.uncategorized.includes(:link_urls)
+          links.available_on_current_tenant.uncategorized.popular
         end
+
+        memoize :matching_links, :matching_links_count, :uncategorized_links,
+                :uncategorized_links_count
       end
     end
   end

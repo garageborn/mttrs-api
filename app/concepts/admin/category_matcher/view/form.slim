@@ -4,7 +4,9 @@
   .form-inputs
     = f.association :category, collection: Category.order_by_name
     = concept('admin/publisher/cell/uncategorized_links', nil, form: f, name: :publisher_id)
-    = f.input :url_matcher, input_html: { rows: 1, cols: 100 }
+    = f.input :url_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
+    = f.input :html_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
+    = f.input :html_matcher_selector, input_html: { rows: 1, cols: 100 }, hint: 'xpath or css'
     = f.input :try_out, as: :boolean
 
   .form-actions
