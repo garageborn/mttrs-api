@@ -28,14 +28,6 @@ module Admin
         def feeds_count
           number_with_delimiter(model.feeds.size)
         end
-
-        def category_matchers
-          model.category_matchers.group_by(&:category)
-        end
-
-        def category_matchers_count
-          number_with_delimiter(model.category_matchers.size)
-        end
       end
 
       class Feed < Trailblazer::Cell

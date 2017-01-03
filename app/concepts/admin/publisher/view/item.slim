@@ -16,14 +16,3 @@ li
       - feeds.each do |publisher, feeds|
         strong= publisher.name
         ul.publishers-list= concept('admin/publisher/cell/feed', collection: feeds)
-
-  section.publishers-item-section
-    strong Matchers (#{ category_matchers_count })
-    = link_to 'Add New', [:new, :admin, :category_matcher, { publisher_id: id }],
-      class: 'publishers-add-button'
-
-    .publishers-item-subsection
-      - category_matchers.each do |category, category_matchers|
-        strong= category.name
-        ul.publishers-list
-          = concept('admin/publisher/cell/category_matcher', collection: category_matchers)

@@ -16,7 +16,9 @@ class Link
 
   class Uncategorized < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 30, order_by_url: true).freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(
+      page: 1, per: 30, order_by_url: true, distinct: true
+    ).freeze
 
     def model!(params)
       ::Link.available_on_current_tenant.uncategorized.filter(params)
