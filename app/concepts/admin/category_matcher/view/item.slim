@@ -1,13 +1,17 @@
 li
-  section
-    strong #{ publisher.name }
-    = link_to 'Add New', [:new, :admin, :category_matcher, { publisher_id: publisher.id }],
-      class: 'category-matchers-add-button'
-    | (#{ uncategorized_links } uncategorized)
-
+  strong= category.name
   ul
     - category_matchers.each do |category_matcher|
       li
-        span
-          | #{ category_matcher.category.name } #{ category_matcher.url_matcher }
+        - if category_matcher.url_matcher.present?
+          i url:
+          |  #{ category_matcher.url_matcher }
+        
+        - if category_matcher.html_matcher.present?
+          i html matcher:
+          |  #{ category_matcher.html_matcher }
+          
+          i html selector:
+          |  #{ category_matcher.html_matcher_selector }
+
         = link_to 'Edit', [:edit, :admin, category_matcher], class: 'category-matchers-edit-button'

@@ -1,0 +1,9 @@
+li
+  section
+    h3 #{ publisher.name }
+    = link_to 'Add New', [:new, :admin, :category_matcher, { publisher_id: publisher.id }],
+      class: 'category-matchers-add-button'
+    | (#{ uncategorized_links } uncategorized)
+
+  ul= concept('admin/category_matcher/cell/item', collection: category_matchers)
+  br

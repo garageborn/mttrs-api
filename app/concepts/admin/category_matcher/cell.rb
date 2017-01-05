@@ -7,13 +7,23 @@ module Admin
         end
       end
 
-      class Item < Trailblazer::Cell
+      class Publisher < Trailblazer::Cell
         def publisher
           model.first
         end
 
         def uncategorized_links
           number_with_delimiter(publisher.links.available_on_current_tenant.uncategorized.count)
+        end
+
+        def category_matchers
+          model.second.sort_by{ |r| r.category.name }.group_by(&:category)
+        end
+      end
+
+      class Item < Trailblazer::Cell
+        def category
+          model.first
         end
 
         def category_matchers
