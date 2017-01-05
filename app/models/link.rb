@@ -5,6 +5,7 @@ class Link < ApplicationRecord
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
+  extend Memoist
 
   belongs_to :publisher
   has_many :categories, through: :category_links
@@ -70,4 +71,11 @@ class Link < ApplicationRecord
       link_urls.build(url: url)
     end
   end
+
+  def page
+    return if html.blank?
+    Nokogiri::HTML(html)
+  end
+
+  memoize :page
 end

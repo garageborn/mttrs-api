@@ -24,14 +24,13 @@ class LinkCategorizer
     end
 
     def match_html?
-      return false if link.html.blank?
+      return false if link.page.blank?
       return false if category_matcher.html_matcher.blank? ||
                       category_matcher.html_matcher_selector.blank?
       regexp = Regexp.new(category_matcher.html_matcher, Regexp::IGNORECASE)
-      doc = Nokogiri::HTML(link.html)
 
       method = category_matcher.html_matcher_selector.start_with?('//') ? :xpath : :css
-      selector = doc.send(method, category_matcher.html_matcher_selector)
+      selector = link.page.send(method, category_matcher.html_matcher_selector)
       text = Utils::StripAttributes.run(selector.text)
       text.match(regexp).present?
     end
