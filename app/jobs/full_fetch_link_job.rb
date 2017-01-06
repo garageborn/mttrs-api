@@ -10,6 +10,7 @@ class FullFetchLinkJob
 
     set_missing_info
     link.save
+    Link::AddCategories.run(id: link.id)
   end
 
   private
