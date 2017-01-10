@@ -15,7 +15,7 @@ FactoryGirl.define do
     "http://google.com/#{ n }"
   end
 
-  sequence :date do |n|
-    n.days.ago.to_date
+  sequence :datetime do |n|
+    n.seconds.ago
   end
 end

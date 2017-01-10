@@ -3,17 +3,7 @@ class Access
     include Model
     include Callback
     model Access
-    contract Contract
-  end
-
-  class Create < Operation
-    action :create
-
-    def process(params)
-      validate(params[:access]) do
-        contract.save
-      end
-    end
+    contract ::Access::Contract
   end
 
   class DestroyAll < Operation
