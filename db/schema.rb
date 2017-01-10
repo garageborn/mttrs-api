@@ -17,12 +17,14 @@ ActiveRecord::Schema.define(version: 24) do
   enable_extension "citext"
 
   create_table "accesses", force: :cascade do |t|
-    t.string   "accessable_type",             null: false
-    t.integer  "accessable_id",               null: false
-    t.datetime "created_at",                  null: false
-    t.integer  "hits",            default: 1, null: false
-    t.index ["accessable_type", "accessable_id"], name: "index_accesses_on_accessable_type_and_accessable_id", using: :btree
-    t.index ["created_at"], name: "index_accesses_on_created_at", using: :btree
+    t.string  "accessable_type",             null: false
+    t.integer "accessable_id",               null: false
+    t.date    "date",                        null: false
+    t.integer "hour",                        null: false
+    t.integer "hits",            default: 1, null: false
+    t.index ["accessable_type", "accessable_id", "date", "hour"], name: "index_accesses_on_accessable_and_date_and_hour", unique: true, using: :btree
+    t.index ["date", "hour"], name: "index_accesses_on_date_and_hour", using: :btree
+    t.index ["hits"], name: "index_accesses_on_hits", using: :btree
   end
 
   create_table "categories", force: :cascade do |t|
