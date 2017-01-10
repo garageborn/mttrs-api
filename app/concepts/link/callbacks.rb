@@ -61,6 +61,7 @@ class Link
           model = contract.model.reload
           CategoryLink::DestroyAll.run(model.category_link_ids)
           StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
+          Access::DestroyAll.run(model.access_ids)
         end
       end
     end

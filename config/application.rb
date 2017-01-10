@@ -23,6 +23,7 @@ module Mttrs
     config.eager_load_paths += %W(
       #{ config.root }/lib
       #{ config.root }/app/graph/types
+      #{ config.root }/app/graph/mutations
       #{ config.root }/app/graph
     )
     config.assets.precompile += %w(
