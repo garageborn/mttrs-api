@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 23) do
+ActiveRecord::Schema.define(version: 24) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
+
+  create_table "accesses", force: :cascade do |t|
+    t.string   "accessable_type",             null: false
+    t.integer  "accessable_id",               null: false
+    t.datetime "date",                        null: false
+    t.integer  "hits",            default: 1, null: false
+    t.index ["accessable_type", "accessable_id", "date"], name: "index_access_on_assetable_and_created_at", unique: true, using: :btree
+    t.index ["date"], name: "index_accesses_on_date", using: :btree
+    t.index ["hits"], name: "index_accesses_on_hits", using: :btree
+  end
 
   create_table "categories", force: :cascade do |t|
     t.citext   "name",                   null: false

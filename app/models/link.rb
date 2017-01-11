@@ -5,6 +5,7 @@ class Link < ApplicationRecord
   include Concerns::Searchable
   include Concerns::StripAttributes
   include Concerns::ParseDate
+  include Concerns::TrackAccess
   extend Memoist
 
   belongs_to :publisher

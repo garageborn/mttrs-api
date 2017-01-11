@@ -14,4 +14,8 @@ FactoryGirl.define do
   sequence :url do |n|
     "http://google.com/#{ n }"
   end
+
+  sequence :datetime do |n|
+    n.seconds.ago
+  end
 end
