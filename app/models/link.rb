@@ -6,6 +6,7 @@ class Link < ApplicationRecord
   include Concerns::StripAttributes
   include Concerns::ParseDate
   include Concerns::TrackAccess
+  extend FriendlyId
   extend Memoist
 
   belongs_to :publisher
@@ -47,6 +48,7 @@ class Link < ApplicationRecord
 
   strip_attributes :title, :description
   serialize :html, Utils::BinaryStringSerializer
+  friendly_id :title, use: %i(slugged finders)
 
   def self.find_by_url(url)
     joins(:link_urls).find_by(link_urls: { url: url })
