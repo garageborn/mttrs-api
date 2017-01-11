@@ -5,6 +5,7 @@ class Story < ApplicationRecord
 
   has_many :categories, -> { distinct }, through: :links
   has_many :links, through: :story_links
+  has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link
   has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
   has_many :publishers, -> { distinct }, through: :links

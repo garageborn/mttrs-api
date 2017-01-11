@@ -4,9 +4,9 @@ CreateLinkAccessMutation = GraphQL::Relay::Mutation.define do
   input_field :link_id, !types.ID
   return_field :link, LinkType
 
-  resolve -> (_obj, inputs, _ctx) {
+  resolve lambda { |_obj, inputs, _ctx|
     link = Link.find(inputs[:link_id])
-    Access::Create.run(access: { accessable_type: 'Link', accessable_id: link.id })
+    Link::CreateAccess.run(model: link)
     { link: link }
   }
 end

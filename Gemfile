@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'addressable', '2.5.0'
 gem 'apartment', '1.2.0'
+gem 'apartment-sidekiq', '1.1.0'
 gem 'cells', '4.1.3'
 gem 'cells-rails', '0.0.6'
 gem 'cells-slim', '0.0.5'

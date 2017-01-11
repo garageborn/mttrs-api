@@ -2,6 +2,7 @@ class Access < ActiveRecord::Base
   belongs_to :accessable, polymorphic: true
 
   scope :by_timeframe, lambda { |timeframe, time|
+    time = Time.parse(time) if time.is_a?(String)
     range = time.send("beginning_of_#{ timeframe }")..time.send("end_of_#{ timeframe }")
     where(date: range)
   }
@@ -12,4 +13,8 @@ class Access < ActiveRecord::Base
     year = DateTime.new(year) if year.is_a?(Integer)
     by_timeframe :year, year
   }
+
+  def self.hits
+    all.sum(:hits)
+  end
 end

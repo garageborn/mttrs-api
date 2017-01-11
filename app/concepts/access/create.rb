@@ -2,7 +2,7 @@ class Access
   class Create < Operation
     def process(params)
       validate(params[:access]) do
-        model.new_record? ? create : increment_hits!(model)
+        model.new_record? ? create(model) : update(model)
       end
     end
 
@@ -12,7 +12,7 @@ class Access
 
     def params!(params)
       access_params = params[:access]
-      access_params[:date] = Time.now.utc.at_beginning_of_hour
+      access_params[:date] ||= Time.now.utc.at_beginning_of_hour
       params
     end
 
@@ -23,20 +23,26 @@ class Access
         accessable_type: params[:accessable_type],
         accessable_id: params[:accessable_id],
         date: params[:date]
-      ).first_or_initialize
-    end
-
-    def create
-      begin
-        contract.save
-      rescue ActiveRecord::RecordNotUnique
-        existing_model = find_or_initialize(params)
-        increment_hits!(existing_model)
+      ).first_or_initialize.tap do |access|
+        access.hits = params[:hits] if params[:hits].present?
       end
     end
 
-    def increment_hits!(model)
-      Access.increment_counter(:hits, model.id)
+    def create(access)
+      begin
+        access.save
+      rescue ActiveRecord::RecordNotUnique
+        existing_model = find_or_initialize(@params)
+        update(existing_model)
+      end
+    end
+
+    def update(access)
+      if @params[:access][:hits]
+        access.update_column(:hits, @params[:access][:hits])
+      else
+        access.increment!(:hits)
+      end
     end
   end
 end
