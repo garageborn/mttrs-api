@@ -14,6 +14,11 @@ QueryType = GraphQL::ObjectType.define do
     resolve -> (_obj, args, _ctx) { Category.find(args['slug'])}
   end
 
+  field :link, LinkType do
+    argument :slug, !types.String
+    resolve -> (_obj, args, _ctx) { Link.find(args['slug'])}
+  end
+
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
     argument :order_by_name, types.Boolean
