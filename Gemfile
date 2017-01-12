@@ -70,6 +70,10 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano-bundler', '1.2.0', require: false
+  gem 'capistrano-rails', '1.2.2', require: false
+  gem 'capistrano-rbenv', '2.1.0', require: false
+  gem 'capistrano', '3.7.1'
   gem 'foreman', '0.82.0'
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
