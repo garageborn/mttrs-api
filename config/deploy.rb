@@ -6,16 +6,10 @@ set :keep_releases, 10
 set :deploy_to, '/home/garageborn/mttrs-api'
 set :pty, true
 set :root, File.expand_path(File.dirname(__FILE__) + '/../')
-set :ssh_options, {
-  forward_agent: true,
-  port: 41858
-}
-
-set :branch, -> {
-  ENV['branch'] || ask(:branch, `git rev-parse --abbrev-ref HEAD`.chomp)
-}
+set :ssh_options, { forward_agent: true, port: 41858 }
+set :branch, -> { ENV['branch'] || `git rev-parse --abbrev-ref HEAD`.chomp }
 set :use_sudo, false
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system"
+append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 
 # rbenv
 set :rbenv_type, :user
@@ -31,3 +25,6 @@ set :whenever_config, -> { "#{ release_path }/config/schedule/schedule.rb" }
 set :whenever_command, -> {
   [:bundle, :exec, :whenever, "--load-file #{ fetch(:whenever_config) }"]
 }
+
+# puma
+set :puma_conf, -> { "#{ release_path }/config/puma.rb" }
