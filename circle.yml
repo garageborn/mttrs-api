@@ -1,19 +1,14 @@
 machine:
   services:
-    - docker
     - redis
   ruby:
     version: 2.4.0
-
-dependencies:
-  cache_directories:
-    - ~/docker
 
 deployment:
   hub:
     branch: master
     commands:
-      - bin/rails deploy
+      - bundle exec cap production deploy branch=master
 
 test:
   override:
