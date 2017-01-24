@@ -10,14 +10,14 @@ class Category
 
     class BeforeDestroy < Base
       def call(_options)
-        destroy_icon!
+        destroy_image!
       end
 
       private
 
-      def destroy_icon!
-        return if contract.model.icon_id.blank?
-        Cloudinary::Uploader.destroy(contract.model.icon_id)
+      def destroy_image!
+        return if contract.model.image_id.blank?
+        Cloudinary::Uploader.destroy(contract.model.image_id)
       end
     end
   end
