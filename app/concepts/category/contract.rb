@@ -1,7 +1,7 @@
 class Category
   class Contract < Reform::Form
     property :color
-    property :icon_id, populator: :icon_id!
+    property :image_id, populator: :image_id!
     property :name
     property :order
 
@@ -9,8 +9,8 @@ class Category
 
     private
 
-    def icon_id!(options)
-      self.icon_id = CloudinaryPopulator.call(options[:doc][:icon_id])
+    def image_id!(options)
+      self.image_id = CloudinaryPopulator.call(options[:doc][:image_id])
     end
   end
 end

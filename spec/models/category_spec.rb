@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Category do
   it { should have_db_column(:color) }
   it { should have_db_column(:created_at).with_options(null: false) }
-  it { should have_db_column(:icon_id) }
+  it { should have_db_column(:image_id) }
   it { should have_db_column(:name).with_options(null: false) }
   it { should have_db_column(:order).with_options(null: false, default: 0) }
   it { should have_db_column(:slug).with_options(null: false) }
