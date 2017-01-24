@@ -27,4 +27,5 @@ set :whenever_command, -> {
 }
 
 # puma
-set :puma_conf, -> { "#{ release_path }/config/puma.rb" }
+set :puma_threads, [0, 2]
+set :puma_workers, 2
