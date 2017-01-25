@@ -21,7 +21,7 @@ set :rbenv_roles, :all
 # whenever
 set :whenever_identifier, -> { fetch(:application) }
 set :whenever_roles, -> { :scheduler }
-set :whenever_config, -> { "#{ release_path }/config/schedule/schedule.rb" }
+set :whenever_config, -> { "#{ release_path }/config/schedule.rb" }
 set :whenever_command, -> {
   [:bundle, :exec, :whenever, "--load-file #{ fetch(:whenever_config) }"]
 }
