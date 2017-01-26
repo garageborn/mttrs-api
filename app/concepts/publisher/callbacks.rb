@@ -1,5 +1,17 @@
 class Publisher
   module Callbacks
+    class AfterCreate
+      attr_reader :contract
+
+      def initialize(contract)
+        @contract = contract
+      end
+
+      def call(_options)
+        BuzzsumoFetcherJob.perform_async(contract.model.id)  
+      end
+    end
+
     class BeforeDestroy
       attr_reader :contract
 

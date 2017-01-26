@@ -18,23 +18,29 @@ class Publisher
     model Publisher
     contract Contract
 
+    callback :after_create, ::Publisher::Callbacks::AfterCreate
     callback :before_destroy, ::Publisher::Callbacks::BeforeDestroy
   end
 
-  class Form < Operation
+  class Create < Operation
+    action :create
+
+    def process(params)
+      validate(params[:publisher]) do
+        contract.save
+        callback!(:after_create)
+      end
+    end
+  end
+
+  class Update < Operation
+    action :update
+
     def process(params)
       validate(params[:publisher]) do
         contract.save
       end
     end
-  end
-
-  class Create < Form
-    action :create
-  end
-
-  class Update < Form
-    action :update
   end
 
   class Destroy < Operation
