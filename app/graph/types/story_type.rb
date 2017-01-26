@@ -20,6 +20,9 @@ StoryType = GraphQL::ObjectType.define do
       obj.main_publisher_link(publisher_slug)
     }
   end
+  field :other_links_count, !types.Int do
+    resolve -> (obj, _args, _ctx) { obj.other_story_links.size }
+  end
   field :other_links, types[LinkType] do
     argument :popular, types.Boolean
     argument :publisher_slug, types.String
