@@ -9,7 +9,6 @@ class Publisher
     validates :domain, presence: true, unique: { case_sensitive: false }
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
     validates :name, presence: true, unique: { case_sensitive: false }
-    validates :slug, presence: true, unique: { case_sensitive: false }
 
     private
 
