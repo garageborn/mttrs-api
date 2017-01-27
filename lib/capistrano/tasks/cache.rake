@@ -3,7 +3,7 @@ namespace :cache do
   task :clear do
     on roles(:db) do
       within release_path do
-        execute('bin/rails runner "Rails.cache.clear"')
+        execute(:bundle, :exec, :rails, :runner, 'Rails.cache.clear')
       end
     end
   end

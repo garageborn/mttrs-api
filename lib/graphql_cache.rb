@@ -15,10 +15,8 @@ module GraphqlCache
   end
 
   class GraphqlCacheInstance
-    extend Memoist
-
     def base_key(&block)
-      keys[:base_key] = block
+      @base_key = block
     end
 
     def fetch(name)
@@ -43,10 +41,6 @@ module GraphqlCache
 
     private
 
-    def keys
-      {}
-    end
-
     def get_key(name, obj, args, ctx)
       base_key = get_base_key(obj, args, ctx)
       query_key = Base64.encode64(args.to_h.to_query)
@@ -54,9 +48,7 @@ module GraphqlCache
     end
 
     def get_base_key(*args)
-      keys[:base_key].call(*args)
+      @base_key.call(*args)
     end
-
-    memoize :keys
   end
 end
