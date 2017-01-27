@@ -27,7 +27,7 @@ StoryType = GraphQL::ObjectType.define do
   field :other_links, types[LinkType] do
     argument :popular, types.Boolean
     argument :publisher_slug, types.String
-    resolve ->(obj, args, _ctx) {
+    resolve StoryType.cache.fetch(:other_links) { |obj, args, _ctx|
       publisher_slug = args['publisher_slug']
       filter = args.to_h.except('publisher_slug')
       next obj.other_links.filter(filter) if publisher_slug.blank?
@@ -39,10 +39,5 @@ end
 GraphqlCache.define(StoryType) do |config|
   config.base_key do |obj, _args, _ctx|
     "#{ Apartment::Tenant.current }/story_type/#{ obj.id }"
-  end
-
-  config.define_key :main_category
-  config.define_key :main_link do |_obj, args, _ctx|
-    "publisher_slug/#{ args['publisher_slug'] }"
   end
 end

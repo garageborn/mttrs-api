@@ -21,19 +21,10 @@ module GraphqlCache
       keys[:base_key] = block
     end
 
-    def define_key(name)
-      keys[name] = proc do |*args|
-        base_key = keys[:base_key].call(*args)
-        object_key = block_given? ? yield(*args) : name
-        "#{ base_key }/#{ object_key }"
-      end
-    end
-
     def fetch(name)
       proc do |*args|
         key = get_key(name, *args)
-        Rails.cache.fetch(key, expires_in: 12.hours) do
-          p '-------------------feeeeeeeeeeeeeeeeeeeeeetch', key
+        Rails.cache.fetch(key, expires_in: 3.hours) do
           yield(*args)
         end
       end
@@ -56,8 +47,10 @@ module GraphqlCache
       {}
     end
 
-    def get_key(name, *args)
-      keys[name].call(args)
+    def get_key(name, obj, args, ctx)
+      base_key = get_base_key(obj, args, ctx)
+      query_key = Base64.encode64(args.to_h.to_query)
+      "#{ base_key }/#{ name }/#{ query_key }"
     end
 
     def get_base_key(*args)
