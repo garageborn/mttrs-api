@@ -14,7 +14,11 @@ LinkType = GraphQL::ObjectType.define do
   field :story, !StoryType
   field :title, !types.String
   field :total_social, !types.Int
-  field :url, !types.String
+  field :url, !types.String do
+    resolve LinkType.cache.fetch(:url) { |obj, _args, _ctx|
+      obj.url
+    }
+  end
   field :slug, !types.String
 end
 
