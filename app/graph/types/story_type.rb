@@ -22,7 +22,9 @@ StoryType = GraphQL::ObjectType.define do
     }
   end
   field :other_links_count, !types.Int do
-    resolve ->(obj, _args, _ctx) { obj.other_story_links.size }
+    resolve StoryType.cache.fetch(:other_links_count) { |obj, args, _ctx|
+      obj.other_story_links.size
+    }
   end
   field :other_links, types[LinkType] do
     argument :popular, types.Boolean
