@@ -7,7 +7,7 @@ LinkType = GraphQL::ObjectType.define do
   field :id, !types.ID
   field :image_source_url, types.String
   field :publisher, !PublisherType do
-    resolve LinkType.cache.fetch(:publisher) { |_obj, _args, _ctx|
+    resolve LinkType.cache.fetch(:publisher) { |obj, _args, _ctx|
       obj.publisher
     }
   end
