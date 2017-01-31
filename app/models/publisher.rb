@@ -12,7 +12,7 @@ class Publisher < ApplicationRecord
 
   scope :available_on_current_tenant, -> { with_tenant_language }
   scope :order_by_name, -> { order(:name) }
-  scope :with_stories, -> { joins(:links).group('publishers.id') }
+  scope :with_stories, -> { joins(:stories).group('publishers.id') }
   scope :with_tenant_language, lambda {
     next all if current_tenant_languages.blank?
     joins(:links).where(links: { language: current_tenant_languages }).distinct
