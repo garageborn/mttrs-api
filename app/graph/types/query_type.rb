@@ -46,11 +46,11 @@ QueryType = GraphQL::ObjectType.define do
       start_at = args['offset'].to_i
       end_at = start_at + args['days'].to_i
 
-      (start_at...end_at).map do |day|
+      (start_at..end_at).map { |day|
         timezone = args['timezone'] || 'UTC'
         date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
         OpenStruct.new(date: date, timezone: timezone)
-      end
+      }
     end
   end
 end

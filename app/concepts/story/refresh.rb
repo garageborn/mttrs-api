@@ -6,6 +6,7 @@ class Story
       return model.destroy unless model.reload.story_links.exists?
       update_total_social
       set_main_story_link
+      clear_graphql_cache
     end
 
     private
@@ -18,6 +19,10 @@ class Story
       main_story_link = model.story_links.popular.first
       main_story_link.update_column(:main, true)
       model.story_links.where.not(id: main_story_link).update_all(main: false)
+    end
+
+    def clear_graphql_cache
+      StoryType.cache.clear(model)
     end
   end
 end
