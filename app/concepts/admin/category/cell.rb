@@ -9,33 +9,13 @@ module Admin
         property :name
         property :order
 
-        def feeds
-          model.feeds.group_by(&:publisher)
-        end
-
-        def feeds_count
-          number_with_delimiter(model.feeds.size)
-        end
-
-        def category_matchers
-          model.category_matchers.group_by(&:publisher)
-        end
-
-        def category_matchers_count
-          number_with_delimiter(model.category_matchers.size)
-        end
-      end
-
-      class Feed < Trailblazer::Cell
-        property :url
-
         def links_count
           number_with_delimiter(model.links.size)
         end
-      end
 
-      class CategoryMatcher < Trailblazer::Cell
-        property :url_matcher
+        def stories_count
+          number_with_delimiter(model.stories.size)
+        end
       end
 
       class Form < Trailblazer::Cell

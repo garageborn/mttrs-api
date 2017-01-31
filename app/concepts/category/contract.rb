@@ -5,6 +5,8 @@ class Category
     property :name
     property :order
 
+    validates :color, presence: true
+    validates :image_id, presence: true
     validates :name, presence: true, unique: { case_sensitive: false }
 
     private

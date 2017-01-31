@@ -1,14 +1,14 @@
 class Publisher
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10).freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10, order_by_name: true).freeze
 
     def model!(params)
       ::Publisher.filter(params)
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page, :order_by_name))
+      DEFAULT_PARAMS.merge(params.permit(:page))
     end
   end
 

@@ -1,24 +1,6 @@
-li
-  .categories-item-title
-    strong ##{ order } #{ name }
-    = link_to 'Edit', [:edit, :admin, model], class: 'categories-edit-button'
-
-  section.categories-item-section
-    strong Feeds (#{ feeds_count })
-    = link_to 'Add New', [:new, :admin, :feed, { category_id: id }], class: 'categories-add-button'
-
-    .categories-item-subsection
-      - feeds.each do |publisher, feeds|
-        strong= publisher.name
-        ul.categories-list= concept('admin/category/cell/feed', collection: feeds)
-
-  section.categories-item-section
-    strong Matchers (#{ category_matchers_count })
-    = link_to 'Add New', [:new, :admin, :category_matcher, { category_id: id }],
-      class: 'categories-add-button'
-
-    .categories-item-subsection
-      - category_matchers.each do |publisher, category_matchers|
-        strong= publisher.name
-        ul.categories-list
-          = concept('admin/category/cell/category_matcher', collection: category_matchers)
+tr
+  td= name
+  td ##{ order }
+  td= links_count
+  td= stories_count
+  td= link_to 'Edit', [:edit, :admin, model], class: 'categories-edit-button'

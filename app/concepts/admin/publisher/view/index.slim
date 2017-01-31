@@ -1,3 +1,15 @@
 h2= link_to 'New Publisher', [:new, :admin, :publisher], class: 'publishers-add-button'
-ul= concept('admin/publisher/cell/item', collection: model)
+
+table.publishers
+  thead
+    tr
+      th Name
+      th Domain
+      th Total Links
+      th Today Links
+      th 
+  
+  tbody
+    = concept('admin/publisher/cell/item', collection: model)
+
 = paginate(model)

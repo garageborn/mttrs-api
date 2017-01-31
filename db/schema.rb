@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 26) do
+ActiveRecord::Schema.define(version: 28) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 26) do
     t.citext   "slug",                   null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "image_id"
-    t.string   "color"
+    t.string   "image_id",               null: false
+    t.string   "color",                  null: false
     t.integer  "order",      default: 0, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
     t.index ["order"], name: "index_categories_on_order", using: :btree
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 26) do
     t.citext   "domain",                    null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.string   "icon_id"
+    t.string   "icon_id",                   null: false
     t.string   "language",   default: "en", null: false
     t.index ["domain"], name: "index_publishers_on_domain", unique: true, using: :btree
     t.index ["name"], name: "index_publishers_on_name", unique: true, using: :btree

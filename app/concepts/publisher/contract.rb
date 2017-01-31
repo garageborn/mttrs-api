@@ -7,6 +7,7 @@ class Publisher
     property :slug
 
     validates :domain, presence: true, unique: { case_sensitive: false }
+    validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
     validates :name, presence: true, unique: { case_sensitive: false }
 

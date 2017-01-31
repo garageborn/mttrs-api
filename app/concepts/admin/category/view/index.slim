@@ -1,4 +1,14 @@
 h2
   = link_to 'New Category', [:new, :admin, :category], class: 'categories-add-button'
-ul= concept('admin/category/cell/item', collection: model)
+
+table.categories
+  thead
+    tr
+      th Name
+      th Order
+      th Total Links
+      th Today Stories
+      th 
+  tbody
+    = concept('admin/category/cell/item', collection: model)
 = paginate(model)

@@ -1,18 +1,6 @@
-li
-  .publishers-item-title
-    strong= name
-    = link_to 'Edit', [:edit, :admin, model], class: 'publishers-edit-button'
-
-  .publishers-item-stats
-    span= domain
-    span Links: #{ links_count }
-    span Today Links: #{ today_links_count }
-
-  section.publishers-item-section
-    strong Feeds (#{ feeds_count })
-    = link_to 'Add New', [:new, :admin, :feed, { publisher_id: id }], class: 'publishers-add-button'
-
-    .publishers-item-subsection
-      - feeds.each do |publisher, feeds|
-        strong= publisher.name
-        ul.publishers-list= concept('admin/publisher/cell/feed', collection: feeds)
+tr
+  td= name
+  td= domain
+  td= links_count
+  td= today_links_count
+  td= link_to 'Edit', [:edit, :admin, model], class: 'publishers-edit-button'

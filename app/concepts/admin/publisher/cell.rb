@@ -16,30 +16,6 @@ module Admin
         def today_links_count
           number_with_delimiter(model.links.today.size)
         end
-
-        def feeds_count
-          number_with_delimiter(model.feeds.size)
-        end
-
-        def feeds
-          model.feeds.group_by(&:publisher)
-        end
-
-        def feeds_count
-          number_with_delimiter(model.feeds.size)
-        end
-      end
-
-      class Feed < Trailblazer::Cell
-        property :url
-
-        def links_count
-          number_with_delimiter(model.links.size)
-        end
-      end
-
-      class CategoryMatcher < Trailblazer::Cell
-        property :url_matcher
       end
 
       class Form < Trailblazer::Cell
