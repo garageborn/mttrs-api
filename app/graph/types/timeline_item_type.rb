@@ -11,7 +11,7 @@ TimelineItemType = GraphQL::ObjectType.define do
     argument :popular, types.Boolean
     argument :publisher_slug, types.String
     argument :recent, types.Boolean
-    resolve -> (obj, args, _ctx) {
+    resolve ->(obj, args, _ctx) {
       start_at = Time.use_zone(obj.timezone) { Time.zone.at(obj.date).at_beginning_of_day }
       end_at = Time.use_zone(obj.timezone) { Time.zone.at(obj.date).end_of_day }
       Story.filter(args).published_between(start_at, end_at)

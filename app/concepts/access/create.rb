@@ -29,12 +29,10 @@ class Access
     end
 
     def create(access)
-      begin
-        access.save
-      rescue ActiveRecord::RecordNotUnique
-        existing_model = find_or_initialize(@params)
-        update(existing_model)
-      end
+      access.save
+    rescue ActiveRecord::RecordNotUnique
+      existing_model = find_or_initialize(@params)
+      update(existing_model)
     end
 
     def update(access)

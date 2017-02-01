@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 28) do
+ActiveRecord::Schema.define(version: 30) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -116,15 +116,22 @@ ActiveRecord::Schema.define(version: 28) do
     t.index ["total_social"], name: "index_links_on_total_social", using: :btree
   end
 
+  create_table "publisher_domains", force: :cascade do |t|
+    t.integer  "publisher_id", null: false
+    t.citext   "domain",       null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["domain"], name: "index_publisher_domains_on_domain", unique: true, using: :btree
+    t.index ["publisher_id"], name: "index_publisher_domains_on_publisher_id", using: :btree
+  end
+
   create_table "publishers", force: :cascade do |t|
     t.citext   "name",                      null: false
     t.citext   "slug",                      null: false
-    t.citext   "domain",                    null: false
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.string   "icon_id",                   null: false
     t.string   "language",   default: "en", null: false
-    t.index ["domain"], name: "index_publishers_on_domain", unique: true, using: :btree
     t.index ["name"], name: "index_publishers_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_publishers_on_slug", unique: true, using: :btree
   end

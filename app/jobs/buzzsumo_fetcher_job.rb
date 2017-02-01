@@ -28,13 +28,16 @@ class BuzzsumoFetcherJob
 
   def entries
     languages.map do |language|
-      Buzzsumo::Articles.all(query: query(language))
+      publisher.publisher_domains.map do |publisher_domain|
+        query = query_for(language: language, domain: publisher_domain.domain)
+        Buzzsumo::Articles.all(query: query)
+      end
     end.flatten.compact.uniq
   end
 
-  def query(language)
+  def query_for(language:, domain:)
     options.clone.tap do |query|
-      query[:q] = publisher.domain
+      query[:q] = domain
       query[:language] = language
       query[:max_pages] ||= 2
       query[:num_results] ||= 100

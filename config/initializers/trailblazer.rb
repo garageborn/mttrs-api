@@ -19,6 +19,7 @@ Trailblazer::Cell.class_eval do
   include ActionView::Helpers::NumberHelper
   include ActionView::Helpers::TranslationHelper
   include Kaminari::Cells
+  include Cocoon::ViewHelpers
   include CloudinaryHelper
 end
 

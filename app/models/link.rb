@@ -21,7 +21,7 @@ class Link < ApplicationRecord
   has_one :story, through: :story_link
   has_one :social_counter, -> { order(id: :desc) }
 
-  scope :category_slug, -> (slug) { joins(:categories).where(categories: { slug: slug }) }
+  scope :category_slug, ->(slug) { joins(:categories).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :order_by_url, -> { joins(:link_url).order('link_urls.url') }
@@ -39,7 +39,7 @@ class Link < ApplicationRecord
   scope :published_until, lambda { |date|
     where('links.published_at <= ?', parse_date(date))
   }
-  scope :publisher_slug, -> (slug) { joins(:publisher).where(publishers: { slug: slug }) }
+  scope :publisher_slug, ->(slug) { joins(:publisher).where(publishers: { slug: slug }) }
   scope :random, -> { order('RANDOM()') }
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }

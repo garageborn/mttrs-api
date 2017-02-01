@@ -6,6 +6,7 @@ class Publisher < ApplicationRecord
   has_many :category_matchers, inverse_of: :publisher, dependent: :destroy
   has_many :feeds, inverse_of: :publisher, dependent: :destroy
   has_many :links, inverse_of: :publisher, dependent: :destroy
+  has_many :publisher_domains, inverse_of: :publisher, dependent: :destroy
   has_many :stories, -> { distinct }, through: :links
 
   friendly_id :name, use: %i(slugged finders)
@@ -21,6 +22,8 @@ class Publisher < ApplicationRecord
   def self.find_by_host(url)
     host = Addressable::URI.parse(url).host
     public_suffix = PublicSuffix.domain(host)
-    find_by(domain: [host, public_suffix].uniq)
+    domains = [host, public_suffix].uniq
+    return if domains.blank?
+    joins(:publisher_domains).find_by(publisher_domains: { domain: domains })
   end
 end

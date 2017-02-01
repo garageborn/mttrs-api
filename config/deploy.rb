@@ -6,7 +6,7 @@ set :keep_releases, 10
 set :deploy_to, '/home/garageborn/mttrs-api'
 set :pty, true
 set :root, File.expand_path(File.dirname(__FILE__) + '/../')
-set :ssh_options, { forward_agent: true, port: 41858 }
+set :ssh_options, forward_agent: true, port: 41_858
 set :branch, -> { ENV['branch'] || `git rev-parse --abbrev-ref HEAD`.chomp }
 set :use_sudo, false
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'

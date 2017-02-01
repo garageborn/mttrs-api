@@ -17,7 +17,7 @@ module Admin
         end
 
         def category_matchers
-          model.second.sort_by{ |r| r.category.name }.group_by(&:category)
+          model.second.sort_by { |r| r.category.name }.group_by(&:category)
         end
       end
 

@@ -1,12 +1,16 @@
 class Publisher
   class Contract < Reform::Form
-    property :domain
+    include Concerns::HasNestedForm
+
     property :icon_id, populator: :icon_id!
     property :language
     property :name
     property :slug
+    has_nested_form :publisher_domains,
+                    form: PublisherDomain::Contract,
+                    klass: PublisherDomain,
+                    prepopulate: true
 
-    validates :domain, presence: true, unique: { case_sensitive: false }
     validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
     validates :name, presence: true, unique: { case_sensitive: false }
