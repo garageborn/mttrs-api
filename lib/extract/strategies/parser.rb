@@ -36,6 +36,8 @@ module Extract
           url_fetcher = Utils::UrlFetcher.run(url)
           return unless url_fetcher&.success?
           url_fetcher.response.body.encode('UTF-8')
+        rescue Encoding::UndefinedConversionError
+          url_fetcher.response.body
         end
       end
     end
