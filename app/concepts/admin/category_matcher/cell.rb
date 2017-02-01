@@ -42,7 +42,7 @@ module Admin
         end
 
         def matching_links_count
-          number_with_delimiter(matching_links.try(:size))
+          number_with_delimiter(matching_links.uniq.try(:size))
         end
 
         def uncategorized_links
@@ -51,7 +51,7 @@ module Admin
         end
 
         def uncategorized_links_count
-          count = number_with_delimiter(publisher_uncategorized_links.size)
+          count = number_with_delimiter(publisher_uncategorized_links.uniq.size)
           publisher = ::Publisher.find_by(id: model.publisher_id)
           return count if publisher.blank?
           path = uncategorized_admin_links_path(publisher_slug: publisher.slug)
@@ -68,6 +68,24 @@ module Admin
 
         memoize :matching_links, :matching_links_count, :uncategorized_links,
                 :uncategorized_links_count
+      end
+
+      class Links < Trailblazer::Cell
+        def links
+          options[:links]
+        end
+      end
+
+      class Link < Trailblazer::Cell
+        property :url
+
+        def published_at
+          localize(model.published_at, format: :short)
+        end
+
+        def total_social
+          number_with_delimiter(model.total_social)
+        end
       end
     end
   end
