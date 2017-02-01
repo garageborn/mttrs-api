@@ -8,10 +8,12 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        property :title
+        def title
+          link_to(model.title, model.url, target: :_blank)
+        end
 
         def published_at
-          localize(model.published_at)
+          localize(model.published_at, format: :short)
         end
 
         def categories_names
@@ -24,20 +26,21 @@ module Admin
 
         def story_id
           return 'None' if model.story.blank?
-          model.story.id
+          link_to model.story.id, [:edit, :admin, model.story]
         end
 
-        def social_counters
-          return if model.social_counters.blank?
-          concept(
-            'admin/link/cell/social_counter',
-            collection: model.social_counters.recent.limit(5)
-          )
+        def total_social
+          number_with_delimiter(model.total_social)
         end
       end
 
       class UncategorizedItem < Trailblazer::Cell
         property :url
+        property :title
+
+        def published_at
+          localize(model.published_at, format: :short)
+        end
 
         def publisher_name
           model.publisher.name

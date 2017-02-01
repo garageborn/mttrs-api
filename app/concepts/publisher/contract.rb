@@ -5,7 +5,6 @@ class Publisher
     property :icon_id, populator: :icon_id!
     property :language
     property :name
-    property :slug
     has_nested_form :publisher_domains,
                     form: PublisherDomain::Contract,
                     klass: PublisherDomain,

@@ -1,4 +1,4 @@
-lock '3.7.1'
+lock '3.7.2'
 
 set :application, 'mttrs-api'
 set :repo_url, 'git@github.com:garageborn/mttrs-api.git'

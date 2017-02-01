@@ -1,5 +1,7 @@
-li
-  .links-uncategorized-item-title
-    = link_to url, url, target: :_blank
-    span= publisher_name
-    span= total_social
+tr
+  td
+    p= link_to url, url, target: :_blank
+    small= title
+  td= total_social
+  td= publisher_name
+  td= published_at
