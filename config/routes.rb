@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :publishers, only: [:index, :show]
   resources :stories, only: [:index]
-  resources :graphql, via: [:post, :options]
+  match '/graphql' => 'graphql#create', via: [:get, :post]
 
   namespace :admin do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
