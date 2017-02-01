@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe Publisher do
   it { should have_db_column(:created_at).with_options(null: false) }
-  it { should have_db_column(:domain).with_options(null: false) }
   it { should have_db_column(:icon_id) }
   it { should have_db_column(:language).with_options(default: 'en', null: false) }
   it { should have_db_column(:name).with_options(null: false) }
@@ -14,6 +13,7 @@ RSpec.describe Publisher do
   it { should have_many(:category_matchers).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:feeds).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:links).inverse_of(:publisher).dependent(:destroy) }
+  it { should have_many(:publisher_domains).inverse_of(:publisher).dependent(:destroy) }
 
   # describe 'Validations' do
   #   subject { build(:publisher) }

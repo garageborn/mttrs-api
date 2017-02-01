@@ -8,7 +8,7 @@ class Publisher
       end
 
       def call(_options)
-        BuzzsumoFetcherJob.perform_async(contract.model.id)  
+        BuzzsumoFetcherJob.perform_async(contract.model.id)
       end
     end
 

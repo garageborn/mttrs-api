@@ -15,7 +15,7 @@ class FeedFetcherJob
   private
 
   def feed
-    Utils::Thread::with_connection do
+    Utils::Thread.with_connection do
       Feed.find_by(id: feed_id)
     end
   end

@@ -17,6 +17,7 @@ Apartment.configure do |config|
     Link
     LinkUrl
     Publisher
+    PublisherDomain
     SocialCounter
   )
 

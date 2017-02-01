@@ -4,12 +4,14 @@ class Story
 
     def process(params)
       return if model.blank?
-      Access::Create.run(access: {
-        accessable_type: 'Story',
-        accessable_id: model.id,
-        date: params[:date],
-        hits: model.links_accesses.by_timeframe(:hour, params[:date]).hits
-      })
+      Access::Create.run(
+        access: {
+          accessable_type: 'Story',
+          accessable_id: model.id,
+          date: params[:date],
+          hits: model.links_accesses.by_timeframe(:hour, params[:date]).hits
+        }
+      )
     end
 
     private

@@ -6,7 +6,7 @@ gem 'apartment-sidekiq', '1.1.0'
 gem 'cells', '4.1.3'
 gem 'cells-rails', '0.0.6'
 gem 'cells-slim', '0.0.5'
-gem 'cloudinary', '1.3.0'
+gem 'cloudinary', '1.4.0'
 gem 'dry-types', '0.9.3'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
@@ -23,7 +23,7 @@ gem 'kaminari', '0.17.0'
 gem 'kaminari-cells', '0.0.4'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
-gem 'nokogiri', '1.7.0'
+gem 'nokogiri', '1.7.0.1'
 gem 'pg', '0.19.0'
 gem 'public_suffix', '2.0.5'
 gem 'rails', '5.0.1'
@@ -45,6 +45,7 @@ gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
 
 # Assets
+gem 'cocoon', '1.2.9'
 gem 'compass-rails', '3.0.2'
 gem 'jquery-rails', '4.2.2'
 gem 'js-routes', '1.3.2'
@@ -55,7 +56,7 @@ gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.0.4'
 
 group :production do
-  gem 'puma', '3.6.2'
+  gem 'puma', '3.7.0'
   gem 'sentry-raven', '2.3.0'
 end
 
@@ -70,11 +71,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'capistrano', '3.7.2'
   gem 'capistrano-bundler', '1.2.0', require: false
   gem 'capistrano-rails', '1.2.2', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
-  gem 'capistrano', '3.7.1'
   gem 'capistrano3-puma', '1.2.1', require: false
   gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
