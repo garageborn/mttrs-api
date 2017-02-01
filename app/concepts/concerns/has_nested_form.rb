@@ -23,13 +23,21 @@ module Concerns
     private
 
     def nested_populator(_name, klass, options)
-      fragment, collection, index = options[:fragment], options[:model], options[:index]
+      fragment = options[:fragment]
+      collection = options[:model]
+      index = options[:index]
+
+      if fragment[:id].to_s.blank?
+        item = nil
+      else
+        item = collection.find { |r| r.id.to_s == fragment[:id].to_s }
+      end
 
       if fragment['_destroy'] == '1'
         collection.delete_at(index)
         return skip!
       else
-        (item = collection[index]) ? item : collection.insert(index, klass.new)
+        item ? item : collection.append(klass.new)
       end
     end
 
