@@ -36,7 +36,6 @@ module Admin
 
       class UncategorizedItem < Trailblazer::Cell
         property :url
-        property :title
 
         def published_at
           localize(model.published_at, format: :short)

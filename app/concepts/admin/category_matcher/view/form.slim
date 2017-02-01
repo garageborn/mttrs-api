@@ -16,13 +16,13 @@
   .category-matchers-links
     - if matching_links.present?
       strong Matching links (#{ matching_links_count })
-      ul= concept('admin/link/cell/uncategorized_item', collection: matching_links)
+      = concept('admin/category_matcher/cell/links', nil, links: matching_links)
     - else
       strong No links matching
 
   .category-matchers-links
     - if uncategorized_links.present?
       strong Uncategorized links (#{ uncategorized_links_count.html_safe })
-      ul= concept('admin/link/cell/uncategorized_item', collection: uncategorized_links)
+      = concept('admin/category_matcher/cell/links', nil, links: uncategorized_links)
     - else
       strong No uncategorized links
