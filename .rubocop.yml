@@ -2,7 +2,7 @@ inherit_from:
   - .rubocop.hound.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 Style/Documentation:
   Enabled: false

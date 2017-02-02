@@ -1,3 +1,5 @@
+require Rails.root.join('lib', 'graphql_cache')
+
 QueryType = GraphQL::ObjectType.define do
   name 'Query Type'
   description 'Query Type'
@@ -7,34 +9,52 @@ QueryType = GraphQL::ObjectType.define do
     argument :order_by_name, types.Boolean
     argument :order_by_stories_count, types.Boolean
     argument :with_stories, types.Boolean
-    resolve ->(_obj, args, _ctx) { Category.filter(args) }
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:categories, ctx).expires_in 15.minutes
+      Category.filter(args)
+    }
   end
 
   field :category, CategoryType do
     argument :slug, !types.String
-    resolve ->(_obj, args, _ctx) { Category.find(args['slug'])}
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:category, ctx).expires_in 15.minutes
+      Category.find(args['slug'])
+    }
   end
 
   field :link, LinkType do
     argument :slug, !types.String
-    resolve ->(_obj, args, _ctx) { Link.find(args['slug'])}
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:link, ctx).expires_in 15.minutes
+      Link.find(args['slug'])
+    }
   end
 
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
     argument :order_by_name, types.Boolean
     argument :with_stories, types.Boolean
-    resolve ->(_obj, args, _ctx) { Publisher.filter(args) }
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:publishers, ctx).expires_in 15.minutes
+      Publisher.filter(args)
+    }
   end
 
   field :publisher, PublisherType do
     argument :slug, !types.String
-    resolve ->(_obj, args, _ctx) { Publisher.find(args['slug']) }
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:publisher, ctx).expires_in 15.minutes
+      Publisher.find(args['slug'])
+    }
   end
 
   field :story, StoryType do
     argument :id, !types.ID
-    resolve ->(_obj, args, _ctx) { Story.find(args['id']) }
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:story, ctx).expires_in 15.minutes
+      Story.find(args['id'])
+    }
   end
 
   field :timeline, !types[TimelineItemType] do
@@ -42,7 +62,8 @@ QueryType = GraphQL::ObjectType.define do
     argument :offset, types.Int
     argument :timezone, types.String
 
-    resolve ->(_obj, args, _ctx) do
+    resolve lambda { |_obj, args, ctx|
+      GraphqlCache.cache_for(:timeline, ctx).expires_in 15.minutes
       start_at = args['offset'].to_i
       end_at = start_at + args['days'].to_i
 
@@ -51,6 +72,6 @@ QueryType = GraphQL::ObjectType.define do
         date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
         OpenStruct.new(date: date, timezone: timezone)
       end
-    end
+    }
   end
 end
