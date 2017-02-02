@@ -7,15 +7,18 @@ module Concerns
     end
 
     def add_graphql_expires(time)
-      @graphql_expires ||= []
-      @graphql_expires.push(time)
+      graphql_expires.push(time)
     end
 
     private
 
     def set_graphql_expires
-      return expires_now if @graphql_expires.include?(:now)
-      expires_in(@graphql_expires.sort.first, public: true)
+      # return expires_now if graphql_expires.include?(:now)
+      # expires_in(graphql_expires.min, public: true)
+    end
+
+    def graphql_expires
+      @graphql_expires ||= []
     end
   end
 end
