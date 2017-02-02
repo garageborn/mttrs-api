@@ -4,9 +4,9 @@ set :output, 'log/cron.log'
 job_type :rake, 'cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output'
 
 # Feeds
-every 10.minutes do
-  rake 'feeds:fetcher:run'
-end
+# every 10.minutes do
+#   rake 'feeds:fetcher:run'
+# end
 
 # Buzzsumo
 every 25.minutes do
