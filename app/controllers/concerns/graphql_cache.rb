@@ -15,6 +15,7 @@ module Concerns
     def set_graphql_expires
       # return expires_now if graphql_expires.include?(:now)
       # expires_in(graphql_expires.min, public: true)
+      expires_in(1.minute, public: true)
     end
 
     def graphql_expires
