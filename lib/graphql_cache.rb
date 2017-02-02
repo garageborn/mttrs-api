@@ -1,54 +1,28 @@
 module GraphqlCache
-  def self.define(object_type)
-    object_type.send :extend, InstanceMethods
-    yield(object_type.cache) if block_given?
-  end
-
-  module InstanceMethods
-    extend Memoist
-
-    def cache
-      GraphqlCacheInstance.new
-    end
-
-    memoize :cache
+  def self.cache_for(key, context)
+    GraphqlCacheInstance.new(key, context)
   end
 
   class GraphqlCacheInstance
-    def base_key(&block)
-      @base_key = block
+    attr_reader :key, :context
+
+    def initialize(key, context)
+      @key = key
+      @context = context
     end
 
-    def fetch(name)
-      proc do |*args|
-        key = get_key(name, *args)
-        Rails.cache.fetch(key, expires_in: 3.hours) do
-          yield(*args)
-        end
-      end
+    def expires_in(time)
+      controller.add_graphql_expires(time)
     end
 
-    def clear(*args)
-      key = get_base_key(*args)
-      match_key = "#{ key }*"
-      Rails.cache.delete_matched(match_key)
-    end
-
-    def clear_key(name, *args)
-      key = get_key(name, *args)
-      Rails.cache.delete(key)
+    def expires_now
+      expires_in(:now)
     end
 
     private
 
-    def get_key(name, obj, args, ctx)
-      base_key = get_base_key(obj, args, ctx)
-      query_key = Base64.encode64(args.to_h.to_query)
-      "#{ base_key }/#{ name }/#{ query_key }"
-    end
-
-    def get_base_key(*args)
-      @base_key.call(*args)
+    def controller
+      context[:controller]
     end
   end
 end
