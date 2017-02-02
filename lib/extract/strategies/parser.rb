@@ -35,7 +35,7 @@ module Extract
         def get_html(url)
           url_fetcher = Utils::UrlFetcher.run(url)
           return unless url_fetcher&.success?
-          url_fetcher.response.body.encode('UTF-8')
+          url_fetcher.response.body.encode('UTF-8', invalid: :replace)
         rescue Encoding::UndefinedConversionError
           url_fetcher.response.body
         end
