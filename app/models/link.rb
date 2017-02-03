@@ -11,6 +11,8 @@ class Link < ApplicationRecord
 
   belongs_to :publisher
   has_many :categories, through: :category_links
+  has_one :main_category_link, class_name: 'CategoryLink'
+  has_one :main_category, through: :main_category_link, source: :category
   has_many :category_links, inverse_of: :link, dependent: :destroy
   has_many :feed_links, inverse_of: :link, dependent: :destroy
   has_many :feeds, through: :feed_links

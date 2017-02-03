@@ -61,16 +61,17 @@ QueryType = GraphQL::ObjectType.define do
     argument :days, !types.Int
     argument :offset, types.Int
     argument :timezone, types.String
+    argument :type, !types.String
 
     resolve lambda { |_obj, args, ctx|
       GraphqlCache.cache_for(:timeline, ctx).expires_in 15.minutes
       start_at = args['offset'].to_i
       end_at = start_at + args['days'].to_i
+      timezone = args['timezone'] || 'UTC'
 
       (start_at...end_at).map do |day|
-        timezone = args['timezone'] || 'UTC'
         date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
-        OpenStruct.new(date: date, timezone: timezone)
+        OpenStruct.new(date: date, timezone: timezone, type: args['type'])
       end
     }
   end
