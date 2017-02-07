@@ -51,8 +51,7 @@ def resolve_timeline_item(start_at:, end_at:, type:, filters:)
 end
 
 TimelineItemType = GraphQL::ObjectType.define do
-  name 'TimelineItemType'
-  description 'TimelineItemType'
+  name 'TimelineItem'
 
   field :date, !types.Int
   field :timezone, !types.String
