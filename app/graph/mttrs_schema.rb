@@ -7,7 +7,6 @@ MttrsSchema = GraphQL::Schema.define do
     p '-----------id_from_object'
     GraphQL::Schema::UniqueWithinType.encode(type_definition.name, object.id)
   }
-
   object_from_id ->(id, query_ctx) {
     p '-------------------object_from_id'
     type_name, item_id = GraphQL::Schema::UniqueWithinType.decode(id)
@@ -15,7 +14,6 @@ MttrsSchema = GraphQL::Schema.define do
     # find an object in your application
     # ....
   }
-
   resolve_type lambda { |object, ctx|
     p '-------------------resolve_type'
   }
