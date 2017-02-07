@@ -7,6 +7,9 @@ module Admin
       class Uncategorized < Trailblazer::Cell
       end
 
+      class Similar < Trailblazer::Cell
+      end
+
       class Item < Trailblazer::Cell
         def title
           link_to(model.title, model.url, target: :_blank)
@@ -47,6 +50,18 @@ module Admin
 
         def total_social
           number_with_delimiter(model.total_social)
+        end
+      end
+
+      class SimilarItem < Trailblazer::Cell
+        property :title
+
+        def published_at
+          localize(Time.zone.parse(model.published_at), format: :short)
+        end
+
+        def score
+          number_with_precision(model._score, precision: 2)
         end
       end
 

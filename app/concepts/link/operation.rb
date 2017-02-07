@@ -27,6 +27,19 @@ class Link
     end
   end
 
+  class Similar < Trailblazer::Operation
+    include Collection
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10, recent: true).freeze
+
+    def model!(params)
+      ::Link.available_on_current_tenant.filter(params)
+    end
+
+    def params!(params)
+      DEFAULT_PARAMS.merge(params.permit(:page))
+    end
+  end
+
   class Operation < Trailblazer::Operation
     include Model
     include Callback

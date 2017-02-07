@@ -8,7 +8,6 @@ module Concerns
       settings index: {} do
         mapping do
           indexes :title, analyzer: 'snowball'
-          indexes :description, analyzer: 'snowball'
           indexes :published_at, type: 'date'
         end
       end
@@ -18,8 +17,12 @@ module Concerns
       after_commit -> { IndexerJob.perform_async('delete', self.class.to_s, id) }, on: :destroy
       after_touch -> { IndexerJob.perform_async('update', self.class.to_s, id) }
 
-      def as_indexed_json(options = {})
-        as_json(options.merge(only: %i(title description published_at)))
+      def as_indexed_json(_options = {})
+        {
+          "title_#{ language }" => title,
+          "title" => title,
+          published_at: published_at
+        }
       end
 
       def similar
@@ -36,8 +39,8 @@ module Concerns
               filter: {
                 range: {
                   published_at: {
-                    lte: published_at + 3.days,
-                    gte: published_at - 3.days
+                    lte: published_at + 2.days,
+                    gte: published_at - 2.days
                   }
                 }
               }

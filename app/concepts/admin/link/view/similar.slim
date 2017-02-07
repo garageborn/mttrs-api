@@ -1,0 +1,17 @@
+h2 Similar links
+
+- model.each do |link|
+  h3= link.title
+
+  table.links
+    thead
+      tr
+        th Title
+        th Score
+        th Published At
+    tbody
+      = concept('admin/link/cell/similar_item', collection: link.similar)
+
+  br
+
+= paginate(model)
