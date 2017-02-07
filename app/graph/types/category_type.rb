@@ -1,6 +1,8 @@
 CategoryType = GraphQL::ObjectType.define do
-  name 'CategoryType'
-  description 'CategoryType'
+  name 'Category'
+
+  interfaces [GraphQL::Relay::Node.interface]
+  global_id_field :id
 
   field :id, !types.ID
   field :name, !types.String
