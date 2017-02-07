@@ -29,7 +29,7 @@ class Link
 
   class Similar < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10, recent: true).freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 50, recent: true).freeze
 
     def model!(params)
       ::Link.available_on_current_tenant.filter(params)
