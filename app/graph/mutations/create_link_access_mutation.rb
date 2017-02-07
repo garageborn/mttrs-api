@@ -1,5 +1,5 @@
 CreateLinkAccessMutation = GraphQL::Relay::Mutation.define do
-  name 'Create Link Access Mutation'
+  name 'CreateLinkAccessMutation'
 
   input_field :slug, !types.String
   return_field :link, LinkType

@@ -1,6 +1,6 @@
 PublisherType = GraphQL::ObjectType.define do
-  name 'Publisher Type'
-  description 'Publisher Type'
+  name 'PublisherType'
+  description 'PublisherType'
 
   field :id, !types.ID
   field :name, !types.String
