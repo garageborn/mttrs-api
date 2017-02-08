@@ -96,6 +96,11 @@ module Admin
       end
 
       class Form < Trailblazer::Cell
+        property :story
+
+        def html
+          model.html.force_encoding('UTF-8')
+        end
       end
     end
   end

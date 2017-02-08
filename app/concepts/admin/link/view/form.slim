@@ -2,10 +2,14 @@
   = f.error_notification
 
   .form-inputs
+    - if story
+      h3 story: #{ link_to story.id, [:edit, :admin, story], class: 'links-edit-button' }
+
     = f.input :title
     = f.association :publisher
     = f.association :categories, as: :check_boxes
     = f.input :published_at
+    = f.input :html, as: :text, input_html: { value: html, rows: 20, cols: 100 }
     - f.simple_fields_for :link_urls do |link_form|
       = link_form.input :url
 

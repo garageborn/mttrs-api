@@ -2,7 +2,6 @@ require Rails.root.join('lib', 'graphql_cache')
 
 QueryType = GraphQL::ObjectType.define do
   name 'QueryType'
-  description 'QueryType'
 
   field :categories, !types[CategoryType] do
     argument :ordered, types.Boolean

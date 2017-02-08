@@ -1,6 +1,5 @@
 CategoryType = GraphQL::ObjectType.define do
   name 'CategoryType'
-  description 'CategoryType'
 
   field :id, !types.ID
   field :name, !types.String

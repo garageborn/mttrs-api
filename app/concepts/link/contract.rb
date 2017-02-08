@@ -1,12 +1,15 @@
 class Link
   class Contract < Reform::Form
+    property :category_ids
     property :description
+    property :html
     property :image_source_url
     property :language
     property :published_at
     property :publisher_id
-    property :category_ids
     property :title
+    property :story
+
     collection :link_urls do
       property :url
     end

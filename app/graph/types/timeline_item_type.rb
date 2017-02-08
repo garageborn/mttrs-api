@@ -52,7 +52,6 @@ end
 
 TimelineItemType = GraphQL::ObjectType.define do
   name 'TimelineItemType'
-  description 'TimelineItemType'
 
   field :date, !types.Int
   field :timezone, !types.String
