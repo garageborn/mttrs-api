@@ -1,25 +1,9 @@
-class Viewer < Struct.new(:id)
-  # HACK:// For relay root queries
-  STATIC = new(id: 'root').freeze
-
-  def self.find(_)
-    STATIC
-  end
-end
+require Rails.root.join('lib', 'graphql_cache')
 
 QueryType = GraphQL::ObjectType.define do
-  name 'Mttrs'
+  name 'QueryType'
+  description 'QueryType'
 
-  field :node, GraphQL::Relay::Node.field
-
-  # Hack until relay has lookup for root fields
-  field :root, ViewerType do
-    description 'Root object to get viewer related collections'
-    resolve -> (obj, args, ctx) { Viewer::STATIC }
-  end
-
-  # apollo-client compatibility
-  # remove it ASAP
   field :categories, !types[CategoryType] do
     argument :ordered, types.Boolean
     argument :order_by_name, types.Boolean
