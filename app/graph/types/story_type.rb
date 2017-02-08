@@ -1,5 +1,6 @@
 StoryType = GraphQL::ObjectType.define do
-  name 'Story'
+  name 'StoryType'
+  description 'StoryType'
 
   field :id, !types.ID
   field :total_social, !types.Int

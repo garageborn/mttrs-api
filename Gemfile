@@ -7,7 +7,7 @@ gem 'cells', '4.1.3'
 gem 'cells-rails', '0.0.6'
 gem 'cells-slim', '0.0.5'
 gem 'cloudinary', '1.4.0'
-gem 'dry-types', '0.9.4'
+gem 'dry-types', '0.9.3'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
 gem 'faraday_middleware-aws-signers-v4', '0.1.5'
@@ -77,7 +77,7 @@ group :development do
   gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
   gem 'capistrano3-puma', '1.2.1', require: false
-  gem 'rack-cors', '0.4.1', require: 'rack/cors'
+  gem 'rack-cors', '0.4.0', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
   gem 'slackistrano', '3.1.0', require: false
 end
@@ -85,7 +85,7 @@ end
 group :test do
   gem 'database_cleaner', '1.5.3'
   gem 'factory_girl_rails', '4.8.0'
-  gem 'faker', '1.7.3'
+  gem 'faker', '1.7.2'
   gem 'rspec-its', '1.2.0'
   gem 'rspec-sidekiq', '2.2.0'
   gem 'shoulda-callback-matchers', '1.1.4'
