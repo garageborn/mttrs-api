@@ -11,5 +11,7 @@ LinkType = GraphQL::ObjectType.define do
   field :total_social, !types.Int
   field :url, !types.String
   field :slug, !types.String
-  field :html, types.String
+  field :html do
+    resolve -> { |obj, _args, _ctx| obj.html.to_s.force_encoding('UTF-8') }
+  end
 end
