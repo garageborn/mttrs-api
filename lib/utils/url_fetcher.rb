@@ -1,11 +1,11 @@
 module Utils
   class UrlFetcher
     def self.run(url)
-      HTTParty.get(
+      Typhoeus.get(
         url,
-        format: :plain,
+        followlocation: true,
         headers: { 'User-Agent' => Utils::UserAgent.sample },
-        verify: false
+        ssl_verifypeer: false
       )
     rescue *Utils::NetworkErrors::RESCUE_FROM
     end
