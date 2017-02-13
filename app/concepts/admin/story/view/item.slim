@@ -1,13 +1,5 @@
-li
-  .stories-item-title
-    = image
-    strong= main_link.title
-    = link_to 'Edit', [:edit, :admin, model], class: 'stories-edit-button'
-
-    .stories-item-stats
-      span= publishers_names
-      span= categories_names
-      = concept('admin/story/cell/social_counter', model)
-
-  section.stories-item-section
-    ul= concept('admin/story/cell/link', collection: other_links)
+- if other_links.present?
+  = concept('admin/story/cell/link', main_link, class_name: 'stories-main-link')
+  = concept('admin/story/cell/link', collection: other_links, class_name: 'stories-other-link')
+- else
+  = concept('admin/story/cell/link', main_link)

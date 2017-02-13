@@ -1,14 +1,16 @@
 class Story
   class Index < Trailblazer::Operation
     include Collection
-    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 10, recent: true).freeze
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 20, popular: true).freeze
 
     def model!(params)
       ::Story.filter(params)
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.
+        merge(published_at: Time.zone.today).
+        merge(params.permit(:page, :published_at))
     end
   end
 

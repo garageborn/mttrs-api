@@ -2,23 +2,56 @@ module Admin
   module Story
     module Cell
       class Index < Trailblazer::Cell
+        def prev_day
+          current_day - 1.day
+        end
+
+        def current_day
+          return Date.parse(params[:published_at]) if params[:published_at].present?
+          Time.zone.today
+        end
+
+        def next_day
+          current_day + 1.day
+        end
       end
 
       class Item < Trailblazer::Cell
         property :main_link
-        property :other_links
+
+        def other_links
+          model.other_links.popular
+        end
+      end
+
+      class Link < Trailblazer::Cell
+        property :title
+        property :url
+        property :story
+
+        def class_name
+          options[:class_name]
+        end
 
         def image
-          return if model.main_link.image_source_url.blank?
-          image_tag(model.main_link.image_source_url, size: '150x100')
+          return if model.image_source_url.blank?
+          image_tag(model.image_source_url, size: '100x100')
         end
 
-        def categories_names
-          model.categories.pluck(:name).to_sentence
+        def total_social
+          number_with_delimiter(model.total_social)
         end
 
-        def publishers_names
-          model.publishers.pluck(:name).to_sentence
+        def publisher_name
+          model.publisher.name
+        end
+
+        def category_names
+          model.categories.map(&:name).try(:to_sentence)
+        end
+
+        def published_at
+          localize(model.published_at, format: :short)
         end
       end
 
@@ -45,23 +78,6 @@ module Admin
 
         def total_google_plus
           number_with_delimiter(model.total_google_plus)
-        end
-      end
-
-      class Link < Trailblazer::Cell
-        property :title
-
-        def categories_names
-          model.categories.pluck(:name).to_sentence
-        end
-
-        def publisher_name
-          model.publisher.name
-        end
-
-        def social_counter
-          return if model.social_counter.blank?
-          concept('admin/link/cell/social_counter', model.social_counter)
         end
       end
 

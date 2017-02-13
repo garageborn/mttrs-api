@@ -16,3 +16,16 @@
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
+
+
+br
+
+strong Similar Links
+table.links
+  thead
+    tr
+      th Title
+      th Score
+      th Published At
+  tbody
+    = concept('admin/link/cell/similar_item', collection: similar)

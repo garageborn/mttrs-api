@@ -1,14 +1,14 @@
-li
-  .links-item-title
-    strong= title
-
-    .links-item-stats
-      span= publisher_name
-      span= categories_names
-      = social_counter
-
-      p
-        span= link_to 'Edit Info', [:edit, :admin, model], class: 'links-edit-button'
-        span= link_to 'Change Story', '#', class: 'stories-change-cluster-button'
-        span= link_to 'Remove From Story', [:remove_from_story, :admin, model], method: :put,
-          class: 'stories-remove-from-cluster-button'
+tr(class=class_name)
+  td= image
+  td
+    = link_to title, url, target: :_blank
+    = link_to 'edit', [:edit, :admin, model], class: 'links-edit-button'
+  td= total_social
+  td= publisher_name
+  td= category_names
+  td= published_at
+  td
+  td
+    = link_to 'Edit', [:edit, :admin, story], class: 'links-edit-button'
+    = link_to 'Remove From Story', [:remove_from_story, :admin, model], method: :put,
+      class: 'links-edit-button'

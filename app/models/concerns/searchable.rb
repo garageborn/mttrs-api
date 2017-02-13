@@ -27,7 +27,7 @@ module Concerns
 
       def similar
         self.class.search(
-          min_score: 1.5,
+          min_score: 1,
           query: {
             bool: {
               must: {

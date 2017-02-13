@@ -79,7 +79,7 @@ class Link
     action :find
 
     def process(*)
-      model.update_attributes(story_id: nil)
+      StoryLink::Destroy.run(id: model.story_link.id)
       Story::Builder.run(link_id: model.id)
     end
   end

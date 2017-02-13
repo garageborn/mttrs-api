@@ -1,3 +1,20 @@
-h2= link_to 'New Story', [:new, :admin, :link], class: 'stories-add-button'
-ul= concept('admin/story/cell/item', collection: model)
+h2
+  = link_to prev_day, admin_stories_path(published_at: prev_day), class: 'stories-add-button'
+  span= current_day
+  = link_to next_day, admin_stories_path(published_at: next_day), class: 'stories-add-button'
+
+table.stories
+  thead
+    tr
+      th Image
+      th Title
+      th Total Social
+      th Publisher
+      th Categories
+      th Published At
+      th Story ID
+      th
+  tbody
+    = concept('admin/story/cell/item', collection: model)
+
 = paginate(model)

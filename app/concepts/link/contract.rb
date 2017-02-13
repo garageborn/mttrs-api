@@ -9,6 +9,7 @@ class Link
     property :publisher_id
     property :title
     property :story
+    property :similar
 
     collection :link_urls do
       property :url
