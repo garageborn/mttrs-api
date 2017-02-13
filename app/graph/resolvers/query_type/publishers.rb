@@ -3,7 +3,7 @@ module Resolvers
     class Publishers < Base
       def resolve
         cache_for(:publishers).expires_in 1.hour
-        Publisher.filter(args)
+        ::Publisher.filter(args)
       end
     end
   end

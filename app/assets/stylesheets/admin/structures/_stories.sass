@@ -12,6 +12,7 @@
 // *************************************
 
 .stories
+  @extend %table
 
 // -------------------------------------
 //   Modifiers
@@ -46,23 +47,3 @@
 
 .stories-remove-from-story-button
   @extend %button--destroy
-
-.stories-item-title
-  @extend %list-item-title
-
-  img
-    float: left
-    height: 100px
-    margin-right: $b-space
-    overflow: hidden
-    width: 150px
-
-.stories-item-stats
-  @extend %list-item-stats
-
-.stories-item-section
-  @extend %list-item-section
-  margin-left: em(200px)
-
-.stories-item-subsection
-  @extend %list-item-subsection

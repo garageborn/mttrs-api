@@ -11,7 +11,7 @@ module Resolvers
       private
 
       def default_timeline_item
-        Story.filter(filters).published_between(start_at, end_at)
+        ::Story.filter(filters).published_between(start_at, end_at)
       end
 
       def home_timeline_item
@@ -26,7 +26,7 @@ module Resolvers
           if stories.size < limit
             missing_stories_count = limit - stories.size
             current_story_ids = stories.map(&:id)
-            other_stories = Story.filter(filters).published_between(start_at, end_at).
+            other_stories = ::Story.filter(filters).published_between(start_at, end_at).
                             where.not(id: current_story_ids).limit(missing_stories_count)
             stories.concat(other_stories)
           end
