@@ -80,7 +80,7 @@ class Link
 
     def process(*)
       StoryLink::Destroy.run(id: model.story_link.id)
-      Story::Builder.run(link_id: model.id)
+      StoryBuilderJob.perform_async(model.id)
     end
   end
 end

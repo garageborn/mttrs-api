@@ -9,6 +9,9 @@ class Publisher
                     form: PublisherDomain::Contract,
                     klass: PublisherDomain,
                     prepopulate: true
+    has_nested_form :blocked_urls,
+                    form: BlockedUrl::Contract,
+                    klass: BlockedUrl
 
     validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
