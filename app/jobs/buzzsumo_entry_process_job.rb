@@ -6,7 +6,7 @@ class BuzzsumoEntryProcessJob
 
   def perform(entry)
     @entry = entry.with_indifferent_access
-    return if entry.blank? || publisher.blank?
+    return if entry.blank? || publisher.blank? || blocked_url?
 
     Link::Create.run(link: attributes) do |op|
       enqueue_update_counters!(op.model)
@@ -41,7 +41,9 @@ class BuzzsumoEntryProcessJob
   end
 
   def image_source_url
-    entry[:thumbnail] || link.try(:image_source_url)
+    image = entry[:thumbnail] || link.try(:image_source_url)
+    return if publisher.blocked_urls.match?(image)
+    image
   end
 
   def language
@@ -62,6 +64,10 @@ class BuzzsumoEntryProcessJob
 
   def urls
     link.try(:urls) || Utils::UrlDiscovery.run(entry[:url])
+  end
+
+  def blocked_url?
+    publisher.blocked_urls.match?(entry[:url]) || publisher.blocked_urls.match?(urls)
   end
 
   memoize :link, :publisher, :urls, :attributes

@@ -10,6 +10,7 @@ RSpec.describe Publisher do
   it { should have_db_index(:name).unique(true) }
   it { should have_db_index(:slug).unique(true) }
 
+  it { should have_many(:blocked_urls).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:category_matchers).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:feeds).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:links).inverse_of(:publisher).dependent(:destroy) }

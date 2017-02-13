@@ -21,12 +21,19 @@ class FullFetchLinkJob
 
   def set_missing_info
     return if page.blank?
-    link.content ||= page.content
-    link.description ||= page.description
-    link.image_source_url ||= page.image
-    link.language ||= page.language
-    link.html ||= page.html
-    link.title ||= page.title
+    set_image_source_url
+    %i(content description language html title).each do |attribute|
+      merge_attribute(attribute)
+    end
+  end
+
+  def set_image_source_url
+    return if link.publisher.blocked_urls.match?(page.image)
+    link.image_source_url = page.image
+  end
+
+  def merge_attribute(attribute)
+    link[attribute] = page.send(attribute) if link[attribute].blank?
   end
 
   def page

@@ -6,6 +6,7 @@
     = f.input :icon_id, as: :file
     = f.input :language
 
+    strong Domains
     .publisher_domains_inputs
       - f.simple_fields_for :publisher_domains do |d|
         = render(view: 'publisher_domains', locals: { f: d })
@@ -13,6 +14,16 @@
       = link_to_add_association 'Add', f, :publisher_domains,
                                 partial: 'publisher_domains',
                                 force_non_association_create: true
+
+    strong Blocked URLs
+    .blocked_urls_inputs
+      - f.simple_fields_for :blocked_urls do |d|
+        = render(view: 'blocked_urls', locals: { f: d })
+
+      = link_to_add_association 'Add', f, :blocked_urls,
+                                partial: 'blocked_urls',
+                                force_non_association_create: true
+
 
   .form-actions
     = f.button :submit

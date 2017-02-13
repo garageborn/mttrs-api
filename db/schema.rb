@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 30) do
+ActiveRecord::Schema.define(version: 31) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 30) do
     t.index ["accessable_type", "accessable_id", "date"], name: "index_access_on_assetable_and_created_at", unique: true, using: :btree
     t.index ["date"], name: "index_accesses_on_date", using: :btree
     t.index ["hits"], name: "index_accesses_on_hits", using: :btree
+  end
+
+  create_table "blocked_urls", force: :cascade do |t|
+    t.integer  "publisher_id", null: false
+    t.text     "matcher",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["publisher_id"], name: "index_blocked_urls_on_publisher_id", using: :btree
   end
 
   create_table "categories", force: :cascade do |t|
