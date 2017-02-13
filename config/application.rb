@@ -22,6 +22,7 @@ module Mttrs
     config.active_record.timestamped_migrations = false
     config.eager_load_paths += %W(
       #{ config.root }/lib
+      #{ config.root }/app/graph/resolvers
       #{ config.root }/app/graph/types
       #{ config.root }/app/graph/mutations
       #{ config.root }/app/graph
