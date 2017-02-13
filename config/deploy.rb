@@ -22,7 +22,7 @@ set :rbenv_roles, :all
 set :whenever_identifier, -> { fetch(:application) }
 set :whenever_roles, -> { :scheduler }
 set :whenever_config, -> { "#{ release_path }/config/schedule.rb" }
-set :whenever_command, -> {
+set :whenever_command, lambda {
   [:bundle, :exec, :whenever, "--load-file #{ fetch(:whenever_config) }"]
 }
 
@@ -34,7 +34,6 @@ set :puma_workers, 2
 set :sidekiq_role, :worker
 
 # slackistrano
-set :slackistrano, {
+set :slackistrano,
   channel: '#activities',
   webhook: 'https://hooks.slack.com/services/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'
-}
