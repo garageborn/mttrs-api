@@ -10,6 +10,7 @@
     = f.association :categories, as: :check_boxes
     = f.input :published_at
     = f.input :html, as: :text, input_html: { value: html, rows: 20, cols: 100 }
+    = f.input :image_source_url
     - f.simple_fields_for :link_urls do |link_form|
       = link_form.input :url
 
