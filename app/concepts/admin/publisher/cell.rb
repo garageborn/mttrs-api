@@ -45,7 +45,7 @@ module Admin
 
         def publisher_option(publisher)
           value = options[:value] || :id
-          uncategorized_links = publisher.links.available_on_current_tenant.uncategorized.size
+          uncategorized_links = publisher.links.available_on_current_tenant.uncategorized.distinct.size
           [
             "#{ publisher.name } (#{ number_with_delimiter(uncategorized_links) })",
             publisher.send(value)

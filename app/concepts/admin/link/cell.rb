@@ -5,6 +5,9 @@ module Admin
       end
 
       class Uncategorized < Trailblazer::Cell
+        def total
+          number_with_delimiter(model.distinct.total_count)
+        end
       end
 
       class Similar < Trailblazer::Cell
