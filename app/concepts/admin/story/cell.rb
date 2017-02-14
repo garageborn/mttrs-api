@@ -2,17 +2,57 @@ module Admin
   module Story
     module Cell
       class Index < Trailblazer::Cell
+        def next_day_link
+          day_link(next_day)
+        end
+
+        def prev_day_link
+          day_link(prev_day)
+        end
+
+        def current_day_link
+          day_link(current_day)
+        end
+
+        def categories_links
+          top_stories = category_link(OpenStruct.new(name: 'Top Stories'))
+          categories = ::Category.ordered.map { |category| category_link(category) }
+          [top_stories] + categories
+        end
+
+        private
+
         def prev_day
           current_day - 1.day
         end
 
+        def next_day
+          current_day + 1.day
+        end
+
+        def day_link(day)
+          link_to(
+            day,
+            admin_stories_path(story_params.merge(published_at: day)),
+            class: 'stories-add-button'
+          )
+        end
+
         def current_day
-          return Date.parse(params[:published_at]) if params[:published_at].present?
+          return Date.parse(story_params[:published_at]) if story_params[:published_at].present?
           Time.zone.today
         end
 
-        def next_day
-          current_day + 1.day
+        def category_link(category)
+          link_to(
+            category.name,
+            admin_stories_path(story_params.merge(category_slug: category.slug)),
+            class: 'stories-add-button'
+          )
+        end
+
+        def story_params
+          params.permit(:published_at, :category_slug)
         end
       end
 

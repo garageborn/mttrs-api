@@ -1,7 +1,9 @@
 h2
-  = link_to prev_day, admin_stories_path(published_at: prev_day), class: 'stories-add-button'
-  span= current_day
-  = link_to next_day, admin_stories_path(published_at: next_day), class: 'stories-add-button'
+  = prev_day_link
+  = current_day_link
+  = next_day_link
+
+h2= categories_links
 
 table.stories
   thead
