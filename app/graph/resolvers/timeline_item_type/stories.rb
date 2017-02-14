@@ -11,7 +11,7 @@ module Resolvers
       private
 
       def default_timeline_item
-        ::Story.filter(filters).published_between(start_at, end_at)
+        ::Story.filter(filters).published_between(start_at, end_at).limit(limit)
       end
 
       def home_timeline_item
