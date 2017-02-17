@@ -3,22 +3,30 @@ module Resolvers
     class Timeline < Base
       def resolve
         cache_for(:timeline).expires_in 15.minutes
-        (start_at...end_at).map { |day| resolve_day(day) }
+        OpenStruct.new(
+          cursor: cursor,
+          filters: filters,
+          limit: limit,
+          timezone: timezone,
+          type: type
+        )
       end
 
       private
 
-      def resolve_day(day)
-        date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
-        OpenStruct.new(date: date, timezone: timezone, type: type)
+      def cursor
+        Time.use_zone(timezone) do
+          return args['cursor'] unless args['cursor'].to_i.zero?
+          Time.zone.now.at_beginning_of_day
+        end.to_i
       end
 
-      def start_at
-        args['offset'].to_i
+      def filters
+        args.slice('category_slug', 'popular', 'publisher_slug', 'recent')
       end
 
-      def end_at
-        start_at + args['days'].to_i
+      def limit
+        args['limit'].to_i
       end
 
       def timezone
@@ -26,10 +34,10 @@ module Resolvers
       end
 
       def type
-        args['type']
+        args['type'].try(:to_sym) || :home
       end
 
-      memoize :start_at, :end_at, :timezone, :type
+      memoize :cursor, :filters, :limit, :timezone, :type
     end
   end
 end

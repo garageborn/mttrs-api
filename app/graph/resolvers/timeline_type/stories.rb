@@ -1,11 +1,14 @@
 module Resolvers
-  module TimelineItemType
+  module TimelineType
     class Stories < Base
       PER_CATEGORY = 2
 
       def resolve
-        return home_timeline_item if type == :home
-        default_timeline_item
+        p '-----------resolve stories'
+        p args
+        p obj
+        # return home_timeline_item if type == :home
+        # default_timeline_item
       end
 
       private
