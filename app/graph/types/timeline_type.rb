@@ -8,11 +8,7 @@ TimelineType = GraphQL::ObjectType.define do
   # argument :publisher_slug, types.String
   # argument :recent, types.Boolean
 
-  # field :cursor, types.Int
-  field :date, types.Int do
-    resolve Resolvers::TimelineType::Date
-  end
-
+  field :date, types.Int
   field :stories, types[StoryType] do
     resolve Resolvers::TimelineType::Stories
   end
