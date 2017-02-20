@@ -3,22 +3,35 @@ module Resolvers
     class Timeline < Base
       def resolve
         cache_for(:timeline).expires_in 15.minutes
-        (start_at...end_at).map { |day| resolve_day(day) }
+        Time.use_zone(timezone) do
+          OpenStruct.new(
+            date: date,
+            filters: filters,
+            limit: limit,
+            timezone: timezone,
+            type: type
+          )
+        end
       end
 
       private
 
-      def resolve_day(day)
-        date = Time.use_zone(timezone) { day.days.ago.at_beginning_of_day.to_i }
-        OpenStruct.new(date: date, timezone: timezone, type: type)
+      def date
+        return if last_story.blank?
+        Time.use_zone(timezone) { Time.zone.at(last_story.published_at).at_beginning_of_day }
       end
 
-      def start_at
-        args['offset'].to_i
+      def cursor
+        return Time.zone.at(args['cursor']).at_beginning_of_day unless args['cursor'].to_i.zero?
+        Time.zone.now.at_beginning_of_day
       end
 
-      def end_at
-        start_at + args['days'].to_i
+      def filters
+        args.slice('category_slug', 'popular', 'publisher_slug').merge(popular: true)
+      end
+
+      def limit
+        args['limit'].to_i
       end
 
       def timezone
@@ -26,10 +39,14 @@ module Resolvers
       end
 
       def type
-        args['type']
+        args['type'].try(:to_sym) || :home
       end
 
-      memoize :start_at, :end_at, :timezone, :type
+      def last_story
+        ::Story.filter(filters).published_until(cursor).reorder(:published_at).last
+      end
+
+      memoize :date, :cursor, :filters, :last_story, :limit, :timezone, :type
     end
   end
 end

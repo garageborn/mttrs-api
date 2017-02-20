@@ -30,6 +30,9 @@ class Story < ApplicationRecord
   scope :published_since, lambda { |date|
     where(published_at: parse_date(date)..Float::INFINITY)
   }
+  scope :published_until, lambda { |date|
+    where('stories.published_at < ?', parse_date(date))
+  }
   scope :publisher_slug, lambda { |slug|
     joins(:publishers).group(:id).where(publishers: { slug: slug })
   }
