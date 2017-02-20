@@ -23,7 +23,7 @@ module Resolvers
 
       def cursor
         return Time.zone.at(args['cursor']).at_beginning_of_day unless args['cursor'].to_i.zero?
-        Time.zone.now.at_beginning_of_day
+        Time.zone.now.end_of_day
       end
 
       def filters
