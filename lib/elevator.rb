@@ -8,7 +8,7 @@ class Elevator < Apartment::Elevators::Generic
   private
 
   def default_tenant
-    :mttrs_br
+    Apartment.tenant_names.first
   end
 
   def header_tenant(request)
