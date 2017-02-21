@@ -7,11 +7,9 @@ class SocialCounter < ApplicationRecord
 
   scope :recent, -> { order(created_at: :desc) }
 
-  def increased?
+  def changed_from_parent?
     return true if parent.blank?
-    PROVIDERS.any? do |provider|
-      self[provider] > parent[provider]
-    end
+    PROVIDERS.any? { |provider| self[provider] != parent[provider] }
   end
 
   private

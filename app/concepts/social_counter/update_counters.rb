@@ -6,7 +6,7 @@ class SocialCounter
       return invalid! if link.blank? || params[:counters].blank?
 
       params[:counters].each { |provider, count| update_counter(provider, count) }
-      return unless model.increased?
+      return unless model.changed_from_parent?
       return unless model.save
       callback!(:after_save)
     end
