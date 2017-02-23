@@ -59,7 +59,7 @@ class BuzzsumoEntryProcessJob
   end
 
   def title
-    entry[:title] || link.try(:title)
+    publisher.title_replacements.apply(entry[:title] || link.try(:title))
   end
 
   def urls

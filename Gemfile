@@ -16,7 +16,7 @@ gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.0'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.4.3'
+gem 'graphql', '1.4.4'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
@@ -27,7 +27,7 @@ gem 'nokogiri', '1.7.0.1'
 gem 'pg', '0.19.0'
 gem 'public_suffix', '2.0.5'
 gem 'rails', '5.0.1'
-gem 'redis-namespace', '1.5.2'
+gem 'redis-namespace', '1.5.3'
 gem 'reform-rails', '0.1.7'
 gem 'retries', '0.0.5'
 gem 'sidekiq', '4.2.9'
@@ -56,8 +56,8 @@ gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.0.4'
 
 group :production do
-  gem 'puma', '3.7.0'
-  gem 'sentry-raven', '2.3.0'
+  gem 'puma', '3.7.1'
+  gem 'sentry-raven', '2.3.1'
 end
 
 group :development, :test do

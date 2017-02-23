@@ -5,13 +5,11 @@ class Publisher
     property :icon_id, populator: :icon_id!
     property :language
     property :name
+    has_nested_form :blocked_urls, form: BlockedUrl::Contract, klass: BlockedUrl
     has_nested_form :publisher_domains,
                     form: PublisherDomain::Contract,
-                    klass: PublisherDomain,
-                    prepopulate: true
-    has_nested_form :blocked_urls,
-                    form: BlockedUrl::Contract,
-                    klass: BlockedUrl
+                    klass: PublisherDomain, prepopulate: true
+    has_nested_form :title_replacements, form: TitleReplacement::Contract, klass: TitleReplacement
 
     validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }

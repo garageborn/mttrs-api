@@ -15,6 +15,7 @@ RSpec.describe Publisher do
   it { should have_many(:feeds).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:links).inverse_of(:publisher).dependent(:destroy) }
   it { should have_many(:publisher_domains).inverse_of(:publisher).dependent(:destroy) }
+  it { should have_many(:title_replacements).inverse_of(:publisher).dependent(:destroy) }
 
   # describe 'Validations' do
   #   subject { build(:publisher) }

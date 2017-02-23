@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 31) do
+ActiveRecord::Schema.define(version: 32) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,14 @@ ActiveRecord::Schema.define(version: 31) do
     t.index ["link_id", "story_id"], name: "index_story_links_on_link_id_and_story_id", unique: true, using: :btree
     t.index ["main", "story_id"], name: "index_story_links_on_main_and_story_id", using: :btree
     t.index ["story_id", "link_id"], name: "index_story_links_on_story_id_and_link_id", unique: true, using: :btree
+  end
+
+  create_table "title_replacements", force: :cascade do |t|
+    t.integer  "publisher_id", null: false
+    t.text     "matcher",      null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["publisher_id"], name: "index_title_replacements_on_publisher_id", using: :btree
   end
 
 end
