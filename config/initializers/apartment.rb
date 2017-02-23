@@ -20,6 +20,7 @@ Apartment.configure do |config|
     Publisher
     PublisherDomain
     SocialCounter
+    TitleReplacement
   )
 
   config.tenant_names = %w(mttrs_us mttrs_br)

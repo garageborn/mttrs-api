@@ -24,6 +24,14 @@
                                 partial: 'blocked_urls',
                                 force_non_association_create: true
 
+    strong Title Replacements
+    .title_replacements_inputs
+      - f.simple_fields_for :title_replacements do |d|
+        = render(view: 'title_replacements', locals: { f: d })
+
+      = link_to_add_association 'Add', f, :title_replacements,
+                                partial: 'title_replacements',
+                                force_non_association_create: true
 
   .form-actions
     = f.button :submit
