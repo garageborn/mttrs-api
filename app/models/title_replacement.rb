@@ -4,11 +4,11 @@ class TitleReplacement < ApplicationRecord
   belongs_to :publisher
 
   def self.apply(string)
-    string.dup.tap do |new_string|
-      self.all.find_each do |title_replacement|
-        new_string = title_replacement.apply(new_string)
-      end
+    new_string = string.dup
+    self.all.find_each do |title_replacement|
+      new_string = title_replacement.apply(new_string)
     end
+    new_string
   end
 
   def regexp
