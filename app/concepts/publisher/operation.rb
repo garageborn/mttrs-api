@@ -39,7 +39,6 @@ class Publisher
     def process(params)
       validate(params[:publisher]) do
         contract.save
-        callback!(:after_update)
       end
     end
   end
