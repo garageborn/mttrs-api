@@ -31,7 +31,9 @@ class Story
       end
 
       def similar
-        link.similar.records.to_a.select(&:belongs_to_current_tenant?)
+        link.similar.records.to_a.map do |similar_link|
+          similar_link.similar.records.to_a
+        end.flatten.compact.uniq.select(&:belongs_to_current_tenant?)
       end
 
       def model!(_params)
