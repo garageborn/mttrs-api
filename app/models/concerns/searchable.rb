@@ -9,6 +9,7 @@ module Concerns
         mapping do
           indexes :title, analyzer: 'snowball'
           indexes :description, analyzer: 'snowball'
+          indexes :content, analyzer: 'snowball'
           indexes :published_at, type: 'date'
         end
       end
@@ -19,7 +20,12 @@ module Concerns
       after_touch -> { IndexerJob.perform_async('update', self.class.to_s, id) }
 
       def as_indexed_json(_options = {})
-        { description: description, published_at: published_at, title: title }
+        {
+          content: content,
+          description: description,
+          published_at: published_at,
+          title: title
+        }
       end
 
       def similar
@@ -30,6 +36,9 @@ module Concerns
             bool: {
               must: {
                 match: { title: title }
+              },
+              should: {
+                match: { description: title, content: title }
               },
               must_not: {
                 ids: { values: [id] }

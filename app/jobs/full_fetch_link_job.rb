@@ -6,7 +6,7 @@ class FullFetchLinkJob
 
   def perform(link_id)
     @link_id = link_id
-    return if link.blank? || !link.needs_full_fetch?
+    # return if link.blank? || !link.needs_full_fetch?
 
     set_missing_info
     link.save

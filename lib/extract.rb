@@ -4,7 +4,7 @@ module Extract
   autoload :Description, './lib/extract/description'
   autoload :Image, './lib/extract/image'
   autoload :Title, './lib/extract/title'
-  AVAILABLE_ATTRIBUTES = %i(description image language title html).freeze
+  AVAILABLE_ATTRIBUTES = %i(content description image language title html).freeze
 
   class << self
     def run(page)
