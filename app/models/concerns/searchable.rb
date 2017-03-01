@@ -30,18 +30,23 @@ module Concerns
 
       def similar
         self.class.search(
-          min_score: 1,
+          min_score: 0.5,
           size: 1_000,
           query: {
             bool: {
               must: {
                 match: { title: title }
               },
-              should: {
-                match: { description: title, content: title }
-              },
               must_not: {
                 ids: { values: [id] }
+              },
+              should: {
+                multi_match: {
+                  query: title,
+                  fields: %w(title^10 description content),
+                  operator: :or,
+                  type: :cross_fields
+                }
               },
               filter: {
                 range: {
