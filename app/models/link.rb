@@ -48,7 +48,7 @@ class Link < ApplicationRecord
   scope :uncategorized, -> { left_outer_joins(:category_links).where(category_links: { id: nil }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-  strip_attributes :title, :description
+  strip_attributes :content, :description, :title
   serialize :html, Utils::BinaryStringSerializer
   friendly_id :title, use: %i(slugged finders)
 
