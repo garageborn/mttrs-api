@@ -30,7 +30,7 @@ module Utils
     end
 
     def build_uri(url)
-      Addressable::URI.parse(url.force_encoding('UTF-8')).normalize
+      Addressable::URI.parse(Utils::Encode.run(url)).normalize
     rescue Encoding::UndefinedConversionError
       Addressable::URI.parse(url).normalize
     end

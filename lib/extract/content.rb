@@ -9,7 +9,19 @@ module Extract
       @content = readability.content
 
       return if content.blank?
-      Utils::StripAttributes.run(content)
+      encode!
+      strip!
+      content
+    end
+
+    private
+
+    def encode!
+      @content = Utils::Encode.run(content)
+    end
+
+    def strip!
+      @content = Utils::StripAttributes.run(content)
     end
   end
 end

@@ -10,7 +10,7 @@ module Utils
 
       def load(string)
         return if string.blank?
-        Zlib::Inflate.inflate(string).force_encoding('UTF-8')
+        Utils::Encode.run(Zlib::Inflate.inflate(string))
       end
     end
   end

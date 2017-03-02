@@ -1,6 +1,7 @@
 module Utils
   autoload :JsonbSerializer, './lib/utils/jsonb_serializer'
   autoload :BinaryStringSerializer, './lib/utils/binary_string_serializer'
+  autoload :Encode, './lib/utils/encode'
   autoload :Language, './lib/utils/language'
   autoload :OpenStructParser, './lib/utils/open_struct_parser'
   autoload :NetworkErrors, './lib/utils/network_errors'

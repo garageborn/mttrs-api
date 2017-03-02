@@ -53,7 +53,7 @@ class FeedFetcherJob
 
   def request_body
     return if request&.body.blank?
-    request.body.body.force_encoding('UTF-8')
+    Utils::Encode.run(request.body)
   rescue Encoding::UndefinedConversionError
     request.body
   end
