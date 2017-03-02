@@ -40,14 +40,14 @@ module Concerns
               must_not: {
                 ids: { values: [id] }
               },
-              should: {
-                multi_match: {
-                  query: title,
-                  fields: %w(title^10 description content),
-                  operator: :or,
-                  type: :cross_fields
-                }
-              },
+              # should: {
+              #   multi_match: {
+              #     query: title,
+              #     fields: %w(title^10 description content),
+              #     operator: :or,
+              #     type: :cross_fields
+              #   }
+              # },
               filter: {
                 range: {
                   published_at: {
