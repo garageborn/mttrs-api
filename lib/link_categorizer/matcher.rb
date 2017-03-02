@@ -32,6 +32,7 @@ class LinkCategorizer
       method = category_matcher.html_matcher_selector.start_with?('//') ? :xpath : :css
       selector = link.page.send(method, category_matcher.html_matcher_selector)
       text = Utils::StripAttributes.run(selector.text)
+      return if text.blank?
       text.match(regexp).present?
     end
 

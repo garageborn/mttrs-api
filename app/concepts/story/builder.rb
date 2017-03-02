@@ -14,9 +14,7 @@ class Story
         return unless link.belongs_to_current_tenant?
 
         begin
-          if build_story!
-            Story::Refresh.run(id: model.id)
-          end
+          Story::Refresh.run(id: model.id) if build_story!
         ensure
           model.destroy unless model.reload.links.exists?
         end
@@ -37,30 +35,29 @@ class Story
       end
 
       def model!(_params)
-        similar_link = similar.detect { |link| link.story.present? }
-        similar_link.try(:story) || Story.new(published_at: link.published_at)
+        story = similar_stories.detect { |similar_story| similar_story.summary.present? }
+        story || similar_stories.first || Story.new(published_at: link.published_at)
       end
 
       def similar_stories
-        similar.collect { |link| link.story }
+        similar.map(&:story).compact.uniq.sort { |story| -story.links.size }
       end
 
       def build_story!
-        begin
-          link.update_attributes(story: model)
-        rescue ActiveRecord::RecordNotUnique
-          return false
-        end
+        link.update_attributes(story: model)
 
         similar.each do |similar_link|
-          next unless similar_link.missing_story?
-          begin
+          next if similar_link.story == model
+
+          if similar_link.missing_story?
             similar_link.update_attributes(story: model)
-          rescue ActiveRecord::RecordNotUnique; end
+          else
+            Story::Merger.run(id: similar_link.story.id, destination_id: story.id)
+          end
         end
       end
 
-      memoize :link, :similar
+      memoize :link, :similar, :similar_stories
     end
   end
 end
