@@ -52,7 +52,7 @@ class Story
           if similar_link.missing_story?
             similar_link.update_attributes(story: model)
           else
-            Story::Merger.run(id: similar_link.story.id, destination_id: story.id)
+            Story::Merger.run(id: similar_link.story.id, destination_id: model.id)
           end
         end
       end
