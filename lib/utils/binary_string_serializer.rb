@@ -2,14 +2,16 @@ require 'zlib'
 
 module Utils
   class BinaryStringSerializer
-    def self.dump(string)
-      return if string.blank?
-      Zlib::Deflate.deflate(string)
-    end
+    class << self
+      def dump(string)
+        return if string.blank?
+        Zlib::Deflate.deflate(string)
+      end
 
-    def self.load(string)
-      return if string.blank?
-      Zlib::Inflate.inflate(string)
+      def load(string)
+        return if string.blank?
+        Zlib::Inflate.inflate(string).force_encoding('UTF-8')
+      end
     end
   end
 end
