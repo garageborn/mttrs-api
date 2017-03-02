@@ -4,7 +4,8 @@ module Utils
       /[\r\n\t]+/ => '',
       '  ' => ' ',
       '&amp;' => '&',
-      /[”“]+/ => '"'
+      /[”“]+/ => '"',
+      /&#\d+;/ => ''
     }.freeze
 
     def self.run(string)
