@@ -6,13 +6,21 @@ module Utils
         new_string = string.to_s.dup
         return if new_string.blank?
 
-        encode(new_string).force_encoding('UTF-8')
+        new_string = utf8_to_utf16(new_string)
+        new_string = utf16_to_utf8(new_string)
+        new_string.force_encoding('UTF-8')
       end
 
       private
 
-      def encode(string)
-        string.encode('UTF-16', 'UTF-8', invalid: :replace, replace: '').encode('UTF-8', 'UTF-16')
+      def utf8_to_utf16(string)
+        string.encode('UTF-16', 'UTF-8')
+      rescue Encoding::UndefinedConversionError
+        string
+      end
+
+      def utf16_to_utf8(string)
+        string.encode('UTF-8', 'UTF-16')
       rescue Encoding::UndefinedConversionError
         string
       end
