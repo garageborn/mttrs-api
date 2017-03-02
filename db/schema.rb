@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 32) do
+ActiveRecord::Schema.define(version: 33) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,7 +109,6 @@ ActiveRecord::Schema.define(version: 32) do
     t.integer  "publisher_id",                 null: false
     t.citext   "title",                        null: false
     t.text     "description"
-    t.text     "content"
     t.citext   "image_source_url"
     t.integer  "total_social",     default: 0, null: false
     t.datetime "published_at",                 null: false
@@ -118,6 +117,7 @@ ActiveRecord::Schema.define(version: 32) do
     t.datetime "created_at",                   null: false
     t.datetime "updated_at",                   null: false
     t.citext   "slug",                         null: false
+    t.binary   "content"
     t.index ["published_at"], name: "index_links_on_published_at", using: :btree
     t.index ["publisher_id"], name: "index_links_on_publisher_id", using: :btree
     t.index ["slug"], name: "index_links_on_slug", unique: true, using: :btree

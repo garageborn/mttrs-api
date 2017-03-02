@@ -50,6 +50,7 @@ class Link < ApplicationRecord
 
   strip_attributes :content, :description, :title
   serialize :html, Utils::BinaryStringSerializer
+  serialize :content, Utils::BinaryStringSerializer
   friendly_id :title, use: %i(slugged finders)
 
   def self.find_by_url(url)
