@@ -33,26 +33,26 @@ module Concerns
           min_score: 1,
           size: 1_000,
           query: {
-            bool: {
-              must: {
-                match: { title: title }
+            function_score: {
+              score_mode: :sum,
+              query: {
+                bool: {
+                  must: {
+                    multi_match: {
+                      query: title,
+                      fields: %w(title^10 description^2 content)
+                    }
+                  },
+                  must_not: {
+                    ids: { values: [id] }
+                  }
+                }
               },
-              must_not: {
-                ids: { values: [id] }
-              },
-              # should: {
-              #   multi_match: {
-              #     query: title,
-              #     fields: %w(title^10 description content),
-              #     operator: :or,
-              #     type: :cross_fields
-              #   }
-              # },
               filter: {
                 range: {
                   published_at: {
-                    gte: (published_at - 1.day).at_beginning_of_day,
-                    lte: (published_at + 1.day).end_of_day
+                    gte: published_at.at_beginning_of_day,
+                    lte: published_at.end_of_day
                   }
                 }
               }

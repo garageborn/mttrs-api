@@ -9,7 +9,9 @@
     = f.association :publisher
     = f.association :categories, as: :check_boxes
     = f.input :published_at
-    = f.input :html, as: :text, input_html: { value: html, rows: 20, cols: 100 }
+    = f.input :description, as: :text, input_html: { rows: 5, cols: 100 }
+    = f.input :content, as: :text, input_html: { rows: 10, cols: 100 }
+    = f.input :html, as: :text, input_html: { rows: 20, cols: 100 }
     = f.input :image_source_url
     - f.simple_fields_for :link_urls do |link_form|
       = link_form.input :url
@@ -17,7 +19,6 @@
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
-
 
 br
 
