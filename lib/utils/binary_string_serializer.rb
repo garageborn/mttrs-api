@@ -4,12 +4,12 @@ module Utils
   class BinaryStringSerializer
     class << self
       def dump(string)
-        return if string.blank?
+        return unless string
         Zlib::Deflate.deflate(string)
       end
 
       def load(string)
-        return if string.blank?
+        return unless string
         Utils::Encode.run(Zlib::Inflate.inflate(string))
       end
     end
