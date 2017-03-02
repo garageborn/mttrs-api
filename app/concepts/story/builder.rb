@@ -45,7 +45,6 @@ class Story
       end
 
       def build_story!
-        byebug
         update_link
         update_similar_links
         Story::Refresh.run(id: model.id)
