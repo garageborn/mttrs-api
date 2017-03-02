@@ -41,6 +41,10 @@ class Story
         similar_link.try(:story) || Story.new(published_at: link.published_at)
       end
 
+      def similar_stories
+        similar.collect { |link| link.story }
+      end
+
       def build_story!
         begin
           link.update_attributes(story: model)
