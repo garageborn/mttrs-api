@@ -51,8 +51,8 @@ module Concerns
               filter: {
                 range: {
                   published_at: {
-                    gte: (published_at - 1.days).at_begining_of_day,
-                    lte: (published_at + 1.days).end_of_day,
+                    gte: (published_at - 1.day).at_beginning_of_day,
+                    lte: (published_at + 1.day).end_of_day
                   }
                 }
               }
