@@ -11,6 +11,7 @@ class FullFetchLinkJob
     set_missing_info
     link.save
     Link::AddCategories.run(id: link.id)
+    StoryBuilderJob.perform_async(link.id)
   end
 
   private

@@ -5,7 +5,7 @@ module Utils
     class << self
       def dump(string)
         return unless string
-        Zlib::Deflate.deflate(string)
+        Zlib::Deflate.deflate(Utils::Encode.run(string))
       end
 
       def load(string)

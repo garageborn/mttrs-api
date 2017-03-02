@@ -10,11 +10,11 @@ class Story
       extend Memoist
 
       def process(_params)
-        return unless link.present? && link.missing_story?
+        return unless link.present?
         return unless link.belongs_to_current_tenant?
 
         begin
-          Story::Refresh.run(id: model.id) if build_story!
+          build_story!
         ensure
           model.destroy unless model.reload.links.exists?
         end
@@ -30,22 +30,37 @@ class Story
 
       def similar
         link.similar.records.to_a.map do |similar_link|
-          similar_link.similar.records.to_a
+          [similar_link, similar_link.similar.records.to_a]
         end.flatten.compact.uniq.select(&:belongs_to_current_tenant?)
       end
 
       def model!(_params)
-        story = similar_stories.detect { |similar_story| similar_story.summary.present? }
-        story || similar_stories.first || Story.new(published_at: link.published_at)
+        story = stories.detect { |similar_story| similar_story.summary.present? }
+        story || stories.first || Story.new(published_at: link.published_at)
       end
 
-      def similar_stories
-        similar.map(&:story).compact.uniq.sort { |story| -story.links.size }
+      def stories
+        stories = [link.story] + similar.map(&:story)
+        stories.compact.uniq.sort { |story| -story.links.size }
       end
 
       def build_story!
-        link.update_attributes(story: model)
+        update_link
+        update_similar_links
+        Story::Refresh.run(id: model.id)
+      end
 
+      def update_link
+        return if link.story == model
+
+        if link.missing_story?
+          link.update_attributes(story: model)
+        else
+          Story::Merger.run(id: link.story.id, destination_id: model.id)
+        end
+      end
+
+      def update_similar_links
         similar.each do |similar_link|
           next if similar_link.story == model
 
@@ -57,7 +72,7 @@ class Story
         end
       end
 
-      memoize :link, :similar, :similar_stories
+      memoize :link, :similar, :stories
     end
   end
 end
