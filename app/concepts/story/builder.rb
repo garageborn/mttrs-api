@@ -56,7 +56,7 @@ class Story
         if link.missing_story?
           link.update_attributes(story: model)
         else
-          Story::Merger.run(id: link.story.id, destination_id: model.id)
+          StoryMergerJob.perform_async(link.story.id, model.id)
         end
       end
 
@@ -67,7 +67,7 @@ class Story
           if similar_link.missing_story?
             similar_link.update_attributes(story: model)
           else
-            Story::Merger.run(id: similar_link.story.id, destination_id: model.id)
+            StoryMergerJob.perform_async(similar_link.story.id, model.id)
           end
         end
       end

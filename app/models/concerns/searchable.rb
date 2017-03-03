@@ -8,8 +8,6 @@ module Concerns
       settings index: {} do
         mapping do
           indexes :title, analyzer: 'snowball'
-          indexes :description, analyzer: 'snowball'
-          indexes :content, analyzer: 'snowball'
           indexes :published_at, type: 'date'
         end
       end
@@ -20,12 +18,7 @@ module Concerns
       after_touch -> { IndexerJob.perform_async('update', self.class.to_s, id) }
 
       def as_indexed_json(_options = {})
-        {
-          content: content,
-          description: description,
-          published_at: published_at,
-          title: title
-        }
+        { published_at: published_at, title: title }
       end
 
       def similar
@@ -33,20 +26,12 @@ module Concerns
           min_score: 1,
           size: 1_000,
           query: {
-            function_score: {
-              score_mode: :sum,
-              query: {
-                bool: {
-                  must: {
-                    multi_match: {
-                      query: title,
-                      fields: %w(title^10 description^2 content)
-                    }
-                  },
-                  must_not: {
-                    ids: { values: [id] }
-                  }
-                }
+            bool: {
+              must: {
+                match: { title: title }
+              },
+              must_not: {
+                ids: { values: [id] }
               },
               filter: {
                 range: {
