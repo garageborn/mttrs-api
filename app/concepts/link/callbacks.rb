@@ -52,6 +52,7 @@ class Link
       private
 
       def destroy_image!
+        return unless Rails.env.production?
         return if contract.model.image_source_url.blank?
         Cloudinary::Uploader.destroy(contract.model.image_source_url, type: :fetch)
       end
