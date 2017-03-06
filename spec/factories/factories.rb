@@ -18,4 +18,8 @@ FactoryGirl.define do
   sequence :datetime do |n|
     n.seconds.ago
   end
+
+  sequence :name do |n|
+    "#{ Faker::RockBand.name } #{ n }"
+  end
 end

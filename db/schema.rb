@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 33) do
+ActiveRecord::Schema.define(version: 34) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -131,6 +131,15 @@ ActiveRecord::Schema.define(version: 33) do
     t.datetime "updated_at",   null: false
     t.index ["domain"], name: "index_publisher_domains_on_domain", unique: true, using: :btree
     t.index ["publisher_id"], name: "index_publisher_domains_on_publisher_id", using: :btree
+  end
+
+  create_table "publisher_suggestions", force: :cascade do |t|
+    t.citext   "name",                   null: false
+    t.integer  "count",      default: 0, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["count"], name: "index_publisher_suggestions_on_count", using: :btree
+    t.index ["name"], name: "index_publisher_suggestions_on_name", unique: true, using: :btree
   end
 
   create_table "publishers", force: :cascade do |t|

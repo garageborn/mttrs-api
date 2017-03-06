@@ -19,6 +19,7 @@ Apartment.configure do |config|
     LinkUrl
     Publisher
     PublisherDomain
+    PublisherSuggestion
     SocialCounter
     TitleReplacement
   )
