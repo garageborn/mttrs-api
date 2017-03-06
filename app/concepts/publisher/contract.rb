@@ -5,6 +5,7 @@ class Publisher
     property :icon_id, populator: :icon_id!
     property :language
     property :name
+    property :display_name
     has_nested_form :blocked_urls, form: BlockedUrl::Contract, klass: BlockedUrl
     has_nested_form :publisher_domains,
                     form: PublisherDomain::Contract,

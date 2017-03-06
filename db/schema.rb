@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 34) do
+ActiveRecord::Schema.define(version: 35) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -143,12 +143,13 @@ ActiveRecord::Schema.define(version: 34) do
   end
 
   create_table "publishers", force: :cascade do |t|
-    t.citext   "name",                      null: false
-    t.citext   "slug",                      null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.string   "icon_id",                   null: false
-    t.string   "language",   default: "en", null: false
+    t.citext   "name",                        null: false
+    t.citext   "slug",                        null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "icon_id",                     null: false
+    t.string   "language",     default: "en", null: false
+    t.citext   "display_name"
     t.index ["name"], name: "index_publishers_on_name", unique: true, using: :btree
     t.index ["slug"], name: "index_publishers_on_slug", unique: true, using: :btree
   end
