@@ -21,24 +21,17 @@ class BuzzsumoFetcherJob
     end
   end
 
-  def languages
-    feed_languages = publisher.feeds.map(&:language)
-    ([publisher.language] + feed_languages).compact.uniq
-  end
-
   def entries
-    languages.map do |language|
-      publisher.publisher_domains.map do |publisher_domain|
-        query = query_for(language: language, domain: publisher_domain.domain)
-        Buzzsumo::Articles.all(query: query)
-      end
+    publisher.publisher_domains.map do |publisher_domain|
+      query = query_for(publisher_domain.domain)
+      Buzzsumo::Articles.all(query: query)
     end.flatten.compact.uniq
   end
 
-  def query_for(language:, domain:)
+  def query_for(domain)
     options.clone.tap do |query|
       query[:q] = domain
-      query[:language] = language
+      query[:language] = publisher.language
       query[:max_pages] ||= 2
       query[:num_results] ||= 100
       query[:num_days] ||= 7 if query[:begin_date].blank? && query[:end_date].blank?
@@ -49,5 +42,5 @@ class BuzzsumoFetcherJob
     BuzzsumoEntryProcessJob.perform_async(entry.to_h)
   end
 
-  memoize :publisher, :languages, :entries
+  memoize :publisher, :entries
 end

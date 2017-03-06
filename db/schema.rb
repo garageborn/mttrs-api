@@ -10,11 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 36) do
+ActiveRecord::Schema.define(version: 37) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "citext"
+  enable_extension "unaccent"
 
   create_table "accesses", force: :cascade do |t|
     t.string   "accessable_type",             null: false
@@ -47,15 +48,6 @@ ActiveRecord::Schema.define(version: 36) do
     t.index ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
   end
 
-  create_table "category_feeds", force: :cascade do |t|
-    t.integer  "category_id", null: false
-    t.integer  "feed_id",     null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.index ["category_id", "feed_id"], name: "index_category_feeds_on_category_id_and_feed_id", unique: true, using: :btree
-    t.index ["feed_id", "category_id"], name: "index_category_feeds_on_feed_id_and_category_id", unique: true, using: :btree
-  end
-
   create_table "category_links", force: :cascade do |t|
     t.integer  "category_id", null: false
     t.integer  "link_id",     null: false
@@ -77,25 +69,6 @@ ActiveRecord::Schema.define(version: 36) do
     t.index ["category_id", "publisher_id"], name: "index_category_matchers_on_category_id_and_publisher_id", using: :btree
     t.index ["publisher_id", "category_id"], name: "index_category_matchers_on_publisher_id_and_category_id", using: :btree
     t.index ["publisher_id", "order"], name: "index_category_matchers_on_publisher_id_and_order", using: :btree
-  end
-
-  create_table "feed_links", force: :cascade do |t|
-    t.integer  "feed_id",    null: false
-    t.integer  "link_id",    null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["feed_id", "link_id"], name: "index_feed_links_on_feed_id_and_link_id", unique: true, using: :btree
-    t.index ["link_id", "feed_id"], name: "index_feed_links_on_link_id_and_feed_id", unique: true, using: :btree
-  end
-
-  create_table "feeds", force: :cascade do |t|
-    t.integer  "publisher_id",                null: false
-    t.citext   "url",                         null: false
-    t.citext   "language",     default: "en", null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-    t.index ["publisher_id"], name: "index_feeds_on_publisher_id", using: :btree
-    t.index ["url"], name: "index_feeds_on_url", unique: true, using: :btree
   end
 
   create_table "link_urls", force: :cascade do |t|

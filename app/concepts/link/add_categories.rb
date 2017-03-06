@@ -12,29 +12,25 @@ class Link
       action :find
 
       def process(_params)
-        return unless new_categories?
+        return if new_category.blank? || !new_categories?
 
-        categories.each do |category|
-          next if model.categories.include?(category)
-          model.categories << category
-        end
+        return if model.categories.include?(new_category)
+        model.categories << new_category
 
         StoryBuilderJob.perform_async(model.id)
       end
 
       private
 
-      def categories
-        LinkCategorizer.run(model).to_a
+      def new_category
+        LinkCategorizer.run(model)
       end
 
       def new_categories?
-        categories.map(&:id).any? do |new_category_id|
-          !model.category_ids.include?(new_category_id)
-        end
+        !model.category_ids.include?(new_category.id)
       end
 
-      memoize :categories
+      memoize :new_category
     end
   end
 end

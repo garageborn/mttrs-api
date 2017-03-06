@@ -14,8 +14,6 @@ class Link < ApplicationRecord
   has_one :main_category_link, class_name: 'CategoryLink'
   has_one :main_category, through: :main_category_link, source: :category
   has_many :category_links, inverse_of: :link, dependent: :destroy
-  has_many :feed_links, inverse_of: :link, dependent: :destroy
-  has_many :feeds, through: :feed_links
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
   has_many :social_counters, inverse_of: :link, dependent: :destroy

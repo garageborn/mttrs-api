@@ -17,7 +17,6 @@ Rails.application.routes.draw do
       get '/', to: 'stories#index'
       resources :categories, except: :show
       resources :category_matchers, except: :show
-      resources :feeds, except: :show
       resources :links, except: :show do
         get :uncategorized, on: :collection
         get :similar, on: :collection

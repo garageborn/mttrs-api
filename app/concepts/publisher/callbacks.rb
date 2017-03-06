@@ -33,7 +33,6 @@ class Publisher
       end
 
       def destroy_associations!
-        Feed::DestroyAll.run(contract.model.feed_ids)
         Link::DestroyAll.run(contract.model.link_ids)
       end
 
