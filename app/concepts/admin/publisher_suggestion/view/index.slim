@@ -1,0 +1,13 @@
+h2= link_to 'New Publisher Suggestion', [:new, :admin, :publisher_suggestion], class: 'publisher-suggestions-add-button'
+
+table.publisher-suggestions
+  thead
+    tr
+      th Name
+      th Count
+      th
+
+  tbody
+    = concept('admin/publisher_suggestion/cell/item', collection: model)
+
+= paginate(model)
