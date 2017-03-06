@@ -9,7 +9,7 @@ module Utils
     }.freeze
 
     def self.run(string)
-      return if string.blank?
+      return unless string
       new_string = Utils::Encode.run(string)
       new_value = ActionView::Base.full_sanitizer.sanitize(new_string) # default rails sanitizer
       REPLACEMENTS.each { |regexp, replacement_value| new_value.gsub!(regexp, replacement_value) }
