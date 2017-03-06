@@ -11,13 +11,16 @@
 namespace :db do
   desc 'Also create shared_extensions Schema'
   task extensions: :environment do
+    extensions = %w(citext unaccent)
     # Create Schema
     ActiveRecord::Base.connection.execute(
       'CREATE SCHEMA IF NOT EXISTS shared_extensions;'
     )
-    # Enable Hstore
+    # Enable extensions
     ActiveRecord::Base.connection.execute(
-      'CREATE EXTENSION IF NOT EXISTS CITEXT SCHEMA shared_extensions;'
+      extensions.map do |extension|
+        "CREATE EXTENSION IF NOT EXISTS #{ extension } SCHEMA shared_extensions;"
+      end.join
     )
   end
 end

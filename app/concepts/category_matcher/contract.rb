@@ -4,6 +4,7 @@ class CategoryMatcher
 
     property :category_id
     property :publisher_id
+    property :order
     property :try_out, virtual: true, type: Types::Form::Bool
     property :url_matcher
     property :html_matcher

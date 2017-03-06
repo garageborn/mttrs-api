@@ -2,9 +2,9 @@ module Admin
   module CategoryMatcher
     module Cell
       class Index < Trailblazer::Cell
-        def publishers_matchers
-          model.all.group_by(&:publisher)
-        end
+        # def publishers_matchers
+        #   model.all.group_by(&:publisher)
+        # end
       end
 
       class Publisher < Trailblazer::Cell
@@ -22,12 +22,17 @@ module Admin
       end
 
       class Item < Trailblazer::Cell
-        def category
-          model.first
+        property :order
+        property :url_matcher
+        property :html_matcher
+        property :html_matcher_selector
+
+        def publisher_name
+          model.publisher.name
         end
 
-        def category_matchers
-          model.second
+        def category_name
+          model.category.name
         end
       end
 

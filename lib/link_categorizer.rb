@@ -20,19 +20,15 @@ class LinkCategorizer
 
   private
 
-  def matchers
-    link.publisher.category_matchers.map do |category_matcher|
-      LinkCategorizer::Matcher.new(category_matcher, link)
-    end
-  end
-
   def matchers_categories
-    matchers.select(&:match?).map(&:category).to_a
+    link.publisher.category_matchers.ordered.to_a.detect do |category_matcher|
+      LinkCategorizer::Matcher.new(category_matcher, link).match?
+    end.try(:category)
   end
 
   def feeds_categories
     link.feeds.map(&:categories).to_a
   end
 
-  memoize :matchers, :matchers_categories, :feeds_categories, :categories
+  memoize :matchers_categories, :feeds_categories, :categories
 end
