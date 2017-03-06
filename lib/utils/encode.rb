@@ -20,7 +20,7 @@ module Utils
         return string if string.blank? || string.encoding == Encoding::UTF_8
         detection = CharlockHolmes::EncodingDetector.detect(string)
         return string if detection.blank?
-        CharlockHolmes::Converter.convert(string, detection[:encoding], Encoding::UTF_8)
+        CharlockHolmes::Converter.convert(string, detection[:encoding], Encoding::UTF_8.to_s)
       end
     end
   end
