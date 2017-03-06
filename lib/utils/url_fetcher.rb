@@ -4,7 +4,10 @@ module Utils
       Typhoeus.get(
         url,
         followlocation: true,
-        headers: { 'User-Agent' => Utils::UserAgent.sample },
+        headers: { 
+          'User-Agent' => Utils::UserAgent.sample, 'Content-Type' => 
+          'text/html; charset=utf-8' 
+        },
         ssl_verifypeer: false
       )
     rescue *Utils::NetworkErrors::RESCUE_FROM
