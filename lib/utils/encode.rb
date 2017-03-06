@@ -7,7 +7,7 @@ module Utils
 
     class << self
       def run(string)
-        string.force_encoding('UTF-8')
+        string.to_s.force_encoding('UTF-8')
       rescue *RESCUE_FROM
         string        
       end
