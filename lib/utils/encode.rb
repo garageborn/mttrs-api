@@ -8,34 +8,12 @@ module Utils
       Encoding::UndefinedConversionError
     ].freeze
 
-    ENCODINGS = %w(
-      iso-8859-1
-      ascii-8bit
-      utf-8
-      ucs-bom
-      shift-jis
-      gb18030
-      gbk
-      gb2312
-      cp936
-    ).freeze
-
     class << self
       def run(string)
-        new_string = encode!(string.dup).force_encoding('UTF-8')
+        new_string = string.dup.force_encoding('UTF-8')
         new_string.valid_encoding? ? new_string : string
       rescue *RESCUE_FROM
         string
-      end
-
-      def encode!(string)
-        ENCODINGS.find do |encoding|
-          begin
-            string.encode!('utf-8', encoding)
-            return string if string.valid_encoding?
-          rescue *RESCUE_FROM
-          end
-        end
       end
     end
   end
