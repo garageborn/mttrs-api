@@ -13,8 +13,6 @@ require ::File.expand_path('../../../lib/elevator', __FILE__)
 Apartment.configure do |config|
   config.excluded_models = %w(
     BlockedUrl
-    Feed
-    FeedLink
     Link
     LinkUrl
     Publisher

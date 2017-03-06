@@ -30,7 +30,7 @@ module Concerns
       if fragment[:id].to_s.blank?
         item = nil
       else
-        item = collection.find { |r| r.id.to_s == fragment[:id].to_s }
+        item = collection.detect { |r| r.id.to_s == fragment[:id].to_s }
       end
 
       if fragment['_destroy'] == '1'

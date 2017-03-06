@@ -42,7 +42,7 @@ class FullFetchLinkJob
       content: link.content,
       description: link.description,
       image: link.image_source_url,
-      language: link.language || link.feeds.first.try(:language),
+      language: link.language || link.publisher.language,
       html: link.html,
       title: link.title,
       url: link.uri

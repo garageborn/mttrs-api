@@ -19,8 +19,6 @@ RSpec.describe Link do
   it { should belong_to(:publisher) }
   it { should have_many(:categories).through(:category_links) }
   it { should have_many(:category_links).inverse_of(:link).dependent(:destroy) }
-  it { should have_many(:feed_links).inverse_of(:link).dependent(:destroy) }
-  it { should have_many(:feeds).through(:feed_links) }
   it { should have_many(:link_urls).inverse_of(:link).dependent(:destroy) }
   it { should have_many(:social_counters).inverse_of(:link).dependent(:destroy) }
   it { should have_one(:story).through(:story_link) }
