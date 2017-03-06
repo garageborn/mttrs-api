@@ -10,10 +10,15 @@ module Utils
 
     class << self
       def run(string)
-        new_string = string.dup.force_encoding('UTF-8')
+        new_string = transcode(string.dup).force_encoding('UTF-8')
         new_string.valid_encoding? ? new_string : string
       rescue *RESCUE_FROM
         string
+      end
+
+      def transcode(string)
+        detection = CharlockHolmes::EncodingDetector.detect(string)
+        CharlockHolmes::Converter.convert(string, detection[:encoding], 'UTF-8')
       end
     end
   end
