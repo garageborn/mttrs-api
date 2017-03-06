@@ -1,6 +1,6 @@
 // *************************************
 //
-//   Categories
+//   Publisher Suggestions
 //
 // -------------------------------------
 //   Template
@@ -12,6 +12,7 @@
 // *************************************
 
 .category-matchers
+  @extend %table
 
 // -------------------------------------
 //   Modifiers
@@ -41,18 +42,5 @@
 .category-matchers-edit-button
   @extend %button--edit
 
-.category-matchers-item-title
-  @extend %list-item-title
-
-.category-matchers-item-section
-  @extend %list-item-section
-
-.category-matchers-item-subsection
-  @extend %list-item-subsection
-
-.category-matchers-list-title
-  margin-top: $b-space
-
-.category-matchers-links
-  li
-    margin-bottom: 0
+.category-matchers-matcher
+  font-family: $b-fontFamily-fixedWidth

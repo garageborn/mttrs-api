@@ -11,8 +11,8 @@ gem 'cloudinary', '1.4.0'
 gem 'dry-types', '0.9.4'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
-gem 'faraday_middleware-aws-signers-v4', '0.1.5'
-gem 'feedjira', '2.1.0'
+gem 'faraday_middleware-aws-signers-v4', '0.1.7'
+gem 'feedjira', '2.1.2'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.0'
@@ -27,7 +27,7 @@ gem 'mime-types', '3.1'
 gem 'nokogiri', '1.7.0.1'
 gem 'pg', '0.19.0'
 gem 'public_suffix', '2.0.5'
-gem 'rails', '5.0.1'
+gem 'rails', '5.0.2'
 gem 'redis-namespace', '1.5.2'
 gem 'reform-rails', '0.1.7'
 gem 'retries', '0.0.5'
@@ -38,7 +38,7 @@ gem 'sidekiq-limit_fetch', '3.4.0'
 gem 'sidekiq-unique-jobs', '4.0.18'
 gem 'simple_form', '3.4.0'
 gem 'sinatra', '2.0.0.beta2'
-gem 'slim-rails', '3.1.1'
+gem 'slim-rails', '3.1.2'
 gem 'thread', '0.2.2'
 gem 'trailblazer', '1.1.2'
 gem 'trailblazer-cells', '0.0.3'
@@ -50,12 +50,12 @@ gem 'whenever', '0.9.7', require: false
 gem 'cocoon', '1.2.9'
 gem 'compass-rails', '3.0.2'
 gem 'jquery-rails', '4.2.2'
-gem 'js-routes', '1.3.2'
+gem 'js-routes', '1.3.3'
 gem 'paloma', '5.0.0'
 gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
 gem 'turbolinks', '5.0.1'
-gem 'uglifier', '3.0.4'
+gem 'uglifier', '3.1.4'
 
 group :production do
   gem 'puma', '3.7.1'
@@ -75,7 +75,7 @@ end
 group :development do
   gem 'capistrano', '3.7.2'
   gem 'capistrano-bundler', '1.2.0', require: false
-  gem 'capistrano-rails', '1.2.2', require: false
+  gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
   gem 'capistrano3-puma', '1.2.1', require: false
