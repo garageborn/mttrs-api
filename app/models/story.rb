@@ -10,7 +10,7 @@ class Story < ApplicationRecord
   has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
   has_many :publishers, -> { distinct }, through: :links
   has_many :story_links, inverse_of: :story, dependent: :destroy
-  has_one :main_category, through: :main_link, source: :main_category, class_name: 'Category'
+  has_one :main_category, through: :main_link, source: :category, class_name: 'Category'
   has_one :main_link, through: :main_story_link, source: :link
   has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
 
