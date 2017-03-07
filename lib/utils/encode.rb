@@ -19,7 +19,7 @@ module Utils
       def transcode(string)
         return string if string.blank? || string.encoding == Encoding::UTF_8
         detection = CharlockHolmes::EncodingDetector.detect(string)
-        return string if detection.blank?
+        return string if detection.try(:[], :encoding).blank?
         CharlockHolmes::Converter.convert(string, detection[:encoding], Encoding::UTF_8.to_s)
       end
     end
