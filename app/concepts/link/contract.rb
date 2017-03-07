@@ -1,6 +1,5 @@
 class Link
   class Contract < Reform::Form
-    property :category_ids
     property :content
     property :description
     property :html

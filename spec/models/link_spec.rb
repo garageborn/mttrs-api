@@ -17,19 +17,11 @@ RSpec.describe Link do
   it { should have_db_index(:total_social) }
 
   it { should belong_to(:publisher) }
-  it { should have_many(:categories).through(:category_links) }
-  it { should have_many(:category_links).inverse_of(:link).dependent(:destroy) }
   it { should have_many(:link_urls).inverse_of(:link).dependent(:destroy) }
   it { should have_many(:social_counters).inverse_of(:link).dependent(:destroy) }
+  it { should have_one(:category).through(:category_link) }
+  it { should have_one(:category_link).inverse_of(:link).dependent(:destroy) }
+  it { should have_one(:social_counter).order(id: :desc) }
   it { should have_one(:story).through(:story_link) }
   it { should have_one(:story_link).inverse_of(:link).dependent(:destroy) }
-  it { should have_one(:social_counter).order(id: :desc) }
-
-  # describe 'Validations' do
-  #   subject { build(:link) }
-  #   it { is_expected.to validate_presence_of(:title) }
-  #   it { is_expected.to_not validate_presence_of(:description) }
-  #   it { is_expected.to validate_presence_of(:published_at) }
-  #   it { is_expected.to validate_inclusion_of(:language).in_array(Utils::Language::AVAILABLE_LANGUAGES).allow_blank }
-  # end
 end

@@ -22,10 +22,6 @@ module Concerns
       story.blank?
     end
 
-    def missing_categories?
-      categories.blank?
-    end
-
     def needs_full_fetch?
       missing_info? || missing_image? || missing_language? || missing_html?
     end

@@ -1,8 +1,8 @@
 class Link
-  class AddCategories < Operation
+  class SetCategory < Operation
     def process(params)
       Apartment::Tenant.each do
-        Link::AddCategories::Tenant.run(id: params[:id])
+        Link::SetCategory::Tenant.run(id: params[:id])
       end
     end
 
@@ -12,11 +12,8 @@ class Link
       action :find
 
       def process(_params)
-        return if new_category.blank? || !new_categories?
-
-        return if model.categories.include?(new_category)
-        model.categories << new_category
-
+        return if model.category.present? || new_category.blank?
+        model.update_attributes(category: new_category)
         StoryBuilderJob.perform_async(model.id)
       end
 
@@ -24,10 +21,6 @@ class Link
 
       def new_category
         LinkCategorizer.run(model)
-      end
-
-      def new_categories?
-        !model.category_ids.include?(new_category.id)
       end
 
       memoize :new_category
