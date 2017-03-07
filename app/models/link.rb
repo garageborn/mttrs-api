@@ -10,10 +10,8 @@ class Link < ApplicationRecord
   extend Memoist
 
   belongs_to :publisher
-  has_many :categories, through: :category_links
-  has_one :main_category_link, class_name: 'CategoryLink'
-  has_one :main_category, through: :main_category_link, source: :category
-  has_many :category_links, inverse_of: :link, dependent: :destroy
+  has_one :category, through: :category_link
+  has_one :category_link, inverse_of: :link, dependent: :destroy
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
   has_many :social_counters, inverse_of: :link, dependent: :destroy
@@ -21,7 +19,7 @@ class Link < ApplicationRecord
   has_one :story, through: :story_link
   has_one :social_counter, -> { order(id: :desc) }
 
-  scope :category_slug, ->(slug) { joins(:categories).where(categories: { slug: slug }) }
+  scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :order_by_url, -> { joins(:link_url).order('link_urls.url') }
@@ -43,7 +41,7 @@ class Link < ApplicationRecord
   scope :random, -> { order('RANDOM()') }
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
-  scope :uncategorized, -> { left_outer_joins(:category_links).where(category_links: { id: nil }) }
+  scope :uncategorized, -> { left_outer_joins(:category_link).where(category_links: { id: nil }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
   strip_attributes :content, :description, :title

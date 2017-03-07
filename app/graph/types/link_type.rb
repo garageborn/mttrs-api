@@ -1,7 +1,7 @@
 LinkType = GraphQL::ObjectType.define do
   name 'LinkType'
 
-  field :categories, types[CategoryType]
+  field :category, types.CategoryType
   field :created_at, !types.Int
   field :id, !types.ID
   field :image_source_url, types.String do

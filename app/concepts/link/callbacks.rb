@@ -10,15 +10,15 @@ class Link
 
     class AfterCreate < Base
       def call(_options)
-        perform_add_categories!
+        perform_set_category!
         enqueue_story_builder!
         enqueue_link_full_fetch!
       end
 
       private
 
-      def perform_add_categories!
-        Link::AddCategories.run(id: contract.model.id)
+      def perform_set_category!
+        Link::SetCategory.run(id: contract.model.id)
       end
 
       def enqueue_story_builder!
@@ -60,7 +60,7 @@ class Link
       def destroy_tenant_associations!
         Apartment::Tenant.each do
           model = contract.model.reload
-          CategoryLink::DestroyAll.run(model.category_link_ids)
+          CategoryLink::Destroy.run(model.category_link.id) if model.category_link.present?
           StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
           Access::DestroyAll.run(model.access_ids)
         end

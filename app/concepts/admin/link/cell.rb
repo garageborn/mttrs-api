@@ -22,8 +22,8 @@ module Admin
           localize(model.published_at, format: :short)
         end
 
-        def categories_names
-          model.categories.pluck(:name).to_sentence
+        def category_name
+          model.category.try(:name)
         end
 
         def publisher_name
@@ -31,7 +31,7 @@ module Admin
         end
 
         def story_id
-          return 'None' if model.story.blank?
+          return if model.story.blank?
           link_to model.story.id, [:edit, :admin, model.story]
         end
 
