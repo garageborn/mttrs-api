@@ -86,8 +86,8 @@ module Admin
           model.publisher.name
         end
 
-        def category_names
-          model.categories.map(&:name).try(:to_sentence)
+        def category_name
+          model.category.try(:name)
         end
 
         def published_at
