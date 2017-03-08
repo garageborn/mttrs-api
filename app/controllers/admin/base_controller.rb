@@ -2,7 +2,7 @@ module Admin
   class BaseController < ActionController::Base
     include Admin::Concerns::Authentication
     include Admin::Concerns::Tenant
-    include Admin::Concerns::Timezone
+    include ::Concerns::Timezone
 
     def concept(name, model = nil, options = {}, &block)
       options[:layout] ||= Admin::Layout::Cell::Application

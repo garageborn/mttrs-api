@@ -8,7 +8,7 @@ StoryType = GraphQL::ObjectType.define do
   field :summary, types.String
   field :headline, types.String
   field :category, !CategoryType
-  field :main_category, !CategoryType do
+  field :main_category, !CategoryType do # backward compatibility
     resolve ->(obj, _args, _ctx) { obj.category }
   end
   field :main_link, !LinkType do
