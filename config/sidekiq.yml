@@ -10,5 +10,5 @@ production:
   - [link_fetcher, 2]
   - [mailers, 1]
 :limits:
-  story_builder: 1
+  # story_builder: 1
   link_fetcher: 2
