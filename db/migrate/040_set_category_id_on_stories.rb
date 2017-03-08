@@ -16,6 +16,7 @@ class SetCategoryIdOnStories < ActiveRecord::Migration[5.0]
 
   def migrate_story(story)
     main_story_link = story.story_links.find_by(main: true) || story.story_links.first
+    return if main_story_link.blank?
     category_id = main_story_link.link.category.id
     story.update_column(:category_id, category_id)
 
