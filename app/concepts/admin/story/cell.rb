@@ -128,8 +128,8 @@ module Admin
       class FormLink < Trailblazer::Cell
         property :title
 
-        def categories_names
-          model.categories.pluck(:name).to_sentence
+        def category_name
+          model.category.name
         end
 
         def publisher_name
