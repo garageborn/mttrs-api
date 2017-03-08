@@ -23,14 +23,8 @@ module Resolvers
         end
 
         def category_stories(category)
-          category_stories = []
-          stories = category.stories.filter(filters).published_between(start_at, end_at).
-                    where.not(id: current_story_ids)
-          stories.each do |story|
-            category_stories << story if story.main_category == category
-            break if category_stories.size == PER_CATEGORY
-          end
-          category_stories
+          category.stories.filter(filters).published_between(start_at, end_at).
+            where.not(id: current_story_ids).limit(PER_CATEGORY)
         end
 
         def fallback_stories

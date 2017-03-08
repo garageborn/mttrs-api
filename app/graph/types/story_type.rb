@@ -7,7 +7,10 @@ StoryType = GraphQL::ObjectType.define do
   field :published_at, !types.Int
   field :summary, types.String
   field :headline, types.String
-  field :main_category, !CategoryType
+  field :category, !CategoryType
+  field :main_category, !CategoryType do
+    resolve ->(obj, _args, _ctx) { obj.category }
+  end
   field :main_link, !LinkType do
     argument :publisher_slug, types.String
     resolve Resolvers::StoryType::MainLink

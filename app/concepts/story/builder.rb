@@ -29,14 +29,15 @@ class Story
       end
 
       def similar
-        link.similar.records.to_a.map do |similar_link|
+        similar_links = link.similar.records.to_a.map do |similar_link|
           [similar_link, similar_link.similar.records.to_a]
         end.flatten.compact.uniq.select(&:belongs_to_current_tenant?)
+        similar_links.select { |similar_link| similar_link.category == link.category }
       end
 
       def model!(_params)
         story = stories.detect { |similar_story| similar_story.summary.present? }
-        story || stories.first || Story.new(published_at: link.published_at)
+        story || stories.first || Story.new(published_at: link.published_at, category: link.category)
       end
 
       def stories
@@ -47,7 +48,7 @@ class Story
       def build_story!
         update_link
         update_similar_links
-        Story::Refresh.run(id: model.id)
+        RefreshStoryJob.perform_async(model.id)
       end
 
       def update_link
