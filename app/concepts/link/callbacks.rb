@@ -60,7 +60,7 @@ class Link
       def destroy_tenant_associations!
         Apartment::Tenant.each do
           model = contract.model.reload
-          CategoryLink::Destroy.run(model.category_link.id) if model.category_link.present?
+          CategoryLink::Destroy.run(id: model.category_link.id) if model.category_link.present?
           StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
           Access::DestroyAll.run(model.access_ids)
         end
