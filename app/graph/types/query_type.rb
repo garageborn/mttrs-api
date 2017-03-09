@@ -38,8 +38,8 @@ QueryType = GraphQL::ObjectType.define do
 
   field :timeline, TimelineType do
     argument :cursor, types.Int
-    argument :timezone, types.String
     argument :type, types.String
+    argument :timezone, types.String
     argument :limit, types.Int
     argument :category_slug, types.String
     argument :limit, types.Int

@@ -3,22 +3,19 @@ module Resolvers
     class Timeline < Base
       def resolve
         cache_for(:timeline).expires_in 15.minutes
-        Time.use_zone(timezone) do
-          OpenStruct.new(
-            date: date,
-            filters: filters,
-            limit: limit,
-            timezone: timezone,
-            type: type
-          )
-        end
+        OpenStruct.new(
+          date: date,
+          filters: filters,
+          limit: limit,
+          type: type
+        )
       end
 
       private
 
       def date
         return if last_story.blank?
-        Time.use_zone(timezone) { Time.zone.at(last_story.published_at).at_beginning_of_day }
+        Time.zone.at(last_story.published_at).at_beginning_of_day
       end
 
       def cursor
@@ -34,10 +31,6 @@ module Resolvers
         args['limit'].to_i
       end
 
-      def timezone
-        args['timezone'] || 'UTC'
-      end
-
       def type
         args['type'].try(:to_sym) || :home
       end
@@ -46,7 +39,7 @@ module Resolvers
         ::Story.filter(filters).published_until(cursor).reorder(:published_at).last
       end
 
-      memoize :date, :cursor, :filters, :last_story, :limit, :timezone, :type
+      memoize :date, :cursor, :filters, :last_story, :limit, :type
     end
   end
 end
