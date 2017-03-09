@@ -31,7 +31,7 @@ class Link
       end
     end
 
-    class AfterSave < Base
+    class AfterUpdate < Base
       def call(_options)
         refresh_story!
       end

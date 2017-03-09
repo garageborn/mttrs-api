@@ -1,3 +1,4 @@
+require ::File.expand_path('../callbacks', __FILE__)
 class Publisher
   class Index < Trailblazer::Operation
     include Collection
@@ -18,8 +19,9 @@ class Publisher
     model Publisher
     contract Contract
 
-    callback :after_create, ::Publisher::Callbacks::AfterCreate
-    callback :before_destroy, ::Publisher::Callbacks::BeforeDestroy
+    callback :after_create, Callbacks::AfterCreate
+    callback :after_update, Callbacks::AfterUpdate
+    callback :before_destroy, Callbacks::BeforeDestroy
   end
 
   class Create < Operation
@@ -39,6 +41,7 @@ class Publisher
     def process(params)
       validate(params[:publisher]) do
         contract.save
+        callback!(:after_update)
       end
     end
   end
