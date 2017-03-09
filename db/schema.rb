@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 38) do
+ActiveRecord::Schema.define(version: 40) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,8 @@ ActiveRecord::Schema.define(version: 38) do
     t.datetime "published_at",             null: false
     t.string   "headline"
     t.text     "summary"
+    t.integer  "category_id",              null: false
+    t.index ["category_id"], name: "index_stories_on_category_id", using: :btree
     t.index ["published_at"], name: "index_stories_on_published_at", using: :btree
     t.index ["total_social"], name: "index_stories_on_total_social", using: :btree
   end

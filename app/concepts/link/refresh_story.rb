@@ -11,7 +11,7 @@ class Link
 
       def process(_params)
         return if model.story.blank?
-        Story::Refresh.run(id: model.story.id)
+        RefreshStoryJob.perform_async(model.story.id)
       end
     end
   end

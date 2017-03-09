@@ -6,19 +6,23 @@ class Story
 
     def process(*)
       return unless destination.present?
-      return if model == destination
+      return if model == destination || !match_category?
 
       model.links.find_each do |link|
         link.update_attributes(story: destination)
       end
       Story::Destroy.run(id: model.id)
-      Story::Refresh.run(id: destination.id)
+      RefreshStoryJob.perform_async(destination.id)
     end
 
     private
 
     def destination
       ::Story.find_by(id: @params[:destination_id])
+    end
+
+    def match_category?
+      model.category_id == destination.category_id
     end
 
     memoize :destination

@@ -3,19 +3,18 @@ class Story < ApplicationRecord
   include Concerns::ParseDate
   extend Memoist
 
-  has_many :categories, -> { distinct }, through: :links
+  belongs_to :category
   has_many :links, through: :story_links
   has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link
   has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
   has_many :publishers, -> { distinct }, through: :links
   has_many :story_links, inverse_of: :story, dependent: :destroy
-  has_one :main_category, through: :main_link, source: :category, class_name: 'Category'
   has_one :main_link, through: :main_story_link, source: :link
   has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
 
   scope :category_slug, lambda { |slug|
-    joins(:categories).group(:id).where(categories: { slug: slug })
+    joins(:category).where(categories: { slug: slug })
   }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }

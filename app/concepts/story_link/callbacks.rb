@@ -14,7 +14,7 @@ class StoryLink
       private
 
       def refresh_story!
-        Story::Refresh.run(id: contract.model.story_id)
+        RefreshStoryJob.perform_async(contract.model.story_id)
       end
     end
   end
