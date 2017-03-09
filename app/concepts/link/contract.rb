@@ -7,7 +7,7 @@ class Link
     property :language
     property :published_at
     property :publisher_id
-    property :similar
+    property :similar, writeable: false
     property :story
     property :title
 

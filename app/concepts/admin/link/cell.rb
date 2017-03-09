@@ -2,6 +2,11 @@ module Admin
   module Link
     module Cell
       class Index < Trailblazer::Cell
+        def publishers_select
+          publishers = ::Publisher.available_on_current_tenant.order_by_name.distinct
+          options = options_from_collection_for_select(publishers, :slug, :name, params[:publisher_slug])
+          select_tag('links_publisher_id', options)
+        end
       end
 
       class Uncategorized < Trailblazer::Cell

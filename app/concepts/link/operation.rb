@@ -10,7 +10,7 @@ class Link
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page, :publisher_slug))
     end
   end
 
@@ -47,16 +47,30 @@ class Link
     contract Contract
 
     callback :after_create, Callbacks::AfterCreate
-    callback :after_save, Callbacks::AfterSave
+    callback :after_update, Callbacks::AfterUpdate
     callback :before_destroy, Callbacks::BeforeDestroy
   end
 
   class Create < Form
     action :create
+
+    def process(params)
+      validate(params[:link]) do
+        contract.save
+        callback!(:after_create)
+      end
+    end
   end
 
   class Update < Form
     action :update
+
+    def process(params)
+      validate(params[:link]) do
+        contract.save
+        callback!(:after_update)
+      end
+    end
   end
 
   class DestroyAll < Operation
