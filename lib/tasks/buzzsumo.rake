@@ -1,7 +1,7 @@
 namespace :buzzsumo do
   namespace :fetcher do
     def enqueue_buzzsumo_fetcher(options)
-      Publisher.find_each(batch_size: 10) do |publisher|
+      Publisher.random.all.each do |publisher|
         BuzzsumoFetcherJob.perform_async(publisher.id, options)
       end
     end
