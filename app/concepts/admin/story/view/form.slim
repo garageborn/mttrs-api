@@ -2,6 +2,7 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :published_at, as: :datetime, html5: true
     = f.input :headline
     = f.input :summary, input_html: { cols: 80, rows: 10 }
 

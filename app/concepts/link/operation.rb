@@ -66,6 +66,8 @@ class Link
     action :update
 
     def process(params)
+      p '------------------params[:link]', params[:link]
+
       validate(params[:link]) do
         contract.save
         callback!(:after_update)
