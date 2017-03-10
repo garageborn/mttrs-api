@@ -32,6 +32,7 @@ set :puma_workers, 2
 
 # sidekiq
 set :sidekiq_role, :worker
+set :sidekiq_processes, 2
 
 # slackistrano
 set :slackistrano,

@@ -2,7 +2,7 @@
 development:
   :concurrency: 10
 production:
-  :concurrency: 35
+  :concurrency: 25
 :queues:
   - [default, 5]
   - [indexer, 15]
