@@ -2,13 +2,13 @@
 development:
   :concurrency: 10
 production:
-  :concurrency: 25
+  :concurrency: 20
 :queues:
-  - [default, 5]
-  - [indexer, 15]
-  - [link_fetcher, 2]
-  - [link_full_fetch, 2]
+  - [indexer, 10]
+  - default
   - link_categorizer
+  - link_fetcher
+  - link_full_fetch
   - link_process
   - mailers
   - refresh_story
@@ -18,5 +18,5 @@ production:
   - update_story_accesses
 :limits:
   story_builder: 1
-  link_fetcher: 2
-  link_full_fetch: 2
+  link_fetcher: 1
+  link_full_fetch: 1
