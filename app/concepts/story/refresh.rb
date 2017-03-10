@@ -1,6 +1,7 @@
 class Story
   class Refresh < Operation
     action :find
+    extend Memoist
 
     def process(_params)
       return model.destroy unless model.reload.story_links.exists?
@@ -15,9 +16,14 @@ class Story
     end
 
     def set_main_story_link
-      main_story_link = model.story_links.popular.first
       main_story_link.update_column(:main, true)
       model.story_links.where.not(id: main_story_link).update_all(main: false)
     end
+
+    def main_story_link
+      model.story_links.unrestrict_content.popular.first || model.story_links.popular.first
+    end
+
+    memoize :main_story_link
   end
 end

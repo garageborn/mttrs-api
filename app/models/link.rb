@@ -42,6 +42,7 @@ class Link < ApplicationRecord
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
   scope :uncategorized, -> { left_outer_joins(:category_link).where(category_links: { id: nil }) }
+  scope :unrestrict_content, -> { joins(:publisher).where(publishers: { restrict_content: false }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
   strip_attributes :content, :description, :title
