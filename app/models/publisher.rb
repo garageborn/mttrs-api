@@ -20,12 +20,14 @@ class Publisher < ApplicationRecord
     next all if current_tenant_languages.blank?
     joins(:links).where(links: { language: current_tenant_languages }).distinct
   }
+  scope :domain, lambda { |domain|
+    joins(:publisher_domains).where(publisher_domains: { domain: domain })
+  }
 
   def self.find_by_host(url)
     host = Addressable::URI.parse(url).host
     public_suffix = PublicSuffix.domain(host)
-    domains = [host, public_suffix].uniq
-    return if domains.blank?
-    joins(:publisher_domains).find_by(publisher_domains: { domain: domains })
+
+    domain(host).first || domain(public_suffix).first
   end
 end
