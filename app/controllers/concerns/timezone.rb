@@ -20,7 +20,7 @@ module Concerns
     end
 
     def x_geoip_timezone
-      timezone = request.headers['HTTP_GEOIP_TIMEZONE']
+      timezone = request.headers['HTTP_X_GEOIP_TIMEZONE']
       return timezone if timezone.present? && ActiveSupport::TimeZone[timezone].present?
     end
   end
