@@ -18,5 +18,5 @@ production:
   - update_story_accesses
 :limits:
   story_builder: 1
-  link_fetcher: 1
-  link_full_fetch: 1
+  link_fetcher: 2
+  link_full_fetch: 2
