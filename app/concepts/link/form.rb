@@ -6,7 +6,7 @@ class Link
       validate(params[:link]) do
         model.save
         callback!(:after_create) if model.previous_changes.include?(:id)
-        callback!(:after_save)
+        callback!(:after_update)
       end
     end
 

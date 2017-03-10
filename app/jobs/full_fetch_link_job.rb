@@ -2,6 +2,7 @@ class FullFetchLinkJob
   include Sidekiq::Worker
   extend Memoist
 
+  sidekiq_options queue: :link_full_fetch
   attr_reader :link_id
 
   def perform(link_id)

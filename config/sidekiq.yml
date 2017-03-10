@@ -4,11 +4,19 @@ development:
 production:
   :concurrency: 35
 :queues:
-  - [indexer, 15]
-  - [story_builder, 10]
   - [default, 5]
+  - [indexer, 15]
   - [link_fetcher, 2]
-  - [mailers, 1]
+  - [link_full_fetch, 2]
+  - link_categorizer
+  - link_process
+  - mailers
+  - refresh_story
+  - story_builder
+  - story_merger
+  - title_replacements
+  - update_story_accesses
 :limits:
   story_builder: 1
   link_fetcher: 2
+  link_full_fetch: 2
