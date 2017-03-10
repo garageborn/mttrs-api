@@ -6,6 +6,7 @@ class Publisher
     property :language
     property :name
     property :display_name
+    property :restrict_content
     has_nested_form :blocked_urls, form: BlockedUrl::Contract, klass: BlockedUrl
     has_nested_form :publisher_domains,
                     form: PublisherDomain::Contract,

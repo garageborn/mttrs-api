@@ -8,6 +8,8 @@ module Admin
         property :id
         property :name
         property :domain
+        property :language
+        property :restrict_content
 
         def links_count
           number_with_delimiter(model.links.size)
