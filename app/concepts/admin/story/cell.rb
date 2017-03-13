@@ -95,6 +95,16 @@ module Admin
         end
       end
 
+      class FormLinks < Trailblazer::Cell
+        def links
+          @options[:links]
+        end
+
+        def story
+          @options[:story]
+        end
+      end
+
       class Form < Trailblazer::Cell
         property :links
 
