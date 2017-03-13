@@ -1,6 +1,8 @@
 tr
   td= image
-  td= link_to title, url, target: :_blank
+  td
+    = link_to title, url, target: :_blank
+    = link_to 'edit', [:edit, :admin, model], class: 'links-edit-button'
   td= score
   td= total_social
   td= publisher_name

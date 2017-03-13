@@ -108,7 +108,7 @@ module Admin
             end
           end
 
-          similar_links
+          similar_links.by_score
         end
       end
 

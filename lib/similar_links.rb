@@ -42,6 +42,10 @@ class SimilarLinks
     records.each_with_hit { |record, hit| add(record, hit) }
   end
 
+  def by_score
+    links.sort_by { |link| -link.score }
+  end
+
   private
 
   def valid_record?(record)
