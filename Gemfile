@@ -16,7 +16,7 @@ gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.0'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.4.4'
+gem 'graphql', '1.5.1'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
@@ -24,7 +24,7 @@ gem 'kaminari-cells', '0.0.4'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
 gem 'nokogiri', '1.7.0.1'
-gem 'pg', '0.19.0'
+gem 'pg', '0.20.0'
 gem 'public_suffix', '2.0.5'
 gem 'rails', '5.0.2'
 gem 'redis-namespace', '1.5.2'
@@ -54,7 +54,7 @@ gem 'paloma', '5.0.0'
 gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
 gem 'turbolinks', '5.0.1'
-gem 'uglifier', '3.1.4'
+gem 'uglifier', '3.1.7'
 
 group :production do
   gem 'puma', '3.7.1'
@@ -72,7 +72,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '3.7.2'
+  gem 'capistrano', '3.8.0'
   gem 'capistrano-bundler', '1.2.0', require: false
   gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
