@@ -135,7 +135,7 @@ module Admin
 
         def score
           return unless model.respond_to?(:score)
-          number_with_delimiter(model.score)
+          number_with_delimiter(model.score, precision: 2)
         end
 
         def publisher_name
