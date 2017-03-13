@@ -1,12 +1,14 @@
 module Utils
   class StripAttributes
     REPLACEMENTS = {
-      /[\r\n\t]+/ => '',
       '  ' => ' ',
       '&amp;' => '&',
-      /[”“]+/ => '"',
+      '&gt' => '>',
+      '&lt;' => '<',
       /&#\d+;/ => '',
-      /[^[:print:]]/ => ''
+      /[\r\n\t]+/ => '',
+      /[^[:print:]]/ => '',
+      /[”“]+/ => '"'
     }.freeze
 
     def self.run(string)
