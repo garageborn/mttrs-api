@@ -4,5 +4,7 @@ class Story
     property :summary
     property :links
     property :published_at
+    property :main_link
+    property :link_ids
   end
 end

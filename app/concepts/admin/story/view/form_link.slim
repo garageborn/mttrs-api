@@ -1,8 +1,11 @@
-li
-  = image
-  = title
+tr
+  td= image
+  td= link_to title, url, target: :_blank
+  td= score
+  td= total_social
+  td= publisher_name
+  td= category_name
+  td= published_at
+  td= story_id
+  td= actions
 
-  .links-item-stats
-    span= publisher_name
-    span= category_name
-    = social_counter

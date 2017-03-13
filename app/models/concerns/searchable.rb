@@ -20,31 +20,6 @@ module Concerns
       def as_indexed_json(_options = {})
         { published_at: published_at, title: title }
       end
-
-      def similar
-        self.class.search(
-          min_score: 1.5,
-          size: 1_000,
-          query: {
-            bool: {
-              must: {
-                match: { title: title }
-              },
-              must_not: {
-                ids: { values: [id] }
-              },
-              filter: {
-                range: {
-                  published_at: {
-                    gte: published_at.at_beginning_of_day,
-                    lte: published_at.end_of_day
-                  }
-                }
-              }
-            }
-          }
-        )
-      end
     end
   end
 end
