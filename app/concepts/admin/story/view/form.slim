@@ -10,4 +10,18 @@
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
-  ul= concept('admin/story/cell/form_link', collection: links)
+table.stories
+  thead
+    tr
+      th Image
+      th Title
+      th Score
+      th Total Social
+      th Publisher
+      th Category
+      th Published At
+      th Story ID
+      th
+  tbody
+    = concept('admin/story/cell/form_link', collection: links, story: model)
+    = concept('admin/story/cell/form_link', collection: similar, story: model)

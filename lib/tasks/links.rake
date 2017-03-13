@@ -2,7 +2,7 @@ namespace :links do
   namespace :purge do
     desc 'Run Links fetcher'
     task run: :environment do
-      Rake::Task['links:purge:week'].invoke
+      # Rake::Task['links:purge:week'].invoke
       Rake::Task['links:purge:month'].invoke
     end
 

@@ -95,38 +95,26 @@ module Admin
         end
       end
 
-      class SocialCounter < Trailblazer::Cell
-        def total_social
-          number_with_delimiter(model.total_social)
-        end
-
-        def total_facebook
-          number_with_delimiter(model.total_facebook)
-        end
-
-        def total_linkedin
-          number_with_delimiter(model.total_linkedin)
-        end
-
-        def total_twitter
-          number_with_delimiter(model.total_twitter)
-        end
-
-        def total_pinterest
-          number_with_delimiter(model.total_pinterest)
-        end
-
-        def total_google_plus
-          number_with_delimiter(model.total_google_plus)
-        end
-      end
-
       class Form < Trailblazer::Cell
         property :links
+
+        def similar
+          similar_links = SimilarLinks.new(model.main_link)
+
+          model.links.each do |link|
+            link.similar(min_score: 1).each do |similar_link|
+              next if model.link_ids.include?(similar_link.id)
+              similar_links.add(similar_link.record, similar_link.hit)
+            end
+          end
+
+          similar_links
+        end
       end
 
       class FormLink < Trailblazer::Cell
         property :title
+        property :url
 
         def category_name
           model.category.name
@@ -136,14 +124,40 @@ module Admin
           model.publisher.name
         end
 
-        def social_counter
-          return if model.social_counter.blank?
-          concept('admin/link/cell/social_counter', model.social_counter)
-        end
-
         def image
           return if model.image_source_url.blank?
           image_tag(model.image_source_url, size: '75x75')
+        end
+
+        def total_social
+          number_with_delimiter(model.total_social)
+        end
+
+        def score
+          return unless model.respond_to?(:score)
+          number_with_delimiter(model.score, precision: 2)
+        end
+
+        def publisher_name
+          model.publisher.name
+        end
+
+        def category_name
+          model.category.try(:name)
+        end
+
+        def published_at
+          localize(model.published_at, format: :short)
+        end
+
+        def story_id
+          return if model.story.blank?
+          link_to(model.story.id, [:edit, :admin, model.story], class: 'links-edit-button')
+        end
+
+        def actions
+          return 'add' if model.story.blank?
+          model.story.id == @options[:story].id ? 'remove' : 'merge'
         end
       end
     end

@@ -3,6 +3,7 @@ class Link < ApplicationRecord
   include Concerns::LinkMissingAttributes
   include Concerns::TenantLink
   include Concerns::Searchable
+  include Concerns::Similar
   include Concerns::StripAttributes
   include Concerns::ParseDate
   include Concerns::TrackAccess
