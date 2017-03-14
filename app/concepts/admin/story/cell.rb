@@ -170,7 +170,7 @@ module Admin
         end
 
         def actions
-          label = model.story.id == @options[:story].id ? 'remove' : 'add'
+          label = model.story.try(:id) == @options[:story].id ? 'remove' : 'add'
           link_to label, '#', class: 'story-form-link-button'
         end
       end
