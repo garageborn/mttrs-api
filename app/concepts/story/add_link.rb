@@ -6,7 +6,7 @@ class Story
 
     def process(*)
       return unless link.present?
-      return if model == link.story || !match_category?
+      return if model == link.story || !valid_link?
 
       if link.missing_story?
         link.update_attributes(story: model)
@@ -23,8 +23,8 @@ class Story
       ::Link.find_by(id: @params[:link_id])
     end
 
-    def match_category?
-      model.category == link.category
+    def valid_link?
+      link.belongs_to_current_tenant? && link.category == model.category
     end
 
     def merge_story
