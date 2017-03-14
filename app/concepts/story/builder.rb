@@ -10,8 +10,7 @@ class Story
       extend Memoist
 
       def process(_params)
-        return unless link.present?
-        return unless link.belongs_to_current_tenant?
+        return unless valid_link?
 
         begin
           build_story!
@@ -29,6 +28,7 @@ class Story
       end
 
       def model!(_params)
+        return unless valid_link?
         story = stories.detect { |similar_story| similar_story.summary.present? } || stories.first
         story || Story.create(published_at: link.published_at, category: link.category)
       end
@@ -52,6 +52,10 @@ class Story
         link.similar.each do |similar_link|
           Story::AddLink.run(id: model.id, link_id: similar_link.id)
         end
+      end
+
+      def valid_link?
+        link.present? && link.belongs_to_current_tenant?
       end
 
       memoize :link, :stories
