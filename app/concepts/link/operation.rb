@@ -51,13 +51,26 @@ class Link
     callback :before_destroy, Callbacks::BeforeDestroy
   end
 
+  class Form < Operation
+    contract Contract
+
+    private
+
+    def model!(params)
+      return ::Link.find(params[:id]) if params[:id].present?
+      urls = params[:link].try(:[], :urls)
+      return ::Link.new(params[:link]) if urls.blank?
+      ::Link.find_by_url(urls) || ::Link.new(params[:link])
+    end
+  end
+
   class Create < Form
     action :create
 
     def process(params)
       validate(params[:link]) do
-        contract.save
-        callback!(:after_create)
+        model.save
+        callback!(:after_create) if model.previous_changes.include?(:id)
       end
     end
   end
@@ -66,8 +79,6 @@ class Link
     action :update
 
     def process(params)
-      p '------------------params[:link]', params[:link]
-
       validate(params[:link]) do
         contract.save
         callback!(:after_update)

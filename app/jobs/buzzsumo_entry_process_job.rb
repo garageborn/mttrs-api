@@ -9,7 +9,8 @@ class BuzzsumoEntryProcessJob
     @entry = entry.with_indifferent_access
     return if entry.blank? || publisher.blank? || blocked_url?
 
-    Link::Create.run(link: attributes) do |op|
+    operation = link.blank? ? Link::Create : Link::Update
+    operation.run(link: attributes) do |op|
       enqueue_update_counters!(op.model)
     end
   end

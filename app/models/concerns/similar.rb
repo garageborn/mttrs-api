@@ -15,6 +15,7 @@ module Concerns
       end
 
       def find_similar(options = {})
+        return if new_record?
         default_options = {
           min_score: 1.5,
           size: 1_000,
