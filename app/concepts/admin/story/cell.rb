@@ -107,17 +107,18 @@ module Admin
 
       class Form < Trailblazer::Cell
         extend Memoist
-        property :links
+        INCLUDES = %i(category publisher story link_url).freeze
+
+        def links
+          model.links.popular.includes(INCLUDES)
+        end
 
         def similar
-          similar_links = SimilarLinks.new(model.main_link)
+          options = { min_score: 1, includes: INCLUDES }
+          similar_links = SimilarLinks.new(model.main_link, options)
 
-          model.links.each do |link|
-            link.similar(min_score: 1).each do |similar_link|
-              next if model.link_ids.include?(similar_link.id)
-              similar_links.add(similar_link.record, similar_link.hit)
-            end
-          end
+          model.links.each { |link| similar_links.process_similars(link) }
+          similar_links.links.delete_if { |similar_link| model.link_ids.include?(similar_link.id) }
 
           similar_links.by_score
         end
@@ -148,7 +149,7 @@ module Admin
 
         def score
           return unless model.respond_to?(:score)
-          number_with_delimiter(model.score, precision: 2)
+          number_with_precision(model.score, precision: 2)
         end
 
         def publisher_name

@@ -7,12 +7,7 @@ module Concerns
 
       def similar(options = {})
         return if new_record?
-        SimilarLinks.new(self).tap do |similar_links|
-          find_similar(options).records.each_with_hit do |record, hit|
-            similar_links.add(record, hit)
-            similar_links.merge(record.find_similar(options).records)
-          end
-        end
+        SimilarLinks.new(self, options)
       end
 
       def find_similar(options = {})
