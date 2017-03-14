@@ -108,7 +108,8 @@ module Admin
         property :similar
 
         def html
-          model.html.force_encoding(Encoding::UTF_8)
+          return unless model.html.valid_encoding?
+          model.html
         end
       end
     end
