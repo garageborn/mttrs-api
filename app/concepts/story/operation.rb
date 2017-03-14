@@ -16,11 +16,16 @@ class Story
 
   class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model Story
     contract Contract
+
+    callback :after_update, Callbacks::AfterUpdate
   end
 
-  class Form < Operation
+  class Create < Operation
+    action :create
+
     def process(params)
       validate(params[:story]) do
         contract.save
@@ -28,12 +33,15 @@ class Story
     end
   end
 
-  class Create < Form
-    action :create
-  end
-
-  class Update < Form
+  class Update < Operation
     action :update
+
+    def process(params)
+      validate(params[:story]) do
+        contract.save
+        callback!(:after_update)
+      end
+    end
   end
 
   class Destroy < Operation

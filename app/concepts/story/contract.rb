@@ -6,5 +6,7 @@ class Story
     property :published_at
     property :main_link
     property :link_ids
+    property :added_links, virtual: true
+    property :removed_links, virtual: true
   end
 end

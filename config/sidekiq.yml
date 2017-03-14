@@ -13,7 +13,6 @@ production:
   - mailers
   - refresh_story
   - story_builder
-  - story_merger
   - title_replacements
   - update_story_accesses
 :limits:

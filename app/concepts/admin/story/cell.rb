@@ -170,8 +170,8 @@ module Admin
         end
 
         def actions
-          return 'add' if model.story.blank?
-          model.story.id == @options[:story].id ? 'remove' : 'merge'
+          label = model.story.id == @options[:story].id ? 'remove' : 'add'
+          link_to label, '#', class: 'story-form-link-button'
         end
       end
     end
