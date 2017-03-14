@@ -49,14 +49,6 @@ module Admin
       render html: concept('admin/link/cell/similar', @model)
     end
 
-    def remove_from_story
-      run ::Link::RemoveFromStory do |op|
-        flash[:notice] = "Link '#{ op.model.title }' removed from story"
-        return redirect_to [:admin, :links]
-      end
-      render_form
-    end
-
     private
 
     def render_form

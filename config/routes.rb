@@ -20,7 +20,6 @@ Rails.application.routes.draw do
       resources :links, except: :show do
         get :uncategorized, on: :collection
         get :similar, on: :collection
-        put :remove_from_story, on: :member
       end
       resources :publishers, except: :show
       resources :publisher_suggestions, except: :show

@@ -8,38 +8,31 @@ class Link
       end
     end
 
-    class AfterCreate < Base
-      def call(_options)
-        perform_set_category!
-        enqueue_story_builder!
-        enqueue_link_full_fetch!
-      end
-
-      private
-
-      def perform_set_category!
-        Link::SetCategory.run(id: contract.model.id)
-      end
-
-      def enqueue_story_builder!
-        StoryBuilderJob.perform_async(contract.model.id)
-      end
-
-      def enqueue_link_full_fetch!
-        return unless contract.model.needs_full_fetch?
-        FullFetchLinkJob.perform_async(contract.model.id)
-      end
-    end
-
-    class AfterUpdate < Base
+    class AfterSave < Base
       def call(_options)
         refresh_story!
+        perform_set_category!
+        enqueue_link_full_fetch!
+        enqueue_story_builder!
       end
 
       private
 
       def refresh_story!
         Link::RefreshStory.run(id: contract.model.id)
+      end
+
+      def perform_set_category!
+        Link::SetCategory.run(id: contract.model.id)
+      end
+
+      def enqueue_link_full_fetch!
+        return unless contract.model.needs_full_fetch?
+        FullFetchLinkJob.perform_async(contract.model.id)
+      end
+
+      def enqueue_story_builder!
+        StoryBuilderJob.perform_async(contract.model.id)
       end
     end
 

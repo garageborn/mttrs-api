@@ -46,8 +46,7 @@ class Link
     model Link
     contract Contract
 
-    callback :after_create, Callbacks::AfterCreate
-    callback :after_update, Callbacks::AfterUpdate
+    callback :after_save, Callbacks::AfterSave
     callback :before_destroy, Callbacks::BeforeDestroy
   end
 
@@ -70,7 +69,7 @@ class Link
     def process(params)
       validate(params[:link]) do
         model.save
-        callback!(:after_create) if model.previous_changes.include?(:id)
+        callback!(:after_save)
       end
     end
   end
@@ -81,7 +80,7 @@ class Link
     def process(params)
       validate(params[:link]) do
         contract.save
-        callback!(:after_update)
+        callback!(:after_save)
       end
     end
   end
@@ -99,15 +98,6 @@ class Link
     def process(*)
       callback!(:before_destroy)
       model.destroy
-    end
-  end
-
-  class RemoveFromStory < Operation
-    action :find
-
-    def process(*)
-      StoryLink::Destroy.run(id: model.story_link.id)
-      StoryBuilderJob.perform_async(model.id)
     end
   end
 end
