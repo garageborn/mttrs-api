@@ -106,7 +106,10 @@ module Admin
       class Form < Trailblazer::Cell
         property :story
         property :similar
-        property :html
+
+        def html
+          model.html.force_encoding(Encoding::UTF_8)
+        end
       end
     end
   end
