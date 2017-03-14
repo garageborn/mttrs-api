@@ -21,7 +21,7 @@ Paloma.controller('Admin/Stories', {
 
     const remove = (tr) => {
       clear(tr)
-      tr.removeClass(addedClassName).addClass(removedClassName).find(buttonSelector).text('add')
+      tr.addClass(removedClassName).find(buttonSelector).text('add')
       form.append(`<input type='text' name='${ removedInputName }' value=${ tr.data('id') }>`)
     }
 

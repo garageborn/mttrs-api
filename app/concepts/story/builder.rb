@@ -29,8 +29,8 @@ class Story
       end
 
       def model!(_params)
-        story = stories.detect { |similar_story| similar_story.summary.present? }
-        story || stories.first || Story.new(published_at: link.published_at, category: link.category)
+        story = stories.detect { |similar_story| similar_story.summary.present? } || stories.first
+        story || Story.create(published_at: link.published_at, category: link.category)
       end
 
       def stories
@@ -45,24 +45,12 @@ class Story
       end
 
       def update_link
-        return if link.story == model
-
-        if link.missing_story?
-          link.update_attributes(story: model)
-        else
-          StoryMergerJob.perform_async(link.story.id, model.id)
-        end
+        Story::AddLink.run(id: model.id, link_id: link.id)
       end
 
       def update_similar_links
         link.similar.each do |similar_link|
-          next if similar_link.story == model
-
-          if similar_link.missing_story?
-            similar_link.update_attributes(story: model)
-          else
-            StoryMergerJob.perform_async(similar_link.story.id, model.id)
-          end
+          Story::AddLink.run(id: model.id, link_id: similar_link.id)
         end
       end
 
