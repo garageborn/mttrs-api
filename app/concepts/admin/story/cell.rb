@@ -106,6 +106,7 @@ module Admin
       end
 
       class Form < Trailblazer::Cell
+        extend Memoist
         property :links
 
         def similar
@@ -120,6 +121,8 @@ module Admin
 
           similar_links.by_score
         end
+
+        memoize :similar
       end
 
       class FormLink < Trailblazer::Cell
