@@ -24,10 +24,8 @@ class Story
       end
 
       def process_removed_links
-        p '-------------------contract.removed_links', contract.removed_links
         return if contract.removed_links.blank?
         ::Link.where(id: contract.removed_links).each do |link|
-          p '----------process_removed_links', link.id
           Story::RemoveLink.run(id: contract.model.id, link_id: link.id)
         end
       end
