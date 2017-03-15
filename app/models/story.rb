@@ -4,6 +4,7 @@ class Story < ApplicationRecord
   extend Memoist
 
   belongs_to :category
+  has_many :blocked_story_links, inverse_of: :story, dependent: :destroy
   has_many :links, through: :story_links
   has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link

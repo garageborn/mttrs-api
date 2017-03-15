@@ -5,7 +5,7 @@ class BlockedUrl < ApplicationRecord
 
   def self.match?(strings)
     strings = [strings].flatten.compact.uniq
-    self.all.detect do |blocked_url|
+    all.detect do |blocked_url|
       strings.detect { |string| blocked_url.match?(string) }
     end
   end

@@ -1,7 +1,7 @@
 module SimpleForm
   module CustomInputs
     class ArrayInput < SimpleForm::Inputs::StringInput
-      def input(wrapper_options = nil)
+      def input(_wrapper_options = nil)
         input_html_options[:type] ||= input_type
         values = Array(object.public_send(attribute_name)).concat([nil])
         field_name = "#{ object_name }[#{ attribute_name }][]"

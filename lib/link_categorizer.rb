@@ -20,6 +20,5 @@ class LinkCategorizer
     end.try(:category)
   end
 
-
   memoize :category
 end

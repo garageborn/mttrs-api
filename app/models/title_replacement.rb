@@ -5,7 +5,7 @@ class TitleReplacement < ApplicationRecord
 
   def self.apply(string)
     new_string = string.to_s.dup
-    self.all.find_each do |title_replacement|
+    all.find_each do |title_replacement|
       new_string = title_replacement.apply(new_string)
     end
     new_string
