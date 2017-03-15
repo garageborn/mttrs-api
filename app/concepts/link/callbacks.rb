@@ -56,7 +56,7 @@ class Link
           CategoryLink::Destroy.run(id: model.category_link.id) if model.category_link.present?
           StoryLink::Destroy.run(id: model.story_link.id) if model.story_link.present?
           BlockedStoryLink::DestroyAll.run(model.blocked_story_link_ids) if model.blocked_story_links.present?
-          Access::DestroyAll.run(model.access_ids) if model.access
+          Access::DestroyAll.run(model.access_ids)
         end
       end
     end

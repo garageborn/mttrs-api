@@ -1,6 +1,7 @@
 module Concerns
   module TenantLink
     extend ActiveSupport::Concern
+    extend Memoist
 
     included do |base|
       base.include Concerns::TenantOptions
@@ -41,5 +42,7 @@ module Concerns
       languages = Apartment.tenant_options[tenant_name].try(:[], :languages) || []
       languages.include?(language)
     end
+
+    memoize :belongs_to_tenant?
   end
 end
