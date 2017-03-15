@@ -5,6 +5,8 @@
     = f.input :published_at, as: :datetime, html5: true
     = f.input :headline
     = f.input :summary, input_html: { cols: 80, rows: 10 }
+    = f.input :added_links, as: :array
+    = f.input :removed_links, as: :array
 
   .form-actions
     = f.button :submit

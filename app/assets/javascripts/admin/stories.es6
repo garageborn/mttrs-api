@@ -16,13 +16,27 @@ Paloma.controller('Admin/Stories', {
     const add = (tr) => {
       clear(tr)
       tr.addClass(addedClassName).find(buttonSelector).text('remove')
-      form.append(`<input type='text' name='${ addedInputName }' value=${ tr.data('id') }>`)
+      form.find('div.story_added_links').append(`
+        <input
+          type='text'
+          name='${ addedInputName }'
+          value=${ tr.data('id') }
+          class='text optional'
+        >
+      `)
     }
 
     const remove = (tr) => {
       clear(tr)
       tr.addClass(removedClassName).find(buttonSelector).text('add')
-      form.append(`<input type='text' name='${ removedInputName }' value=${ tr.data('id') }>`)
+      form.find('div.story_removed_links').append(`
+        <input
+          type='text'
+          name='${ removedInputName }'
+          value=${ tr.data('id') }
+          class='text optional'
+        >
+      `)
     }
 
     const toggle = (event) => {
