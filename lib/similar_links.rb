@@ -13,32 +13,29 @@ class SimilarLinks
       hit._score
     end
 
-    def merge(_record, hit)
-      @hit = hit if hit._score > @hit._score
-    end
-
     def method_missing(method, *args)
       return record.send(method, *args) if record.respond_to?(method)
       super
     end
   end
 
-  attr_reader :base_link, :includes, :links, :options
+  attr_reader :base_link, :blocked_links, :includes, :links, :options
   def_delegators :@links, :each, :each_with_index, :map, :first, :last
 
   def initialize(base_link, options = {})
     @base_link = base_link
     @links = []
+    @blocked_links = base_link.blocked_story_links.pluck(:link_id)
     @includes = %i(category category_link) + options.delete(:includes).to_a
     @options = options
     perform
   end
 
   def add(record, hit)
-    similar_link = links.detect { |link| link.id == record.id }
-    return similar_link.merge(record, hit) if similar_link
+    return if links.detect { |link| link.id == record.id }
     return unless valid_record?(record)
     links.push(SimilarLink.new(record, hit))
+    blocked_links.concat(record.blocked_story_links.pluck(:link_id))
     revalidate!
   end
 
@@ -52,9 +49,12 @@ class SimilarLinks
   end
 
   def process_similars(link)
-    result = link.find_similar(options)
-    result.records.includes(includes).each do |similar_link|
-      hit = result.detect { |r| r.id.to_i == similar_link.id.to_i }
+    find_similar = link.find_similar(options)
+    current_link_ids = links.map(&:id)
+    result_ids = find_similar.records.ids.select { |id| current_link_ids.exclude?(id.to_i) }
+
+    ::Link.where(id: result_ids).includes(includes).each do |similar_link|
+      hit = find_similar.detect { |r| r.id.to_i == similar_link.id.to_i }
       add(similar_link, hit)
     end
   end
@@ -62,8 +62,8 @@ class SimilarLinks
   private
 
   def valid_record?(record)
-    return false unless record.belongs_to_current_tenant?
-    valid_category?(record) && !blocked_story_link?(record)
+    return false if blocked_story_link?(record)
+    record.belongs_to_current_tenant? && valid_category?(record)
   end
 
   def valid_category?(record)
@@ -71,8 +71,7 @@ class SimilarLinks
   end
 
   def blocked_story_link?(record)
-    blocked_story_links = base_link.blocked_story_links + links.map(&:blocked_story_links)
-    blocked_story_links.flatten.map(&:link_id).include?(record.id)
+    blocked_links.include?(record.id)
   end
 
   def revalidate!
