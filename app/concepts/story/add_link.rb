@@ -14,6 +14,7 @@ class Story
         merge_story
       end
 
+      ::BlockedStoryLink.where(story: model, link: link).destroy_all
       RefreshStoryJob.perform_async(model.id)
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 41) do
+ActiveRecord::Schema.define(version: 42) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,15 @@ ActiveRecord::Schema.define(version: 41) do
     t.index ["accessable_type", "accessable_id", "date"], name: "index_access_on_assetable_and_created_at", unique: true, using: :btree
     t.index ["date"], name: "index_accesses_on_date", using: :btree
     t.index ["hits"], name: "index_accesses_on_hits", using: :btree
+  end
+
+  create_table "blocked_story_links", force: :cascade do |t|
+    t.integer  "story_id",   null: false
+    t.integer  "link_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["link_id", "story_id"], name: "index_blocked_story_links_on_link_id_and_story_id", unique: true, using: :btree
+    t.index ["story_id", "link_id"], name: "index_blocked_story_links_on_story_id_and_link_id", unique: true, using: :btree
   end
 
   create_table "blocked_urls", force: :cascade do |t|

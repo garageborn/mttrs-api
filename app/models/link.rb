@@ -16,6 +16,7 @@ class Link < ApplicationRecord
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
   has_many :social_counters, inverse_of: :link, dependent: :destroy
+  has_many :blocked_story_links, inverse_of: :link, dependent: :destroy
   has_one :story_link, inverse_of: :link, dependent: :destroy
   has_one :story, through: :story_link
   has_one :social_counter, -> { order(id: :desc) }

@@ -39,6 +39,7 @@ class SimilarLinks
     return similar_link.merge(record, hit) if similar_link
     return unless valid_record?(record)
     links.push(SimilarLink.new(record, hit))
+    revalidate!
   end
 
   def by_score
@@ -61,6 +62,20 @@ class SimilarLinks
   private
 
   def valid_record?(record)
-    record.belongs_to_current_tenant? && record.category == base_link.category
+    return false unless record.belongs_to_current_tenant?
+    valid_category?(record) && !blocked_story_link?(record)
+  end
+
+  def valid_category?(record)
+    record.category == base_link.category
+  end
+
+  def blocked_story_link?(record)
+    blocked_story_links = base_link.blocked_story_links + links.map(&:blocked_story_links)
+    blocked_story_links.flatten.map(&:link_id).include?(record.id)
+  end
+
+  def revalidate!
+    links.delete_if { |record| !valid_record?(record) }
   end
 end
