@@ -65,6 +65,7 @@ module Admin
       end
 
       class Link < Trailblazer::Cell
+        property :id
         property :title
         property :url
         property :story
@@ -127,6 +128,7 @@ module Admin
       end
 
       class FormLink < Trailblazer::Cell
+        property :id
         property :title
         property :url
 

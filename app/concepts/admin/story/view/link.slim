@@ -1,8 +1,7 @@
 tr(class=class_name)
+  td= link_to  id, [:edit, :admin, model], class: 'links-edit-button'
   td= image
-  td
-    = link_to title, url, target: :_blank
-    = link_to 'edit', [:edit, :admin, model], class: 'links-edit-button'
+  td= link_to title, url, target: :_blank
   td= total_social
   td= publisher_name
   td= category_name
