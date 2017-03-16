@@ -91,7 +91,7 @@ class SimilarLinks
       story.try(:link_ids).to_a
     end
 
-    blocked_link_ids = (base_story_blocked_links + base_link_blocked_links).compact.uniq
+    blocked_link_ids = (base_story_blocked_links + base_link_blocked_links).flatten.compact.uniq
 
     blocked_links.concat(blocked_link_ids)
   end
