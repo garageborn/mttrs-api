@@ -85,15 +85,14 @@ class SimilarLinks
   end
 
   def set_blocked_links
-    base_blocked_story_links = [
-      base_link.try(:story).try(:blocked_story_links),
-      base_link.blocked_story_links
-    ].flatten.compact.uniq
+    base_story_blocked_links = base_link.try(:story).try(:blocked_story_links).map(&:link_id)
 
-    base_blocked_story_links.map(&:story).map do |story|
-      blocked_links.concat(story.try(:link_ids).to_a)
+    base_link_blocked_links = base_link.blocked_story_links.map(&:story).map do |story|
+      story.try(:link_ids).to_a
     end
 
-    blocked_links.uniq!
+    blocked_link_ids = (base_story_blocked_links + base_link_blocked_links).compact.uniq
+
+    blocked_links.concat(blocked_link_ids)
   end
 end
