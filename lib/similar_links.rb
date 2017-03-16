@@ -25,7 +25,7 @@ class SimilarLinks
   def initialize(base_link, options = {})
     @base_link = base_link
     @links = []
-    @blocked_links = base_link.blocked_story_links.pluck(:link_id)
+    @blocked_links = []
     @includes = %i(category category_link) + options.delete(:includes).to_a
     @options = options
     perform
@@ -35,8 +35,6 @@ class SimilarLinks
     return if links.detect { |link| link.id == record.id }
     return unless valid_record?(record)
     links.push(SimilarLink.new(record, hit))
-    blocked_links.concat(record.blocked_story_links.pluck(:link_id))
-    revalidate!
   end
 
   def by_score
@@ -44,17 +42,16 @@ class SimilarLinks
   end
 
   def perform
+    set_blocked_links
     process_similars(base_link)
     each { |link| process_similars(link) }
   end
 
   def process_similars(link)
-    find_similar = link.find_similar(options)
-    current_link_ids = links.map(&:id)
-    result_ids = find_similar.records.ids.select { |id| current_link_ids.exclude?(id.to_i) }
+    response = link.find_similar(options)
 
-    ::Link.where(id: result_ids).includes(includes).each do |similar_link|
-      hit = find_similar.detect { |r| r.id.to_i == similar_link.id.to_i }
+    ::Link.where(id: map_result_ids(response)).includes(includes).each do |similar_link|
+      hit = response.detect { |r| r.id.to_i == similar_link.id.to_i }
       add(similar_link, hit)
     end
   end
@@ -71,10 +68,32 @@ class SimilarLinks
   end
 
   def blocked_story_link?(record)
-    blocked_links.include?(record.id)
+    return true if blocked_links.include?(record.id)
+
+    record_blocked_links = record.blocked_story_links.map(&:story).map do |story|
+      story.try(:link_ids)
+    end.flatten.compact.uniq
+
+    links.map(&:id).any? { |id| record_blocked_links.include?(id) }
   end
 
-  def revalidate!
-    links.delete_if { |record| !valid_record?(record) }
+  def map_result_ids(response)
+    current_link_ids = links.map(&:id)
+    result_ids = response.records.ids.select do |id|
+      current_link_ids.exclude?(id.to_i) && blocked_links.exclude?(id.to_i)
+    end
+  end
+
+  def set_blocked_links
+    base_blocked_story_links = [
+      base_link.try(:story).try(:blocked_story_links),
+      base_link.blocked_story_links
+    ].flatten.compact.uniq
+
+    base_blocked_story_links.map(&:story).map do |story|
+      blocked_links.concat(story.try(:link_ids).to_a)
+    end
+
+    blocked_links.uniq!
   end
 end
