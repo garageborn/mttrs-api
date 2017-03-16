@@ -10,8 +10,9 @@ class Publisher
     has_nested_form :blocked_urls, form: BlockedUrl::Contract, klass: BlockedUrl
     has_nested_form :publisher_domains,
                     form: PublisherDomain::Contract,
-                    klass: PublisherDomain, prepopulate: true
-    has_nested_form :title_replacements, form: TitleReplacement::Contract, klass: TitleReplacement
+                    klass: PublisherDomain,
+                    prepopulate: true
+    has_nested_form :title_replacements, form: TitleReplacement::Contract, klass: TitleReplacement, prepopulate: false
 
     validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }

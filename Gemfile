@@ -57,7 +57,7 @@ gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.1.7'
 
 group :production do
-  gem 'puma', '3.8.1'
+  gem 'puma', '3.8.2'
   gem 'sentry-raven', '2.4.0'
 end
 
