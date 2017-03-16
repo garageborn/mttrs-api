@@ -85,7 +85,7 @@ class SimilarLinks
   end
 
   def set_blocked_links
-    base_story_blocked_links = base_link.try(:story).try(:blocked_story_links).map(&:link_id)
+    base_story_blocked_links = base_link.try(:story).try(:blocked_story_links).to_a.map(&:link_id)
 
     base_link_blocked_links = base_link.blocked_story_links.map(&:story).map do |story|
       story.try(:link_ids).to_a
