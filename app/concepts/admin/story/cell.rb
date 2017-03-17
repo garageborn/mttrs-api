@@ -101,8 +101,8 @@ module Admin
           @options[:links]
         end
 
-        def story
-          @options[:story]
+        def story_id
+          @options[:story_id]
         end
       end
 
@@ -113,18 +113,12 @@ module Admin
         def links
           model.links.popular.includes(INCLUDES)
         end
+      end
 
-        def similar
-          options = { min_score: 1, includes: INCLUDES }
-          similar_links = SimilarLinks.new(model.main_link, options)
-
-          model.links.each { |link| similar_links.process_similars(link) }
-          similar_links.links.delete_if { |similar_link| model.link_ids.include?(similar_link.id) }
-
-          similar_links.by_score
+      class SimilarLinks < Trailblazer::Cell
+        def story_id
+          params[:id].to_i
         end
-
-        memoize :similar
       end
 
       class FormLink < Trailblazer::Cell
@@ -172,7 +166,7 @@ module Admin
         end
 
         def actions
-          label = model.story.try(:id) == @options[:story].id ? 'remove' : 'add'
+          label = model.story.try(:id) == @options[:story_id] ? 'remove' : 'add'
           link_to label, '#', class: 'story-form-link-button'
         end
       end
