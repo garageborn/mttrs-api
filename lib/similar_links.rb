@@ -19,15 +19,16 @@ class SimilarLinks
     end
   end
 
-  attr_reader :base_link, :blocked_links, :includes, :links, :options
+  attr_reader :base_link, :blocked_links, :category, :includes, :links, :options
   def_delegators :@links, :each, :each_with_index, :map, :first, :last
 
-  def initialize(base_link, options = {})
-    @base_link = base_link
+  def initialize(options = {})
+    @options = options.dup
+    @base_link = @options.delete(:base_link)
     @links = []
     @blocked_links = []
-    @includes = %i(category category_link) + options.delete(:includes).to_a
-    @options = options
+    @includes = %i(category category_link) + @options.delete(:includes).to_a
+    @category = @options.delete(:category) || base_link.try(:category)
     perform
   end
 
@@ -42,6 +43,7 @@ class SimilarLinks
   end
 
   def perform
+    return unless base_link.present?
     set_blocked_links
     process_similars(base_link)
     each { |link| process_similars(link) }
@@ -64,7 +66,7 @@ class SimilarLinks
   end
 
   def valid_category?(record)
-    record.category == base_link.category
+    record.category == category
   end
 
   def blocked_story_link?(record)
@@ -79,12 +81,13 @@ class SimilarLinks
 
   def map_result_ids(response)
     current_link_ids = links.map(&:id)
-    result_ids = response.records.ids.select do |id|
+    response.records.ids.select do |id|
       current_link_ids.exclude?(id.to_i) && blocked_links.exclude?(id.to_i)
     end
   end
 
   def set_blocked_links
+    return unless base_link.present?
     base_story_blocked_links = base_link.try(:story).try(:blocked_story_links).to_a.map(&:link_id)
 
     base_link_blocked_links = base_link.blocked_story_links.map(&:story).map do |story|

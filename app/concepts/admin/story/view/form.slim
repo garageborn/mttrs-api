@@ -2,6 +2,7 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :id, as: :hidden
     = f.input :published_at, as: :datetime, html5: true
     = f.input :headline
     = f.input :summary, input_html: { cols: 80, rows: 10 }
@@ -12,12 +13,19 @@
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
-- if links.present?
-  h3 Current Links
-  = concept('admin/story/cell/form_links', nil, links: links, story: model)
+.current-links
+  - if links.present?
+    h3 Current Links
+    = concept('admin/story/cell/form_links', nil, links: links, story_id: model.id)
 
 br
 
-- if similar.present?
+.other-links
   h3 Other Links
-  = concept('admin/story/cell/form_links', nil, links: similar, story: model)
+
+br
+
+.find-links
+  h3 Find Links
+  form
+    input.string(type='text')

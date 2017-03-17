@@ -26,6 +26,11 @@ module Admin
       render_form
     end
 
+    def similar_links
+      present ::Story::SimilarLinks
+      render html: concept('admin/story/cell/similar_links', @model, layout: false)
+    end
+
     private
 
     def render_form

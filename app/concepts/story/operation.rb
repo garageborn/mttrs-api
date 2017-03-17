@@ -14,6 +14,54 @@ class Story
     end
   end
 
+  class SimilarLinks < Trailblazer::Operation
+    include Collection
+    extend Memoist
+    QUERY_OPTIONS = {
+      min_score: 1,
+      includes: %i(category publisher story link_url)
+    }.freeze
+
+    def model!(params)
+      return unless similar_links.present?
+      similar_links.links.delete_if { |similar_link| story.link_ids.include?(similar_link.id) }
+      similar_links.by_score
+    end
+
+    def params!(params)
+      params.permit(:id, :published_at, :query)
+    end
+
+    private
+
+    def story
+      Story.find(@params[:id])
+    end
+
+    def similar_links
+      @params[:query].present? ? query_similar_links : story_similar_links
+    end
+
+    def query_similar_links
+      response = ::Link.find_similar(
+        query: @params[:query],
+        published_at: story.published_at,
+        size: 50
+      )
+      similar_links = ::SimilarLinks.new(QUERY_OPTIONS.merge(category: story.category))
+      response.records.each { |link| similar_links.process_similars(link) }
+      similar_links
+    end
+
+    def story_similar_links
+      similar_links = ::SimilarLinks.new(QUERY_OPTIONS.merge(base_link: story.main_link))
+      story.links.each { |link| similar_links.process_similars(link) }
+      similar_links
+    end
+
+    memoize :story, :similar_links, :query_similar_links, :story_similar_links
+  end
+
   class Operation < Trailblazer::Operation
     include Model
     include Callback

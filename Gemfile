@@ -48,6 +48,7 @@ gem 'whenever', '0.9.7', require: false
 # Assets
 gem 'cocoon', '1.2.9'
 gem 'compass-rails', '3.0.2'
+gem 'lodash-rails', '4.17.4'
 gem 'jquery-rails', '4.2.2'
 gem 'js-routes', '1.3.3'
 gem 'paloma', '5.0.0'

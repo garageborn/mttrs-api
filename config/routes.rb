@@ -23,7 +23,9 @@ Rails.application.routes.draw do
       end
       resources :publishers, except: :show
       resources :publisher_suggestions, except: :show
-      resources :stories, only: %i(index edit update destroy)
+      resources :stories, only: %i(index edit update destroy) do
+        get :similar_links, on: :member
+      end
       get '/elastic', to: 'elastic#index'
     end
   end

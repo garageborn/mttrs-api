@@ -21,3 +21,4 @@ class Tenant {
 }
 
 $(document).on('turbolinks:load', () => { Tenant.init() })
+Tenant.init()

@@ -5,23 +5,21 @@ module Concerns
     included do
       extend Memoist
 
-      def similar(options = {})
-        return if new_record?
-        SimilarLinks.new(self, options)
-      end
+      def self.find_similar(options = {})
+        query = options.delete(:query)
+        exclude = options.delete(:exclude) || []
+        published_at = options.delete(:published_at)
 
-      def find_similar(options = {})
-        return if new_record?
         default_options = {
           min_score: 1.5,
           size: 1_000,
           query: {
             bool: {
               must: {
-                match: { title: title }
+                match: { title: query }
               },
               must_not: {
-                ids: { values: [id] }
+                ids: { values: exclude }
               },
               filter: {
                 range: {
@@ -34,7 +32,20 @@ module Concerns
             }
           }
         }
-        self.class.search(default_options.merge(options))
+        search(default_options.merge(options))
+      end
+
+      def similar(options = {})
+        return if new_record?
+        SimilarLinks.new(options.merge(base_link: self))
+      end
+
+      def find_similar(options = {})
+        return if new_record?
+
+        self.class.find_similar(
+          options.merge(query: title, exclude: [id], published_at: published_at)
+        )
       end
 
       memoize :similar
