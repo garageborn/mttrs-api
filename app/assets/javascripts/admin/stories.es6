@@ -60,12 +60,14 @@ class StoryAddSimilarLinks {
 
   run (query) {
     this.clear()
+    this.container.append("<p class='loading'>Loading...</p>")
 
     let route = this.buildRoute(query)
     this.xhr = $.get(route, (data) => {
       let table = $(data)
       this.container.append(table)
       new StoryFormLinksActions(table)
+      this.container.find('p.loading').remove()
     })
   }
 
@@ -85,14 +87,16 @@ class StoryAddSimilarLinks {
 
 class StoryFindSimilarLinks {
   constructor (selector) {
-    this.handleQuery = _.debounce(this.handleQuery.bind(this), 2000)
+    this.handleQuery = _.debounce(this.handleQuery.bind(this), 1500)
     this.addSimilar = new StoryAddSimilarLinks(selector)
     this.input = $(selector).find('form input')
     this.input.keydown(this.handleQuery)
+    this.lastQuery = ''
   }
 
   handleQuery () {
     this.validQuery ? this.addSimilar.run(this.query) : this.addSimilar.clear()
+    this.lastQuery = this.query
   }
 
   get query () {
@@ -100,7 +104,7 @@ class StoryFindSimilarLinks {
   }
 
   get validQuery() {
-    return this.query.length > 3
+    return this.query.length >= 3 && this.query !== this.lastQuery
   }
 }
 

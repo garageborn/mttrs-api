@@ -17,15 +17,14 @@
   - if links.present?
     h3 Current Links
     = concept('admin/story/cell/form_links', nil, links: links, story_id: model.id)
-
-br
-
-.other-links
-  h3 Other Links
-
 br
 
 .find-links
   h3 Find Links
   form
     input.string(type='text')
+
+br
+
+.other-links
+  h3 Other Links
