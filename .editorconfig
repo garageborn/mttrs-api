@@ -21,3 +21,6 @@ indent_size = 2
 
 [*.jade]
 indent_size = 2
+
+[*.slim]
+indent_size = 2

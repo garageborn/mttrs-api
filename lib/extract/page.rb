@@ -1,6 +1,6 @@
-module Extract
+class Extract
   class Page
-    attr_accessor :content, :description, :html, :image, :language, :title, :url
+    attr_accessor :content, :description, :html, :image, :language, :published_at, :title, :url
 
     def initialize(attributes = {})
       self.content = attributes[:content]
@@ -8,6 +8,7 @@ module Extract
       self.html = attributes[:html]
       self.image = attributes[:image]
       self.language = attributes[:language]
+      self.published_at = attributes[:published_at]
       self.title = attributes[:title]
       self.url = attributes[:url]
     end
@@ -26,13 +27,14 @@ module Extract
 
     def merge(attrs)
       attributes.each do |attribute|
-        next if send(attribute).present?
-        send("#{ attribute }=", attrs[attribute])
+        new_value = attrs[attribute]
+        next if new_value.blank?
+        send("#{ attribute }=", new_value)
       end
     end
 
     def attributes
-      %i(content description html language image title url)
+      %i(content description html image language published_at title url)
     end
   end
 end

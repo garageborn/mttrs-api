@@ -1,6 +1,6 @@
 require 'readability'
 
-module Extract
+class Extract
   class Content < Base
     attr_reader :content
 
