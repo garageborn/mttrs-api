@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Base
     attr_reader :document, :publisher
 
@@ -15,7 +15,7 @@ module Extract
 
     def tag_value(name)
       method = name.start_with?('//') ? :xpath : :css
-      tags = document.send(method, method)
+      tags = document.send(method, name)
 
       return if tags.none?
       Utils::StripAttributes.run(tags.text)
@@ -26,7 +26,7 @@ module Extract
       return if attribute_matchers.blank?
 
       attribute_matchers.each do |attribute_matcher|
-        value = tag_value(attribute_matcher.matcer)
+        value = tag_value(attribute_matcher.matcher)
         return value if value.present?
       end
 

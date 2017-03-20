@@ -1,4 +1,4 @@
-module Extract
+class Extract
   extend Memoist
   autoload :Page, './lib/extract/page'
   autoload :Base, './lib/extract/base'
@@ -14,8 +14,8 @@ module Extract
 
   attr_reader :entry, :force_attributes, :page, :publisher
 
-  def self.run(page)
-    extract = Extract.new(page)
+  def self.run(page, options = {})
+    extract = Extract.new(page, options)
     extract.run
     extract.page
   end

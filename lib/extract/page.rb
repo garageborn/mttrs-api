@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Page
     attr_accessor :content, :description, :html, :image, :language, :published_at, :title, :url
 

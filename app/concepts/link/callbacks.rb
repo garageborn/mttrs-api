@@ -27,7 +27,7 @@ class Link
       end
 
       def enqueue_link_full_fetch!
-        return unless contract.model.needs_full_fetch?
+        return unless contract.model.missing_html?
         FullFetchLinkJob.perform_async(contract.model.id)
       end
 

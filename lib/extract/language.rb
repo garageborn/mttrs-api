@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Language < Base
     def value
       language = in_language || html_language || matcher_value(:language)

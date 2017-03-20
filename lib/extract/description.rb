@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Description < Base
     def value
       meta_description || matcher_value(:description)

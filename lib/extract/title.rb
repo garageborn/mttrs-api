@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Title < Base
     def value
       meta_title || tag_value('title') || matcher_value(:title)

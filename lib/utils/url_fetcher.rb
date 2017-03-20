@@ -6,7 +6,7 @@ module Utils
         followlocation: true,
         headers: {
           'User-Agent' => Utils::UserAgent.sample,
-          'Content-Type' => 'text/html; charset=utf-8'
+          # 'Content-Type' => 'text/html; charset=utf-8' # temp disable
         },
         ssl_verifypeer: false
       )

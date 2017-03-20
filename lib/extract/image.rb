@@ -1,4 +1,4 @@
-module Extract
+class Extract
   class Image < Base
     def value
       meta_image || matcher_value(:image_source_url)
