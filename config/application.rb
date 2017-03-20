@@ -20,6 +20,7 @@ module Mttrs
   class Application < Rails::Application
     config.time_zone = 'UTC'
     config.active_record.timestamped_migrations = false
+    config.i18n.available_locales = %w(en pt)
     config.eager_load_paths += %W(
       #{ config.root }/lib
       #{ config.root }/app/graph/resolvers
