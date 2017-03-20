@@ -27,8 +27,9 @@ class Extract
 
     def merge(attrs)
       attributes.each do |attribute|
-        next if send(attribute).present?
-        send("#{ attribute }=", attrs[attribute])
+        new_value = attrs[attribute]
+        next if new_value.blank?
+        send("#{ attribute }=", new_value)
       end
     end
 
