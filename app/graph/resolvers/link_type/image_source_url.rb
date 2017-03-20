@@ -10,7 +10,7 @@ module Resolvers
 
       def story_images
         return [] if obj.story.blank?
-        obj.story.links.popular.pluck(:image_source_url).compact.uniq
+        obj.story.links.popular.pluck(:image_source_url).compact.uniq.select(&:present?)
       end
 
       memoize :story_images
