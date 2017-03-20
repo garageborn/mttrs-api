@@ -4,6 +4,7 @@ class FullFetchLinkJob
 
   sidekiq_options queue: :link_full_fetch
   attr_reader :link_id
+  delegate :publisher, to: :link
 
   def perform(link_id)
     @link_id = link_id
@@ -30,7 +31,7 @@ class FullFetchLinkJob
   end
 
   def set_image_source_url
-    return if link.publisher.blocked_urls.match?(page.image)
+    return if publisher.blocked_urls.match?(page.image)
     link.image_source_url = page.image
   end
 
@@ -42,13 +43,14 @@ class FullFetchLinkJob
     current_page = Extract::Page.new(
       content: link.content,
       description: link.description,
-      image: link.image_source_url,
-      language: link.language || link.publisher.language,
       html: link.html,
+      image: link.image_source_url,
+      language: link.language || publisher.language,
+      published_at: link.published_at,
       title: link.title,
       url: link.uri
     )
-    Extract.run(current_page)
+    Extract.run(current_page, publisher: publisher, force_attributes: %i(published_at))
   end
 
   memoize :link, :page

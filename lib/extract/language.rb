@@ -1,7 +1,8 @@
 module Extract
   class Language < Base
     def value
-      Utils::Language.find(in_language || html_language)
+      language = in_language || html_language || matcher_value(:language)
+      Utils::Language.find(language)
     end
 
     private

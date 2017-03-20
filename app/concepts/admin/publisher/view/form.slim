@@ -35,6 +35,15 @@
                                 partial: 'title_replacements',
                                 force_non_association_create: true
 
+    strong Attribute Matchers
+    .attribute_matchers_inputs
+      - f.simple_fields_for :attribute_matchers do |d|
+        = render(view: 'attribute_matchers', locals: { f: d })
+
+      = link_to_add_association 'Add', f, :attribute_matchers,
+                                partial: 'attribute_matchers',
+                                force_non_association_create: true
+
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete

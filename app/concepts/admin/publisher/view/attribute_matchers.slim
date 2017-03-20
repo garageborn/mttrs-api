@@ -1,0 +1,5 @@
+.nested-fields
+  = f.input :name, collection: %w(description image_source_url language published_at title),
+    prompt: false
+  = f.input :matcher, hint: 'xpath or css', input_html: { rows: 1, cols: 100 }
+  = link_to_remove_association 'Delete', f

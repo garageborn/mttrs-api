@@ -12,7 +12,14 @@ class Publisher
                     form: PublisherDomain::Contract,
                     klass: PublisherDomain,
                     prepopulate: true
-    has_nested_form :title_replacements, form: TitleReplacement::Contract, klass: TitleReplacement, prepopulate: false
+    has_nested_form :title_replacements,
+                    form: TitleReplacement::Contract,
+                    klass: TitleReplacement,
+                    prepopulate: false
+    has_nested_form :attribute_matchers,
+                    form: AttributeMatcher::Contract,
+                    klass: AttributeMatcher,
+                    prepopulate: false
 
     validates :icon_id, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
