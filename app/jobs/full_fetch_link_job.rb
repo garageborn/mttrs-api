@@ -36,7 +36,9 @@ class FullFetchLinkJob
   end
 
   def merge_attribute(attribute)
-    link[attribute] = page.send(attribute) if link[attribute].blank?
+    new_value = link[attribute]
+    return if new_value.blank?
+    link[attribute] = page.send(attribute)
   end
 
   def page
