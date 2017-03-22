@@ -37,7 +37,7 @@ class Access
 
     def update(access)
       if @params[:access][:hits]
-        access.update_column(:hits, @params[:access][:hits])
+        access.update_attributes(:hits, @params[:access][:hits])
       else
         access.increment!(:hits)
       end
