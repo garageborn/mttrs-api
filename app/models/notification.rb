@@ -1,10 +1,9 @@
 class Notification
   include ActiveModel::Model
-  attr_accessor :title, :message, :data, :image
+  attr_accessor :title, :message, :image
 
   def initialize(attributes = {})
     super(attributes)
-    @data ||= {}
   end
 
   def to_json
@@ -25,23 +24,27 @@ class Notification
     ENV['ONESIGNAL_APP_ID']
   end
 
+  def big_picture
+    image
+  end
+
   def contents
     { en: message }
+  end
+
+  def data
+    { type: :text, tenant: Apartment::Tenant.current }
   end
 
   def headings
     { en: title }
   end
 
-  def ios_attachments
-    { id: image }
-  end
-
-  def big_picture
-    image
-  end
-
   def included_segments
     [Apartment::Tenant.current]
+  end
+
+  def ios_attachments
+    { id: image }
   end
 end

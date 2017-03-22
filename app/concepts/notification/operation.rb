@@ -19,5 +19,6 @@ class Notification
       else
         Notification.new(params)
       end
+    end
   end
 end
