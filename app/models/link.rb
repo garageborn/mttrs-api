@@ -11,15 +11,16 @@ class Link < ApplicationRecord
   extend Memoist
 
   belongs_to :publisher
+  has_many :blocked_story_links, inverse_of: :link, dependent: :destroy
+  has_many :link_urls, inverse_of: :link, dependent: :destroy
+  has_many :notifications, as: :notificable, dependent: :destroy
+  has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_one :category, through: :category_link
   has_one :category_link, inverse_of: :link, dependent: :destroy
-  has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
-  has_many :social_counters, inverse_of: :link, dependent: :destroy
-  has_many :blocked_story_links, inverse_of: :link, dependent: :destroy
-  has_one :story_link, inverse_of: :link, dependent: :destroy
-  has_one :story, through: :story_link
   has_one :social_counter, -> { order(id: :desc) }
+  has_one :story, through: :story_link
+  has_one :story_link, inverse_of: :link, dependent: :destroy
 
   scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }

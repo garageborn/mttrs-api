@@ -3,6 +3,7 @@
 
   .form-inputs
     = f.input :id, as: :hidden
+    = f.association :category, collection: Category.order_by_name, prompt: false
     = f.input :published_at, as: :datetime, html5: true
     = f.input :headline
     = f.input :summary, input_html: { cols: 80, rows: 10 }
@@ -12,6 +13,7 @@
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
+    = notification_link
 
 .current-links
   - if links.present?

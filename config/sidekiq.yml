@@ -11,6 +11,7 @@ production:
   - link_full_fetch
   - link_process
   - mailers
+  - notification_deliver
   - refresh_story
   - story_builder
   - title_replacements

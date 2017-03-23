@@ -113,6 +113,20 @@ module Admin
         def links
           model.links.popular.includes(INCLUDES)
         end
+
+        def notification_link
+          main_link = model.main_link
+          return if main_link.blank?
+
+          options = {
+            notificable_type: 'Link',
+            notificable_id: main_link.id,
+            title: main_link.title,
+            message: model.summary,
+            image_url: model.main_image_source_url
+          }
+          link_to 'Create Notification', [:new, :admin, :notification, { notification: options }]
+        end
       end
 
       class SimilarLinks < Trailblazer::Cell

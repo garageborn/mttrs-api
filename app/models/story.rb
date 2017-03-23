@@ -64,5 +64,11 @@ class Story < ApplicationRecord
     links.publisher_slug(slug).popular.first
   end
 
+  def main_image_source_url
+    image_source_url = main_link.try(:image_source_url)
+    return image_source_url if image_source_url.present?
+    links.popular.pluck(:image_source_url).compact.uniq.select(&:present?).first
+  end
+
   memoize :main_publisher_link
 end

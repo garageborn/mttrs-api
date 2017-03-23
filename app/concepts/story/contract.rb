@@ -1,5 +1,6 @@
 class Story
   class Contract < Reform::Form
+    property :category_id
     property :headline
     property :summary
     property :links
@@ -8,5 +9,6 @@ class Story
     property :link_ids
     property :added_links, virtual: true
     property :removed_links, virtual: true
+    property :main_image_source_url, virtual: true
   end
 end

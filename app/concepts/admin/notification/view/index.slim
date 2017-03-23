@@ -1,0 +1,14 @@
+h2= link_to 'New Notification', [:new, :admin, :notification], class: 'notifications-add-button'
+
+table.notifications
+  thead
+    tr
+      th Title
+      th Created At
+      th Onesignal URL
+      th
+
+  tbody
+    = concept('admin/notification/cell/item', collection: model)
+
+= paginate(model)

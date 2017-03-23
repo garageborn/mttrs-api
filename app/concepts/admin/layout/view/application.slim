@@ -12,6 +12,10 @@ html
 
   body
     = concept('admin/layout/cell/navigation')
+
+    - if parent_controller.flash[:notice]
+      .flash= parent_controller.flash[:notice]
+
     main.root= yield
     = insert_paloma_hook
 

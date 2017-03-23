@@ -3,17 +3,17 @@ module Resolvers
     class ImageSourceUrl < Base
       def resolve
         return obj.image_source_url if obj.image_source_url.present?
-        story_images.first
+        story_main_image_source_url
       end
 
       private
 
-      def story_images
-        return [] if obj.story.blank?
-        obj.story.links.popular.pluck(:image_source_url).compact.uniq.select(&:present?)
+      def story_main_image_source_url
+        return if obj.story.blank?
+        obj.story.main_image_source_url
       end
 
-      memoize :story_images
+      memoize :story_main_image_source_url
     end
   end
 end
