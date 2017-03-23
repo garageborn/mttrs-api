@@ -6,6 +6,7 @@ class Notification
     property :message
     property :image_url
     property :onesignal_id
+    property :response
     property :onesignal_url, virtual: true
 
     validates :title, :message, presence: true
