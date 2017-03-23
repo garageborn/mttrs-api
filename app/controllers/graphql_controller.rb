@@ -3,7 +3,6 @@ class GraphqlController < ApplicationController
   before_action :parse_query_variables
 
   def create
-    batata
     result = MttrsSchema.execute(
       @query_string,
       variables: @query_variables,
