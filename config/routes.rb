@@ -21,7 +21,7 @@ Rails.application.routes.draw do
         get :uncategorized, on: :collection
         get :similar, on: :collection
       end
-      resources :notifications, only: %i(new create)
+      resources :notifications, except: :show
       resources :publishers, except: :show
       resources :publisher_suggestions, except: :show
       resources :stories, only: %i(index edit update destroy) do

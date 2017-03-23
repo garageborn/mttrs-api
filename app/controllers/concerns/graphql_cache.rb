@@ -13,7 +13,7 @@ module Concerns
     private
 
     def set_graphql_expires
-      return unless Rails.env.production?
+      # return unless Rails.env.production?
       return expires_now if graphql_expires.include?(:now)
       expires_in(graphql_expires.min, public: true)
     end

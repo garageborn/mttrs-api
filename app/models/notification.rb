@@ -1,17 +1,21 @@
-class Notification
-  include ActiveModel::Model
-  attr_accessor :title, :message, :image
+class Notification < ActiveRecord::Base
+  include Concerns::Filterable
 
-  def initialize(attributes = {})
-    super(attributes)
+  belongs_to :notificable, polymorphic: true
+
+  scope :recent, -> { order(created_at: :desc) }
+
+  def onesignal_url
+    return if onesignal_id.blank?
+    "https://onesignal.com/apps/#{ app_id }/notifications/#{ onesignal_id }"
   end
 
-  def to_json
+  def to_query(data = {})
     {
       app_id: app_id,
       big_picture: big_picture,
       contents: contents,
-      data: data,
+      data: data.merge(tenant: Apartment::Tenant.current),
       headings: headings,
       included_segments: included_segments,
       ios_attachments: ios_attachments
@@ -25,15 +29,11 @@ class Notification
   end
 
   def big_picture
-    image
+    image_url
   end
 
   def contents
     { en: message }
-  end
-
-  def data
-    { type: :text, tenant: Apartment::Tenant.current }
   end
 
   def headings
@@ -45,6 +45,6 @@ class Notification
   end
 
   def ios_attachments
-    { id: image }
+    { id: image_url }
   end
 end
