@@ -9,6 +9,6 @@ class Story
     property :link_ids
     property :added_links, virtual: true
     property :removed_links, virtual: true
-    property :main_image_source_url, virtual: true
+    property :main_image_source_url, writeable: false
   end
 end
