@@ -19,7 +19,7 @@ class Notification < ActiveRecord::Base
       headings: headings,
       included_segments: included_segments,
       ios_attachments: ios_attachments
-    }
+    }.compact
   end
 
   private
@@ -29,6 +29,7 @@ class Notification < ActiveRecord::Base
   end
 
   def big_picture
+    return if image_url.blank?
     image_url
   end
 
@@ -45,6 +46,7 @@ class Notification < ActiveRecord::Base
   end
 
   def ios_attachments
+    return if image_url.blank?
     { id: image_url }
   end
 end
