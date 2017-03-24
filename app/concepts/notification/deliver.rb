@@ -23,11 +23,12 @@ class Notification
       end
 
       def update_model(response)
+        onesignal_id = response.try(:[], :id) if response.is_a?(Hash)
         if @params[:try_out]
           model.response = response
-          model.onesignal_id = response.try(:[], :id)
+          model.onesignal_id = onesignal_id
         else
-          model.update_attributes(response: response, onesignal_id: response[:id])
+          model.update_attributes(response: response, onesignal_id: onesignal_id)
         end
       end
 
