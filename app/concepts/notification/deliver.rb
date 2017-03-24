@@ -1,10 +1,9 @@
 class Notification
   class Deliver < Operation
-
     class Base < Operation
       extend Memoist
 
-      def process(params)
+      def process(*)
         return if model.blank? || query.blank?
         response = JSON.parse(request.response.body).with_indifferent_access
         update_model(response)
