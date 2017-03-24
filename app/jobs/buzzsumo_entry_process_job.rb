@@ -43,9 +43,10 @@ class BuzzsumoEntryProcessJob
   end
 
   def image_source_url
-    thumbnail = entry[:thumbnail].to_s
-    return thumbnail unless publisher.blocked_urls.match?(thumbnail)
-    link.try(:image_source_url)
+    images = [link.try(:image_source_url), entry[:thumbnail]].compact.uniq
+    images.find do |image|
+      image.present? && !publisher.blocked_urls.match?(image)
+    end
   end
 
   def language
