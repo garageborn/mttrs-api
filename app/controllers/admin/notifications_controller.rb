@@ -18,6 +18,7 @@ module Admin
     def create
       run ::Notification::Create do |op|
         flash[:notice] = "Notification '#{ op.model.title }' created"
+        return render_form if op.contract.try_out
         return redirect_to [:admin, :notifications]
       end
       render_form
@@ -26,6 +27,7 @@ module Admin
     def update
       run ::Notification::Update do |op|
         flash[:notice] = "Notification '#{ op.model.title }' updated"
+        return render_form if op.contract.try_out
         return redirect_to [:admin, :notifications]
       end
       render_form

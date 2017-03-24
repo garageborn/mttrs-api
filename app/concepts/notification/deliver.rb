@@ -1,26 +1,43 @@
 class Notification
   class Deliver < Operation
-    action :find
 
     class Base < Operation
-      action :find
+      extend Memoist
 
-      def process(*)
+      def process(params)
         return if model.blank? || query.blank?
-        request = OneSignal::Notification.create(params: query)
         response = JSON.parse(request.response.body).with_indifferent_access
-
-        model.update_attributes(
-          response: response,
-          onesignal_id: response[:id]
-        )
+        update_model(response)
       rescue OneSignal::OneSignalError => error
-        model.update_attributes(response: error.http_body)
+        update_model(error.http_body)
       end
 
       def query
         raise 'Missing implementation'
       end
+
+      private
+
+      def model!(params)
+        params[:model] || ::Notification.find_by(id: params[:id])
+      end
+
+      def update_model(response)
+        if @params[:try_out]
+          model.response = response
+          model.onesignal_id = response.try(:[], :id)
+        else
+          model.update_attributes(response: response, onesignal_id: response[:id])
+        end
+      end
+
+      def request
+        request_params = query
+        request_params[:included_segments] = ['Test User'] if @params[:try_out]
+        OneSignal::Notification.create(params: request_params)
+      end
+
+      memoize :request
     end
 
     class Text < Base
@@ -47,10 +64,16 @@ class Notification
     def process(*)
       return if model.blank?
       if model.notificable.is_a?(::Link)
-        Notification::Deliver::Link.run(id: model.id)
+        Notification::Deliver::Link.run(@params)
       else
-        Notification::Deliver::Text.run(id: model.id)
+        Notification::Deliver::Text.run(@params)
       end
+    end
+
+    private
+
+    def model!(params)
+      params[:model] || ::Notification.find_by(id: params[:id])
     end
   end
 end
