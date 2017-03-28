@@ -16,14 +16,14 @@ gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.0'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.5.3'
+gem 'graphql', '1.5.4'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
 gem 'kaminari-cells', '0.0.4'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
-gem 'nokogiri', '1.7.0.1'
+gem 'nokogiri', '1.7.1'
 gem 'one_signal', '1.2.0'
 gem 'pg', '0.20.0'
 gem 'public_suffix', '2.0.5'
@@ -32,12 +32,12 @@ gem 'redis-namespace', '1.5.2'
 gem 'reform-rails', '0.1.7'
 gem 'retries', '0.0.5'
 gem 'ruby-readability', '0.7.0'
-gem 'sidekiq', '4.2.9'
+gem 'sidekiq', '4.2.10'
 gem 'sidekiq-failures', '0.4.5'
 gem 'sidekiq-limit_fetch', '3.4.0'
 gem 'sidekiq-unique-jobs', '4.0.18'
 gem 'simple_form', '3.4.0'
-gem 'sinatra', '2.0.0.rc1'
+gem 'sinatra', '2.0.0.rc2'
 gem 'slim-rails', '3.1.2'
 gem 'thread', '0.2.2'
 gem 'trailblazer', '1.1.2'
@@ -50,7 +50,7 @@ gem 'whenever', '0.9.7', require: false
 gem 'cocoon', '1.2.9'
 gem 'compass-rails', '3.0.2'
 gem 'lodash-rails', '4.17.4'
-gem 'jquery-rails', '4.2.2'
+gem 'jquery-rails', '4.3.1'
 gem 'js-routes', '1.3.3'
 gem 'paloma', '5.0.0'
 gem 'sass-rails', '5.0.6'
@@ -79,7 +79,7 @@ group :development do
   gem 'capistrano-rails', '1.2.3', require: false
   gem 'capistrano-rbenv', '2.1.0', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
-  gem 'capistrano3-puma', '1.2.1', require: false
+  gem 'capistrano3-puma', '3.1.0', require: false
   gem 'rack-cors', '0.4.1', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
   gem 'slackistrano', '3.1.0', require: false
@@ -93,7 +93,7 @@ group :test do
   gem 'rspec-sidekiq', '2.2.0'
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
-  gem 'simplecov', '0.13.0', require: false
+  gem 'simplecov', '0.14.1', require: false
   gem 'terminal-notifier', '1.7.1', require: false
   gem 'terminal-notifier-guard', '1.7.0', require: false
 end

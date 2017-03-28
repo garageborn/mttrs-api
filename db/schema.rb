@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 44) do
+ActiveRecord::Schema.define(version: 46) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,27 @@ ActiveRecord::Schema.define(version: 44) do
     t.index ["link_id", "story_id"], name: "index_story_links_on_link_id_and_story_id", unique: true, using: :btree
     t.index ["main", "story_id"], name: "index_story_links_on_main_and_story_id", using: :btree
     t.index ["story_id", "link_id"], name: "index_story_links_on_story_id_and_link_id", unique: true, using: :btree
+  end
+
+  create_table "tag_matchers", force: :cascade do |t|
+    t.integer  "tag_id",                null: false
+    t.text     "url_matcher"
+    t.text     "html_matcher_selector"
+    t.text     "html_matcher"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.index ["tag_id"], name: "index_tag_matchers_on_tag_id", using: :btree
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.integer  "category_id",             null: false
+    t.citext   "name",                    null: false
+    t.integer  "order",       default: 0, null: false
+    t.citext   "slug",                    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["category_id", "order"], name: "index_tags_on_category_id_and_order", using: :btree
+    t.index ["slug"], name: "index_tags_on_slug", unique: true, using: :btree
   end
 
   create_table "title_replacements", force: :cascade do |t|
