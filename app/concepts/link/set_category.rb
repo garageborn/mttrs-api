@@ -20,7 +20,9 @@ class Link
       private
 
       def new_category
-        LinkCategorizer.run(model)
+        model.publisher.category_matchers.ordered.to_a.detect do |category_matcher|
+          category_matcher.match?(model)
+        end.try(:category)
       end
 
       memoize :new_category
