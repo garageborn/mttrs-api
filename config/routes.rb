@@ -27,6 +27,8 @@ Rails.application.routes.draw do
       resources :stories, only: %i(index edit update destroy) do
         get :similar_links, on: :member
       end
+      resources :tags, except: :show
+      resources :tag_matchers, except: :show
       get '/elastic', to: 'elastic#index'
     end
   end
