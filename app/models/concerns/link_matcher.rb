@@ -8,7 +8,7 @@ module Concerns
       match_url?(link) || match_html?(link)
     end
 
-    def method
+    def find_method
       html_matcher_selector.start_with?('//') ? :xpath : :css
     end
 
@@ -31,7 +31,7 @@ module Concerns
       return false if link.page.blank?
       return false if html_matcher.blank? || html_matcher_selector.blank?
 
-      selector = link.page.send(method, html_matcher_selector)
+      selector = link.page.send(find_method, html_matcher_selector)
       text = Utils::StripAttributes.run(selector.text)
       return if text.blank?
       text.match(html_matcher_regexp).present?
