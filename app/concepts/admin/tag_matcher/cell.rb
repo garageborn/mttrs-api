@@ -41,7 +41,7 @@ module Admin
 
         def matching_links
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
-          publisher_untagged_links.to_a.select { |link| link_matcher.match?(link) }
+          publisher_untagged_links.limit(500).to_a.select { |link| link_matcher.match?(link) }
         end
 
         def matching_links_count
@@ -62,15 +62,15 @@ module Admin
         def publisher_untagged_links
           publisher = ::Publisher.find_by(id: model.publisher_id)
           tag = ::Tag.find_by(id: model.tag_id)
-          return ::Link.untagged.available_on_current_tenant.order_by_url if publisher.blank?
 
-          scope = if tag.present?
+          scope = case
+                  when publisher.present? && tag.present?
                     publisher.links.category_slug(tag.category.slug).without_tag(tag.id)
-                  else
+                  when publisher.present?
                     publisher.links.untagged
+                  else ::Link.untagged
                   end
-
-          scope.available_on_current_tenant.order_by_url
+          scope.available_on_current_tenant.recent.includes(:link_url)
         end
 
         def link_matcher
