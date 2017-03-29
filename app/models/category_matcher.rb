@@ -10,8 +10,9 @@ class CategoryMatcher < ApplicationRecord
             uniqueness: { case_sensitive: false, scope: :publisher_id },
             allow_blank: true
 
-  strip_attributes :url_matcher
+  strip_attributes :url_matcher, :html_matcher
 
   scope :order_by_publisher_name, -> { joins(:publisher).order('unaccent(publishers.name) ASC') }
+  scope :order_by_category_name, -> { joins(:category).order('unaccent(categories.name) ASC') }
   scope :ordered, -> { order(:order) }
 end

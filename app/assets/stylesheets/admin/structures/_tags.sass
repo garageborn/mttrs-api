@@ -1,21 +1,18 @@
 // *************************************
 //
-//   Header
+//   Tags
 //
 // -------------------------------------
 //   Template
 // -------------------------------------
 //
-// .header[.header--modifier](.is-state)(.has-context)
-//   .header-scaffolding
+// tags[tags--modifier](.is-state)(.has-context)
+//   tags-scaffolding
 //
 // *************************************
 
-header
-  +clearfix
-  background: $c-header-background
-  padding: $b-space 0
-  width: 100%
+.tags
+  @extend %table
 
 // -------------------------------------
 //   Modifiers
@@ -38,16 +35,9 @@ header
 // -------------------------------------
 //   Scaffolding
 // -------------------------------------
-.header-logo
-  float: left
-  margin: 0 em(8px)
 
-.header-item
-  +inline-block
-  color: $c-subdue
-  font-size: $b-fontSize-h4
-  margin: em(8px) $b-space-s 0 $b-space-xs
+.tags-add-button
+  @extend %button--add
 
-.header-tenant
-  float: right
-  margin: 0 $b-space
+.tags-edit-button
+  @extend %button--edit

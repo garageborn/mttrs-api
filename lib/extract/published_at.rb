@@ -32,7 +32,7 @@ class Extract
       translated_key.each_with_index do |value, index|
         default_value = default_key[index]
         next if value.blank? || default_value.blank?
-        regex =  /#{ value }\b+/i
+        regex = /#{ value }\b+/i
         published_at.gsub!(regex, default_value)
       end
     end

@@ -1,0 +1,13 @@
+h2
+  = link_to 'New Tag Matcher', [:new, :admin, :tag_matcher], class: 'tag-matchers-add-button'
+
+table.tags
+  thead
+    tr
+      th Category
+      th Tag
+      th Matcher
+      th
+  tbody
+    = concept('admin/tag_matcher/cell/item', collection: model)
+= paginate(model)

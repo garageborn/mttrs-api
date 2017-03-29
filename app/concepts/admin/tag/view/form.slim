@@ -1,0 +1,11 @@
+= simple_form_for([:admin, model], html: { multipart: true }) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :category, collection: Category.order_by_name, prompt: false
+    = f.input :name
+    = f.input :order
+
+  .form-actions
+    = f.button :submit
+    = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete

@@ -1,16 +1,16 @@
-class CategoryMatcher
+class Tag
   class Index < Trailblazer::Operation
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(
-      order_by_publisher_name: true,
-      ordered: true,
-      order_by_category_name: true,
       page: 1,
-      per: 100
+      per: 10,
+      order_by_category_name: true,
+      ordered: true,
+      order_by_name: true
     ).freeze
 
     def model!(params)
-      ::CategoryMatcher.filter(params)
+      ::Tag.filter(params)
     end
 
     def params!(params)
@@ -20,35 +20,27 @@ class CategoryMatcher
 
   class Operation < Trailblazer::Operation
     include Model
-    include Callback
-    model CategoryMatcher
+    model Tag
     contract Contract
-
-    callback :after_save, Callbacks::AfterSave
   end
 
-  class Form < Operation
+  class Create < Operation
+    action :create
+
     def process(params)
-      validate(params[:category_matcher]) do
-        return if contract.try_out
+      validate(params[:tag]) do
         contract.save
-        callback!(:after_save)
       end
     end
   end
 
-  class Create < Form
-    action :create
-  end
-
-  class Update < Form
+  class Update < Operation
     action :update
-  end
 
-  class DestroyAll < Operation
     def process(params)
-      return if params.blank?
-      params.each { |id| Destroy.run(id: id) }
+      validate(params[:tag]) do
+        contract.save
+      end
     end
   end
 

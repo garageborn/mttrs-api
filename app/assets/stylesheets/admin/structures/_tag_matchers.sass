@@ -1,17 +1,18 @@
 // *************************************
 //
-//   List
+//   Tag-matchers
 //
 // -------------------------------------
 //   Template
 // -------------------------------------
 //
-// .list[.list--modifier](.is-state)(.has-context)
-//   .list-scaffolding
+// tag-matchers[tag-matchers--modifier](.is-state)(.has-context)
+//   tag-matchers-scaffolding
 //
 // *************************************
 
-%list
+.tag-matchers
+  @extend %table
 
 // -------------------------------------
 //   Modifiers
@@ -35,23 +36,8 @@
 //   Scaffolding
 // -------------------------------------
 
-%list-item-title
-  strong
-    font-size: $b-fontSize-h3
-    margin-right: $b-space
+.tag-matchers-add-button
+  @extend %button--add
 
-%list-item-stats
-  span
-    margin-right: $b-space
-
-%list-item-section
-  clear: both
-  margin-top: $b-space
-  margin-left: $b-space
-  strong
-    font-size: $b-fontSize-h5
-    margin-right: $b-space
-
-%list-item-subsection
-  clear: both
-  margin-left: $b-space
+.tag-matchers-edit-button
+  @extend %button--edit
