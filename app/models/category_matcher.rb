@@ -1,6 +1,7 @@
 class CategoryMatcher < ApplicationRecord
   include Concerns::Filterable
   include Concerns::StripAttributes
+  include Concerns::LinkMatcher
 
   belongs_to :publisher
   belongs_to :category
