@@ -1,0 +1,15 @@
+h2
+  = link_to 'New Tag', [:new, :admin, :tag], class: 'tags-add-button'
+
+table.tags
+  thead
+    tr
+      th Category
+      th Order
+      th Name
+      th Total Links
+      th Today Stories
+      th
+  tbody
+    = concept('admin/tag/cell/item', collection: model)
+= paginate(model)

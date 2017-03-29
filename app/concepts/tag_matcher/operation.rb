@@ -27,7 +27,7 @@ class TagMatcher
     action :create
 
     def process(params)
-      validate(params[:tag]) do
+      validate(params[:tag_matcher]) do
         contract.save
       end
     end
@@ -37,7 +37,7 @@ class TagMatcher
     action :update
 
     def process(params)
-      validate(params[:tag]) do
+      validate(params[:tag_matcher]) do
         contract.save
       end
     end

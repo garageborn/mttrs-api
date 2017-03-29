@@ -1,0 +1,13 @@
+= simple_form_for([:admin, model], html: { multipart: true }) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.association :tag, collection: tags_collection, prompt: false
+    = f.input :url_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
+    = f.input :html_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
+    = f.input :html_matcher_selector, input_html: { rows: 1, cols: 100 }, hint: 'xpath or css'
+    = f.input :try_out, as: :boolean
+
+  .form-actions
+    = f.button :submit
+    = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete

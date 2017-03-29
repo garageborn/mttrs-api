@@ -17,7 +17,7 @@ module Admin
 
     def create
       run ::TagMatcher::Create do |op|
-        flash[:notice] = "Tag Matcher '#{ op.model.name }' created"
+        flash[:notice] = "Tag Matcher '#{ op.model.id }' created"
         return redirect_to [:admin, :tag_matchers]
       end
       render_form
@@ -25,7 +25,7 @@ module Admin
 
     def update
       run ::TagMatcher::Update do |op|
-        flash[:notice] = "Tag Matcher '#{ op.model.name }' updated"
+        flash[:notice] = "Tag Matcher '#{ op.model.id }' updated"
         return redirect_to [:admin, :tag_matchers]
       end
       render_form
@@ -33,7 +33,7 @@ module Admin
 
     def destroy
       run ::TagMatcher::Destroy do |op|
-        flash[:notice] = "Tag Matcher '#{ op.model.name }' destroyed"
+        flash[:notice] = "Tag Matcher '#{ op.model.id }' destroyed"
         return redirect_to [:admin, :tag_matchers]
       end
       render_form
