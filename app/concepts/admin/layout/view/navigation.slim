@@ -11,4 +11,4 @@ header
   = link_to 'Publisher Suggestions', [:admin, :publisher_suggestions], class: 'header-item'
   = link_to 'Notifications', [:admin, :notifications], class: 'header-item'
 
-  h2.header-tenant= select('tenant', 'name', tenant_names)
+  h3.header-tenant= select('tenant', 'name', tenant_names)

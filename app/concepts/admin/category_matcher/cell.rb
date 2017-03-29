@@ -2,9 +2,6 @@ module Admin
   module CategoryMatcher
     module Cell
       class Index < Trailblazer::Cell
-        # def publishers_matchers
-        #   model.all.group_by(&:publisher)
-        # end
       end
 
       class Publisher < Trailblazer::Cell
@@ -41,9 +38,7 @@ module Admin
 
         def matching_links
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
-          publisher_uncategorized_links.to_a.select do |link|
-            model.model.match?(link)
-          end
+          publisher_uncategorized_links.to_a.select { |link| link_matcher.match?(link) }
         end
 
         def matching_links_count
@@ -71,8 +66,16 @@ module Admin
           links.available_on_current_tenant.uncategorized.order_by_url
         end
 
-        memoize :matching_links, :matching_links_count, :uncategorized_links,
-                :uncategorized_links_count
+        def link_matcher
+          ::LinkMatcher.new(
+            url_matcher: model.url_matcher,
+            html_matcher: model.html_matcher,
+            html_matcher_selector: model.html_matcher_selector
+          )
+        end
+
+        memoize :link_matcher, :matching_links, :matching_links_count, :uncategorized_links,
+                :uncategorized_links_count, :publisher_uncategorized_links
       end
 
       class Links < Trailblazer::Cell
@@ -90,6 +93,10 @@ module Admin
 
         def total_social
           number_with_delimiter(model.total_social)
+        end
+
+        def html
+          return 'yes' if model.html.present?
         end
       end
     end

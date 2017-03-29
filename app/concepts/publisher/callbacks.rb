@@ -53,6 +53,7 @@ class Publisher
         Apartment::Tenant.each do
           model = contract.model.reload
           CategoryMatcher::DestroyAll.run(model.category_matcher_ids)
+          TagMatcher::DestroyAll.run(model.tag_matcher_ids)
         end
       end
     end

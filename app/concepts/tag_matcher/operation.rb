@@ -5,7 +5,8 @@ class TagMatcher
       page: 1,
       per: 10,
       order_by_category_name: true,
-      order_by_tag_name: true
+      order_by_tag_name: true,
+      order_by_publisher_name: true
     ).freeze
 
     def model!(params)
@@ -28,6 +29,7 @@ class TagMatcher
 
     def process(params)
       validate(params[:tag_matcher]) do
+        return if contract.try_out
         contract.save
       end
     end
@@ -38,8 +40,16 @@ class TagMatcher
 
     def process(params)
       validate(params[:tag_matcher]) do
+        return if contract.try_out
         contract.save
       end
+    end
+  end
+
+  class DestroyAll < Operation
+    def process(params)
+      return if params.blank?
+      params.each { |id| Destroy.run(id: id) }
     end
   end
 

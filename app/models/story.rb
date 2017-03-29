@@ -5,12 +5,14 @@ class Story < ApplicationRecord
 
   belongs_to :category
   has_many :blocked_story_links, inverse_of: :story, dependent: :destroy
+  has_many :link_tags, through: :links
   has_many :links, through: :story_links
   has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link
   has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
   has_many :publishers, -> { distinct }, through: :links
   has_many :story_links, inverse_of: :story, dependent: :destroy
+  has_many :tags, through: :link_tags
   has_one :main_link, through: :main_story_link, source: :link
   has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
 
