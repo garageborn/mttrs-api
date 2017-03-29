@@ -23,7 +23,7 @@ class TagMatcher < ApplicationRecord
   private
 
   def link_matcher
-    return if url_matcher.blank? || html_matcher.blank?
+    return if url_matcher.blank? && html_matcher.blank?
     ::LinkMatcher.new(
       url_matcher: url_matcher,
       html_matcher: html_matcher,
