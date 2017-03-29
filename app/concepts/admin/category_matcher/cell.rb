@@ -38,7 +38,7 @@ module Admin
 
         def matching_links
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
-          publisher_uncategorized_links.limit(500).to_a.select { |link| link_matcher.match?(link) }
+          publisher_uncategorized_links.limit(250).to_a.select { |link| link_matcher.match?(link) }
         end
 
         def matching_links_count
