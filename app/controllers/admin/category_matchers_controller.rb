@@ -17,8 +17,8 @@ module Admin
 
     def create
       run ::CategoryMatcher::Create do |op|
-        flash[:notice] = "Category Matcher '#{ op.model.id }' created"
         return render_form if op.contract.try_out
+        flash[:notice] = "Category Matcher '#{ op.model.id }' created"
         return redirect_to [:admin, :category_matchers]
       end
       render_form
@@ -26,8 +26,8 @@ module Admin
 
     def update
       run ::CategoryMatcher::Update do |op|
-        flash[:notice] = "Category Matcher '#{ op.model.id }' updated"
         return render_form if op.contract.try_out
+        flash[:notice] = "Category Matcher '#{ op.model.id }' updated"
         return redirect_to [:admin, :category_matchers]
       end
       render_form

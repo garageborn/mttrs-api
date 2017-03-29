@@ -2,7 +2,10 @@
   = f.error_notification
 
   .form-inputs
-    = f.association :tag, collection: tags_collection, prompt: false
+    = f.association :tag, collection: tags_collection, prompt: false,
+      as: :grouped_select, group_method: :last
+    = f.association :publisher, collection: publishers_collection, prompt: false,
+      as: :grouped_select, group_method: :last
     = f.input :url_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
     = f.input :html_matcher, input_html: { rows: 1, cols: 100 }, hint: 'regexp'
     = f.input :html_matcher_selector, input_html: { rows: 1, cols: 100 }, hint: 'xpath or css'
@@ -11,3 +14,21 @@
   .form-actions
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
+
+  br
+
+  .tag-matchers-links
+    strong Matching links (#{ matching_links_count })
+    - if matching_links.present?
+      = concept('admin/tag_matcher/cell/links', nil, links: matching_links)
+    - else
+      p No links matching
+
+  br
+
+  .tag-matchers-links
+    strong Untagged links (#{ untagged_links_count })
+    - if untagged_links.present?
+      = concept('admin/tag_matcher/cell/links', nil, links: untagged_links)
+    - else
+      p No untagged links

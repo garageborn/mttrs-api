@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :tag_matcher do
+  factory :link_tag do
+    link
     tag
-    publisher
   end
 end

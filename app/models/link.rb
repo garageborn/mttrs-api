@@ -12,9 +12,11 @@ class Link < ApplicationRecord
 
   belongs_to :publisher
   has_many :blocked_story_links, inverse_of: :link, dependent: :destroy
+  has_many :link_tags, inverse_of: :link, dependent: :destroy
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_many :notifications, as: :notificable, dependent: :destroy
   has_many :social_counters, inverse_of: :link, dependent: :destroy
+  has_many :tags, through: :link_tags
   has_one :category, through: :category_link
   has_one :category_link, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
@@ -45,6 +47,11 @@ class Link < ApplicationRecord
   scope :recent, -> { order(published_at: :desc) }
   scope :today, -> { published_at(Time.zone.now) }
   scope :uncategorized, -> { left_outer_joins(:category_link).where(category_links: { id: nil }) }
+  scope :untagged, -> { left_outer_joins(:link_tags).where(link_tags: { id: nil }) }
+  scope :without_tag, lambda { |tag_id|
+    scopped = left_outer_joins(:link_tags)
+    scopped.where(link_tags: { id: nil }).or(scopped.where.not(link_tags: { id: tag_id }))
+  }
   scope :unrestrict_content, -> { joins(:publisher).where(publishers: { restrict_content: false }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 

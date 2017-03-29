@@ -14,16 +14,20 @@
     = f.button :submit
     = link_to 'Delete', [:admin, model], data: { confirm: 'Are you sure?' }, method: :delete
 
-  .category-matchers-links
-    - if matching_links.present?
-      strong Matching links (#{ matching_links_count })
-      = concept('admin/category_matcher/cell/links', nil, links: matching_links)
-    - else
-      strong No links matching
+  br
 
   .category-matchers-links
+    strong Matching links (#{ matching_links_count })
+    - if matching_links.present?
+      = concept('admin/category_matcher/cell/links', nil, links: matching_links)
+    - else
+      p No links matching
+
+  br
+
+  .category-matchers-links
+    strong Uncategorized links (#{ uncategorized_links_count.html_safe })
     - if uncategorized_links.present?
-      strong Uncategorized links (#{ uncategorized_links_count.html_safe })
       = concept('admin/category_matcher/cell/links', nil, links: uncategorized_links)
     - else
-      strong No uncategorized links
+      p No uncategorized links

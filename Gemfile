@@ -70,6 +70,10 @@ group :development, :test do
   gem 'guard-rspec', '4.7.3'
   gem 'guard-rubocop', '1.2.0'
   gem 'guard-slimlint', '1.2.1'
+  gem 'pronto', '0.8.2'
+  gem 'pronto-brakeman', '0.8.0', require: false
+  gem 'pronto-flay', '0.8.0', require: false
+  gem 'pronto-rubocop', '0.8.0', require: false
   gem 'rspec-rails', '3.5.2'
 end
 

@@ -4,6 +4,10 @@ machine:
   ruby:
     version: 2.4.0
 
+dependencies:
+  post:
+    - bundle exec rake lint
+
 deployment:
   hub:
     branch: master

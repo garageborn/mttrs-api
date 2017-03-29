@@ -18,8 +18,10 @@ RSpec.describe Link do
 
   it { should belong_to(:publisher) }
   it { should have_many(:blocked_story_links).inverse_of(:link).dependent(:destroy) }
+  it { should have_many(:link_tags).inverse_of(:link).dependent(:destroy) }
   it { should have_many(:link_urls).inverse_of(:link).dependent(:destroy) }
   it { should have_many(:social_counters).inverse_of(:link).dependent(:destroy) }
+  it { should have_many(:tags).through(:link_tags)  }
   it { should have_one(:category).through(:category_link) }
   it { should have_one(:category_link).inverse_of(:link).dependent(:destroy) }
   it { should have_one(:social_counter).order(id: :desc) }
