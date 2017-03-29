@@ -4,8 +4,24 @@ module Admin
       class Index < Trailblazer::Cell
         def publishers_select
           publishers = ::Publisher.available_on_current_tenant.order_by_name.distinct
-          options = options_from_collection_for_select(publishers, :slug, :name, params[:publisher_slug])
-          select_tag('links_publisher_id', options)
+          options = options_from_collection_for_select(
+            publishers,
+            :slug,
+            :name,
+            params[:publisher_slug],
+          )
+          select_tag('links_publisher_slug', options, prompt: 'Categories')
+        end
+
+        def tags_select
+          collection = ::Category.order_by_name.map do |category|
+            next if category.tags.blank?
+            tags = category.tags.order_by_name.map { |r| [r.name, r.slug] }
+            [category.name, tags]
+          end.compact.uniq
+
+          grouped_options = grouped_options_for_select(collection, params[:tag_slug])
+          select_tag('links_tag_slug', grouped_options, prompt: 'Tags')
         end
       end
 
@@ -33,6 +49,10 @@ module Admin
 
         def publisher_name
           model.publisher.name
+        end
+
+        def tags
+          model.tags.pluck(:name).sort.to_sentence
         end
 
         def story_id

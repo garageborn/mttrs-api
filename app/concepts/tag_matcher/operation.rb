@@ -20,8 +20,11 @@ class TagMatcher
 
   class Operation < Trailblazer::Operation
     include Model
+    include Callback
     model TagMatcher
     contract Contract
+
+    callback :after_save, Callbacks::AfterSave
   end
 
   class Create < Operation
@@ -31,6 +34,7 @@ class TagMatcher
       validate(params[:tag_matcher]) do
         return if contract.try_out
         contract.save
+        callback!(:after_save)
       end
     end
   end
@@ -42,6 +46,7 @@ class TagMatcher
       validate(params[:tag_matcher]) do
         return if contract.try_out
         contract.save
+        callback!(:after_save)
       end
     end
   end

@@ -12,4 +12,6 @@ RSpec.describe Tag do
 
   it { should belong_to(:category) }
   it { should have_many(:tag_matchers).inverse_of(:tag).dependent(:destroy) }
+  it { should have_many(:link_tags).inverse_of(:tag).dependent(:destroy) }
+  it { should have_many(:links).through(:link_tags) }
 end
