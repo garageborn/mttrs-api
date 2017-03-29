@@ -42,7 +42,7 @@ module Admin
         def matching_links
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
           publisher_uncategorized_links.to_a.select do |link|
-            model.match?(link)
+            model.model.match?(link)
           end
         end
 
