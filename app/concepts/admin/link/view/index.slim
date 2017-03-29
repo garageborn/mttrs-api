@@ -4,6 +4,7 @@ h2
   = link_to 'Similar links', [:similar, :admin, :links], class: 'links-add-button'
 
 = publishers_select
+= tags_select
 
 table.links
   thead
@@ -13,6 +14,7 @@ table.links
       th Publisher
       th Category
       th Published At
+      th Tags
       th Story ID
       th
   tbody

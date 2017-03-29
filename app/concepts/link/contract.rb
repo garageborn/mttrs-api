@@ -11,6 +11,8 @@ class Link
     property :story
     property :title
 
+    property :tag_ids
+
     collection :link_urls do
       property :url
     end

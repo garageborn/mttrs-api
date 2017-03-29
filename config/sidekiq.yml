@@ -10,6 +10,7 @@ production:
   - link_fetcher
   - link_full_fetch
   - link_process
+  - link_set_tags
   - mailers
   - notification_deliver
   - refresh_story

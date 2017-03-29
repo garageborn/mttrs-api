@@ -1,8 +1,15 @@
 Paloma.controller('Admin/Links', {
   index: () => {
-    let select = $('#links_publisher_id')
-    select.change(() => {
-      let route = Routes.admin_links_path({ publisher_slug: select.val() })
+    let publishersSelect = $('#links_publisher_slug')
+    let tagsSelect = $('#links_tag_slug')
+
+    publishersSelect.change(() => {
+      let route = Routes.admin_links_path({ publisher_slug: publishersSelect.val() })
+      Turbolinks.visit(route)
+    })
+
+    tagsSelect.change(() => {
+      let route = Routes.admin_links_path({ tag_slug: tagsSelect.val() })
       Turbolinks.visit(route)
     })
   },
