@@ -9,9 +9,8 @@ class Link
     property :publisher_id
     property :similar, writeable: false
     property :story
-    property :title
-
     property :tag_ids
+    property :title
 
     collection :link_urls do
       property :url
