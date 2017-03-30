@@ -4,9 +4,11 @@ class Story
     extend Memoist
 
     def process(_params)
-      return model.destroy unless model.reload.story_links.exists?
-      update_total_social
-      set_main_story_link
+      model.with_lock do
+        return model.destroy unless model.story_links.exists?
+        update_total_social
+        set_main_story_link
+      end
     end
 
     private
@@ -16,8 +18,10 @@ class Story
     end
 
     def set_main_story_link
-      main_story_link.update_column(:main, true)
-      model.story_links.where.not(id: main_story_link).update_all(main: false)
+      main_story_link.update_attributes(main: true)
+      model.story_links.where.not(id: main_story_link).each do |story_link|
+        story_link.update_attributes(main: false)
+      end
     end
 
     def main_story_link
