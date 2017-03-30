@@ -11,6 +11,7 @@ class Category < ApplicationRecord
 
   scope :order_by_name, -> { order(:name) }
   scope :ordered, -> { order(:order) }
+  scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }) }
   scope :with_stories, -> { joins(:stories).group('categories.id') }
 
   friendly_id :name, use: %i(slugged finders)

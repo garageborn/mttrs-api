@@ -1,19 +1,19 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :categories, only: [:index, :show]
-  resources :publishers, only: [:index, :show]
+  resources :categories, only: %i(index show)
+  resources :publishers, only: %i(index show)
   resources :stories, only: [:index]
-  match '/graphql' => 'graphql#create', via: [:get, :post]
+  match '/graphql' => 'graphql#create', via: %i(get post)
 
   namespace :admin do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
 
     Sidekiq::Web.use(Rack::Auth::Basic) { |username, password| Auth.call(username, password) }
     mount Sidekiq::Web => '/sidekiq'
-    mount GraphiQL::Rails::Engine => '/graphql', graphql_path: '/graphql'
 
     scope '/:tenant_name' do
+      mount GraphiQL::Rails::Engine => '/graphql', graphql_path: '/graphql'
       get '/', to: 'stories#index'
       resources :categories, except: :show
       resources :category_matchers, except: :show

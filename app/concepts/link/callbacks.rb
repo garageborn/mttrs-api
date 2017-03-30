@@ -12,6 +12,7 @@ class Link
       def call(_options)
         refresh_story!
         perform_set_category!
+        perform_set_tags!
         enqueue_link_full_fetch!
         enqueue_story_builder!
       end
@@ -24,6 +25,10 @@ class Link
 
       def perform_set_category!
         Link::SetCategory.run(id: contract.model.id)
+      end
+
+      def perform_set_tags!
+        Link::SetTags.run(id: contract.model.id)
       end
 
       def enqueue_link_full_fetch!

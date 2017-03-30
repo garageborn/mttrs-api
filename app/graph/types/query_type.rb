@@ -6,6 +6,7 @@ QueryType = GraphQL::ObjectType.define do
     argument :order_by_name, types.Boolean
     argument :order_by_stories_count, types.Boolean
     argument :with_stories, types.Boolean
+    argument :tag_slug, types.String
     resolve Resolvers::QueryType::Categories
   end
 
@@ -46,6 +47,7 @@ QueryType = GraphQL::ObjectType.define do
     argument :popular, types.Boolean
     argument :publisher_slug, types.String
     argument :recent, types.Boolean
+    argument :tag_slug, types.String
 
     resolve Resolvers::QueryType::Timeline
   end

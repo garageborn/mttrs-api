@@ -13,6 +13,7 @@ class FullFetchLinkJob
     set_missing_info
     link.save
     Link::SetCategory.run(id: link.id)
+    Link::SetTags.run(id: link.id)
     Link::UpdateStory.run(id: link.id)
     StoryBuilderJob.perform_async(link.id)
   end

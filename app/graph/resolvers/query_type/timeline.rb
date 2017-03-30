@@ -24,7 +24,7 @@ module Resolvers
       end
 
       def filters
-        args.slice('category_slug', 'popular', 'publisher_slug').merge(popular: true)
+        args.slice('category_slug', 'popular', 'publisher_slug', 'tag_slug').merge(popular: true)
       end
 
       def limit
