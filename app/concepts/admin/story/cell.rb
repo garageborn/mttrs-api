@@ -14,10 +14,21 @@ module Admin
           day_link(current_day)
         end
 
-        def categories_links
+        def categories_filter
           top_stories = category_link(OpenStruct.new(name: 'Top Stories'))
           categories = ::Category.ordered.map { |category| category_link(category) }
           [top_stories] + categories
+        end
+
+        def tags_filter
+          collection = ::Category.order_by_name.map do |category|
+            next if category.tags.blank?
+            tags = category.tags.order_by_name.map { |r| [r.name, r.slug] }
+            [category.name, tags]
+          end.compact.uniq
+
+          grouped_options = grouped_options_for_select(collection, params[:tag_slug])
+          select_tag('stories_tag_slug', grouped_options, prompt: 'Tags')
         end
 
         private
@@ -52,7 +63,7 @@ module Admin
         end
 
         def story_params
-          params.permit(:published_at, :category_slug)
+          params.permit(:published_at, :category_slug, :tag_slug)
         end
       end
 

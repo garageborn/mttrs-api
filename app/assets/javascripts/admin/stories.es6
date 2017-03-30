@@ -113,5 +113,19 @@ Paloma.controller('Admin/Stories', {
     new StoryFormLinksActions('.current-links table')
     new StoryAddSimilarLinks('.other-links').run()
     new StoryFindSimilarLinks('.find-links')
-  }
+  },
+
+  index: () => {
+    let tagsSelect = $('#stories_tag_slug')
+
+    tagsSelect.change(() => {
+      let urlParams = new URLSearchParams(window.location.search)
+
+      let route = Routes.admin_stories_path({
+        published_at: urlParams.get('published_at'),
+        tag_slug: tagsSelect.val()
+      })
+      Turbolinks.visit(route)
+    })
+  },
 })
