@@ -45,7 +45,6 @@ module Buzzsumo
       return 0 if response.blank?
       x_ratelimit_reset = Time.zone.at(response.headers['x-ratelimit-reset'].to_i)
       time_difference = (x_ratelimit_reset - Time.zone.now).to_i
-      return 0 if time_difference.zero?
       time_difference + DEFAULT_RATELIMIT_WINDOW
     end
 
