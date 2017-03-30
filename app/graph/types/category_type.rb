@@ -6,4 +6,5 @@ CategoryType = GraphQL::ObjectType.define do
   field :slug, !types.String
   field :image_id, !types.String
   field :color, !types.String
+  field :tags, types[TagType]
 end

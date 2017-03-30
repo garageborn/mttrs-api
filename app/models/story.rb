@@ -16,9 +16,7 @@ class Story < ApplicationRecord
   has_one :main_link, through: :main_story_link, source: :link
   has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
 
-  scope :category_slug, lambda { |slug|
-    joins(:category).where(categories: { slug: slug })
-  }
+  scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
   scope :popular, -> { order(total_social: :desc) }
@@ -29,16 +27,13 @@ class Story < ApplicationRecord
   scope :published_between, lambda { |start_at, end_at|
     where(published_at: parse_date(start_at)..parse_date(end_at))
   }
-  scope :published_since, lambda { |date|
-    where(published_at: parse_date(date)..Float::INFINITY)
-  }
-  scope :published_until, lambda { |date|
-    where('stories.published_at < ?', parse_date(date))
-  }
+  scope :published_since, ->(date) { where(published_at: parse_date(date)..Float::INFINITY) }
+  scope :published_until, ->(date) { where('stories.published_at < ?', parse_date(date)) }
   scope :publisher_slug, lambda { |slug|
     joins(:publishers).group(:id).where(publishers: { slug: slug })
   }
   scope :recent, -> { order('stories.published_at DESC') }
+  scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }) }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
 

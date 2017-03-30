@@ -1,7 +1,7 @@
-class LinkCategorizerJob
+class LinkSetCategoryJob
   include Sidekiq::Worker
 
-  sidekiq_options queue: :link_categorizer
+  sidekiq_options queue: :link_set_category
 
   def perform(link_id)
     Link::SetCategory.run(id: link_id)

@@ -6,10 +6,10 @@ production:
 :queues:
   - [indexer, 10]
   - default
-  - link_categorizer
   - link_fetcher
   - link_full_fetch
   - link_process
+  - link_set_category
   - link_set_tags
   - mailers
   - notification_deliver
