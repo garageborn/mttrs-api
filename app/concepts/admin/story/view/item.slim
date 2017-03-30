@@ -1,5 +1,13 @@
-- if other_links.present?
-  = concept('admin/story/cell/link', main_link, class_name: 'stories-main-link')
-  = concept('admin/story/cell/link', collection: other_links, class_name: 'stories-other-link')
-- else
-  = concept('admin/story/cell/link', main_link)
+tr(class='stories-main-link')
+  td= image
+  td
+    = link_to main_link.title, main_link.url, target: :_blank
+    p= tags
+  td= total_social
+  td
+  td= category_name
+  td= published_at
+  td= link_to 'Edit', [:edit, :admin, model], class: 'links-edit-button'
+
+= concept('admin/story/cell/link', main_link)
+= concept('admin/story/cell/link', collection: other_links)

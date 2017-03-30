@@ -73,6 +73,30 @@ module Admin
         def other_links
           model.other_links.popular
         end
+
+        def image
+          return if model.main_image_source_url.blank?
+          image_tag(model.main_image_source_url, size: '100x100')
+        end
+
+        def category_name
+          model.category.try(:name)
+        end
+
+        def published_at
+          localize(model.published_at, format: :short)
+        end
+
+        def total_social
+          number_with_delimiter(model.total_social)
+        end
+
+        def tags
+          return if model.tags.blank?
+          model.tags.order_by_name.pluck(:name).map do |tag|
+            content_tag(:span, tag, class: 'links-tag')
+          end
+        end
       end
 
       class Link < Trailblazer::Cell
@@ -80,15 +104,6 @@ module Admin
         property :title
         property :url
         property :story
-
-        def class_name
-          options[:class_name]
-        end
-
-        def image
-          return if model.image_source_url.blank?
-          image_tag(model.image_source_url, size: '100x100')
-        end
 
         def total_social
           number_with_delimiter(model.total_social)
@@ -98,12 +113,15 @@ module Admin
           model.publisher.name
         end
 
-        def category_name
-          model.category.try(:name)
-        end
-
         def published_at
           localize(model.published_at, format: :short)
+        end
+
+        def tags
+          return if model.tags.blank?
+          model.tags.order_by_name.pluck(:name).map do |tag|
+            content_tag(:span, tag, class: 'links-tag')
+          end
         end
       end
 
