@@ -3,7 +3,7 @@ class Story
     extend Memoist
 
     def process(params)
-      return if model.blank?
+      return if link.blank? || model.blank?
       Access::Create.run(
         access: {
           accessable_type: 'Story',

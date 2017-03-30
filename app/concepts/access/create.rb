@@ -31,7 +31,7 @@ class Access
     def create(access)
       access.save
     rescue ActiveRecord::RecordNotUnique
-      existing_model = find_or_initialize(@params)
+      existing_model = find_or_initialize(@params[:access])
       update(existing_model)
     end
 
