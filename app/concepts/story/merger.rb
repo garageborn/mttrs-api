@@ -9,7 +9,7 @@ class Story
       return if model == destination || !match_category?
 
       model.links.find_each do |link|
-        link.update_attributes(story: destination)
+        link.with_lock { link.update_attributes(story: destination) }
       end
       Story::Destroy.run(id: model.id)
       RefreshStoryJob.perform_async(destination.id)

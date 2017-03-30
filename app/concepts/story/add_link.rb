@@ -9,7 +9,7 @@ class Story
       return if model == link.story || !valid_link?
 
       if link.missing_story?
-        link.update_attributes(story: model)
+        link.with_lock { link.update_attributes(story: model) }
       else
         merge_story
       end

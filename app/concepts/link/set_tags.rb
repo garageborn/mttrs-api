@@ -13,7 +13,7 @@ class Link
 
       def process(_params)
         return if model.blank? || new_tags.blank?
-        model.update_attributes(tags: new_tags)
+        model.with_lock { model.update_attributes(tags: new_tags) }
       end
 
       private

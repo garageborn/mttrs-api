@@ -13,7 +13,7 @@ class Link
 
       def process(_params)
         return if model.category.present? || new_category.blank?
-        model.update_attributes(category: new_category)
+        model.with_lock { model.update_attributes(category: new_category) }
         LinkSetTagsJob.perform_async(model.id)
         StoryBuilderJob.perform_async(model.id)
       end
