@@ -18,9 +18,11 @@ class Story
     end
 
     def set_main_story_link
-      main_story_link.update_attributes(main: true)
-      model.story_links.where.not(id: main_story_link).each do |story_link|
-        story_link.update_attributes(main: false)
+      main_story_link.with_lock do
+        main_story_link.update_attributes(main: true)
+        model.story_links.where.not(id: main_story_link).each do |story_link|
+          story_link.update_attributes(main: false)
+        end
       end
     end
 
