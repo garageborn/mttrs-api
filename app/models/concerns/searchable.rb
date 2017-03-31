@@ -18,7 +18,7 @@ module Concerns
       after_touch -> { IndexerJob.perform_async('update', self.class.to_s, id) }
 
       def as_indexed_json(_options = {})
-        { published_at: published_at, title: title }
+        { published_at: published_at.to_i, title: title }
       end
     end
   end
