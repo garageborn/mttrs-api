@@ -1,6 +1,7 @@
 class Story < ApplicationRecord
   include Concerns::Filterable
   include Concerns::ParseDate
+  include Concerns::TrackAccess
   extend Memoist
 
   belongs_to :category
