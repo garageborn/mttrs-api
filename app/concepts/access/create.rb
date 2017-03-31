@@ -1,18 +1,30 @@
 class Access
   class Create < Operation
+    MAX_RETRIES = 3
+
     def process(params)
       validate(params[:access]) do
-        model.new_record? ? create(model) : update(model)
+        save
       end
     end
 
-    def model!(params)
-      find_or_initialize(params[:access])
+    def save
+      with_retries(max_tries: MAX_RETRIES, rescue: ActiveRecord::RecordNotUnique) do
+        access = find_or_initialize(access_params)
+        access.with_lock do
+          if access_params[:hits]
+            access.hits = access_params[:hits]
+          elsif !access.new_record?
+            access.increment(:hits)
+          end
+          access.save
+        end
+      end
     end
 
     def params!(params)
-      access_params = params[:access]
-      access_params[:date] ||= Time.now.utc.at_beginning_of_hour
+      params[:access] ||= {}
+      params[:access][:date] ||= Time.now.utc.at_beginning_of_hour
       params
     end
 
@@ -23,24 +35,11 @@ class Access
         accessable_type: params[:accessable_type],
         accessable_id: params[:accessable_id],
         date: params[:date]
-      ).first_or_initialize.tap do |access|
-        access.hits = params[:hits] if params[:hits].present?
-      end
+      ).first_or_initialize
     end
 
-    def create(access)
-      access.save
-    rescue ActiveRecord::RecordNotUnique
-      existing_model = find_or_initialize(@params[:access])
-      update(existing_model)
-    end
-
-    def update(access)
-      if @params[:access][:hits]
-        access.update_attributes(hits: @params[:access][:hits])
-      else
-        access.increment!(:hits)
-      end
+    def access_params
+      @params[:access]
     end
   end
 end
