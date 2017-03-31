@@ -42,6 +42,7 @@ class Access
     end
 
     def reload_model!
+      sleep 1
       self.model = find_or_initialize(@params)
     end
 
