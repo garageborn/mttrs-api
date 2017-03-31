@@ -18,6 +18,7 @@ class Story
     end
 
     def set_main_story_link
+      return if main_story_link.blank?
       main_story_link.with_lock do
         main_story_link.update_attributes(main: true)
         model.story_links.where.not(id: main_story_link).each do |story_link|
