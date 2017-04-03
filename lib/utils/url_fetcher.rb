@@ -4,7 +4,7 @@ module Utils
       401, # Unauthorized (RFC 7235)
       403, # Forbidden
       429, # Too Many Requests (RFC 6585)
-      509, # Bandwidth Limit Exceeded
+      509  # Bandwidth Limit Exceeded
     ].freeze
 
     class << self
