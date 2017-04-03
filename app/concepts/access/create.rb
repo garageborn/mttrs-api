@@ -2,7 +2,8 @@ class Access
   class Create < Operation
     MAX_RETRIES = 3
     RESCUE_FROM = [
-      ActiveRecord::RecordNotUnique
+      ActiveRecord::RecordNotUnique,
+      PG::UniqueViolation
     ].freeze
 
     def process(params)
@@ -42,7 +43,7 @@ class Access
     end
 
     def reload_model!
-      sleep 1
+      sleep 5
       self.model = find_or_initialize(@params)
     end
 
