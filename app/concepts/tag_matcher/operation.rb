@@ -3,7 +3,7 @@ class TagMatcher
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(
       page: 1,
-      per: 10,
+      per: 100,
       order_by_category_name: true,
       order_by_tag_name: true,
       order_by_publisher_name: true
