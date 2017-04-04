@@ -54,7 +54,7 @@ class Extract
   end
 
   def attributes
-    attrs = AVAILABLE_ATTRIBUTES - page.missing_attributes
+    attrs = AVAILABLE_ATTRIBUTES & page.missing_attributes
     attrs.delete(:html)
     attrs.concat(force_attributes).compact.uniq
   end
