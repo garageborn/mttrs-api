@@ -10,7 +10,7 @@ module Admin
             :name,
             params[:publisher_slug],
           )
-          select_tag('links_publisher_slug', options, prompt: 'Categories')
+          select_tag('links_publisher_slug', options, prompt: 'Publishers')
         end
 
         def tags_select
@@ -62,6 +62,11 @@ module Admin
 
         def total_social
           number_with_delimiter(model.total_social)
+        end
+
+        def image
+          return if model.image_source_url.blank?
+          image_tag(model.image_source_url, size: '100x100')
         end
       end
 
