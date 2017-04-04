@@ -40,6 +40,7 @@ module Admin
         end
 
         def matching_links
+          return [] unless model.try_out
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
           publisher_untagged_links.limit(250).to_a.select { |link| link_matcher.match?(link) }
         end

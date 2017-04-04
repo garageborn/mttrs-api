@@ -37,6 +37,7 @@ module Admin
         extend Memoist
 
         def matching_links
+          return [] unless model.try_out
           return [] if model.url_matcher.blank? && model.html_matcher.blank?
           publisher_uncategorized_links.limit(250).to_a.select { |link| link_matcher.match?(link) }
         end
