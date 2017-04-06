@@ -9,7 +9,11 @@ module Admin
 
       class Item < Trailblazer::Cell
         property :accessable
-        property :title
+
+        def label
+          return model.title if model.title.present?
+          truncate(model.message, length: 100)
+        end
 
         def created_at
           localize(model.created_at, format: :short)
