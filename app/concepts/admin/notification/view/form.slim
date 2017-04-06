@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :notificable_type
+    = f.input :notificable_type, collection: types_collection, prompt: 'Text'
     = f.input :notificable_id
     = f.input :title
     = f.input :message, input_html: { rows: 5, cols: 100 }

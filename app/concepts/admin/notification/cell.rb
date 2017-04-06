@@ -2,6 +2,9 @@ module Admin
   module Notification
     module Cell
       class Form < Trailblazer::Cell
+        def types_collection
+          %w(Link Category Publisher)
+        end
       end
 
       class Index < Trailblazer::Cell
