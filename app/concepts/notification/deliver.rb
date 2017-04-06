@@ -46,27 +46,46 @@ class Notification
       end
     end
 
+    class Category < Base
+      def query
+        category = model.try(:notificable)
+        return if category.blank?
+        model.to_query(
+          type: :category,
+          model: { id: category.id, slug: category.slug }
+        )
+      end
+    end
+
     class Link < Base
       def query
         link = model.try(:notificable)
         return if link.blank?
         model.to_query(
           type: :link,
-          model: {
-            id: link.id,
-            slug: link.slug,
-            story: { id: link.story.try(:id) }
-          }
+          model: { id: link.id, slug: link.slug }
+        )
+      end
+    end
+
+    class Publisher < Base
+      def query
+        publisher = model.try(:notificable)
+        return if publisher.blank?
+        model.to_query(
+          type: :publisher,
+          model: { id: publisher.id, slug: publisher.slug }
         )
       end
     end
 
     def process(*)
       return if model.blank?
-      if model.notificable.is_a?(::Link)
-        Notification::Deliver::Link.run(@params)
-      else
-        Notification::Deliver::Text.run(@params)
+      case model.notificable
+      when ::Category then Notification::Deliver::Category.run(@params)
+      when ::Link then Notification::Deliver::Link.run(@params)
+      when ::Publisher then Notification::Deliver::Publisher.run(@params)
+      else Notification::Deliver::Text.run(@params)
       end
     end
 

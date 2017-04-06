@@ -11,6 +11,11 @@ module Admin
         property :language
         property :restrict_content
 
+        def icon
+          return if model.icon_id.blank?
+          cl_image_tag(model.icon_id, width: 24, height: 24, crop: :fit)
+        end
+
         def links_count
           number_with_delimiter(model.links.size)
         end

@@ -9,6 +9,11 @@ module Admin
         property :name
         property :order
 
+        def image
+          return if model.image_id.blank?
+          cl_image_tag(model.image_id, width: 100, height: 100, crop: :fit)
+        end
+
         def links_count
           number_with_delimiter(model.links.size)
         end
