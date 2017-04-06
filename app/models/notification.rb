@@ -14,6 +14,7 @@ class Notification < ActiveRecord::Base
     {
       app_id: app_id,
       big_picture: big_picture,
+      large_icon: large_icon,
       contents: contents,
       data: data.merge(tenant: Apartment::Tenant.current),
       headings: headings,
@@ -30,7 +31,14 @@ class Notification < ActiveRecord::Base
 
   def big_picture
     return if image_url.blank?
-    image_url
+    options = { crop: 'fit', height: 512, secure: true, type: 'fetch', width: 1024 }
+    Cloudinary::Utils.cloudinary_url(image_url, options)
+  end
+
+  def large_icon
+    return if icon_url.blank?
+    options = { crop: 'fit', height: 256, secure: true, type: 'fetch', width: 256 }
+    Cloudinary::Utils.cloudinary_url(icon_url, options)
   end
 
   def contents
