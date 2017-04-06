@@ -147,13 +147,15 @@ module Admin
           main_link = model.main_link
           return if main_link.blank?
 
-          options = {
-            notificable_type: 'Link',
-            notificable_id: main_link.id,
-            title: main_link.title,
-            message: model.summary,
-            image_url: model.main_image_source_url
-          }
+          options = { notificable_type: 'Link', notificable_id: main_link.id }
+          if model.summary.present?
+            options.merge!(
+              message: "#{ main_link.title }\n#{ model.summary }",
+              icon_url: model.main_image_source_url
+            )
+          else
+            options.merge!(message: main_link.title, image_url: model.main_image_source_url)
+          end
           link_to 'Create Notification', [:new, :admin, :notification, { notification: options }]
         end
       end
