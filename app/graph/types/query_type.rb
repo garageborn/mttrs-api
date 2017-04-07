@@ -37,6 +37,14 @@ QueryType = GraphQL::ObjectType.define do
     resolve Resolvers::QueryType::Story
   end
 
+  field :tags, !types[TagType] do
+    argument :limit, types.Int
+    argument :ordered, types.Boolean
+    argument :with_stories, types.Boolean
+    argument :category_slug, types.String
+    resolve Resolvers::QueryType::Tags
+  end
+
   field :timeline, TimelineType do
     argument :cursor, types.Int
     argument :type, types.String
