@@ -35,7 +35,8 @@ class AmpFetcherJob
   end
 
   def mark_pending_links
-    links.select(&:fetching).each do |link|
+    links.each do |link|
+      next unless link.amp_link.fetching?
       link.amp_link.with_lock { link.amp_link.pending! }
     end
   end
