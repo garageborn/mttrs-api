@@ -63,11 +63,13 @@ class AmpFetcherJob
   end
 
   def success_links
+    return [] if amp_response.amp_urls.blank?
     urls = amp_response.amp_urls.map(&:original_url)
     links.select { |link| urls.include?(link.url) }
   end
 
   def error_links
+    return [] if amp_response.url_errors.blank?
     urls = amp_response.url_errors.map(&:original_url)
     links.select { |link| urls.include?(link.url) }
   end
