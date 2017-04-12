@@ -2,7 +2,7 @@ class AmpFetcherJob
   extend Memoist
   include Sidekiq::Worker
 
-  sidekiq_options queue: :link_fetch_amp_url
+  sidekiq_options queue: :amp_fetcher
 
   # https://developers.google.com/amp/cache/reference/limits
   LIMIT_WINDOW = 100
@@ -12,8 +12,8 @@ class AmpFetcherJob
   def perform
     return if links.blank?
     mark_fetching_links
-    amp_response
-    proccess_response
+    update_success_links
+    update_error_links
   end
 
   private
@@ -34,11 +34,6 @@ class AmpFetcherJob
 
   def amp_response
     ::Amp.fetch(urls)
-  end
-
-  def proccess_response
-    update_success_links
-    update_error_links
   end
 
   def update_success_links
