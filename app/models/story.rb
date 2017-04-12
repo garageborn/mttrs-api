@@ -7,6 +7,7 @@ class Story < ApplicationRecord
   belongs_to :category
   has_many :blocked_story_links, inverse_of: :story, dependent: :destroy
   has_many :link_tags, through: :links
+  has_many :amp_links, through: :links
   has_many :links, through: :story_links
   has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link
@@ -37,6 +38,9 @@ class Story < ApplicationRecord
   scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }).group('stories.id') }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
+  scope :with_amp, lambda {
+    joins(:amp_links).where(amp_links: { status: :success }).group('stories.id')
+  }
 
   def total_facebook
     links.map { |link| link.social_counter.try(:facebook).to_i }.sum
