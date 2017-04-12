@@ -14,6 +14,8 @@ class AmpFetcherJob
     mark_fetching_links
     update_success_links
     update_error_links
+  ensure
+    mark_pending_links
   end
 
   private
@@ -29,6 +31,12 @@ class AmpFetcherJob
   def mark_fetching_links
     links.each do |link|
       link.amp_link.with_lock { link.amp_link.fetching! }
+    end
+  end
+
+  def mark_pending_links
+    links.select(&:fetching).each do |link|
+      link.amp_link.with_lock { link.amp_link.pending! }
     end
   end
 
