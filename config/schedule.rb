@@ -20,3 +20,8 @@ end
 every 1.day, at: '3am' do
   rake 'links:purge:run'
 end
+
+# AMP
+every 5.minutes do
+  rake 'amp:fetcher'
+end

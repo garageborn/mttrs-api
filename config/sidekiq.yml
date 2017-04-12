@@ -5,6 +5,7 @@ production:
   :concurrency: 20
 :queues:
   - [indexer, 10]
+  - amp_fetcher
   - default
   - link_fetcher
   - link_full_fetch

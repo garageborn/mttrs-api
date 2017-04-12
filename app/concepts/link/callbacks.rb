@@ -15,6 +15,7 @@ class Link
         perform_set_tags!
         enqueue_link_full_fetch!
         enqueue_story_builder!
+        create_amp_link!
       end
 
       private
@@ -38,6 +39,11 @@ class Link
 
       def enqueue_story_builder!
         StoryBuilderJob.perform_async(contract.model.id)
+      end
+
+      def create_amp_link!
+        return if contract.model.amp_link.present?
+        contract.model.create_amp_link
       end
     end
 

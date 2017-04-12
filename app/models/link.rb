@@ -17,6 +17,7 @@ class Link < ApplicationRecord
   has_many :notifications, as: :notificable, dependent: :destroy
   has_many :social_counters, inverse_of: :link, dependent: :destroy
   has_many :tags, through: :link_tags
+  has_one :amp_link, inverse_of: :link, dependent: :destroy
   has_one :category, through: :category_link
   has_one :category_link, inverse_of: :link, dependent: :destroy
   has_one :link_url, -> { order(id: :desc) }
@@ -49,6 +50,7 @@ class Link < ApplicationRecord
   scope :today, -> { published_at(Time.zone.now) }
   scope :uncategorized, -> { left_outer_joins(:category_link).where(category_links: { id: nil }) }
   scope :untagged, -> { left_outer_joins(:link_tags).where(link_tags: { id: nil }) }
+  scope :with_amp, -> { joins(:amp_link).where(amp_links: { status: :success })}
   scope :without_tag, lambda { |tag_id|
     scopped = left_outer_joins(:link_tags)
     scopped.where(link_tags: { id: nil }).or(scopped.where.not(link_tags: { id: tag_id }))
@@ -73,6 +75,11 @@ class Link < ApplicationRecord
   def url
     return if link_url.blank?
     uri.to_s
+  end
+
+  def amp_url
+    return unless amp_link.try(:success?)
+    amp_link.url
   end
 
   def urls

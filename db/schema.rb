@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 49) do
+ActiveRecord::Schema.define(version: 50) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 49) do
     t.index ["accessable_type", "accessable_id", "date"], name: "index_access_on_assetable_and_created_at", unique: true, using: :btree
     t.index ["date"], name: "index_accesses_on_date", using: :btree
     t.index ["hits"], name: "index_accesses_on_hits", using: :btree
+  end
+
+  create_table "amp_links", force: :cascade do |t|
+    t.integer  "link_id",                null: false
+    t.integer  "status",     default: 0, null: false
+    t.citext   "url"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["link_id"], name: "index_amp_links_on_link_id", unique: true, using: :btree
+    t.index ["status"], name: "index_amp_links_on_status", using: :btree
   end
 
   create_table "attribute_matchers", force: :cascade do |t|
