@@ -6,6 +6,7 @@ production:
 :queues:
   - [indexer, 10]
   - default
+  - link_fetch_amp_url
   - link_fetcher
   - link_full_fetch
   - link_process

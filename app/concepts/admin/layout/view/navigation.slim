@@ -1,14 +1,14 @@
 header
   h1.header-logo Mttrs
 
-  = link_to 'Stories', [:admin, :stories], class: 'header-item'
-  = link_to 'Links', [:admin, :links], class: 'header-item'
-  = link_to 'Categories', [:admin, :categories], class: 'header-item'
-  = link_to 'Category Matchers', [:admin, :category_matchers], class: 'header-item'
-  = link_to 'Tags', [:admin, :tags], class: 'header-item'
-  = link_to 'Tag Matchers', [:admin, :tag_matchers], class: 'header-item'
-  = link_to 'Publishers', [:admin, :publishers], class: 'header-item'
-  = link_to 'Publisher Suggestions', [:admin, :publisher_suggestions], class: 'header-item'
-  = link_to 'Notifications', [:admin, :notifications], class: 'header-item'
+  = link_to 'Stories', %i(admin stories), class: 'header-item'
+  = link_to 'Links', %i(admin links), class: 'header-item'
+  = link_to 'Categories', %i(admin categories), class: 'header-item'
+  = link_to 'Category Matchers', %i(admin category_matchers), class: 'header-item'
+  = link_to 'Tags', %i(admin tags), class: 'header-item'
+  = link_to 'Tag Matchers', %i(admin tag_matchers), class: 'header-item'
+  = link_to 'Publishers', %i(admin publishers), class: 'header-item'
+  = link_to 'Publisher Suggestions', %i(admin publisher_suggestions), class: 'header-item'
+  = link_to 'Notifications', %i(admin notifications), class: 'header-item'
 
   h3.header-tenant= select('tenant', 'name', tenant_names)

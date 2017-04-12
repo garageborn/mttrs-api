@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'addressable', '2.5.0'
+gem 'addressable', '2.5.1'
 gem 'apartment', '1.2.0'
 gem 'apartment-sidekiq', '1.1.0'
 gem 'cells', '4.1.3'
@@ -14,9 +14,10 @@ gem 'elasticsearch-rails', '0.1.9'
 gem 'faraday_middleware-aws-signers-v4', '0.1.7'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
-gem 'friendly_id', '5.2.0'
+gem 'friendly_id', '5.2.1'
+gem 'google-api-client', '0.11.1'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.5.4'
+gem 'graphql', '1.5.6'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
@@ -56,7 +57,7 @@ gem 'paloma', '5.0.0'
 gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
 gem 'turbolinks', '5.0.1'
-gem 'uglifier', '3.1.7'
+gem 'uglifier', '3.2.0'
 
 group :production do
   gem 'puma', '3.8.2'
@@ -73,7 +74,7 @@ group :development, :test do
   gem 'pronto', '0.8.2'
   gem 'pronto-brakeman', '0.8.0', require: false
   gem 'pronto-flay', '0.8.0', require: false
-  gem 'pronto-rubocop', '0.8.0', require: false
+  gem 'pronto-rubocop', '0.8.1', require: false
   gem 'rspec-rails', '3.5.2'
 end
 
@@ -86,7 +87,7 @@ group :development do
   gem 'capistrano3-puma', '3.1.0', require: false
   gem 'rack-cors', '0.4.1', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
-  gem 'slackistrano', '3.1.0', require: false
+  gem 'slackistrano', '3.1.1', require: false
 end
 
 group :test do
