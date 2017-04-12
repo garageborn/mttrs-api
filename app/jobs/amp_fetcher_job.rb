@@ -21,7 +21,7 @@ class AmpFetcherJob
   private
 
   def links
-    ::AmpLink.pending.limit(URLS_PER_REQUEST).map(&:link)
+    ::AmpLink.recent.pending.limit(URLS_PER_REQUEST).map(&:link)
   end
 
   def urls
