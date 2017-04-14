@@ -6,6 +6,9 @@ module Admin
 
       class Item < Trailblazer::Cell
         property :name
+        property :url_matcher
+        property :html_matcher
+        property :html_matcher_selector
 
         def tag_name
           model.tag.name

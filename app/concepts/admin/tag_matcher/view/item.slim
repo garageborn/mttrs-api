@@ -3,4 +3,15 @@ tr
   td= tag_name
   td= publisher_name
   td
+    - if url_matcher.present?
+      i url:
+      span.tag-matchers-matcher  #{ url_matcher }
+
+    - if html_matcher.present?
+      i html matcher:
+      span.tag-matchers-matcher  #{ html_matcher }
+
+      i html selector:
+      span.tag-matchers-matcher #{ html_matcher_selector }
+
   td= link_to 'Edit', [:edit, :admin, model], class: 'tags-edit-button'
