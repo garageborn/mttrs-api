@@ -20,7 +20,7 @@ class Link < ApplicationRecord
   has_one :amp_link, inverse_of: :link, dependent: :destroy
   has_one :category, through: :category_link
   has_one :category_link, inverse_of: :link, dependent: :destroy
-  has_one :link_url, -> { order(id: :desc) }
+  has_one :link_url, -> { order(id: :asc) }
   has_one :social_counter, -> { order(id: :desc) }
   has_one :story, through: :story_link
   has_one :story_link, inverse_of: :link, dependent: :destroy
