@@ -3,7 +3,7 @@ class Tag
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(
       page: 1,
-      per: 10,
+      per: 100,
       order_by_category_name: true,
       ordered: true,
       order_by_name: true
