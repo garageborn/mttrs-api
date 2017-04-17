@@ -2,6 +2,7 @@ class Notification
   class Contract < Reform::Form
     feature Coercion
 
+    property :segment
     property :notificable
     property :notificable_type
     property :notificable_id
@@ -12,7 +13,6 @@ class Notification
     property :onesignal_id
     property :response
     property :onesignal_url, virtual: true
-    property :try_out, virtual: true, type: Types::Form::Bool, default: true
 
     validates :message, presence: true
 

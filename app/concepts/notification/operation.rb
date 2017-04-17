@@ -26,18 +26,9 @@ class Notification
 
     def process(params)
       validate(params[:notification]) do
-        return deliver_try_out_notification if contract.try_out
         contract.save
         callback!(:after_create)
       end
-    end
-
-    private
-
-    def deliver_try_out_notification
-      ::Notification::Deliver.run(model: contract.sync, try_out: true)
-      contract.response = contract.model.response
-      contract.onesignal_id = contract.model.onesignal_id
     end
   end
 

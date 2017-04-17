@@ -23,18 +23,11 @@ class Notification
 
       def update_model(response)
         onesignal_id = response.try(:[], :id) if response.is_a?(Hash)
-        if @params[:try_out]
-          model.response = response
-          model.onesignal_id = onesignal_id
-        else
-          model.update_attributes(response: response, onesignal_id: onesignal_id)
-        end
+        model.update_attributes(response: response, onesignal_id: onesignal_id)
       end
 
       def request
-        request_params = query
-        request_params[:included_segments] = ['Test User'] if @params[:try_out]
-        OneSignal::Notification.create(params: request_params)
+        OneSignal::Notification.create(params: query)
       end
 
       memoize :request

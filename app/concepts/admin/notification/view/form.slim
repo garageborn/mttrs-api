@@ -2,6 +2,7 @@
   = f.error_notification
 
   .form-inputs
+    = f.input :segment, collection: segments_collection, prompt: 'Segment'
     = f.input :notificable_type, collection: types_collection, prompt: 'Text'
     = f.input :notificable_id
     = f.input :title
@@ -9,7 +10,6 @@
     = f.input :icon_url
     = f.input :image_url
     = f.input :response, input_html: { rows: 5, cols: 100 }
-    = f.input :try_out, as: :boolean
 
   .form-actions
     = f.button :submit

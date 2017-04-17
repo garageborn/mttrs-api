@@ -2,8 +2,19 @@ module Admin
   module Notification
     module Cell
       class Form < Trailblazer::Cell
+        SEGMENTS = [
+          'mttrs_br test',
+          'mttrs_br',
+          'mttrs_us test'
+          'mttrs_us',
+        ].freeze
+
         def types_collection
           %w(Link Category Publisher)
+        end
+
+        def segments_collection
+          SEGMENTS.select { |segment| segment.starts_with?(Apartment::Tenant.current) }
         end
       end
 
