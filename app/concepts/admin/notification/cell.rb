@@ -5,8 +5,8 @@ module Admin
         SEGMENTS = [
           'mttrs_br test',
           'mttrs_br',
-          'mttrs_us test'
-          'mttrs_us',
+          'mttrs_us test',
+          'mttrs_us'
         ].freeze
 
         def types_collection
