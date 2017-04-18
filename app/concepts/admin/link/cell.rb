@@ -3,14 +3,23 @@ module Admin
     module Cell
       class Index < Trailblazer::Cell
         def publishers_select
-          publishers = ::Publisher.available_on_current_tenant.order_by_name.distinct
           options = options_from_collection_for_select(
-            publishers,
+            ::Publisher.available_on_current_tenant.order_by_name.distinct,
             :slug,
             :name,
             params[:publisher_slug],
           )
           select_tag('links_publisher_slug', options, prompt: 'Publishers')
+        end
+
+        def categories_select
+          options = options_from_collection_for_select(
+            ::Category.order_by_name.distinct,
+            :slug,
+            :name,
+            params[:category_slug],
+          )
+          select_tag('links_category_slug', options, prompt: 'Categories')
         end
 
         def tags_select
