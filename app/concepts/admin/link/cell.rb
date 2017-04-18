@@ -61,7 +61,10 @@ module Admin
         end
 
         def tags
-          model.tags.pluck(:name).sort.to_sentence
+          return if model.tags.blank?
+          model.tags.order_by_name.pluck(:name).map do |tag|
+            content_tag(:span, tag, class: 'links-tag')
+          end
         end
 
         def story_id

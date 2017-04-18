@@ -1,10 +1,11 @@
 tr
   td= image
-  td= title
+  td
+    = title
+    p= tags
   td= total_social
   td= publisher_name
   td= category_name
   td= published_at
-  td= tags
   td= story_id
   td= link_to 'Edit', [:edit, :admin, model], class: 'links-edit-button'
