@@ -84,7 +84,7 @@ class SimilarLinks
 
   def set_blocked_links
     return unless base_link.present?
-    base_story_blocked_links = base_link.try(:story).try(:blocked_links).pluck(:id)
+    base_story_blocked_links = base_link.try(:story).try(:blocked_links).to_a.map { |link| link.id }
     base_link_blocked_links = base_link.blocked_stories.map { |story| story.try(:link_ids).to_a }
     blocked_link_ids = (base_story_blocked_links + base_link_blocked_links).flatten.compact.uniq
     blocked_links.concat(blocked_link_ids)
