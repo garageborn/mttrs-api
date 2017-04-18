@@ -12,6 +12,8 @@ class Link < ApplicationRecord
 
   belongs_to :publisher
   has_many :blocked_story_links, inverse_of: :link, dependent: :destroy
+  has_many :blocked_stories, through: :blocked_story_links, source: :story, class_name: 'Story'
+  has_many :blocked_links, through: :blocked_stories, source: :links, class_name: 'Link'
   has_many :link_tags, inverse_of: :link, dependent: :destroy
   has_many :link_urls, inverse_of: :link, dependent: :destroy
   has_many :notifications, as: :notificable, dependent: :destroy

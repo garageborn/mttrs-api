@@ -31,3 +31,9 @@ table.links
       th Published At
   tbody
     = concept('admin/link/cell/similar_item', collection: similar)
+
+br
+
+.blocked-links
+  h3 Blocked Links
+  = concept('admin/link/cell/blocked_links', model)

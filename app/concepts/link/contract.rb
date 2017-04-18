@@ -11,6 +11,7 @@ class Link
     property :story
     property :tag_ids
     property :title
+    property :blocked_links
 
     collection :link_urls do
       property :url

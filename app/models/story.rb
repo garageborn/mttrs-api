@@ -6,6 +6,7 @@ class Story < ApplicationRecord
 
   belongs_to :category
   has_many :blocked_story_links, inverse_of: :story, dependent: :destroy
+  has_many :blocked_links, through: :blocked_story_links, source: :link, class_name: 'Link'
   has_many :link_tags, through: :links
   has_many :amp_links, through: :links
   has_many :links, through: :story_links

@@ -112,6 +112,7 @@ Paloma.controller('Admin/Stories', {
   edit () {
     new StoryFormLinksActions('.current-links table')
     new StoryAddSimilarLinks('.other-links').run()
+    new StoryFormLinksActions('.blocked-links table')
     new StoryFindSimilarLinks('.find-links')
   },
 
