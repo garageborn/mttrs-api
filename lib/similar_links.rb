@@ -71,12 +71,8 @@ class SimilarLinks
 
   def blocked_story_link?(record)
     return true if blocked_links.include?(record.id)
-
-    record_blocked_links = record.blocked_story_links.map(&:story).map do |story|
-      story.try(:link_ids)
-    end.flatten.compact.uniq
-
-    links.map(&:id).any? { |id| record_blocked_links.include?(id) }
+    record_blocked_links = record.blocked_links.pluck(:id)
+    links.any? { |link| record_blocked_links.include?(link.id) }
   end
 
   def map_result_ids(response)
@@ -88,14 +84,9 @@ class SimilarLinks
 
   def set_blocked_links
     return unless base_link.present?
-    base_story_blocked_links = base_link.try(:story).try(:blocked_story_links).to_a.map(&:link_id)
-
-    base_link_blocked_links = base_link.blocked_story_links.map(&:story).map do |story|
-      story.try(:link_ids).to_a
-    end
-
+    base_story_blocked_links = base_link.try(:story).try(:blocked_links).pluck(:id)
+    base_link_blocked_links = base_link.blocked_stories.map { |story| story.try(:link_ids).to_a }
     blocked_link_ids = (base_story_blocked_links + base_link_blocked_links).flatten.compact.uniq
-
     blocked_links.concat(blocked_link_ids)
   end
 end
