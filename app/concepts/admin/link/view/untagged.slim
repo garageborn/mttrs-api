@@ -1,0 +1,19 @@
+h2 Total: #{ total }
+
+= categories_select
+= concept('admin/publisher/cell/untagged_links', nil, id: :untagged_links,
+  name: :publisher_slug, value: :slug, selected: params[:publisher_slug])
+
+table.links
+  thead
+    tr
+      th Url
+      th Total Social
+      th Category
+      th Publisher
+      th Published At
+      th
+  tbody
+    = concept('admin/link/cell/untagged_item', collection: model)
+
+= paginate(model)

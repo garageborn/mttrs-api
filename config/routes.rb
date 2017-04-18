@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       resources :category_matchers, except: :show
       resources :links, except: :show do
         get :uncategorized, on: :collection
+        get :untagged, on: :collection
         get :similar, on: :collection
       end
       resources :notifications, except: :show

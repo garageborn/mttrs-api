@@ -27,6 +27,19 @@ class Link
     end
   end
 
+  class Untagged < Trailblazer::Operation
+    include Collection
+    DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 50, order_by_url: true).freeze
+
+    def model!(params)
+      ::Link.available_on_current_tenant.untagged.filter(params)
+    end
+
+    def params!(params)
+      DEFAULT_PARAMS.merge(params.permit(:category_slug, :page, :publisher_slug))
+    end
+  end
+
   class Similar < Trailblazer::Operation
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 50, recent: true).freeze

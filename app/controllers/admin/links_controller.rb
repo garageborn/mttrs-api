@@ -44,6 +44,11 @@ module Admin
       render html: concept('admin/link/cell/uncategorized', @model)
     end
 
+    def untagged
+      present ::Link::Untagged
+      render html: concept('admin/link/cell/untagged', @model)
+    end
+
     def similar
       present ::Link::Similar
       render html: concept('admin/link/cell/similar', @model)
