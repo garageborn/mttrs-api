@@ -2,7 +2,7 @@
   = f.error_notification
 
   .form-inputs
-    = f.input :segment, collection: segments_collection, prompt: 'Segment'
+    = f.input :segment, collection: segments_collection, prompt: false
     = f.input :notificable_type, collection: types_collection, prompt: 'Text'
     = f.input :notificable_id
     = f.input :title

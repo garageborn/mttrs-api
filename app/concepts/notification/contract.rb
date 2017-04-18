@@ -14,7 +14,7 @@ class Notification
     property :response
     property :onesignal_url, virtual: true
 
-    validates :message, presence: true
+    validates :message, :segment, presence: true
 
     def prepopulate!(options)
       notification_params = options[:params][:notification]
