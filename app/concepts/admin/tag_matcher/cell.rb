@@ -69,7 +69,7 @@ module Admin
 
           scope = case
                   when publisher.present? && tag.present?
-                    publisher.links.category_slug(tag.category.slug).without_tag(tag.id)
+                    publisher.links.category_slug(tag.category.slug).untagged
                   when publisher.present?
                     publisher.links.untagged
                   else ::Link.untagged
