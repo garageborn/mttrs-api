@@ -50,7 +50,7 @@ class Notification < ActiveRecord::Base
   end
 
   def included_segments
-    [Apartment::Tenant.current]
+    [segment]
   end
 
   def ios_attachments

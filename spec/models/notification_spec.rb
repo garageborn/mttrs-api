@@ -9,6 +9,7 @@ RSpec.describe Notification do
   it { should have_db_column(:notificable_type) }
   it { should have_db_column(:onesignal_id) }
   it { should have_db_column(:title) }
+  it { should have_db_column(:segment).with_options(null: false) }
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_index([:notificable_id, :notificable_type]) }
   it { should have_db_index([:notificable_type, :notificable_id]) }
