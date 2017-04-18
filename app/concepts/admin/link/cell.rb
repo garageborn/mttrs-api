@@ -98,33 +98,51 @@ module Admin
         end
       end
 
-      class SocialCounter < Trailblazer::Cell
-        def total
-          number_with_delimiter(model.total)
+      class BlockedLinks < Trailblazer::Cell
+        INCLUDES = %i(category publisher story link_url).freeze
+
+        def blocked_links
+          model.blocked_links.popular.includes(INCLUDES)
+        end
+      end
+
+      class BlockedLink < Trailblazer::Cell
+        property :id
+        property :title
+        property :url
+
+        def category_name
+          model.category.name
         end
 
-        def facebook
-          number_with_delimiter(model.facebook)
+        def publisher_name
+          model.publisher.name
         end
 
-        def linkedin
-          number_with_delimiter(model.linkedin)
+        def image
+          return if model.image_source_url.blank?
+          image_tag(model.image_source_url, size: '75x75')
         end
 
-        def twitter
-          number_with_delimiter(model.twitter)
+        def total_social
+          number_with_delimiter(model.total_social)
         end
 
-        def pinterest
-          number_with_delimiter(model.pinterest)
+        def publisher_name
+          model.publisher.name
         end
 
-        def google_plus
-          number_with_delimiter(model.google_plus)
+        def category_name
+          model.category.try(:name)
         end
 
-        def created_at
-          localize(model.created_at)
+        def published_at
+          localize(model.published_at, format: :short)
+        end
+
+        def story_id
+          return if model.story.blank?
+          link_to(model.story.id, [:edit, :admin, model.story], class: 'links-edit-button')
         end
       end
 

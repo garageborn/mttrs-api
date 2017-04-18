@@ -143,6 +143,10 @@ module Admin
           model.links.popular.includes(INCLUDES)
         end
 
+        def blocked_links
+          model.blocked_links.popular.includes(INCLUDES)
+        end
+
         def notification_link
           main_link = model.main_link
           return if main_link.blank?

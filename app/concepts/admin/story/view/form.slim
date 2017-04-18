@@ -19,6 +19,7 @@
   - if links.present?
     h3 Current Links
     = concept('admin/story/cell/form_links', nil, links: links, story_id: model.id)
+
 br
 
 .find-links
@@ -30,3 +31,9 @@ br
 
 .other-links
   h3 Other Links
+
+br
+
+.blocked-links
+  h3 Blocked Links
+  = concept('admin/story/cell/form_links', nil, links: blocked_links, story_id: model.id)

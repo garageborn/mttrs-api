@@ -4,6 +4,7 @@ class Story
     property :headline
     property :summary
     property :links
+    property :blocked_links
     property :published_at
     property :main_link
     property :link_ids
