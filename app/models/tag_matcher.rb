@@ -15,7 +15,7 @@ class TagMatcher < ApplicationRecord
     joins(:category).where(categories: { slug: slug }).group('tag_matchers.id')
   }
   scope :publisher_slug, lambda { |slug|
-    joins(:publishers).where(publishers: { slug: slug }).group('tag_matchers.id')
+    joins(:publisher).where(publishers: { slug: slug }).group('tag_matchers.id')
   }
   scope :tag_slug, lambda { |slug|
     joins(:tag).where(tags: { slug: slug }).group('tag_matchers.id')
