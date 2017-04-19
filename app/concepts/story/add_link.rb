@@ -9,10 +9,13 @@ class Story
       return if model == link.story || !valid_link?
 
       if link.missing_story?
-        add_link
+        link.with_lock { link.update_attributes(story: model) }
       else
         merge_story
       end
+
+      ::BlockedStoryLink.where(story: model, link: link).destroy_all
+      RefreshStoryJob.perform_async(model.id)
     end
 
     private
@@ -25,22 +28,11 @@ class Story
       link.belongs_to_current_tenant? && link.category == model.category
     end
 
-    def add_link
-      link.with_lock { link.update_attributes(story: model) }
-      ::BlockedStoryLink.where(story: model, link: link).destroy_all
-      RefreshStoryJob.perform_async(model.id)
-    end
-
     def merge_story
-      stories = [model, link.story]
-      destination = stories.detect { |story| story.summary.present? } || stories.first
-      other_story = stories.detect { |story| story != destination }
-
+      other_story = link.story
       other_story.links.find_each do |similar_link|
-        similar_link.update_attributes(story: destination)
+        similar_link.update_attributes(story: model)
       end
-      ::BlockedStoryLink.where(story: destination, link: link).destroy_all
-      RefreshStoryJob.perform_async(destination.id)
       Story::Destroy.run(id: other_story.id)
     end
 
