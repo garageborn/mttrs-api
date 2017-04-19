@@ -11,6 +11,15 @@ class TagMatcher < ApplicationRecord
 
   strip_attributes :url_matcher,  :html_matcher
 
+  scope :category_slug, lambda { |slug|
+    joins(:category).where(categories: { slug: slug }).group('tag_matchers.id')
+  }
+  scope :publisher_slug, lambda { |slug|
+    joins(:publishers).where(publishers: { slug: slug }).group('tag_matchers.id')
+  }
+  scope :tag_slug, lambda { |slug|
+    joins(:tag).where(tags: { slug: slug }).group('tag_matchers.id')
+  }
   scope :order_by_category_name, -> { joins(:category).order('unaccent(categories.name) ASC') }
   scope :order_by_tag_name, -> { joins(:tag).order('unaccent(tags.name) ASC') }
   scope :order_by_publisher_name, -> { joins(:publisher).order('unaccent(publishers.name) ASC') }
