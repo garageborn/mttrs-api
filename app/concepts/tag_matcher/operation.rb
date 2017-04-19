@@ -14,7 +14,7 @@ class TagMatcher
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:category_slug, :page, :publisher_slug, :tag_slug))
     end
   end
 
