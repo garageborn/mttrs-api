@@ -11,7 +11,7 @@ module Admin
             ::Category.order_by_name.distinct,
             :slug,
             :name,
-            params[:category_slug],
+            params[:category_slug]
           )
           select_tag('untagged_links_category_slug', options, prompt: 'Categories')
         end

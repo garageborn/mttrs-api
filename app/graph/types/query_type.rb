@@ -38,10 +38,11 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :tags, !types[TagType] do
+    argument :category_slug, types.String
     argument :limit, types.Int
     argument :ordered, types.Boolean
     argument :with_stories, types.Boolean
-    argument :category_slug, types.String
+    argument :with_recent_stories, types.Boolean
     resolve Resolvers::QueryType::Tags
   end
 
