@@ -47,16 +47,17 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :timeline, TimelineType do
-    argument :cursor, types.Int
-    argument :type, types.String
-    argument :timezone, types.String
-    argument :limit, types.Int
     argument :category_slug, types.String
+    argument :cursor, types.Int
+    argument :limit, types.Int
     argument :limit, types.Int
     argument :popular, types.Boolean
     argument :publisher_slug, types.String
     argument :recent, types.Boolean
     argument :tag_slug, types.String
+    argument :timezone, types.String
+    argument :type, types.String
+    argument :with_summary, types.Boolean
 
     resolve Resolvers::QueryType::Timeline
   end

@@ -42,6 +42,7 @@ class Story < ApplicationRecord
   scope :with_amp, lambda {
     joins(:amp_links).where(amp_links: { status: :success }).group('stories.id')
   }
+  scope :with_summary, -> { where.not(summary: nil).where.not(summary: '') }
 
   def total_facebook
     links.map { |link| link.social_counter.try(:facebook).to_i }.sum
