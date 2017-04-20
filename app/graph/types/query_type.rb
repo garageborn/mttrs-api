@@ -58,7 +58,6 @@ QueryType = GraphQL::ObjectType.define do
     argument :timezone, types.String
     argument :type, types.String
     argument :with_summary, types.Boolean
-
     resolve Resolvers::QueryType::Timeline
   end
 end
