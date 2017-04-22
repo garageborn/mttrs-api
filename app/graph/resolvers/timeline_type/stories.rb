@@ -8,12 +8,16 @@ module Resolvers
           case type
           when :home then Resolvers::TimelineType::Stories::HomeTimeline
           when :publisher then Resolvers::TimelineType::Stories::PublisherTimeline
-          when :default then Resolvers::TimelineType::Stories::CategoryTimeline
+          else Resolvers::TimelineType::Stories::CategoryTimeline
           end
         end
 
-        def filters(type, args)
+        def filters(type:, args:)
           timeline(type).filters(args)
+        end
+
+        def last_story(type:, cursor:, filters:)
+          timeline(type).last_story(cursor: cursor, filters: filters)
         end
       end
 

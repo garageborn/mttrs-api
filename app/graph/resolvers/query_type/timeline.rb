@@ -19,7 +19,7 @@ module Resolvers
       end
 
       def filters
-        Resolvers::TimelineType::Stories.filters(type, args)
+        Resolvers::TimelineType::Stories.filters(type: type, args: args).with_indifferent_access
       end
 
       def limit
@@ -31,7 +31,7 @@ module Resolvers
       end
 
       def last_story
-        ::Story.filter(filters).published_until(cursor).reorder(:published_at).last
+        Resolvers::TimelineType::Stories.last_story(type: type, cursor: cursor, filters: filters)
       end
 
       memoize :date, :cursor, :filters, :last_story, :limit, :type

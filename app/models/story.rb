@@ -22,6 +22,7 @@ class Story < ApplicationRecord
   scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
+  scope :min_total_social, ->(total_social) { where('stories.total_social >= ?', total_social) }
   scope :order_by_summarized_at,-> { order('stories.summarized_at DESC NULLS LAST') }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
