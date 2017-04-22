@@ -5,7 +5,13 @@ module Resolvers
         delegate :filters, :date, :limit, to: :obj
 
         def resolve
+          return [] if date.blank?
           ::Story.filter(filters).published_between(start_at, end_at).limit(limit)
+        end
+
+        def self.filters(args)
+          allowed_filters = %w(category_slug popular publisher_slug tag_slug with_summary)
+          args.slice(*allowed_filters).merge(popular: true)
         end
 
         private

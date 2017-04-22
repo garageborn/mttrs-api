@@ -1,16 +1,26 @@
 module Resolvers
   module TimelineType
     class Stories < Base
-      delegate :type, :date, to: :obj
+      delegate :type, to: :obj
+
+      class << self
+        def timeline(type)
+          home_timeline = Resolvers::TimelineType::Stories::HomeTimeline
+          default_timeline = Resolvers::TimelineType::Stories::DefaultTimeline
+          type == :home ? home_timeline : default_timeline
+        end
+
+        def filters(type, args)
+          timeline(type).filters(args)
+        end
+      end
 
       def resolve
-        return [] if date.blank?
+        timeline.call(obj, args, ctx)
+      end
 
-        if type == :home
-          Resolvers::TimelineType::Stories::HomeTimeline.call(obj, args, ctx)
-        else
-          Resolvers::TimelineType::Stories::DefaultTimeline.call(obj, args, ctx)
-        end
+      def timeline
+        self.class.timeline(type)
       end
     end
   end

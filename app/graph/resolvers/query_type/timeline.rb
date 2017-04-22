@@ -3,12 +3,7 @@ module Resolvers
     class Timeline < Base
       def resolve
         cache_for(:timeline).expires_in 15.minutes
-        OpenStruct.new(
-          date: date,
-          filters: filters,
-          limit: limit,
-          type: type
-        )
+        OpenStruct.new(date: date, filters: filters, limit: limit, type: type)
       end
 
       private
@@ -24,8 +19,7 @@ module Resolvers
       end
 
       def filters
-        allowed_filters = %w(category_slug popular publisher_slug tag_slug with_summary)
-        args.slice(*allowed_filters).merge(popular: true)
+        Resolvers::TimelineType::Stories.filters(type, args)
       end
 
       def limit
