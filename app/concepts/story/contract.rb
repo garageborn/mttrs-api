@@ -3,6 +3,7 @@ class Story
     property :category_id
     property :headline
     property :summary
+    property :summarized_at
     property :links
     property :blocked_links
     property :published_at

@@ -22,6 +22,7 @@ class Story < ApplicationRecord
   scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :last_month, -> { published_since(1.month.ago) }
   scope :last_week, -> { published_since(1.week.ago) }
+  scope :order_by_summarized_at,-> { order('stories.summarized_at DESC NULLS LAST') }
   scope :popular, -> { order(total_social: :desc) }
   scope :published_at, lambda { |date|
     date = parse_date(date)
@@ -35,7 +36,7 @@ class Story < ApplicationRecord
   scope :publisher_slug, lambda { |slug|
     joins(:publishers).group(:id).where(publishers: { slug: slug })
   }
-  scope :recent, -> { order('stories.published_at DESC') }
+  scope :recent, -> { order(published_at: :desc) }
   scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }).group('stories.id') }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }

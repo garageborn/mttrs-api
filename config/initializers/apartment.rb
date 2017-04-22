@@ -72,3 +72,14 @@ end
 # Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'
 # Rails.application.config.middleware.use 'Apartment::Elevators::FirstSubdomain'
 Rails.application.config.middleware.use Elevator
+
+# tenant shortcuts
+def mttrs_br!
+  Time.zone = 'America/Sao_Paulo'
+  Apartment::Tenant.switch!(:mttrs_br)
+end
+
+def mttrs_us!
+  Time.zone = 'UTC'
+  Apartment::Tenant.switch!(:mttrs_us)
+end
