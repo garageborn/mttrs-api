@@ -17,7 +17,7 @@ gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.1'
 gem 'google-api-client', '0.11.1'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.5.6'
+gem 'graphql', '1.5.9'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
@@ -36,7 +36,7 @@ gem 'ruby-readability', '0.7.0'
 gem 'sidekiq', '4.2.10'
 gem 'sidekiq-failures', '0.4.5'
 gem 'sidekiq-limit_fetch', '3.4.0'
-gem 'sidekiq-unique-jobs', '4.0.18'
+gem 'sidekiq-unique-jobs', '5.0.4'
 gem 'simple_form', '3.4.0'
 gem 'sinatra', '2.0.0.rc2'
 gem 'slim-rails', '3.1.2'
@@ -79,10 +79,10 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '3.8.0'
+  gem 'capistrano', '3.8.1'
   gem 'capistrano-bundler', '1.2.0', require: false
   gem 'capistrano-rails', '1.2.3', require: false
-  gem 'capistrano-rbenv', '2.1.0', require: false
+  gem 'capistrano-rbenv', '2.1.1', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
   gem 'capistrano3-puma', '3.1.0', require: false
   gem 'rack-cors', '0.4.1', require: 'rack/cors'
@@ -95,7 +95,7 @@ group :test do
   gem 'factory_girl_rails', '4.8.0'
   gem 'faker', '1.7.3'
   gem 'rspec-its', '1.2.0'
-  gem 'rspec-sidekiq', '2.2.0'
+  gem 'rspec-sidekiq', '3.0.1'
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
   gem 'simplecov', '0.14.1', require: false
