@@ -5,9 +5,11 @@ module Resolvers
 
       class << self
         def timeline(type)
-          home_timeline = Resolvers::TimelineType::Stories::HomeTimeline
-          default_timeline = Resolvers::TimelineType::Stories::DefaultTimeline
-          type == :home ? home_timeline : default_timeline
+          case type
+          when :home then Resolvers::TimelineType::Stories::HomeTimeline
+          when :publisher then Resolvers::TimelineType::Stories::PublisherTimeline
+          when :default then Resolvers::TimelineType::Stories::CategoryTimeline
+          end
         end
 
         def filters(type, args)

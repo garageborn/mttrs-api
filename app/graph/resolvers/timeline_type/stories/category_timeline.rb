@@ -1,7 +1,7 @@
 module Resolvers
   module TimelineType
     class Stories
-      class DefaultTimeline < Base
+      class CategoryTimeline < Base
         delegate :filters, :date, :limit, to: :obj
 
         def resolve
@@ -10,7 +10,7 @@ module Resolvers
         end
 
         def self.filters(args)
-          allowed_filters = %w(category_slug popular publisher_slug tag_slug with_summary)
+          allowed_filters = %w(category_slug tag_slug with_summary)
           args.slice(*allowed_filters).merge(popular: true)
         end
 
