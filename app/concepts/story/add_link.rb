@@ -5,11 +5,10 @@ class Story
     action :find
 
     def process(*)
-      return unless link.present?
+      return if link.blank?
       return if model == link.story || !valid_link?
 
-      add_blocked_story_links
-      link.missing_story? ? add_link : merge_story
+      link.missing_story? ? add_link(link) : merge_story
       RefreshStoryJob.perform_async(model.id)
     end
 
@@ -23,34 +22,25 @@ class Story
       link.belongs_to_current_tenant? && link.category == model.category
     end
 
-    def add_link
-      link.with_lock { link.update_attributes(story: model) }
-    end
-
     def merge_story
       other_story = link.story
-      merge_blocked_story_links(other_story.blocked_story_links)
-
-      other_story.links.find_each do |similar_link|
-        merge_blocked_story_links(similar_link.blocked_story_links)
-        similar_link.update_attributes(story: model)
-      end
-
+      merge_blocked_links(other_story)
+      other_story.links.find_each { |similar_link| add_link(similar_link) }
       ::Story::Destroy.run(id: other_story.id)
     end
 
-    def add_blocked_story_links
-      ::BlockedStoryLink.where(story: model, link: link).destroy_all
-      merge_blocked_story_links(link.blocked_story_links)
+    def merge_blocked_links(story)
+      blocked_link_ids = model.link_ids + model.blocked_link_ids
+      story.blocked_story_links.where.not(link_id: blocked_link_ids).each do |blocked_story_link|
+        model.blocked_story_links.create(link: blocked_story_link.link)
+        blocked_story_link.destroy
+      end
     end
 
-    def merge_blocked_story_links(blocked_story_links)
-      blocked_story_links.each do |blocked_link|
-        next if model.link_ids.include?(blocked_link.link.id)
-        next if model.blocked_link_ids.include?(blocked_link.link.id)
-        model.blocked_story_links.create(link_id: blocked_link.link.id)
-      end
-      ::BlockedStoryLink::DestroyAll.run(blocked_story_links.map(&:id))
+    def add_link(link)
+      link.blocked_story_links.where(link_id: model.link_ids + model.blocked_link_ids).destroy_all
+      model.blocked_story_links.where(link_id: link.id).destroy_all
+      link.with_lock { link.update_attributes(story: model) }
     end
 
     memoize :link
