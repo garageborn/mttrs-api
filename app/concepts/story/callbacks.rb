@@ -24,8 +24,6 @@ class Story
       end
 
       def process_removed_links
-        p '---------------------------------process_removed_links'
-        byebug
         return if contract.removed_links.blank?
         ::Link.where(id: contract.removed_links).each do |link|
           Story::RemoveLink.run(id: contract.model.id, link_id: link.id)
