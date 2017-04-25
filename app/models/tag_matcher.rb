@@ -9,7 +9,7 @@ class TagMatcher < ApplicationRecord
 
   validates :tag, presence: true
 
-  strip_attributes :url_matcher,  :html_matcher
+  strip_attributes :url_matcher, :html_matcher
 
   scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }
   scope :order_by_category_name, -> { joins(:category).order('categories.name ASC') }
@@ -20,7 +20,7 @@ class TagMatcher < ApplicationRecord
 
   def match?(link)
     return false if link_matcher.blank?
-    link_matcher.match?(link)
+    match_category?(link) && link_matcher.match?(link)
   end
 
   private
@@ -34,5 +34,9 @@ class TagMatcher < ApplicationRecord
     )
   end
 
-  memoize :link_matcher, :match?
+  def match_category?(link)
+    link.category == category
+  end
+
+  memoize :link_matcher, :match?, :match_category?
 end
