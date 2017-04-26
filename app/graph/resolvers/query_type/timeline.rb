@@ -55,6 +55,7 @@ module Resolvers
       end
 
       def recent?(date)
+        return if date.blank?
         date > recent_start_at
       end
 
