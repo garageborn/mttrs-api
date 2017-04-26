@@ -1,6 +1,8 @@
 module Resolvers
   module QueryType
     class Timeline < Base
+      RECENT_DAYS_AGO = 1
+
       def resolve
         cache_for(:timeline).expires_in 15.minutes
         OpenStruct.new(
@@ -57,7 +59,7 @@ module Resolvers
       end
 
       def recent_start_at
-        1.day.ago.at_beginning_of_day
+        RECENT_DAYS_AGO.days.ago.at_beginning_of_day
       end
 
       def recent_end_at
