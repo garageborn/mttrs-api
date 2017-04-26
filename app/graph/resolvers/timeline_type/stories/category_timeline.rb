@@ -2,7 +2,7 @@ module Resolvers
   module TimelineType
     class Stories
       class CategoryTimeline < Base
-        delegate :filters, :date, :start_at, :end_at, to: :obj
+        delegate :date, :filters, :limit, :start_at, :end_at, to: :obj
 
         MIN_CATEGORY_SOCIAL = 300
         MIN_TAG_SOCIAL = 50
