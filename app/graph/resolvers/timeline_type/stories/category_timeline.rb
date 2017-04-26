@@ -2,7 +2,8 @@ module Resolvers
   module TimelineType
     class Stories
       class CategoryTimeline < Base
-        delegate :filters, :date, :limit, to: :obj
+        delegate :date, :filters, :limit, :start_at, :end_at, to: :obj
+
         MIN_CATEGORY_SOCIAL = 300
         MIN_TAG_SOCIAL = 50
 
@@ -36,18 +37,6 @@ module Resolvers
           return [] if date.blank?
           self.class.filter_stories(filters).published_between(start_at, end_at).limit(limit)
         end
-
-        private
-
-        def start_at
-          date.at_beginning_of_day
-        end
-
-        def end_at
-          date.end_of_day
-        end
-
-        memoize :start_at, :end_at
       end
     end
   end
