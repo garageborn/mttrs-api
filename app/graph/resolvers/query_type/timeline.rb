@@ -3,7 +3,14 @@ module Resolvers
     class Timeline < Base
       def resolve
         cache_for(:timeline).expires_in 15.minutes
-        OpenStruct.new(date: date, filters: filters, limit: limit, type: type)
+        OpenStruct.new(
+          date: date,
+          filters: filters,
+          limit: limit,
+          type: type,
+          start_at: start_at,
+          end_at: end_at
+        )
       end
 
       private
@@ -14,8 +21,9 @@ module Resolvers
       end
 
       def cursor
-        return Time.zone.at(args['cursor']).at_beginning_of_day unless args['cursor'].to_i.zero?
-        Time.zone.now.end_of_day
+        return recent_end_at if args['cursor'].to_i.zero?
+        cursor = Time.zone.at(args['cursor']).at_beginning_of_day
+        recent?(cursor) ? recent_start_at : cursor
       end
 
       def filters
@@ -32,6 +40,28 @@ module Resolvers
 
       def last_story
         Resolvers::TimelineType::Stories.last_story(type: type, cursor: cursor, filters: filters)
+      end
+
+      def start_at
+        return recent_start_at if recent?(date)
+        date.at_beginning_of_day
+      end
+
+      def end_at
+        return recent_end_at if recent?(date)
+        date.end_of_day
+      end
+
+      def recent?(date)
+        date > recent_start_at
+      end
+
+      def recent_start_at
+        1.day.ago.at_beginning_of_day
+      end
+
+      def recent_end_at
+        Time.zone.now.end_of_day
       end
 
       memoize :date, :cursor, :filters, :last_story, :limit, :type
