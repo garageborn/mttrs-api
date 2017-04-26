@@ -45,11 +45,13 @@ module Resolvers
       end
 
       def start_at
+        return if date.blank?
         return recent_start_at if recent?(date)
         date.at_beginning_of_day
       end
 
       def end_at
+        return if date.blank?
         return recent_end_at if recent?(date)
         date.end_of_day
       end
