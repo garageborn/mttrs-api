@@ -10,7 +10,4 @@ PublisherType = GraphQL::ObjectType.define do
   field :today_stories_count, !types.Int do
     resolve Resolvers::PublisherType::TodayStoriesCount
   end
-  field :recent_stories_count, !types.Int do
-    resolve Resolvers::PublisherType::RecentStoriesCount
-  end
 end

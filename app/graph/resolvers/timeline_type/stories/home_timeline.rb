@@ -2,7 +2,7 @@ module Resolvers
   module TimelineType
     class Stories
       class HomeTimeline < Base
-        delegate :filters, :date, :start_at, :end_at, to: :obj
+        delegate :filters, :date, to: :obj
 
         class << self
           def filters(_args)
@@ -18,6 +18,18 @@ module Resolvers
           return [] if date.blank?
           ::Story.filter(filters).published_between(start_at, end_at)
         end
+
+        private
+
+        def start_at
+          date.at_beginning_of_day
+        end
+
+        def end_at
+          date.end_of_day
+        end
+
+        memoize :start_at, :end_at
       end
     end
   end
