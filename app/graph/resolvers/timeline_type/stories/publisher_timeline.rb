@@ -2,7 +2,7 @@ module Resolvers
   module TimelineType
     class Stories
       class PublisherTimeline < Base
-        delegate :filters, :date, :limit, to: :obj
+        delegate :date, :filters, :limit, to: :obj
 
         class << self
           def filters(args)
@@ -11,7 +11,13 @@ module Resolvers
           end
 
           def last_story(filters:, cursor:)
+            cursor = parse_cursor(cursor)
             ::Story.filter(filters).published_until(cursor).reorder(:published_at).last
+          end
+
+          def parse_cursor(cursor)
+            return Time.zone.now.end_of_day if cursor.to_i.zero?
+            Time.zone.at(cursor).at_beginning_of_day
           end
         end
 
