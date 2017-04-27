@@ -2,7 +2,7 @@ module Resolvers
   module TimelineType
     class Stories
       class CategoryTimeline < Base
-        delegate :date, :filters, :limit, :start_at, :end_at, to: :obj
+        delegate :date, :filters, :limit, to: :obj
 
         MIN_CATEGORY_SOCIAL = 300
         MIN_TAG_SOCIAL = 50
@@ -14,6 +14,7 @@ module Resolvers
           end
 
           def last_story(filters:, cursor:)
+            cursor = parse_cursor(cursor)
             filter_stories(filters).published_until(cursor).reorder(:published_at).last
           end
 
@@ -31,12 +32,29 @@ module Resolvers
           def apply_min_total_social(stories, min_total_social)
             stories.min_total_social(min_total_social).or(stories.with_summary)
           end
+
+          def parse_cursor(cursor)
+            return Time.zone.now.end_of_day if cursor.to_i.zero?
+            Time.zone.at(cursor).at_beginning_of_day
+          end
         end
 
         def resolve
           return [] if date.blank?
           self.class.filter_stories(filters).published_between(start_at, end_at).limit(limit)
         end
+
+        private
+
+        def start_at
+          date.at_beginning_of_day
+        end
+
+        def end_at
+          date.end_of_day
+        end
+
+        memoize :start_at, :end_at
       end
     end
   end
