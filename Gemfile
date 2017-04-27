@@ -17,7 +17,7 @@ gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.1'
 gem 'google-api-client', '0.11.1'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.5.9'
+gem 'graphql', '1.5.10'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
@@ -36,7 +36,7 @@ gem 'ruby-readability', '0.7.0'
 gem 'sidekiq', '4.2.10'
 gem 'sidekiq-failures', '0.4.5'
 gem 'sidekiq-limit_fetch', '3.4.0'
-gem 'sidekiq-unique-jobs', '5.0.4'
+gem 'sidekiq-unique-jobs', '5.0.7'
 gem 'simple_form', '3.4.0'
 gem 'sinatra', '2.0.0.rc2'
 gem 'slim-rails', '3.1.2'
@@ -71,10 +71,10 @@ group :development, :test do
   gem 'guard-rspec', '4.7.3'
   gem 'guard-rubocop', '1.2.0'
   gem 'guard-slimlint', '1.2.1'
-  gem 'pronto', '0.8.2'
-  gem 'pronto-brakeman', '0.8.0', require: false
-  gem 'pronto-flay', '0.8.0', require: false
-  gem 'pronto-rubocop', '0.8.1', require: false
+  gem 'pronto', '0.9.1'
+  gem 'pronto-brakeman', '0.9.0', require: false
+  gem 'pronto-flay', '0.9.0', require: false
+  gem 'pronto-rubocop', '0.9.0', require: false
   gem 'rspec-rails', '3.5.2'
 end
 

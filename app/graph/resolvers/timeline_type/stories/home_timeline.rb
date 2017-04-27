@@ -46,10 +46,10 @@ module Resolvers
 
         private
 
-      def cursor
-        return Time.zone.now.end_of_day if args['cursor'].to_i.zero?
-        Time.zone.at(args['cursor']).at_beginning_of_day
-      end
+        def cursor
+          return Time.zone.now.end_of_day if args['cursor'].to_i.zero?
+          Time.zone.at(args['cursor']).at_beginning_of_day
+        end
 
         def start_at
           return if date.blank?
