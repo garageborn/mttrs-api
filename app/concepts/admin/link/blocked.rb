@@ -1,7 +1,7 @@
 module Admin
   module Link
     module Cell
-      class BlockedLinks < Trailblazer::Cell
+      class Blocked < Trailblazer::Cell
         INCLUDES = %i(category publisher story link_url).freeze
 
         def blocked_links
