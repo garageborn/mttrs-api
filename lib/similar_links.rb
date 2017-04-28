@@ -57,7 +57,7 @@ class SimilarLinks
   end
 
   def by_score
-    similar_links.sort_by { |similar_link| -similar_link.score }
+    similar_links.sort_by { |similar_link| -similar_link.score }.map(&:record)
   end
 
   def current_link_ids
