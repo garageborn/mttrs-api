@@ -49,7 +49,7 @@ class Story
       end
 
       def update_similar_links
-        link.similar.each do |similar_link|
+        link.similar.links.each do |similar_link|
           Story::AddLink.run(id: model.id, link_id: similar_link.id)
         end
       end
