@@ -23,8 +23,10 @@ class Story
     }.freeze
 
     def model!(params)
-      return unless similar_links.present?
-      similar_links.links.delete_if { |similar_link| story.link_ids.include?(similar_link.id) }
+      return if similar_links.blank?
+      similar_links.links.delete_if do |similar_link|
+        story.link_ids.include?(similar_link.record.id)
+      end
       similar_links.by_score
     end
 
