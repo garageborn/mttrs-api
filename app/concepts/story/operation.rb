@@ -25,7 +25,7 @@ class Story
     def model!(params)
       return if similar_links.blank?
       similar_links.links.delete_if do |similar_link|
-        story.link_ids.include?(similar_link.record.id)
+        story.link_ids.include?(similar_link.id)
       end
       similar_links.by_score
     end
