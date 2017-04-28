@@ -34,7 +34,7 @@ class Story
       end
 
       def stories
-        stories = [link.story] + link.similar.map(&:story)
+        stories = [link.story] + link.similar.stories
         stories.compact.uniq.sort { |story| -story.links.size }
       end
 
