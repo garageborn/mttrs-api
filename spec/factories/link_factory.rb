@@ -4,5 +4,6 @@ FactoryGirl.define do
     title { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
     published_at { Time.zone.now }
+    language { 'en' }
   end
 end
