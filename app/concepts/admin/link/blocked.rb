@@ -5,6 +5,7 @@ module Admin
         INCLUDES = %i(category publisher story link_url).freeze
 
         def blocked_links
+          p '0-------------fooooooooooooo'
           model.blocked_links.popular.includes(INCLUDES)
         end
       end
