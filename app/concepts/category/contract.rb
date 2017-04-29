@@ -4,6 +4,8 @@ class Category
     property :image_id, populator: :image_id!
     property :name
     property :order
+    property :similar_min_score
+    property :slug
 
     validates :color, presence: true
     validates :image_id, presence: true
