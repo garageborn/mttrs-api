@@ -32,6 +32,7 @@ module Concerns
             }
           }
         }
+
         search(default_options.merge(options))
       end
 

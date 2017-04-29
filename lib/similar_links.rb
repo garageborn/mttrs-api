@@ -24,6 +24,7 @@ class SimilarLinks
     @blocked_links = []
     @includes = %i(category category_link) + @options.delete(:includes).to_a
     @category = @options.delete(:category) || base_link.try(:category)
+    @options[:min_score] ||= category.try(:similar_min_score)
     perform
   end
 

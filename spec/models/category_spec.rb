@@ -8,6 +8,7 @@ RSpec.describe Category do
   it { should have_db_column(:order).with_options(null: false, default: 0) }
   it { should have_db_column(:slug).with_options(null: false) }
   it { should have_db_column(:updated_at).with_options(null: false) }
+  it { should have_db_column(:similar_min_score).with_options(null: false, default: 1.5) }
   it { should have_db_index(:name).unique(true) }
   it { should have_db_index(:order) }
   it { should have_db_index(:slug).unique(true) }

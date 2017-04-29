@@ -5,6 +5,7 @@
     = f.association :category, collection: Category.order_by_name, prompt: false
     = f.input :name
     = f.input :order
+    = f.input :slug
 
   .form-actions
     = f.button :submit
