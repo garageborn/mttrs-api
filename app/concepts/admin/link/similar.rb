@@ -5,14 +5,16 @@ module Admin
       end
 
       class SimilarItem < Trailblazer::Cell
-        property :title
-
         def published_at
-          localize(model.published_at, format: :short)
+          localize(model.record.published_at, format: :short)
         end
 
         def score
           number_with_precision(model.score, precision: 2)
+        end
+
+        def title
+          model.record.title
         end
       end
     end

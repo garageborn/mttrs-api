@@ -15,6 +15,7 @@ class SimilarLinks
   end
 
   attr_reader :base_link, :blocked_links, :category, :includes, :similar_links, :options
+  def_delegator :@similar_links, :each_with_index
 
   def initialize(options = {})
     @options = options.dup
