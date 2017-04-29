@@ -3,6 +3,7 @@ class Tag
     property :category_id
     property :name
     property :order
+    property :slug
 
     validates :category_id, :name, presence: true
   end
