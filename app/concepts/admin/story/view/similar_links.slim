@@ -1,2 +1,15 @@
-- if model.present?
-  = concept('admin/story/cell/form_links', nil, links: model, story_id: story_id)
+table.links
+  thead
+    tr
+      th ID
+      th Image
+      th Title
+      th Score
+      th Total Social
+      th Publisher
+      th Category
+      th Published At
+      th Story ID
+      th
+  tbody
+    = concept('admin/story/cell/similar_link', collection: model, story_id: story_id)
