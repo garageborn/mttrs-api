@@ -15,4 +15,5 @@ LinkType = GraphQL::ObjectType.define do
   field :url, !types.String
   field :amp_url, types.String
   field :slug, !types.String
+  field :social_counter, SocialCounterType
 end

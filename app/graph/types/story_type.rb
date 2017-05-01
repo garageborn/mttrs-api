@@ -23,5 +23,8 @@ StoryType = GraphQL::ObjectType.define do
     argument :publisher_slug, types.String
     resolve Resolvers::StoryType::OtherLinks
   end
+  field :social_counter, SocialCounterType do
+    resolve Resolvers::StoryType::SocialCounter
+  end
   field :tags, types[TagType]
 end
