@@ -75,7 +75,10 @@ module Admin
 
       class Form < Trailblazer::Cell
         property :story
-        property :similar
+
+        def similar
+          model.model.similar
+        end
 
         def html
           return unless model.html.valid_encoding?
