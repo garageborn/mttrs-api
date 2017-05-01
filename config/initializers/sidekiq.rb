@@ -17,9 +17,6 @@ end
 
 Sidekiq.configure_server do |config|
   config.redis = REDIS_OPTIONS.merge(size: ENV.fetch('SIDEKIQ_REDIS_SERVER_SIZE', 40).to_i)
-  config.server_middleware do |chain|
-    chain.remove Sidekiq::Middleware::Server::RetryJobs
-  end
 end
 
 Sidekiq.default_worker_options = {

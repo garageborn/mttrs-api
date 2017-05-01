@@ -2,7 +2,7 @@ class AmpFetcherJob
   extend Memoist
   include Sidekiq::Worker
 
-  sidekiq_options queue: :amp_fetcher
+  sidekiq_options queue: :amp_fetcher, retry: false
 
   # https://developers.google.com/amp/cache/reference/limits
   LIMIT_WINDOW = 100

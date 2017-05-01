@@ -2,7 +2,7 @@ class IndexerJob
   include Sidekiq::Worker
   extend Memoist
 
-  sidekiq_options queue: :indexer
+  sidekiq_options queue: :indexer, retry: false
 
   def perform(operation, klass, record_id, options = {})
     return unless Rails.env.production?

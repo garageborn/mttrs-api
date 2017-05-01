@@ -33,10 +33,9 @@ gem 'redis-namespace', '1.5.2'
 gem 'reform-rails', '0.1.7'
 gem 'retries', '0.0.5'
 gem 'ruby-readability', '0.7.0'
-gem 'sidekiq', '4.2.10'
-gem 'sidekiq-failures', '0.4.5'
+gem 'sidekiq', '5.0.0'
 gem 'sidekiq-limit_fetch', '3.4.0'
-gem 'sidekiq-unique-jobs', '4.0.18'
+gem 'sidekiq-unique-jobs', '5.0.7'
 gem 'simple_form', '3.4.0'
 gem 'sinatra', '2.0.0.rc2'
 gem 'slim-rails', '3.1.2'
@@ -71,7 +70,7 @@ group :development, :test do
   gem 'guard-rspec', '4.7.3'
   gem 'guard-rubocop', '1.2.0'
   gem 'guard-slimlint', '1.2.1'
-  gem 'pronto', '0.9.1'
+  gem 'pronto', '0.9.2'
   gem 'pronto-brakeman', '0.9.0', require: false
   gem 'pronto-flay', '0.9.0', require: false
   gem 'pronto-rubocop', '0.9.0', require: false
