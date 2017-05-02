@@ -4,10 +4,11 @@ module Resolvers
       def resolve
         OpenStruct.new(
           facebook: obj.total_facebook,
-          twitter: obj.total_twitter,
-          pinterest: obj.total_pinterest,
           google_plus: obj.total_google_plus,
-          total: obj.total_social
+          linkedin: obj.total_linkedin,
+          pinterest: obj.total_pinterest,
+          total: obj.total_social,
+          twitter: obj.total_twitter
         )
       end
     end
