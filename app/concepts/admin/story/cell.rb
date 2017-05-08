@@ -15,9 +15,8 @@ module Admin
         end
 
         def categories_filter
-          top_stories = category_link(OpenStruct.new(name: 'Top Stories'))
           categories = ::Category.ordered.map { |category| category_link(category) }
-          [top_stories] + categories
+          [top_stories, with_summary] + categories
         end
 
         def tags_filter
@@ -29,6 +28,22 @@ module Admin
 
           grouped_options = grouped_options_for_select(collection, params[:tag_slug])
           select_tag('stories_tag_slug', grouped_options, prompt: 'Tags')
+        end
+
+        def top_stories
+          link_to(
+            'Top Stories',
+            admin_stories_path(story_params.merge(category_slug: nil)),
+            class: 'stories-add-button'
+          )
+        end
+
+        def with_summary
+          link_to(
+            'With Summary',
+            admin_stories_path(story_params.merge(with_summary: true)),
+            class: 'stories-add-button'
+          )
         end
 
         private
@@ -63,7 +78,7 @@ module Admin
         end
 
         def story_params
-          params.permit(:published_at, :category_slug, :tag_slug)
+          params.permit(:published_at, :category_slug, :tag_slug, :with_summary)
         end
       end
 

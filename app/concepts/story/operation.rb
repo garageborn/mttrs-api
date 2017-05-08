@@ -10,7 +10,7 @@ class Story
     def params!(params)
       DEFAULT_PARAMS.
         merge(published_at: Time.zone.today).
-        merge(params.permit(:category_slug, :page, :published_at, :tag_slug))
+        merge(params.permit(:category_slug, :page, :published_at, :tag_slug, :with_summary))
     end
   end
 
