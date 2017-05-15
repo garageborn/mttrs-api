@@ -5,6 +5,7 @@ QueryType = GraphQL::ObjectType.define do
     argument :ordered, types.Boolean
     argument :order_by_name, types.Boolean
     argument :order_by_stories_count, types.Boolean
+    argument :publisher_ids, types.Array
     argument :with_stories, types.Boolean
     argument :tag_slug, types.String
     resolve Resolvers::QueryType::Categories
@@ -23,6 +24,7 @@ QueryType = GraphQL::ObjectType.define do
   field :publishers, !types[PublisherType] do
     argument :limit, types.Int
     argument :order_by_name, types.Boolean
+    argument :with_ids, types.Array
     argument :with_stories, types.Boolean
     resolve Resolvers::QueryType::Publishers
   end
@@ -52,6 +54,7 @@ QueryType = GraphQL::ObjectType.define do
     argument :limit, types.Int
     argument :limit, types.Int
     argument :popular, types.Boolean
+    argument :publisher_ids, types.Array
     argument :publisher_slug, types.String
     argument :recent, types.Boolean
     argument :tag_slug, types.String
