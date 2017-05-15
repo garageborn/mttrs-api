@@ -15,16 +15,16 @@ gem 'faraday_middleware-aws-signers-v4', '0.1.7'
 gem 'figaro', '1.1.1'
 gem 'fog', '1.38.0'
 gem 'friendly_id', '5.2.1'
-gem 'google-api-client', '0.11.1'
+gem 'google-api-client', '0.11.2'
 gem 'graphiql-rails', '1.4.1'
-gem 'graphql', '1.5.10'
+gem 'graphql', '1.5.13'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
 gem 'kaminari-cells', '0.0.4'
 gem 'memoist', '0.15.0'
 gem 'mime-types', '3.1'
-gem 'nokogiri', '1.7.1'
+gem 'nokogiri', '1.7.2'
 gem 'one_signal', '1.2.0'
 gem 'pg', '0.20.0'
 gem 'public_suffix', '2.0.5'
@@ -35,9 +35,10 @@ gem 'retries', '0.0.5'
 gem 'ruby-readability', '0.7.0'
 gem 'sidekiq', '5.0.0'
 gem 'sidekiq-limit_fetch', '3.4.0'
-gem 'sidekiq-unique-jobs', '5.0.7'
+gem 'sidekiq-unique-jobs', '5.0.8'
 gem 'simple_form', '3.4.0'
-gem 'sinatra', '2.0.0.rc2'
+gem 'sinatra', '2.0.0'
+gem 'slim', '3.0.7'
 gem 'slim-rails', '3.1.2'
 gem 'thread', '0.2.2'
 gem 'trailblazer', '1.1.2'
@@ -47,7 +48,7 @@ gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
 
 # Assets
-gem 'cocoon', '1.2.9'
+gem 'cocoon', '1.2.10'
 gem 'compass-rails', '3.0.2'
 gem 'lodash-rails', '4.17.4'
 gem 'jquery-rails', '4.3.1'
@@ -70,11 +71,11 @@ group :development, :test do
   gem 'guard-rspec', '4.7.3'
   gem 'guard-rubocop', '1.2.0'
   gem 'guard-slimlint', '1.2.1'
-  gem 'pronto', '0.9.2'
+  gem 'pronto', '0.9.3'
   gem 'pronto-brakeman', '0.9.0', require: false
   gem 'pronto-flay', '0.9.0', require: false
   gem 'pronto-rubocop', '0.9.0', require: false
-  gem 'rspec-rails', '3.5.2'
+  gem 'rspec-rails', '3.6.0'
 end
 
 group :development do
@@ -90,7 +91,7 @@ group :development do
 end
 
 group :test do
-  gem 'database_cleaner', '1.5.3'
+  gem 'database_cleaner', '1.6.1'
   gem 'factory_girl_rails', '4.8.0'
   gem 'faker', '1.7.3'
   gem 'rspec-its', '1.2.0'
@@ -98,6 +99,6 @@ group :test do
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
   gem 'simplecov', '0.14.1', require: false
-  gem 'terminal-notifier', '1.7.1', require: false
+  gem 'terminal-notifier', '1.8.0', require: false
   gem 'terminal-notifier-guard', '1.7.0', require: false
 end
