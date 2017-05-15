@@ -28,7 +28,9 @@ class Story
     end
 
     def main_story_link
-      model.story_links.unrestrict_content.popular.first || model.story_links.popular.first
+      model.story_links.fixed ||
+        model.story_links.unrestrict_content.popular.first ||
+        model.story_links.popular.first
     end
 
     memoize :main_story_link

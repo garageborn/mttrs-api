@@ -40,7 +40,11 @@ class Story
     def add_link(link)
       link.blocked_story_links.where(link_id: model.link_ids + model.blocked_link_ids).destroy_all
       model.blocked_story_links.where(link_id: link.id).destroy_all
-      link.with_lock { link.update_attributes(story: model) }
+      link.with_lock do
+        fixed = model.story_links.fixed.blank? &&
+                link.story.story_links.fixed.try(:link_id) == link.id
+        model.story_links.where(link: link).first_or_create.update_attributes(fixed: fixed)
+      end
     end
 
     memoize :link

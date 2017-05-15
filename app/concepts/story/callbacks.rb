@@ -12,6 +12,7 @@ class Story
       def call(_options)
         process_added_links
         process_removed_links
+        process_fixed_link
       end
 
       private
@@ -27,6 +28,13 @@ class Story
         return if contract.removed_links.blank?
         ::Link.where(id: contract.removed_links).each do |link|
           Story::RemoveLink.run(id: contract.model.id, link_id: link.id)
+        end
+      end
+
+      def process_fixed_link
+        contract.story_links.each do |story_link|
+          fixed = story_link.link_id.to_i == contract.fixed_link_id.to_i
+          story_link.update_attributes(fixed: fixed)
         end
       end
     end
