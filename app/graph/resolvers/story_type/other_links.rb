@@ -25,7 +25,7 @@ module Resolvers
         args.except('publisher_ids', 'publisher_slug')
       end
 
-      memoize :publisher_slug, :filters
+      memoize :main_publisher_link, :filters
     end
   end
 end

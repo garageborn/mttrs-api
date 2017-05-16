@@ -20,7 +20,7 @@ module Resolvers
         obj.main_publisher_link(slug: publisher_slug, ids: publisher_ids)
       end
 
-      memoize :publisher_slug
+      memoize :main_publisher_link
     end
   end
 end
