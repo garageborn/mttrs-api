@@ -1,7 +1,7 @@
 module Resolvers
   module TimelineType
     class Stories
-      class PublisherTimeline < Base
+      class DefaultTimeline < Base
         delegate :date, :filters, :limit, to: :obj
 
         class << self
