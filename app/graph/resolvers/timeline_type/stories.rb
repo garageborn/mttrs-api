@@ -7,8 +7,9 @@ module Resolvers
         def timeline(type)
           case type
           when :home then Resolvers::TimelineType::Stories::HomeTimeline
-          when :publisher then Resolvers::TimelineType::Stories::PublisherTimeline
-          else Resolvers::TimelineType::Stories::CategoryTimeline
+          when :category then Resolvers::TimelineType::Stories::CategoryTimeline
+          when :highlight then Resolvers::TimelineType::Stories::HighlightTimeline
+          else Resolvers::TimelineType::Stories::DefaultTimeline
           end
         end
 

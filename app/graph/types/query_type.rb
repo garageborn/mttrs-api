@@ -52,7 +52,6 @@ QueryType = GraphQL::ObjectType.define do
     argument :category_slug, types.String
     argument :cursor, types.Int
     argument :limit, types.Int
-    argument :limit, types.Int
     argument :popular, types.Boolean
     argument :publisher_ids, types[types.Int]
     argument :publisher_slug, types.String

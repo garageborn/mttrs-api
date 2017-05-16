@@ -6,7 +6,7 @@ module Resolvers
 
         class << self
           def filters(args)
-            allowed_filters = %w(publisher_slug with_summary)
+            allowed_filters = %w(category_slug publisher_ids publisher_slug tag_slug with_summary)
             args.slice(*allowed_filters).merge(popular: true)
           end
 
