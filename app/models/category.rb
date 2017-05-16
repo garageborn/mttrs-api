@@ -12,6 +12,9 @@ class Category < ApplicationRecord
   scope :order_by_name, -> { order(:name) }
   scope :ordered, -> { order(:order) }
   scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }) }
+  scope :publisher_ids, lambda { |ids|
+    joins(:publishers).where(publishers: { id: ids }).group('categories.id')
+  }
   scope :with_stories, -> { joins(:stories).group('categories.id') }
   scope :with_tags, -> { joins(:tags).group('categories.id') }
 

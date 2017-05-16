@@ -15,6 +15,9 @@ class Publisher < ApplicationRecord
   friendly_id :name, use: %i(slugged finders)
 
   scope :available_on_current_tenant, -> { with_tenant_language }
+  scope :domain, lambda { |domain|
+    joins(:publisher_domains).where(publisher_domains: { domain: domain })
+  }
   scope :order_by_name, -> { order(:name) }
   scope :random, -> { order('RANDOM()') }
   scope :with_stories, -> { joins(:stories).group('publishers.id') }
@@ -22,14 +25,14 @@ class Publisher < ApplicationRecord
     next all if current_tenant_languages.blank?
     joins(:links).where(links: { language: current_tenant_languages }).distinct
   }
-  scope :domain, lambda { |domain|
-    joins(:publisher_domains).where(publisher_domains: { domain: domain })
+  scope :with_ids, lambda { |ids|
+    next all if ids.blank?
+    where(id: ids)
   }
 
   def self.find_by_host(url)
     host = Addressable::URI.parse(url).host
     public_suffix = PublicSuffix.domain(host)
-
     domain(host).first || domain(public_suffix).first
   end
 end

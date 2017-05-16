@@ -34,8 +34,11 @@ class Story < ApplicationRecord
   }
   scope :published_since, ->(date) { where(published_at: parse_date(date)..Float::INFINITY) }
   scope :published_until, ->(date) { where('stories.published_at < ?', parse_date(date)) }
+  scope :publisher_ids, lambda { |ids|
+    joins(:publishers).where(publishers: { id: ids }).group('stories.id')
+  }
   scope :publisher_slug, lambda { |slug|
-    joins(:publishers).group(:id).where(publishers: { slug: slug })
+    joins(:publishers).where(publishers: { slug: slug }).group('stories.id')
   }
   scope :recent, -> { order(published_at: :desc) }
   scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }).group('stories.id') }
@@ -66,8 +69,12 @@ class Story < ApplicationRecord
     links.map { |link| link.social_counter.try(:google_plus).to_i }.sum
   end
 
-  def main_publisher_link(slug)
-    links.publisher_slug(slug).popular.first
+  def main_publisher_link(ids: [], slug: nil)
+    if ids.present?
+      links.publisher_ids(ids).popular.first
+    elsif slug.present?
+      links.publisher_slug(slug).popular.first
+    end
   end
 
   def main_image_source_url

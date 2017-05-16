@@ -12,6 +12,7 @@ StoryType = GraphQL::ObjectType.define do
     resolve ->(obj, _args, _ctx) { obj.category }
   end
   field :main_link, !LinkType do
+    argument :publisher_ids, types[types.Int]
     argument :publisher_slug, types.String
     resolve Resolvers::StoryType::MainLink
   end
@@ -20,6 +21,7 @@ StoryType = GraphQL::ObjectType.define do
   end
   field :other_links, types[LinkType] do
     argument :popular, types.Boolean
+    argument :publisher_ids, types[types.Int]
     argument :publisher_slug, types.String
     resolve Resolvers::StoryType::OtherLinks
   end
