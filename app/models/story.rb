@@ -69,8 +69,12 @@ class Story < ApplicationRecord
     links.map { |link| link.social_counter.try(:google_plus).to_i }.sum
   end
 
-  def main_publisher_link(slug)
-    links.publisher_slug(slug).popular.first
+  def main_publisher_link(ids: [], slug: nil)
+    if ids.present?
+      links.publisher_ids(ids).popular.first
+    elsif slug.present?
+      links.publisher_slug(slug).popular.first
+    end
   end
 
   def main_image_source_url
