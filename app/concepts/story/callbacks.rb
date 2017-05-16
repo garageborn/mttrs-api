@@ -13,6 +13,7 @@ class Story
         process_added_links
         process_removed_links
         process_fixed_link
+        process_category_change
       end
 
       private
@@ -35,6 +36,14 @@ class Story
         contract.story_links.each do |story_link|
           fixed = story_link.link_id.to_i == contract.fixed_link_id.to_i
           story_link.update_attributes(fixed: fixed)
+        end
+      end
+
+      def process_category_change
+        _previous_category_id, current_category_id = contract.model.previous_changes[:category_id]
+        return if current_category_id.blank?
+        contract.links.each do |link|
+          link.update_attributes(category: contract.model.category)
         end
       end
     end
