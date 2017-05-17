@@ -12,7 +12,6 @@ class Story
       new_params = DEFAULT_PARAMS.dup
       new_params[:published_at] = Time.zone.today if params[:search].blank?
       new_params.merge!(params.permit(ALLOWED_PARAMS))
-      p '----------------', new_params
       new_params
     end
   end
