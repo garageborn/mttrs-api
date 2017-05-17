@@ -119,6 +119,7 @@ Paloma.controller('Admin/Stories', {
   index: () => {
     let tagsSelect = $('#stories_tag_slug')
     let searchInput = $('#stories_search')
+    let urlParams = new URLSearchParams(window.location.search)
 
     tagsSelect.change(() => {
       let route = Routes.admin_stories_path({
@@ -130,7 +131,6 @@ Paloma.controller('Admin/Stories', {
 
     searchInput.keypress((e) => {
       if (e.which !== 13) return
-      let urlParams = new URLSearchParams(window.location.search)
 
       const params = {
         search: searchInput.val(),
