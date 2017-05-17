@@ -2,15 +2,17 @@ class Story
   class Index < Trailblazer::Operation
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 20, popular: true).freeze
+    ALLOWED_PARAMS = %i(category_slug page published_at search tag_slug with_summary).freeze
 
     def model!(params)
       ::Story.filter(params)
     end
 
     def params!(params)
-      DEFAULT_PARAMS.
-        merge(published_at: Time.zone.today).
-        merge(params.permit(:category_slug, :page, :published_at, :tag_slug, :with_summary))
+      new_params = DEFAULT_PARAMS
+      new_params[:published_at] = Time.zone.today if params[:search].blank?
+      new_params.merge!(params.permit(ALLOWED_PARAMS))
+      new_params
     end
   end
 
@@ -22,7 +24,7 @@ class Story
       includes: %i(category publisher story link_url)
     }.freeze
 
-    def model!(params)
+    def model!(_params)
       return if similar_links.blank?
       similar_links.by_score.delete_if do |similar_link|
         story.link_ids.include?(similar_link.record.id)

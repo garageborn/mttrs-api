@@ -30,6 +30,15 @@ module Admin
           select_tag('stories_tag_slug', grouped_options, prompt: 'Tags')
         end
 
+        def search_input
+          text_field_tag(
+            'search',
+            params[:search],
+            id: 'stories_search',
+            placeholder: 'Search', size: 50
+          )
+        end
+
         def top_stories
           link_to(
             'Top Stories',
@@ -40,7 +49,7 @@ module Admin
 
         def with_summary
           link_to(
-            'With Summary',
+            'Summaries',
             admin_stories_path(story_params.merge(with_summary: true)),
             class: 'stories-add-button'
           )
@@ -78,7 +87,7 @@ module Admin
         end
 
         def story_params
-          params.permit(:published_at, :category_slug, :tag_slug, :with_summary)
+          params.permit(:published_at, :category_slug, :search, :tag_slug, :with_summary)
         end
       end
 

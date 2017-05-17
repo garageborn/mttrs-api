@@ -118,15 +118,27 @@ Paloma.controller('Admin/Stories', {
 
   index: () => {
     let tagsSelect = $('#stories_tag_slug')
+    let searchInput = $('#stories_search')
 
     tagsSelect.change(() => {
-      let urlParams = new URLSearchParams(window.location.search)
-
       let route = Routes.admin_stories_path({
         published_at: urlParams.get('published_at'),
         tag_slug: tagsSelect.val()
       })
       Turbolinks.visit(route)
+    })
+
+    searchInput.keypress((e) => {
+      if (e.which !== 13) return
+      let urlParams = new URLSearchParams(window.location.search)
+
+      const params = {
+        search: searchInput.val(),
+        published_at: urlParams.get('published_at'),
+        category_slug: urlParams.get('category_slug'),
+        tag_slug: urlParams.get('tag_slug')
+      }
+      Turbolinks.visit(Routes.admin_stories_path(params))
     })
   },
 })

@@ -41,6 +41,9 @@ class Story < ApplicationRecord
     joins(:publishers).where(publishers: { slug: slug }).group('stories.id')
   }
   scope :recent, -> { order(published_at: :desc) }
+  scope :search, lambda { |query|
+    joins(:links).where('links.title LIKE ?', "%#{ query }%").group('stories.id')
+  }
   scope :tag_slug, ->(slug) { joins(:tags).where(tags: { slug: slug }).group('stories.id') }
   scope :today, -> { published_at(Time.zone.now) }
   scope :yesterday, -> { published_at(1.day.ago) }
