@@ -5,9 +5,10 @@
     - if story
       h3 story: #{ link_to story.id, [:edit, :admin, story], class: 'links-edit-button' }
 
-    = f.input :title
     = f.association :publisher
+    = f.input :category_id, collection: Category.order_by_name
     = f.association :tags, as: :check_boxes
+    = f.input :title
     = f.input :published_at, as: :datetime, html5: true
     = f.input :description, as: :text, input_html: { rows: 5, cols: 100 }
     = f.input :content, as: :text, input_html: { rows: 10, cols: 100 }

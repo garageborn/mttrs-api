@@ -10,6 +10,7 @@ class Link
 
     class AfterSave < Base
       def call(_options)
+        process_category_change!
         refresh_story!
         perform_set_category!
         perform_set_tags!
@@ -19,6 +20,16 @@ class Link
       end
 
       private
+
+      def process_category_change!
+        category = Category.find_by(id: contract.category_id)
+        return if category == contract.model.category
+        contract.model.update_attributes(category: category)
+
+        return if contract.story.blank? || contract.story.try(:category) == category
+        contract.model.update_attributes(story: nil)
+        Story::Refresh.run(id: contract.story.id)
+      end
 
       def refresh_story!
         Link::RefreshStory.run(id: contract.model.id)
