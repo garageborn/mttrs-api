@@ -50,7 +50,7 @@ module Admin
         def with_summary
           link_to(
             'Summaries',
-            admin_stories_path(story_params.merge(with_summary: true)),
+            admin_stories_path(story_params.merge(with_summary: true, category_slug: nil)),
             class: 'stories-add-button'
           )
         end
