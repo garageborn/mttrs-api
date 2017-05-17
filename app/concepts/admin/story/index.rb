@@ -81,7 +81,7 @@ module Admin
         def category_link(category)
           link_to(
             category.name,
-            admin_stories_path(story_params.merge(category_slug: category.slug)),
+            admin_stories_path(story_params.merge(category_slug: category.slug, with_summary: nil)),
             class: 'stories-add-button'
           )
         end
