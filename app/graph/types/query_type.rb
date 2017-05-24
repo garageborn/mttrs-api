@@ -22,6 +22,7 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :publishers, !types[PublisherType] do
+    argument :category_ids, types[types.Int]
     argument :limit, types.Int
     argument :order_by_name, types.Boolean
     argument :with_ids, types[types.Int]

@@ -15,6 +15,9 @@ class Publisher < ApplicationRecord
   friendly_id :name, use: %i(slugged finders)
 
   scope :available_on_current_tenant, -> { with_tenant_language }
+  scope :category_ids, lambda { |ids|
+    joins(stories: :category).where(categories: { id: ids }).group('publishers.id')
+  }
   scope :domain, lambda { |domain|
     joins(:publisher_domains).where(publisher_domains: { domain: domain })
   }
