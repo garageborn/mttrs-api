@@ -4,13 +4,13 @@ module Resolvers
       class CategoryTimeline < Base
         delegate :date, :filters, :limit, to: :obj
 
+        ALLOWED_FILTERS = %w(category_slug tag_slug with_summary).freeze
         MIN_CATEGORY_SOCIAL = 300
         MIN_TAG_SOCIAL = 50
 
         class << self
           def filters(args)
-            allowed_filters = %w(category_slug tag_slug with_summary)
-            args.slice(*allowed_filters).merge(popular: true)
+            args.slice(*ALLOWED_FILTERS).merge(popular: true)
           end
 
           def last_story(filters:, cursor:)

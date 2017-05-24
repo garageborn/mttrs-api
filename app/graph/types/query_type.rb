@@ -50,6 +50,7 @@ QueryType = GraphQL::ObjectType.define do
   end
 
   field :timeline, TimelineType do
+    argument :category_ids, types[types.Int]
     argument :category_slug, types.String
     argument :cursor, types.Int
     argument :limit, types.Int
