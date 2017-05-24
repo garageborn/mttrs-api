@@ -1,14 +1,14 @@
 module Resolvers
   module TimelineType
     class Stories
-      class HighlightTimeline < Base
+      class PopularTimeline < Base
         delegate :date, :filters, :limit, to: :obj
+        ALLOWED_FILTERS = %w(publisher_ids publisher_slug tag_slug with_summary).freeze
         STORIES_PER_CATEGORY = 2
 
         class << self
           def filters(args)
-            allowed_filters = %w(publisher_ids publisher_slug tag_slug with_summary)
-            args.slice(*allowed_filters).merge(popular: true)
+            args.slice(*ALLOWED_FILTERS).merge(popular: true)
           end
 
           def last_story(filters:, cursor:)

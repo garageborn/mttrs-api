@@ -6,9 +6,9 @@ module Resolvers
       class << self
         def timeline(type)
           case type
-          when :home then Resolvers::TimelineType::Stories::HomeTimeline
+          when :home, :summaries then Resolvers::TimelineType::Stories::HomeTimeline
           when :category then Resolvers::TimelineType::Stories::CategoryTimeline
-          when :highlight then Resolvers::TimelineType::Stories::HighlightTimeline
+          when :popular then Resolvers::TimelineType::Stories::PopularTimeline
           else Resolvers::TimelineType::Stories::DefaultTimeline
           end
         end
