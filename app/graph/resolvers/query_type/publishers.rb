@@ -3,7 +3,7 @@ module Resolvers
     class Publishers < Base
       def resolve
         cache_for(:publishers).expires_in 1.hour
-        ::Publisher.available_on_current_tenant.filter(args)
+        ::Publisher.filter(args)
       end
     end
   end
