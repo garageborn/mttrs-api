@@ -5,6 +5,7 @@ class TagMatcher < ApplicationRecord
 
   belongs_to :tag
   belongs_to :publisher
+
   has_one :category, through: :tag
 
   validates :tag, presence: true

@@ -4,8 +4,9 @@ class Tag < ApplicationRecord
 
   belongs_to :category
   has_many :link_tags, inverse_of: :tag, dependent: :destroy
-  has_many :links, through: :link_tags
   has_many :tag_matchers, inverse_of: :tag, dependent: :destroy
+
+  has_many :links, through: :link_tags
   has_many :stories, through: :links
 
   scope :category_slug, ->(slug) { joins(:category).where(categories: { slug: slug }) }

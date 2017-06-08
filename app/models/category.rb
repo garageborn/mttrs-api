@@ -4,10 +4,11 @@ class Category < ApplicationRecord
 
   has_many :category_links, inverse_of: :category, dependent: :destroy
   has_many :category_matchers, inverse_of: :category, dependent: :destroy
+  has_many :tags, inverse_of: :category, dependent: :destroy
+
   has_many :links, through: :category_links
   has_many :publishers, -> { distinct }, through: :links
   has_many :stories, -> { distinct }, through: :links
-  has_many :tags, inverse_of: :category, dependent: :destroy
 
   scope :order_by_name, -> { order(:name) }
   scope :ordered, -> { order(:order) }

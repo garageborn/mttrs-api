@@ -6,18 +6,19 @@ class Story < ApplicationRecord
 
   belongs_to :category
   has_many :blocked_story_links, inverse_of: :story, dependent: :destroy
+  has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
+  has_many :story_links, inverse_of: :story, dependent: :destroy
+  has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
+
   has_many :blocked_links, through: :blocked_story_links, source: :link, class_name: 'Link'
   has_many :link_tags, through: :links
   has_many :amp_links, through: :links
   has_many :links, through: :story_links
   has_many :links_accesses, through: :links, source: :accesses
   has_many :other_links, through: :other_story_links, source: :link
-  has_many :other_story_links, -> { where(main: false) }, class_name: 'StoryLink'
   has_many :publishers, -> { distinct }, through: :links
-  has_many :story_links, inverse_of: :story, dependent: :destroy
   has_many :tags, -> { distinct }, through: :link_tags
   has_one :main_link, through: :main_story_link, source: :link
-  has_one :main_story_link, -> { where(main: true) }, class_name: 'StoryLink'
 
   scope :category_ids, lambda { |ids|
     joins(:category).where(categories: { id: ids }).group('stories.id')
