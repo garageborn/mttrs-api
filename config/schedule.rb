@@ -12,10 +12,6 @@ every 6.hours do
   rake 'buzzsumo:fetcher:recent'
 end
 
-every 1.day, at: '2am' do
-  rake 'buzzsumo:fetcher:since_7_days'
-end
-
 # Links
 every 1.day, at: '3am' do
   rake 'links:purge:run'
