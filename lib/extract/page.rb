@@ -1,9 +1,8 @@
 class Extract
   class Page
-    attr_accessor :content, :description, :html, :image, :language, :published_at, :title, :url
+    attr_accessor :description, :html, :image, :language, :published_at, :title, :url
 
     def initialize(attributes = {})
-      self.content = attributes[:content]
       self.description = attributes[:description]
       self.html = attributes[:html]
       self.image = attributes[:image]
@@ -34,7 +33,7 @@ class Extract
     end
 
     def attributes
-      %i(content description html image language published_at title url)
+      %i(description html image language published_at title url)
     end
   end
 end

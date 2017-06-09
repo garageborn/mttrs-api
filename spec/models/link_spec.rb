@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Link do
-  it { should have_db_column(:content) }
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:description) }
   it { should have_db_column(:html) }

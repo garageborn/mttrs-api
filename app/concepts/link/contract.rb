@@ -2,7 +2,6 @@ class Link
   class Contract < Reform::Form
     property :category_id, virtual: true
     property :category_link
-    property :content
     property :description
     property :html
     property :image_source_url
