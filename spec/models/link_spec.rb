@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Link do
   it { should have_db_column(:created_at).with_options(null: false) }
   it { should have_db_column(:description) }
-  it { should have_db_column(:html) }
   it { should have_db_column(:image_source_url) }
   it { should have_db_column(:language) }
   it { should have_db_column(:published_at).with_options(null: false) }

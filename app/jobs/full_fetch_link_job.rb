@@ -26,10 +26,14 @@ class FullFetchLinkJob
 
   def set_missing_info
     return if page.blank?
+    set_html
     set_image_source_url
-    %i(description html language published_at title).each do |attribute|
-      merge_attribute(attribute)
-    end
+    %i(description language published_at title).each { |attribute| merge_attribute(attribute) }
+  end
+
+  def set_html
+    return if page.html.blank?
+    link.html = StringIO.new(page.html)
   end
 
   def set_image_source_url
@@ -46,7 +50,7 @@ class FullFetchLinkJob
   def page
     current_page = Extract::Page.new(
       description: link.description,
-      html: link.html,
+      html: link.page.to_s,
       image: link.image_source_url,
       language: link.language || publisher.language,
       published_at: link.published_at,
