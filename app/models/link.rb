@@ -63,7 +63,7 @@ class Link < ApplicationRecord
   scope :yesterday, -> { published_at(1.day.ago) }
 
   has_attached_file :html
-  validates_attachment_content_type :html, content_type: %w(text/html text/plain)
+  validates_attachment_content_type :html, content_type: %w(text/html text/plain application/xhtml+xml)
   strip_attributes :description, :title
   serialize :raw_html, ::Utils::BinaryStringSerializer
   friendly_id :title, use: %i(slugged finders)
