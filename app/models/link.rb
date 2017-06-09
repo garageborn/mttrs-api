@@ -62,9 +62,8 @@ class Link < ApplicationRecord
   scope :unrestrict_content, -> { joins(:publisher).where(publishers: { restrict_content: false }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
-  strip_attributes :content, :description, :title
+  strip_attributes :description, :title
   serialize :html, ::Utils::BinaryStringSerializer
-  serialize :content, ::Utils::BinaryStringSerializer
   friendly_id :title, use: %i(slugged finders)
 
   def self.find_by_url(url)
