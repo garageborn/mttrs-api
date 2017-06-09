@@ -79,11 +79,6 @@ module Admin
         def similar
           model.model.similar
         end
-
-        def html
-          return unless model.html.valid_encoding?
-          model.html
-        end
       end
     end
   end

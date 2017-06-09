@@ -62,8 +62,10 @@ class Link < ApplicationRecord
   scope :unrestrict_content, -> { joins(:publisher).where(publishers: { restrict_content: false }) }
   scope :yesterday, -> { published_at(1.day.ago) }
 
+  has_attached_file :html
+  validates_attachment_content_type :html, content_type: %w(text/html text/plain)
   strip_attributes :description, :title
-  serialize :html, ::Utils::BinaryStringSerializer
+  serialize :raw_html, ::Utils::BinaryStringSerializer
   friendly_id :title, use: %i(slugged finders)
 
   def self.find_by_url(url)
@@ -98,7 +100,9 @@ class Link < ApplicationRecord
 
   def page
     return if html.blank?
-    Nokogiri::HTML(html)
+    file = Paperclip.io_adapters.for(html).read
+    return if file.blank?
+    Nokogiri::HTML(file)
   end
 
   memoize :page
