@@ -44,6 +44,7 @@ class Link
       end
 
       def enqueue_link_full_fetch!
+        return unless contract.model.publisher.requires_link_html?
         return unless contract.model.missing_html?
         FullFetchLinkJob.perform_async(contract.model.id)
       end
