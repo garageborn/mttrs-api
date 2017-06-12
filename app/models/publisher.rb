@@ -39,4 +39,16 @@ class Publisher < ApplicationRecord
     public_suffix = PublicSuffix.domain(host)
     domain(host).first || domain(public_suffix).first
   end
+
+  def requires_link_html?
+    requires_link_html = false
+    Apartment::Tenant.each do
+      category_matchers_exists = category_matchers.with_html_matcher.exists?
+      tag_matchers_exists = tag_matchers.with_html_matcher.exists?
+      if category_matchers_exists || tag_matchers_exists || attribute_matchers.exists?
+        requires_link_html = true
+      end
+    end
+    requires_link_html
+  end
 end
