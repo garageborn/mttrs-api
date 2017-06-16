@@ -2,7 +2,7 @@ module Admin
   module Link
     module Cell
       class Blocked < Trailblazer::Cell
-        INCLUDES = %i(category publisher story link_url).freeze
+        INCLUDES = %i[category publisher story link_url].freeze
 
         def blocked_links
           model.blocked_links.popular.includes(INCLUDES)

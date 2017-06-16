@@ -63,9 +63,9 @@ class Link < ApplicationRecord
   scope :yesterday, -> { published_at(1.day.ago) }
 
   has_attached_file :html
-  validates_attachment_content_type :html, content_type: %w(text/html text/plain application/xhtml+xml)
+  validates_attachment_content_type :html, content_type: %w[text/html text/plain application/xhtml+xml]
   strip_attributes :description, :title
-  friendly_id :title, use: %i(slugged finders)
+  friendly_id :title, use: %i[slugged finders]
 
   def self.find_by_url(url)
     joins(:link_urls).find_by(link_urls: { url: url })

@@ -13,16 +13,16 @@ Metrics/LineLength:
 Style/StringLiterals:
   EnforcedStyle: single_quotes
 
-Style/TrailingBlankLines:
+Layout/TrailingBlankLines:
   Enabled: false
 
-Style/SpaceInsideStringInterpolation:
+Layout/SpaceInsideStringInterpolation:
   Enabled: false
 
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/IndentArray:
+Layout/IndentArray:
   EnforcedStyle: consistent
 
 Rails/HasAndBelongsToMany:

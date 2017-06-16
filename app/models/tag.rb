@@ -15,9 +15,9 @@ class Tag < ApplicationRecord
   scope :ordered, -> { order(:order) }
   scope :with_stories, -> { joins(:stories).group('tags.id') }
   scope :with_recent_stories, lambda {
-    joins(:stories).where(stories: { published_at: 7.days.ago..Float::INFINITY }).
-      group('tags.id')
+    joins(:stories).where(stories: { published_at: 7.days.ago..Float::INFINITY })
+                   .group('tags.id')
   }
 
-  friendly_id :name, use: %i(slugged finders)
+  friendly_id :name, use: %i[slugged finders]
 end

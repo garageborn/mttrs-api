@@ -6,6 +6,6 @@ class CreateAttributeMatchers < ActiveRecord::Migration[5.0]
       t.text :matcher, null: false
       t.timestamps null: false
     end
-    add_index :attribute_matchers, [:publisher_id, :name]
+    add_index :attribute_matchers, %i[publisher_id name]
   end
 end

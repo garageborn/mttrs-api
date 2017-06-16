@@ -10,7 +10,7 @@ ELASTICSEARCH_OPTIONS = {
   logger: Rails.logger
 }.freeze
 
-if /amazonaws\.com/ =~ ELASTICSEARCH_URL
+if /amazonaws\.com/.match?(ELASTICSEARCH_URL)
   ELASTICSEARCH_CLIENT = Elasticsearch::Client.new(ELASTICSEARCH_OPTIONS.dup) do |f|
     f.request(
       :aws_signers_v4,

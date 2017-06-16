@@ -18,7 +18,7 @@ module Admin
     def create
       run ::Link::Create do |op|
         flash[:notice] = "Link '#{ op.model.title }' created"
-        return redirect_to [:admin, :links]
+        return redirect_to %i[admin links]
       end
       render_form
     end
@@ -26,7 +26,7 @@ module Admin
     def update
       run ::Link::Update do |op|
         flash[:notice] = "Link '#{ op.model.title }' updated"
-        return redirect_to [:admin, :links]
+        return redirect_to %i[admin links]
       end
       render_form
     end
@@ -34,7 +34,7 @@ module Admin
     def destroy
       run ::Link::Destroy do |op|
         flash[:notice] = "Link '#{ op.model.title }' destroyed"
-        return redirect_to [:admin, :links]
+        return redirect_to %i[admin links]
       end
       render_form
     end

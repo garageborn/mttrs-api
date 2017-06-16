@@ -1,10 +1,10 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :categories, only: %i(index show)
-  resources :publishers, only: %i(index show)
+  resources :categories, only: %i[index show]
+  resources :publishers, only: %i[index show]
   resources :stories, only: [:index]
-  match '/graphql' => 'graphql#create', via: %i(get post)
+  match '/graphql' => 'graphql#create', via: %i[get post]
 
   namespace :admin do
     root to: redirect("/admin/#{ Apartment.tenant_names.first }")
@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       resources :notifications, except: :show
       resources :publishers, except: :show
       resources :publisher_suggestions, except: :show
-      resources :stories, only: %i(index edit update destroy) do
+      resources :stories, only: %i[index edit update destroy] do
         get :similar_links, on: :member
       end
       resources :tags, except: :show

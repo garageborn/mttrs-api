@@ -7,6 +7,6 @@ class CreateLinkUrls < ActiveRecord::Migration
     end
 
     add_index :link_urls, :url, unique: true
-    add_index :link_urls, [:link_id, :url], unique: true
+    add_index :link_urls, %i[link_id url], unique: true
   end
 end

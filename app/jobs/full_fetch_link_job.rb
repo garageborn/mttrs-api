@@ -28,7 +28,7 @@ class FullFetchLinkJob
     return if page.blank?
     set_html
     set_image_source_url
-    %i(description language published_at title).each { |attribute| merge_attribute(attribute) }
+    %i[description language published_at title].each { |attribute| merge_attribute(attribute) }
   end
 
   def set_html
@@ -57,7 +57,7 @@ class FullFetchLinkJob
       title: link.title,
       url: link.uri
     )
-    Extract.run(current_page, publisher: publisher, force_attributes: %i(published_at))
+    Extract.run(current_page, publisher: publisher, force_attributes: %i[published_at])
   end
 
   memoize :link, :page

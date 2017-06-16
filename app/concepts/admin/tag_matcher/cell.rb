@@ -67,10 +67,9 @@ module Admin
           publisher = ::Publisher.find_by(id: model.publisher_id)
           tag = ::Tag.find_by(id: model.tag_id)
 
-          scope = case
-                  when publisher.present? && tag.present?
+          scope = if publisher.present? && tag.present?
                     publisher.links.category_slug(tag.category.slug).untagged
-                  when publisher.present?
+                  elsif publisher.present?
                     publisher.links.untagged
                   else ::Link.untagged
                   end

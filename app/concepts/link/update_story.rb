@@ -15,7 +15,6 @@ class Link
 
         story.update_attributes(category: model.category, published_at: model.published_at)
       end
-
     end
   end
 end

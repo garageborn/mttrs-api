@@ -1,3 +1,3 @@
-GraphiQL::Rails.config.headers['X-Tenant'] = lambda { |context|
+GraphiQL::Rails.config.headers['X-Tenant'] = lambda { |_context|
   Apartment::Tenant.current
 }

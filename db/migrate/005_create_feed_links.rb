@@ -6,7 +6,7 @@ class CreateFeedLinks < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :feed_links, [:feed_id, :link_id], unique: true
-    add_index :feed_links, [:link_id, :feed_id], unique: true
+    add_index :feed_links, %i[feed_id link_id], unique: true
+    add_index :feed_links, %i[link_id feed_id], unique: true
   end
 end

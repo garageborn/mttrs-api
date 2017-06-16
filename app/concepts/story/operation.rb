@@ -2,7 +2,7 @@ class Story
   class Index < Trailblazer::Operation
     include Collection
     DEFAULT_PARAMS = ActionController::Parameters.new(page: 1, per: 20, popular: true).freeze
-    ALLOWED_PARAMS = %i(category_slug page published_at search tag_slug with_summary).freeze
+    ALLOWED_PARAMS = %i[category_slug page published_at search tag_slug with_summary].freeze
 
     def model!(params)
       ::Story.filter(params)
@@ -21,7 +21,7 @@ class Story
     extend Memoist
     QUERY_OPTIONS = {
       min_score: 1,
-      includes: %i(category publisher story link_url)
+      includes: %i[category publisher story link_url]
     }.freeze
 
     def model!(_params)

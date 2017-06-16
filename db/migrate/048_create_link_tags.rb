@@ -5,7 +5,7 @@ class CreateLinkTags < ActiveRecord::Migration
       t.integer :link_id, null: false
       t.timestamps null: false
     end
-    add_index :link_tags, [:tag_id, :link_id], unique: true
-    add_index :link_tags, [:link_id, :tag_id], unique: true
+    add_index :link_tags, %i[tag_id link_id], unique: true
+    add_index :link_tags, %i[link_id tag_id], unique: true
   end
 end

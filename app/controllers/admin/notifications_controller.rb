@@ -18,7 +18,7 @@ module Admin
     def create
       run ::Notification::Create do |op|
         flash[:notice] = "Notification '#{ op.model.title }' created"
-        return redirect_to [:admin, :notifications]
+        return redirect_to %i[admin notifications]
       end
       render_form
     end
@@ -26,7 +26,7 @@ module Admin
     def update
       run ::Notification::Update do |op|
         flash[:notice] = "Notification '#{ op.model.title }' updated"
-        return redirect_to [:admin, :notifications]
+        return redirect_to %i[admin notifications]
       end
       render_form
     end
@@ -34,7 +34,7 @@ module Admin
     def destroy
       run ::Notification::Destroy do |op|
         flash[:notice] = "Notification '#{ op.model.title }' destroyed"
-        return redirect_to [:admin, :notifications]
+        return redirect_to %i[admin notifications]
       end
       render_form
     end

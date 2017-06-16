@@ -13,7 +13,7 @@ module Admin
     def update
       run ::Story::Update do |op|
         flash[:notice] = "Story '#{ op.model.id }' updated"
-        return redirect_to [:admin, :stories]
+        return redirect_to %i[admin stories]
       end
       render_form
     end
@@ -21,7 +21,7 @@ module Admin
     def destroy
       run ::Story::Destroy do |op|
         flash[:notice] = "Story '#{ op.model.id }' destroyed"
-        return redirect_to [:admin, :stories]
+        return redirect_to %i[admin stories]
       end
       render_form
     end

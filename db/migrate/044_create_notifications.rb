@@ -10,7 +10,7 @@ class CreateNotifications < ActiveRecord::Migration
       t.text :response
       t.timestamps null: false
     end
-    add_index :notifications, [:notificable_type, :notificable_id]
-    add_index :notifications, [:notificable_id, :notificable_type]
+    add_index :notifications, %i[notificable_type notificable_id]
+    add_index :notifications, %i[notificable_id notificable_type]
   end
 end

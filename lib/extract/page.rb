@@ -33,7 +33,7 @@ class Extract
     end
 
     def attributes
-      %i(description html image language published_at title url)
+      %i[description html image language published_at title url]
     end
   end
 end

@@ -21,7 +21,7 @@ class Link
     validates :language, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }, allow_blank: true
 
     def prepopulate!(_options)
-      self.link_urls << LinkUrl.new if link_urls.blank?
+      link_urls << LinkUrl.new if link_urls.blank?
       self.category_id = category_link.try(:category_id) if category_id.blank?
     end
   end

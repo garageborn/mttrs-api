@@ -8,6 +8,6 @@ class CreatePerformedJobs < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :performed_jobs, [:type, :key], unique: true
+    add_index :performed_jobs, %i[type key], unique: true
   end
 end
