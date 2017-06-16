@@ -18,7 +18,7 @@ module Admin
     def create
       run ::PublisherSuggestion::Create do |op|
         flash[:notice] = "Publisher suggestion '#{ op.model.name }' created"
-        return redirect_to [:admin, :publisher_suggestions]
+        return redirect_to %i[admin publisher_suggestions]
       end
       render_form
     end
@@ -26,7 +26,7 @@ module Admin
     def update
       run ::PublisherSuggestion::Update do |op|
         flash[:notice] = "Publisher suggestion '#{ op.model.name }' updated"
-        return redirect_to [:admin, :publisher_suggestions]
+        return redirect_to %i[admin publisher_suggestions]
       end
       render_form
     end
@@ -34,7 +34,7 @@ module Admin
     def destroy
       run ::PublisherSuggestion::Destroy do |op|
         flash[:notice] = "Publisher suggestion '#{ op.model.name }' destroyed"
-        return redirect_to [:admin, :publisher_suggestions]
+        return redirect_to %i[admin publisher_suggestions]
       end
       render_form
     end

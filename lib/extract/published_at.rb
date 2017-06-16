@@ -21,7 +21,7 @@ class Extract
     end
 
     def translate_string(locale)
-      keys = %w(date.abbr_day_names date.abbr_month_names date.day_names date.month_names)
+      keys = %w[date.abbr_day_names date.abbr_month_names date.day_names date.month_names]
       keys.each { |key| translate_key(key, locale) }
     end
 

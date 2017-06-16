@@ -10,7 +10,7 @@ module Admin
         ].freeze
 
         def types_collection
-          %w(Link Category Publisher)
+          %w[Link Category Publisher]
         end
 
         def segments_collection

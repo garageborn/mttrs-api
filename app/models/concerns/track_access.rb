@@ -6,9 +6,9 @@ module Concerns
       has_many :accesses, as: :accessable, dependent: :destroy
 
       scope :sort_by_hits, lambda {
-        left_outer_joins(:accesses).
-          group("#{ table_name }.#{ primary_key }").
-          reorder('COALESCE(SUM(accesses.hits), 0) DESC')
+        left_outer_joins(:accesses)
+          .group("#{ table_name }.#{ primary_key }")
+          .reorder('COALESCE(SUM(accesses.hits), 0) DESC')
       }
 
       scope :hits_by_timeframe, lambda { |timeframe, time|

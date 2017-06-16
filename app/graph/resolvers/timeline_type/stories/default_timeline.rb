@@ -3,14 +3,14 @@ module Resolvers
     class Stories
       class DefaultTimeline < Base
         delegate :date, :filters, :limit, to: :obj
-        ALLOWED_FILTERS = %w(
+        ALLOWED_FILTERS = %w[
           category_ids
           category_slug
           publisher_ids
           publisher_slug
           tag_slug
           with_summary
-        ).freeze
+        ].freeze
 
         class << self
           def filters(args)

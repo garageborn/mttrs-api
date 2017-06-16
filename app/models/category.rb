@@ -19,5 +19,5 @@ class Category < ApplicationRecord
   scope :with_stories, -> { joins(:stories).group('categories.id') }
   scope :with_tags, -> { joins(:tags).group('categories.id') }
 
-  friendly_id :name, use: %i(slugged finders)
+  friendly_id :name, use: %i[slugged finders]
 end

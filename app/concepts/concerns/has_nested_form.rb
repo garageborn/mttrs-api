@@ -27,11 +27,11 @@ module Concerns
       collection = options[:model]
       index = options[:index]
 
-      if fragment[:id].to_s.blank?
-        item = nil
-      else
-        item = collection.detect { |r| r.id.to_s == fragment[:id].to_s }
-      end
+      item = if fragment[:id].to_s.blank?
+               nil
+             else
+               collection.detect { |r| r.id.to_s == fragment[:id].to_s }
+             end
 
       if fragment['_destroy'] == '1'
         collection.delete_at(index)

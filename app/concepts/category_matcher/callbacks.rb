@@ -17,7 +17,7 @@ class CategoryMatcher
 
       def enqueue_link_set_category_job!
         links = contract.model.publisher.links.available_on_current_tenant.uncategorized
-        links.find_each { |link|  LinkSetCategoryJob.perform_async(link.id) }
+        links.find_each { |link| LinkSetCategoryJob.perform_async(link.id) }
       end
     end
   end

@@ -3,7 +3,7 @@ module Resolvers
     class Stories
       class PopularTimeline < Base
         delegate :date, :filters, :limit, to: :obj
-        ALLOWED_FILTERS = %w(publisher_ids publisher_slug tag_slug with_summary).freeze
+        ALLOWED_FILTERS = %w[publisher_ids publisher_slug tag_slug with_summary].freeze
         STORIES_PER_CATEGORY = 2
 
         class << self
@@ -24,8 +24,8 @@ module Resolvers
 
         def resolve
           return [] if date.blank?
-          ::Story.where(id: stories_ids).filter(filters).published_between(start_at, end_at).
-            limit(limit)
+          ::Story.where(id: stories_ids).filter(filters).published_between(start_at, end_at)
+                 .limit(limit)
         end
 
         private
@@ -50,13 +50,13 @@ module Resolvers
         end
 
         def category_stories(category)
-          category.stories.filter(filters).published_between(start_at, end_at).
-            limit(STORIES_PER_CATEGORY)
+          category.stories.filter(filters).published_between(start_at, end_at)
+                  .limit(STORIES_PER_CATEGORY)
         end
 
         def fallback_stories_ids
-          ::Story.filter(filters).published_between(start_at, end_at).
-            where.not(id: categories_stories_ids).limit(missing_stories_count).map(&:id)
+          ::Story.filter(filters).published_between(start_at, end_at)
+                 .where.not(id: categories_stories_ids).limit(missing_stories_count).map(&:id)
         end
 
         def missing_stories_count

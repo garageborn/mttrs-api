@@ -1,7 +1,11 @@
 RSpec.configure do |config|
   config.before(:suite) do
     Apartment.tenant_names.each do |tenant_name|
-      Apartment::Tenant.drop(tenant_name) rescue nil
+      begin
+        Apartment::Tenant.drop(tenant_name)
+      rescue
+        nil
+      end
     end
     Apartment::Tenant.create('mttrs_us')
   end

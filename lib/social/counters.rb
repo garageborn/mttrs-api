@@ -15,7 +15,7 @@ module Social
     end
 
     def attributes
-      %i(facebook google_plus linkedin pinterest twitter)
+      %i[facebook google_plus linkedin pinterest twitter]
     end
 
     def to_h

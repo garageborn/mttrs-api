@@ -11,7 +11,7 @@
 namespace :db do
   desc 'Also create shared_extensions Schema'
   task extensions: :environment do
-    extensions = %w(citext unaccent)
+    extensions = %w[citext unaccent]
     # Create Schema
     ActiveRecord::Base.connection.execute(
       'CREATE SCHEMA IF NOT EXISTS shared_extensions;'

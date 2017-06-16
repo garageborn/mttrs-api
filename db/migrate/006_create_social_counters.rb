@@ -14,7 +14,7 @@ class CreateSocialCounters < ActiveRecord::Migration
       t.timestamps null: false
     end
 
-    add_index :social_counters, [:link_id, :total]
+    add_index :social_counters, %i[link_id total]
     add_index :social_counters, :parent_id, unique: true
   end
 end

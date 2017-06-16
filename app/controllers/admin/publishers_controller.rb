@@ -18,7 +18,7 @@ module Admin
     def create
       run ::Publisher::Create do |op|
         flash[:notice] = "Publisher '#{ op.model.name }' created"
-        return redirect_to [:admin, :publishers]
+        return redirect_to %i[admin publishers]
       end
       render_form
     end
@@ -26,7 +26,7 @@ module Admin
     def update
       run ::Publisher::Update do |op|
         flash[:notice] = "Publisher '#{ op.model.name }' updated"
-        return redirect_to [:admin, :publishers]
+        return redirect_to %i[admin publishers]
       end
       render_form
     end
@@ -34,7 +34,7 @@ module Admin
     def destroy
       run ::Publisher::Destroy do |op|
         flash[:notice] = "Publisher '#{ op.model.name }' destroyed"
-        return redirect_to [:admin, :publishers]
+        return redirect_to %i[admin publishers]
       end
       render_form
     end

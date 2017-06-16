@@ -5,7 +5,7 @@ class CreateBlockedStoryLinks < ActiveRecord::Migration[5.0]
       t.integer :link_id, null: false
       t.timestamps null: false
     end
-    add_index :blocked_story_links, [:story_id, :link_id], unique: true
-    add_index :blocked_story_links, [:link_id, :story_id], unique: true
+    add_index :blocked_story_links, %i[story_id link_id], unique: true
+    add_index :blocked_story_links, %i[link_id story_id], unique: true
   end
 end
