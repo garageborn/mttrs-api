@@ -6,7 +6,7 @@ RSpec.describe LinkUrl do
   it { should have_db_column(:updated_at).with_options(null: false) }
   it { should have_db_column(:link_id).with_options(null: false) }
   it { should have_db_index(:url).unique(true) }
-  it { should have_db_index([:link_id, :url]).unique(true) }
+  it { should have_db_index(%i[link_id url]).unique(true) }
 
   it { should belong_to(:link) }
 

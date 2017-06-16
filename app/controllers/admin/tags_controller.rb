@@ -18,7 +18,7 @@ module Admin
     def create
       run ::Tag::Create do |op|
         flash[:notice] = "Tag '#{ op.model.name }' created"
-        return redirect_to [:admin, :tags]
+        return redirect_to %i[admin tags]
       end
       render_form
     end
@@ -26,7 +26,7 @@ module Admin
     def update
       run ::Tag::Update do |op|
         flash[:notice] = "Tag '#{ op.model.name }' updated"
-        return redirect_to [:admin, :tags]
+        return redirect_to %i[admin tags]
       end
       render_form
     end
@@ -34,7 +34,7 @@ module Admin
     def destroy
       run ::Tag::Destroy do |op|
         flash[:notice] = "Tag '#{ op.model.name }' destroyed"
-        return redirect_to [:admin, :tags]
+        return redirect_to %i[admin tags]
       end
       render_form
     end

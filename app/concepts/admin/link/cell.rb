@@ -7,7 +7,7 @@ module Admin
             ::Publisher.available_on_current_tenant.order_by_name.distinct,
             :slug,
             :name,
-            params[:publisher_slug],
+            params[:publisher_slug]
           )
           select_tag('links_publisher_slug', options, prompt: 'Publishers')
         end
@@ -17,7 +17,7 @@ module Admin
             ::Category.order_by_name.distinct,
             :slug,
             :name,
-            params[:category_slug],
+            params[:category_slug]
           )
           select_tag('links_category_slug', options, prompt: 'Categories')
         end

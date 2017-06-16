@@ -32,7 +32,7 @@ module Buzzsumo
 
     def do_request
       @response = self.class.send(method, path, options)
-      raise ::Buzzsumo::Error.new(response) unless response.success?
+      raise Buzzsumo::Error, response unless response.success?
       response
     end
 

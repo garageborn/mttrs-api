@@ -2,12 +2,12 @@ module Buzzsumo
   class Error < StandardError
     attr_reader :headers, :path, :raised_at, :status
 
-    RATELIMIT_HEADERS = %w(
+    RATELIMIT_HEADERS = %w[
       x-ratelimit-reset
       x-ratelimit-limit
       x-ratelimit-remaining
       x-ratelimit-month-remaining
-    ).freeze
+    ].freeze
 
     def initialize(response)
       @headers = response.headers.select { |key, _value| RATELIMIT_HEADERS.include?(key) }

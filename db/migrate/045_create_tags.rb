@@ -7,7 +7,7 @@ class CreateTags < ActiveRecord::Migration
       t.citext :slug, null: false
       t.timestamps null: false
     end
-    add_index :tags, [:category_id, :order]
+    add_index :tags, %i[category_id order]
     add_index :tags, :slug, unique: true
   end
 end

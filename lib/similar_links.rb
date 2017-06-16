@@ -22,7 +22,7 @@ class SimilarLinks
     @base_link = @options.delete(:base_link)
     @similar_links = []
     @blocked_links = []
-    @includes = %i(category category_link) + @options.delete(:includes).to_a
+    @includes = %i[category category_link] + @options.delete(:includes).to_a
     @category = @options.delete(:category) || base_link.try(:category)
     @options[:min_score] ||= category.try(:similar_min_score)
     perform

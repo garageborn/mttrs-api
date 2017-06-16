@@ -10,7 +10,7 @@ module Buzzsumo
       def all(options = {})
         options[:query] ||= {}
         current_page = 0
-        Array.new.tap do |resources|
+        [].tap do |resources|
           loop do
             options[:query][:page] = current_page
             request = get(options)

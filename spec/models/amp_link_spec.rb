@@ -10,5 +10,5 @@ RSpec.describe AmpLink do
   it { should have_db_index(:status) }
 
   it { should belong_to(:link) }
-  it { should define_enum_for(:status).with(%i(pending fetching error success)) }
+  it { should define_enum_for(:status).with(%i[pending fetching error success]) }
 end

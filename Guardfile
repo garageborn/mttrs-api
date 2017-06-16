@@ -28,7 +28,7 @@ group :red_green_refactor, halt_on_fail: true do
     dsl.watch_spec_files_for(ruby.lib_files)
 
     # Rails files
-    rails = dsl.rails(view_extensions: %w(erb haml slim))
+    rails = dsl.rails(view_extensions: %w[erb haml slim])
     dsl.watch_spec_files_for(rails.app_files)
     dsl.watch_spec_files_for(rails.views)
 
@@ -77,7 +77,7 @@ guard 'livereload' do
     jpeg: :jpeg
   }
 
-  rails_view_exts = %w(erb haml slim)
+  rails_view_exts = %w[erb haml slim]
 
   # file types LiveReload may optimize refresh for
   compiled_exts = extensions.values.uniq

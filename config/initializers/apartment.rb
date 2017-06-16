@@ -11,7 +11,7 @@ require ::File.expand_path('../../../lib/elevator', __FILE__)
 # Apartment Configuration
 #
 Apartment.configure do |config|
-  config.excluded_models = %w(
+  config.excluded_models = %w[
     AmpLink
     AttributeMatcher
     BlockedUrl
@@ -22,12 +22,12 @@ Apartment.configure do |config|
     PublisherSuggestion
     SocialCounter
     TitleReplacement
-  )
+  ]
 
-  config.tenant_names = %w(mttrs_us mttrs_br)
+  config.tenant_names = %w[mttrs_us mttrs_br]
   config.tenant_options = {
-    mttrs_us: { languages: %w(en) },
-    mttrs_br: { languages: %w(pt) }
+    mttrs_us: { languages: %w[en] },
+    mttrs_br: { languages: %w[pt] }
   }
 
   #
@@ -49,7 +49,7 @@ Apartment.configure do |config|
   # e.g when using a PostgreSQL extension like hstore.
   # Any schemas added here will be available along with your selected Tenant.
   #
-  config.persistent_schemas = %w(shared_extensions)
+  config.persistent_schemas = %w[shared_extensions]
 
   # <== PostgreSQL only options
   #

@@ -19,7 +19,7 @@ module Admin
       run ::CategoryMatcher::Create do |op|
         return render_form if op.contract.try_out
         flash[:notice] = "Category Matcher '#{ op.model.id }' created"
-        return redirect_to [:admin, :category_matchers]
+        return redirect_to %i[admin category_matchers]
       end
       render_form
     end
@@ -28,7 +28,7 @@ module Admin
       run ::CategoryMatcher::Update do |op|
         return render_form if op.contract.try_out
         flash[:notice] = "Category Matcher '#{ op.model.id }' updated"
-        return redirect_to [:admin, :category_matchers]
+        return redirect_to %i[admin category_matchers]
       end
       render_form
     end
@@ -36,7 +36,7 @@ module Admin
     def destroy
       run ::CategoryMatcher::Destroy do |op|
         flash[:notice] = "Category Matcher '#{ op.model.id }' destroyed"
-        return redirect_to [:admin, :category_matchers]
+        return redirect_to %i[admin category_matchers]
       end
       render_form
     end

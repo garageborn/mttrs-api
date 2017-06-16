@@ -7,7 +7,7 @@ class CreateAccesses < ActiveRecord::Migration
       t.integer :hits, null: false, default: 1
     end
     add_index :accesses,
-              [:accessable_type, :accessable_id, :date],
+              %i[accessable_type accessable_id date],
               name: 'index_access_on_assetable_and_created_at',
               unique: true
     add_index :accesses, :date

@@ -1,7 +1,7 @@
 class AddSlugOnLinks < ActiveRecord::Migration[5.0]
   class Link < ApplicationRecord
     extend FriendlyId
-    friendly_id :title, use: %i(slugged finders)
+    friendly_id :title, use: %i[slugged finders]
   end
 
   def change

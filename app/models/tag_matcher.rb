@@ -16,7 +16,7 @@ class TagMatcher < ApplicationRecord
   scope :order_by_category_name, -> { joins(:category).order('categories.name ASC') }
   scope :order_by_publisher_name, -> { joins(:publisher).order('publishers.name ASC') }
   scope :order_by_tag_name, -> { joins(:tag).order('tags.name ASC') }
-  scope :publisher_slug,->(slug) { joins(:publisher).where(publishers: { slug: slug }) }
+  scope :publisher_slug, ->(slug) { joins(:publisher).where(publishers: { slug: slug }) }
   scope :tag_slug, ->(slug) { joins(:tag).where(tags: { slug: slug }) }
   scope :with_html_matcher, -> { where.not(html_matcher: nil).where.not(html_matcher: '') }
 

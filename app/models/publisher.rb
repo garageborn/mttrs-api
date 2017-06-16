@@ -13,7 +13,7 @@ class Publisher < ApplicationRecord
 
   has_many :stories, -> { distinct }, through: :links
 
-  friendly_id :name, use: %i(slugged finders)
+  friendly_id :name, use: %i[slugged finders]
 
   scope :available_on_current_tenant, -> { with_tenant_language }
   scope :category_ids, lambda { |ids|

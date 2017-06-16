@@ -16,7 +16,7 @@ class BuzzsumoEntryProcessJob
   end
 
   def enqueue_update_counters!(model)
-    counters = Social::counters_from_entry(entry)
+    counters = Social.counters_from_entry(entry)
     return if counters.blank?
     ::SocialCounter::UpdateCounters.run(link: model, counters: counters.to_h)
   end

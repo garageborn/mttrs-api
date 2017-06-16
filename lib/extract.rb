@@ -9,7 +9,7 @@ class Extract
   autoload :PublishedAt, './lib/extract/published_at'
   autoload :Title, './lib/extract/title'
 
-  AVAILABLE_ATTRIBUTES = %i(description image language published_at title html).freeze
+  AVAILABLE_ATTRIBUTES = %i[description image language published_at title html].freeze
 
   attr_reader :entry, :force_attributes, :page, :publisher
 
