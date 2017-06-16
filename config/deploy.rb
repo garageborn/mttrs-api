@@ -1,5 +1,3 @@
-lock '3.8.1'
-
 set :application, 'mttrs-api'
 set :repo_url, 'git@github.com:garageborn/mttrs-api.git'
 set :keep_releases, 10

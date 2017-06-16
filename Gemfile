@@ -14,8 +14,8 @@ gem 'elasticsearch-rails', '0.1.9'
 gem 'faraday_middleware-aws-signers-v4', '0.1.7'
 gem 'figaro', '1.1.1'
 gem 'friendly_id', '5.2.1'
-gem 'google-api-client', '0.12.0'
-gem 'graphiql-rails', '1.4.1'
+gem 'google-api-client', '0.13.0'
+gem 'graphiql-rails', '1.4.2'
 gem 'graphql', '1.6.3'
 gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
@@ -26,7 +26,7 @@ gem 'mime-types', '3.1'
 gem 'nokogiri', '1.8.0'
 gem 'one_signal', '1.2.0'
 gem 'paperclip', '5.1.0'
-gem 'pg', '0.20.0'
+gem 'pg', '0.21.0'
 gem 'public_suffix', '2.0.5'
 gem 'rails', '5.1.1'
 gem 'redis-namespace', '1.5.3'
@@ -45,7 +45,7 @@ gem 'whenever', '0.9.7', require: false
 
 # sidekiq
 gem 'apartment-sidekiq', '1.1.0'
-gem 'sidekiq', '5.0.2'
+gem 'sidekiq', '5.0.3'
 gem 'sidekiq-limit_fetch', '3.4.0'
 gem 'sidekiq-unique-jobs', '5.0.8'
 gem 'sinatra', '2.0.0'
@@ -64,7 +64,7 @@ gem 'uglifier', '3.2.0'
 
 group :production do
   gem 'puma', '3.9.1'
-  gem 'sentry-raven', '2.5.2'
+  gem 'sentry-raven', '2.5.3'
 end
 
 group :development, :test do
@@ -72,7 +72,7 @@ group :development, :test do
   gem 'guard-bundler', '2.1.0'
   gem 'guard-livereload', '2.5.2'
   gem 'guard-rspec', '4.7.3'
-  gem 'guard-rubocop', '1.2.0'
+  gem 'guard-rubocop', '1.3.0'
   gem 'guard-slimlint', '1.2.1'
   gem 'pronto', '0.9.3'
   gem 'pronto-brakeman', '0.9.0', require: false
@@ -82,9 +82,9 @@ group :development, :test do
 end
 
 group :development do
-  gem 'capistrano', '3.8.1'
+  gem 'capistrano', '3.8.2'
   gem 'capistrano-bundler', '1.2.0', require: false
-  gem 'capistrano-rails', '1.2.3', require: false
+  gem 'capistrano-rails', '1.3.0', require: false
   gem 'capistrano-rbenv', '2.1.1', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
   gem 'capistrano3-puma', '3.1.0', require: false
