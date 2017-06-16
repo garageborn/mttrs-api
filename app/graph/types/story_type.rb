@@ -8,6 +8,9 @@ StoryType = GraphQL::ObjectType.define do
   field :summary, types.String
   field :headline, types.String
   field :category, !CategoryType
+  field :links_count, !types.Int do
+    resolve ->(obj, _args, _ctx) { obj.links.size }
+  end
   field :main_category, !CategoryType do # backward compatibility
     resolve ->(obj, _args, _ctx) { obj.category }
   end
@@ -27,7 +30,6 @@ StoryType = GraphQL::ObjectType.define do
   end
   field :publishers, types[PublisherType] do
     argument :limit, types.Int
-    argument :popular, types.Boolean
     argument :publisher_ids, types[types.Int]
     argument :publisher_slug, types.String
     resolve Resolvers::StoryType::Publishers
