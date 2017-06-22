@@ -24,10 +24,20 @@ Apartment.configure do |config|
     TitleReplacement
   ]
 
-  config.tenant_names = %w[mttrs_us mttrs_br]
+  config.tenant_names = %w[
+    mttrs_us
+    mttrs_br
+    mttrs_ar
+    mttrs_cl
+    mttrs_mx
+  ]
+
   config.tenant_options = {
-    mttrs_us: { languages: %w[en] },
-    mttrs_br: { languages: %w[pt] }
+    mttrs_us: { country: 'United States', languages: %w[en], default_timezone: 'EST' },
+    mttrs_br: { country: 'Brasil', languages: %w[pt], default_timezone: 'Brasilia' },
+    mttrs_ar: { country: 'Argentina', languages: %w[ar], default_timezone: 'Buenos Aires' },
+    mttrs_cl: { country: 'Chile', languages: %w[cl], default_timezone: 'Santiago' },
+    mttrs_mx: { country: 'Mexico', languages: %w[mx], default_timezone: 'Mexico City' }
   }
 
   #
@@ -74,12 +84,12 @@ end
 Rails.application.config.middleware.use Elevator
 
 # tenant shortcuts
-def mttrs_br!
-  Time.zone = 'America/Sao_Paulo'
-  Apartment::Tenant.switch!(:mttrs_br)
-end
+Apartment.tenant_names.each do |tenant_name|
+  tenant = tenant_name.to_sym
+  options = Apartment.tenant_options[tenant]
 
-def mttrs_us!
-  Time.zone = 'UTC'
-  Apartment::Tenant.switch!(:mttrs_us)
+  define_method("#{ tenant }!") do
+    Time.zone = options[:default_timezone]
+    Apartment::Tenant.switch!(tenant)
+  end
 end
