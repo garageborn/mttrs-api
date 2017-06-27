@@ -30,6 +30,7 @@ Apartment.configure do |config|
     mttrs_ar
     mttrs_cl
     mttrs_mx
+    mttrs_pt
   ]
 
   config.tenant_options = {
