@@ -37,7 +37,8 @@ Apartment.configure do |config|
     mttrs_br: { country: 'Brasil', languages: %w[pt], default_timezone: 'Brasilia' },
     mttrs_ar: { country: 'Argentina', languages: %w[es], default_timezone: 'Buenos Aires' },
     mttrs_cl: { country: 'Chile', languages: %w[es], default_timezone: 'Santiago' },
-    mttrs_mx: { country: 'Mexico', languages: %w[es], default_timezone: 'Mexico City' }
+    mttrs_mx: { country: 'Mexico', languages: %w[es], default_timezone: 'Mexico City' },
+    mttrs_pt: { country: 'Portugal', languages: %w[pt], default_timezone: 'Lisbon' }
   }
 
   #
