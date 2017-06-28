@@ -9,7 +9,7 @@ class Publisher
     end
 
     def params!(params)
-      DEFAULT_PARAMS.merge(params.permit(:page))
+      DEFAULT_PARAMS.merge(params.permit(:page, :with_stories))
     end
   end
 

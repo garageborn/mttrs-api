@@ -1,4 +1,6 @@
-h2= link_to 'New Publisher', [:new, :admin, :publisher], class: 'publishers-add-button'
+h2
+  = link_to 'Tenant Publishers', admin_publishers_path(with_stories: true), class: 'publishers-add-button'
+  = link_to 'New Publisher', [:new, :admin, :publisher], class: 'publishers-add-button'
 
 table.publishers
   thead
