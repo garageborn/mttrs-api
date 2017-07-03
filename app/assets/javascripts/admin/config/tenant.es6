@@ -1,4 +1,13 @@
-const TENANT_NAMES = ['mttrs_us', 'mttrs_br', 'mttrs_ar', 'mttrs_cl', 'mttrs_mx', 'mttrs_pt']
+const TENANT_NAMES = [
+  'mttrs_us',
+  'mttrs_br',
+  'mttrs_ar',
+  'mttrs_cl',
+  'mttrs_mx',
+  'mttrs_pt',
+  'mttrs_us_es',
+  'mttrs_au'
+]
 const DEFAULT_TENANT = TENANT_NAMES[0]
 
 class Tenant {
