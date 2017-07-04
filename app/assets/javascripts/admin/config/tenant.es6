@@ -23,7 +23,8 @@ class Tenant {
 
   static init () {
     let tenant = TENANT_NAMES.find((tenantName) => {
-      return location.pathname.match(`/${ tenantName }`)
+      const tenantPath = window.location.pathname.split('/')[2]
+      return tenantName === tenantPath
     })
     this.current = tenant || DEFAULT_TENANT
   }
