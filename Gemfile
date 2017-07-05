@@ -21,7 +21,7 @@ gem 'hiredis', '0.6.1'
 gem 'httparty', '0.14.0'
 gem 'kaminari', '0.17.0'
 gem 'kaminari-cells', '0.0.4'
-gem 'memoist', '0.15.0'
+gem 'memoist', '0.16.0'
 gem 'mime-types', '3.1'
 gem 'nokogiri', '1.8.0'
 gem 'one_signal', '1.2.0'
@@ -45,7 +45,7 @@ gem 'whenever', '0.9.7', require: false
 
 # sidekiq
 gem 'apartment-sidekiq', '1.1.0'
-gem 'sidekiq', '5.0.3'
+gem 'sidekiq', '5.0.4'
 gem 'sidekiq-limit_fetch', '3.4.0'
 gem 'sidekiq-unique-jobs', '5.0.8'
 gem 'sinatra', '2.0.0'
@@ -98,7 +98,7 @@ group :test do
   gem 'factory_girl_rails', '4.8.0'
   gem 'faker', '1.7.3'
   gem 'rspec-its', '1.2.0'
-  gem 'rspec-sidekiq', '3.0.1'
+  gem 'rspec-sidekiq', '3.0.3'
   gem 'shoulda-callback-matchers', '1.1.4'
   gem 'shoulda-matchers', '3.1.1'
   gem 'simplecov', '0.14.1', require: false

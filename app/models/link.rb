@@ -63,7 +63,7 @@ class Link < ApplicationRecord
   scope :yesterday, -> { published_at(1.day.ago) }
 
   has_attached_file :html
-  has_attached_file :image, styles: proc { |attachment| attachment.instance.image_styles }
+  has_attached_file :image, styles: { thumb: '120x95' }
   validates_attachment_content_type :html, content_type: %w[text/html text/plain application/xhtml+xml]
   strip_attributes :description, :title
   friendly_id :title, use: %i[slugged finders]
@@ -105,27 +105,10 @@ class Link < ApplicationRecord
     Nokogiri::HTML(file)
   end
 
-  def dynamic_image_url(format)
-    return unless save_image!
-    @dynamic_image_style = format
-    image.reprocess!(dynamic_image_style_symbol) unless image.exists?(dynamic_image_style_symbol)
-    image.url(dynamic_image_style_symbol)
-  end
-
-  def image_styles
-    return {} if @dynamic_image_style.blank?
-    { dynamic_image_style_symbol => @dynamic_image_style }
-  end
-
-  private
-
-  def save_image!
-    return true if image.present?
-    update_attributes(image: open(image_source_url))
-  end
-
-  def dynamic_image_style_symbol
-    URI.escape(@dynamic_image_style).to_sym
+  def image_source_url=(url_value)
+    return if url_value == read_attribute(:image_source_url)
+    self.image = URI.parse(url_value) rescue nil
+    write_attribute(:image_source_url, url_value)
   end
 
   memoize :page
