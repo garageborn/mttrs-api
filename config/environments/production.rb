@@ -92,11 +92,11 @@ Rails.application.configure do
       access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
       secret_access_key: ENV.fetch('AWS_SECRET_ACCESS_KEY'),
       s3_region: ENV.fetch('AWS_DEFAULT_REGION')
-    }
+    },
     s3_host_alias: ENV.fetch('S3_HOST_NAME'),
     s3_host_name: ENV.fetch('S3_HOST_NAME'),
     s3_protocol: 'https',
     storage: :s3,
-    url: ':s3_alias_url',
+    url: ':s3_alias_url'
   }
 end
