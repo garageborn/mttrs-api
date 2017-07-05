@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 57) do
+ActiveRecord::Schema.define(version: 58) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -134,6 +134,10 @@ ActiveRecord::Schema.define(version: 57) do
     t.string "html_content_type"
     t.integer "html_file_size"
     t.datetime "html_updated_at"
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
     t.index ["published_at"], name: "index_links_on_published_at"
     t.index ["publisher_id"], name: "index_links_on_publisher_id"
     t.index ["slug"], name: "index_links_on_slug", unique: true

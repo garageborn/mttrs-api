@@ -4,6 +4,7 @@ LinkType = GraphQL::ObjectType.define do
   field :category, CategoryType
   field :created_at, !types.Int
   field :id, !types.ID
+  field :image, LinkImageType
   field :image_source_url, types.String do
     resolve Resolvers::LinkType::ImageSourceUrl
   end

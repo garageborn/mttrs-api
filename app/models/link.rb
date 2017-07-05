@@ -63,6 +63,7 @@ class Link < ApplicationRecord
   scope :yesterday, -> { published_at(1.day.ago) }
 
   has_attached_file :html
+  has_attached_file :image, styles: { thumb: '120x95' }
   validates_attachment_content_type :html, content_type: %w[text/html text/plain application/xhtml+xml]
   strip_attributes :description, :title
   friendly_id :title, use: %i[slugged finders]
@@ -102,6 +103,12 @@ class Link < ApplicationRecord
     file = Paperclip.io_adapters.for(html).read
     return if file.blank?
     Nokogiri::HTML(file)
+  end
+
+  def image_source_url=(url_value)
+    return if url_value == read_attribute(:image_source_url)
+    self.image = URI.parse(url_value) rescue nil
+    write_attribute(:image_source_url, url_value)
   end
 
   memoize :page
