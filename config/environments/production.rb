@@ -86,7 +86,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.paperclip_defaults = {
-    path: ':rails_root/public/system/:class/:attachment/:id_partition/:fingerprint_:style',
+    path: ':class/:attachment/:id_partition/:fingerprint_:style',
     s3_credentials: {
       bucket: ENV.fetch('S3_BUCKET_NAME'),
       access_key_id: ENV.fetch('AWS_ACCESS_KEY_ID'),
