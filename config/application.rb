@@ -32,5 +32,10 @@ module Mttrs
       admin/application.css
       admin/application.js
     ]
+    config.paperclip_defaults = {
+      path: ':rails_root/public/system/:class/:attachment/:id_partition/:fingerprint_:style',
+      url: '/system/:class/:attachment/:id_partition/:fingerprint_:style',
+      use_timestamp: false
+    }
   end
 end
