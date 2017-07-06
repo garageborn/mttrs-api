@@ -4,11 +4,11 @@ set :output, 'log/cron.log'
 job_type :rake, 'cd :path && :environment_variable=:environment bin/rake :task --silent :path/:output'
 
 # Buzzsumo
-every 25.minutes do
+every 40.minutes do
   rake 'buzzsumo:fetcher:today'
 end
 
-every 6.hours do
+every 12.hours do
   rake 'buzzsumo:fetcher:recent'
 end
 
