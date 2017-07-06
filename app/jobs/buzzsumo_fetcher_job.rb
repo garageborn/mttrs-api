@@ -5,6 +5,19 @@ class BuzzsumoFetcherJob
   sidekiq_options queue: :buzzsumo_fetcher, retry: false
   attr_reader :publisher_id, :options
 
+  ENTRY_KEYS = %i[
+    google_plus_shares
+    language
+    linkedin_shares
+    pinterest_shares
+    published_date
+    thumbnail
+    title
+    total_facebook_shares
+    twitter_shares
+    url
+  ].freeze
+
   def perform(publisher_id, options = {})
     @publisher_id = publisher_id
     @options = options.with_indifferent_access
@@ -39,7 +52,8 @@ class BuzzsumoFetcherJob
   end
 
   def process(entry)
-    BuzzsumoEntryProcessJob.perform_async(entry.to_h)
+    attributes = entry.to_h.with_indifferent_access.select { |key, _| ENTRY_KEYS.include?(key) }
+    BuzzsumoEntryProcessJob.perform_async(attributes)
   end
 
   memoize :publisher, :entries
