@@ -10,9 +10,9 @@ class Publisher < ApplicationRecord
   has_many :publisher_domains, inverse_of: :publisher, dependent: :destroy
   has_many :tag_matchers, inverse_of: :publisher, dependent: :destroy
   has_many :title_replacements, inverse_of: :publisher, dependent: :destroy
-
   has_many :stories, -> { distinct }, through: :links
 
+  has_attached_file :icon, styles: { thumb: '50x50', thumb2: '30x30', thumb3: '22x22' }
   friendly_id :name, use: %i[slugged finders]
 
   scope :available_on_current_tenant, -> { with_tenant_language }
