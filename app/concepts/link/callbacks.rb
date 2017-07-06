@@ -16,6 +16,7 @@ class Link
         perform_set_tags!
         enqueue_link_full_fetch!
         enqueue_story_builder!
+        enqueue_link_image_uploader!
         create_amp_link!
       end
 
@@ -51,6 +52,11 @@ class Link
 
       def enqueue_story_builder!
         StoryBuilderJob.perform_async(contract.model.id)
+      end
+
+      def enqueue_link_image_uploader!
+        return if contract.model.image.present?
+        LinkImageUploaderJob.perform_async(contract.model.id)
       end
 
       def create_amp_link!

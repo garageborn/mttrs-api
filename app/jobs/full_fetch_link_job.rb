@@ -16,6 +16,7 @@ class FullFetchLinkJob
     Link::SetTags.run(id: link.id)
     Link::UpdateStory.run(id: link.id)
     StoryBuilderJob.perform_async(link.id)
+    LinkImageUploaderJob.perform_async(link.id)
   end
 
   private
