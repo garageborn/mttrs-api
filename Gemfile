@@ -7,7 +7,6 @@ gem 'cells', '4.1.7'
 gem 'cells-rails', '0.0.8'
 gem 'cells-slim', '0.0.5'
 gem 'charlock_holmes', '0.7.3'
-gem 'cloudinary', '1.8.1'
 gem 'dry-types', '0.10.3'
 gem 'elasticsearch-model', '0.1.9'
 gem 'elasticsearch-rails', '0.1.9'
@@ -42,7 +41,6 @@ gem 'trailblazer-compat', '0.1.1'
 gem 'trailblazer-rails', '1.0.2'
 gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
-
 # sidekiq
 gem 'apartment-sidekiq', '1.1.0'
 gem 'sidekiq', '5.0.4'

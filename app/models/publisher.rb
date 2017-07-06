@@ -10,10 +10,11 @@ class Publisher < ApplicationRecord
   has_many :publisher_domains, inverse_of: :publisher, dependent: :destroy
   has_many :tag_matchers, inverse_of: :publisher, dependent: :destroy
   has_many :title_replacements, inverse_of: :publisher, dependent: :destroy
-
   has_many :stories, -> { distinct }, through: :links
 
+  has_attached_file :icon, styles: { xsmall: '50x50', small: '30x30', medium: '22x22' }
   friendly_id :name, use: %i[slugged finders]
+  validates_attachment_content_type :icon, content_type: /\Aimage/
 
   scope :available_on_current_tenant, -> { with_tenant_language }
   scope :category_ids, lambda { |ids|

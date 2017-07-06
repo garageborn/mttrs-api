@@ -33,17 +33,11 @@ class Publisher
       end
 
       def call(_options)
-        destroy_icon!
         destroy_associations!
         destroy_tenant_associations!
       end
 
       private
-
-      def destroy_icon!
-        return if contract.model.icon_id.blank?
-        Cloudinary::Uploader.destroy(contract.model.icon_id)
-      end
 
       def destroy_associations!
         Link::DestroyAll.run(contract.model.link_ids)
