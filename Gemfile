@@ -42,7 +42,6 @@ gem 'trailblazer-compat', '0.1.1'
 gem 'trailblazer-rails', '1.0.2'
 gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
-
 # sidekiq
 gem 'apartment-sidekiq', '1.1.0'
 gem 'sidekiq', '5.0.4'
