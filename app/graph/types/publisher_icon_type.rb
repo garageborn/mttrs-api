@@ -2,18 +2,18 @@ PublisherIconType = GraphQL::ObjectType.define do
   name 'PublisherIconType'
 
   field :original, !types.String do
-    resolve lambda { |obj, _args, _ctx| obj.url }
+    resolve -> { |obj, _args, _ctx| obj.url }
   end
 
   field :small, !types.String do
-    resolve lambda { |obj, _args, _ctx| obj.url(:small) }
+    resolve -> { |obj, _args, _ctx| obj.url(:small) }
   end
 
   field :small, !types.String do
-    resolve lambda { |obj, _args, _ctx| obj.url(:xsmall) }
+    resolve -> { |obj, _args, _ctx| obj.url(:xsmall) }
   end
 
   field :medium, !types.String do
-    resolve lambda { |obj, _args, _ctx| obj.url(:medium) }
+    resolve -> { |obj, _args, _ctx| obj.url(:medium) }
   end
 end
