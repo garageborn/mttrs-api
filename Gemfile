@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'addressable', '2.5.1'
 gem 'apartment', '1.2.0'
-gem 'aws-sdk', '2.9.36'
+gem 'aws-sdk', '2.10.8'
 gem 'cells', '4.1.7'
 gem 'cells-rails', '0.0.8'
 gem 'cells-slim', '0.0.5'
@@ -28,7 +28,7 @@ gem 'one_signal', '1.2.0'
 gem 'paperclip', '5.1.0'
 gem 'pg', '0.21.0'
 gem 'public_suffix', '2.0.5'
-gem 'rails', '5.1.1'
+gem 'rails', '5.1.2'
 gem 'redis-namespace', '1.5.3'
 gem 'reform-rails', '0.1.7'
 gem 'retries', '0.0.5'
@@ -87,7 +87,7 @@ group :development do
   gem 'capistrano-rails', '1.3.0', require: false
   gem 'capistrano-rbenv', '2.1.1', require: false
   gem 'capistrano-sidekiq', '0.10.0', require: false
-  gem 'capistrano3-puma', '3.1.0', require: false
+  gem 'capistrano3-puma', '3.1.1', require: false
   gem 'rack-cors', '0.4.1', require: 'rack/cors'
   gem 'rack-livereload', '0.3.16'
   gem 'slackistrano', '3.8.1', require: false
