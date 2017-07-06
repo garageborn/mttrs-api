@@ -12,7 +12,7 @@ class Publisher < ApplicationRecord
   has_many :title_replacements, inverse_of: :publisher, dependent: :destroy
   has_many :stories, -> { distinct }, through: :links
 
-  has_attached_file :icon, styles: { xsmall: '50x50', small: '30x30', medium: '22x22' }
+  has_attached_file :icon, styles: { xsmall: '22x22', small: '30x30', medium: '50x50' }
   friendly_id :name, use: %i[slugged finders]
   validates_attachment_content_type :icon, content_type: /\Aimage/
 

@@ -1,6 +1,6 @@
 class AddIconAsAttachmentOnPublishers < ActiveRecord::Migration[5.0]
   class Publisher < ApplicationRecord
-    has_attached_file :icon, styles: { xsmall: '50x50', small: '30x30', medium: '22x22' }
+    has_attached_file :icon, styles: { xsmall: '22x22', small: '30x30', medium: '50x50' }
     validates_attachment_content_type :icon, content_type: /\Aimage/
   end
 
