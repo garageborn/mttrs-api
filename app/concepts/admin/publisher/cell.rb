@@ -12,8 +12,8 @@ module Admin
         property :restrict_content
 
         def icon
-          return if model.icon_id.blank?
-          cl_image_tag(model.icon_id, width: 24, height: 24, crop: :fit)
+          return if model.icon.blank?
+          image_tag(model.icon.url(:xsmall))
         end
 
         def links_count

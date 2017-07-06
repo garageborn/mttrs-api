@@ -2,7 +2,7 @@ class Publisher
   class Contract < Reform::Form
     include Concerns::HasNestedForm
 
-    property :icon_id, populator: :icon_id!
+    property :icon
     property :language
     property :name
     property :display_name
@@ -22,14 +22,8 @@ class Publisher
                     klass: AttributeMatcher,
                     prepopulate: false
 
-    validates :icon_id, presence: true
+    validates :icon, presence: true
     validates :language, presence: true, inclusion: { in: Utils::Language::AVAILABLE_LANGUAGES }
     validates :name, presence: true, unique: { case_sensitive: false }
-
-    private
-
-    def icon_id!(options)
-      self.icon_id = CloudinaryPopulator.call(options[:doc][:icon_id])
-    end
   end
 end

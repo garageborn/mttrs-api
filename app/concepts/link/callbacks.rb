@@ -67,17 +67,10 @@ class Link
 
     class BeforeDestroy < Base
       def call(_options)
-        destroy_image!
         destroy_tenant_associations!
       end
 
       private
-
-      def destroy_image!
-        return unless Rails.env.production?
-        return if contract.model.image_source_url.blank?
-        Cloudinary::Uploader.destroy(contract.model.image_source_url, type: :fetch)
-      end
 
       def destroy_tenant_associations!
         Apartment::Tenant.each do

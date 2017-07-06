@@ -14,11 +14,8 @@ class Category
 
   class Form < Trailblazer::Operation
     include Model
-    include Callback
     model Category
     contract Contract
-
-    callback :before_destroy, Callbacks::BeforeDestroy
 
     def process(params)
       validate(params[:category]) do

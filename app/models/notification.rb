@@ -31,14 +31,12 @@ class Notification < ActiveRecord::Base
 
   def big_picture
     return if image_url.blank?
-    options = { crop: 'fit', height: 512, secure: true, type: 'fetch', width: 1024 }
-    Cloudinary::Utils.cloudinary_url(image_url, options)
+    image_url
   end
 
   def large_icon
     return if icon_url.blank?
-    options = { crop: 'fit', height: 256, secure: true, type: 'fetch', width: 256 }
-    Cloudinary::Utils.cloudinary_url(icon_url, options)
+    icon_url
   end
 
   def contents
