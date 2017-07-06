@@ -105,11 +105,12 @@ class Link < ApplicationRecord
     Nokogiri::HTML(file)
   end
 
-  def image_source_url=(url_value)
-    return if url_value == read_attribute(:image_source_url)
-    self.image = URI.parse(url_value) rescue nil
-    write_attribute(:image_source_url, url_value)
-  end
+  # temp disable
+  # def image_source_url=(url_value)
+  #   return if url_value == read_attribute(:image_source_url)
+  #   self.image = URI.parse(url_value) rescue nil
+  #   write_attribute(:image_source_url, url_value)
+  # end
 
   memoize :page
 end
