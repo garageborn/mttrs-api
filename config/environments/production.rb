@@ -97,6 +97,7 @@ Rails.application.configure do
     s3_host_name: ENV.fetch('S3_HOST_NAME'),
     s3_protocol: 'https',
     storage: :s3,
+    use_timestamp: false,
     url: ':s3_alias_url'
   }
 end
