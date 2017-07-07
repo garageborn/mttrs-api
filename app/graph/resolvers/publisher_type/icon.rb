@@ -1,10 +1,9 @@
 module Resolvers
   module PublisherType
     class Icon < Base
-      STYLES = %i[xsmall small medium]
-
       def resolve
         OpenStruct.new(
+          original: original_url,
           xsmall: style_url(:xsmall),
           small: style_url(:small),
           medium: style_url(:medium)
@@ -12,6 +11,10 @@ module Resolvers
       end
 
       private
+
+      def original_url
+        obj.icon.url
+      end
 
       def style_url(style)
         style_name = dpr.present? ? "#{ style }_#{ dpr }x".to_sym : style.to_sym
