@@ -52,7 +52,9 @@ class BuzzsumoFetcherJob
   end
 
   def process(entry)
-    attributes = entry.to_h.with_indifferent_access.select { |key, _| ENTRY_KEYS.include?(key) }
+    attributes = entry.to_h.with_indifferent_access.select do |key, _value|
+      ENTRY_KEYS.include?(key.to_sym)
+    end
     BuzzsumoEntryProcessJob.perform_async(attributes)
   end
 
