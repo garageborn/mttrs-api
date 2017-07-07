@@ -6,7 +6,11 @@ const TENANT_NAMES = [
   'mttrs_mx',
   'mttrs_pt',
   'mttrs_us_es',
-  'mttrs_au'
+  'mttrs_au',
+  'mttrs_ca',
+  'mttrs_de',
+  'mttrs_es',
+  'mttrs_uk'
 ]
 const DEFAULT_TENANT = TENANT_NAMES[0]
 
