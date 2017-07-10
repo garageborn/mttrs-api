@@ -1,6 +1,6 @@
 module Utils
   module Language
-    AVAILABLE_LANGUAGES = %w[pt en es].freeze
+    AVAILABLE_LANGUAGES = %w[pt en es de].freeze
     EXISTING_LANGUAGES = %w[
       af ar az be bg bn bs ca cs cy da de el en eo es esl et eu fa fi fr gl he hi hr hu id is it ja
       km kn ko lb lo lt lv mk ml mn mr ms nb ne nl nn or pa pl pt rm ro ru sk sl sq sr sv sw ta th
