@@ -21,8 +21,12 @@ class LinkImageUploaderJob
     return if response.blank?
     StringIO.new(response.body).tap do |string_io|
       string_io.class.class_eval { attr_accessor :original_filename }
-      string_io.original_filename = link.image_source_url.split('/').last
+      string_io.original_filename = filename
     end
+  end
+
+  def filename
+    link.image_source_url.split('/').last.last(50)
   end
 
   memoize :link, :file
