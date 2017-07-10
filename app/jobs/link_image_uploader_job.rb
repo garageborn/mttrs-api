@@ -18,7 +18,7 @@ class LinkImageUploaderJob
   def file
     return if link.image_source_url.blank?
     response = Utils::UrlFetcher.run(link.image_source_url)
-    return if response.blank?
+    return if response.success?
     StringIO.new(response.body).tap do |string_io|
       string_io.class.class_eval { attr_accessor :original_filename }
       string_io.original_filename = filename
