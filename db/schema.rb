@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 61) do
+ActiveRecord::Schema.define(version: 62) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(version: 61) do
     t.citext "slug", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "image_id", null: false
     t.string "color", null: false
     t.integer "order", default: 0, null: false
     t.float "similar_min_score", default: 1.5, null: false
@@ -188,10 +187,10 @@ ActiveRecord::Schema.define(version: 61) do
     t.string "language", default: "en", null: false
     t.citext "display_name"
     t.boolean "restrict_content", default: false, null: false
-    t.string "icon_file_name", null: false
-    t.string "icon_content_type", null: false
-    t.integer "icon_file_size", null: false
-    t.datetime "icon_updated_at", null: false
+    t.string "icon_file_name"
+    t.string "icon_content_type"
+    t.integer "icon_file_size"
+    t.datetime "icon_updated_at"
     t.string "icon_fingerprint"
     t.index ["name"], name: "index_publishers_on_name", unique: true
     t.index ["restrict_content"], name: "index_publishers_on_restrict_content"
