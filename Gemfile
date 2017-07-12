@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'addressable', '2.5.1'
 gem 'apartment', '1.2.0'
-gem 'aws-sdk', '2.10.8'
+gem 'aws-sdk', '2.10.9'
 gem 'cells', '4.1.7'
 gem 'cells-rails', '0.0.8'
 gem 'cells-slim', '0.0.5'
@@ -45,7 +45,7 @@ gem 'whenever', '0.9.7', require: false
 gem 'apartment-sidekiq', '1.1.0'
 gem 'sidekiq', '5.0.4'
 gem 'sidekiq-limit_fetch', '3.4.0'
-gem 'sidekiq-unique-jobs', '5.0.8'
+gem 'sidekiq-unique-jobs', '5.0.9'
 gem 'sinatra', '2.0.0'
 
 # Assets
@@ -100,7 +100,7 @@ end
 group :test do
   gem 'database_cleaner', '1.6.1'
   gem 'factory_girl_rails', '4.8.0'
-  gem 'faker', '1.7.3'
+  gem 'faker', '1.8.3'
   gem 'rspec-its', '1.2.0'
   gem 'rspec-sidekiq', '3.0.3'
   gem 'shoulda-callback-matchers', '1.1.4'
