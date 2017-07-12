@@ -56,7 +56,7 @@ class BuzzsumoFetcherJob
 
   def processable_entry?(entry)
     social = entry.select { |key, _value| SOCIAL_KEYS.include?(key.to_sym) }
-    total_social social.map { |_key, value| value.to_i }.sum
+    total_social = social.map { |_key, value| value.to_i }.sum
     total_social > MIN_TOTAL_SOCIAL
   end
 
