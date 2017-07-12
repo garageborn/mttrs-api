@@ -5,25 +5,22 @@ class BuzzsumoFetcherJob
   sidekiq_options queue: :buzzsumo_fetcher, retry: false
   attr_reader :publisher_id, :options
 
-  ENTRY_KEYS = %i[
+  MIN_TOTAL_SOCIAL = 10.freeze
+  SOCIAL_KEYS = %i[
     google_plus_shares
-    language
     linkedin_shares
     pinterest_shares
-    published_date
-    thumbnail
-    title
     total_facebook_shares
     twitter_shares
-    url
   ].freeze
+  ENTRY_KEYS = %i[language published_date thumbnail title url].merge(SOCIAL_KEYS).freeze
 
   def perform(publisher_id, options = {})
     @publisher_id = publisher_id
     @options = options.with_indifferent_access
     return if publisher.blank?
 
-    entries.each { |entry| process(entry) }
+    entries.each { |entry| process(entry.to_h.with_indifferent_access) }
   end
 
   private
@@ -52,10 +49,15 @@ class BuzzsumoFetcherJob
   end
 
   def process(entry)
-    attributes = entry.to_h.with_indifferent_access.select do |key, _value|
-      ENTRY_KEYS.include?(key.to_sym)
-    end
+    return unless processable_entry?(entry)
+    attributes = entry.select { |key, _value| ENTRY_KEYS.include?(key.to_sym) }
     BuzzsumoEntryProcessJob.perform_async(attributes)
+  end
+
+  def processable_entry?(entry)
+    social = entry.select { |key, _value| SOCIAL_KEYS.include?(key.to_sym) }
+    total_social social.map { |_key, value| value.to_i }.sum
+    total_social > MIN_TOTAL_SOCIAL
   end
 
   memoize :publisher, :entries
