@@ -24,7 +24,6 @@ gem 'memoist', '0.16.0'
 gem 'mime-types', '3.1'
 gem 'nokogiri', '1.8.0'
 gem 'one_signal', '1.2.0'
-gem 'paperclip', '5.1.0'
 gem 'pg', '0.21.0'
 gem 'public_suffix', '2.0.5'
 gem 'rails', '5.1.2'
@@ -42,7 +41,7 @@ gem 'trailblazer-rails', '1.0.2'
 gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
 
-# sidekiq
+# Sidekiq
 gem 'apartment-sidekiq', '1.1.0'
 gem 'sidekiq', '5.0.4'
 gem 'sidekiq-limit_fetch', '3.4.0'
@@ -60,6 +59,12 @@ gem 'sass-rails', '5.0.6'
 gem 'sprockets-es6', '0.9.2'
 gem 'turbolinks', '5.0.1'
 gem 'uglifier', '3.2.0'
+
+# Paperclip
+gem 'paperclip-optimizer', '2.0.0'
+gem 'image_optim', '0.25.0'
+gem 'image_optim_pack', '0.5.0.20170712'
+gem 'paperclip', '5.1.0'
 
 group :production do
   gem 'puma', '3.9.1'
