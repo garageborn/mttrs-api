@@ -20,7 +20,7 @@ production:
   - title_replacements
   - update_story_accesses
 :limits:
-  story_builder: 3
+  # story_builder: 3
   buzzsumo_fetcher: 3
   link_full_fetch: 3
   update_story_accesses: 3
