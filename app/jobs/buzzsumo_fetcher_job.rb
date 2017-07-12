@@ -13,7 +13,7 @@ class BuzzsumoFetcherJob
     total_facebook_shares
     twitter_shares
   ].freeze
-  ENTRY_KEYS = %i[language published_date thumbnail title url].merge(SOCIAL_KEYS).freeze
+  ENTRY_KEYS = %i[language published_date thumbnail title url].concat(SOCIAL_KEYS).freeze
 
   def perform(publisher_id, options = {})
     @publisher_id = publisher_id
