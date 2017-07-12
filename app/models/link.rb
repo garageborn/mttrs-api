@@ -66,6 +66,7 @@ class Link < ApplicationRecord
   has_attached_file :image,
     styles: { thumb: '120x95', thumb_2x: '240x190' },
     processors: %i[thumbnail paperclip_optimizer]
+
   validates_attachment_content_type :html, content_type: %w[text/html text/plain application/xhtml+xml]
   strip_attributes :description, :title
   friendly_id :title, use: %i[slugged finders]
