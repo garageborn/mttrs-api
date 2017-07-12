@@ -18,7 +18,7 @@ class LinkImageUploaderJob
   def file
     return if link.image_source_url.blank?
     response = Utils::UrlFetcher.run(link.image_source_url)
-    return if response.success?
+    return unless response.success?
     StringIO.new(response.body).tap do |string_io|
       string_io.class.class_eval { attr_accessor :original_filename }
       string_io.original_filename = filename
@@ -26,7 +26,7 @@ class LinkImageUploaderJob
   end
 
   def filename
-    link.image_source_url.split('/').last.last(50)
+    link.image_source_url.split('/').last.to_s.last(50) || 'image'
   end
 
   memoize :link, :file
