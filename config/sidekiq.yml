@@ -10,7 +10,7 @@ production:
   - buzzsumo_fetcher
   - link_full_fetch
   - link_image_uploader
-  - link_process
+  - buzzsumo_entry_process
   - link_set_category
   - link_set_tags
   - mailers

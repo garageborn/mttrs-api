@@ -2,7 +2,7 @@ class BuzzsumoEntryProcessJob
   include Sidekiq::Worker
   extend Memoist
 
-  sidekiq_options queue: :link_process, retry: false
+  sidekiq_options queue: :buzzsumo_entry_process, retry: false
   attr_reader :entry
 
   def perform(entry)

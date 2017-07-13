@@ -14,12 +14,12 @@ class Publisher < ApplicationRecord
 
   has_attached_file :icon,
     styles: {
-      xsmall: '22x22',
-      xsmall_2x: '44x44',
-      small: '30x30',
-      small_2x:'60x60',
-      medium: '50x50',
-      medium_2x: '100x100'
+      xsmall: '22x22#',
+      xsmall_2x: '44x44#',
+      small: '30x30#',
+      small_2x:'60x60#',
+      medium: '50x50#',
+      medium_2x: '100x100#'
     },
     processors: %i[thumbnail paperclip_optimizer]
   friendly_id :name, use: %i[slugged finders]
