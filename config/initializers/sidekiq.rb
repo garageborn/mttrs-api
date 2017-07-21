@@ -21,7 +21,5 @@ end
 
 Sidekiq.default_worker_options = {
   retry: false,
-  unique: :until_executed,
-  unique_args: ->(args) { args.first.except('job_id') },
   log_duplicate_payload: true
 }
