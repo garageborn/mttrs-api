@@ -24,3 +24,4 @@ production:
   buzzsumo_fetcher: 6
   link_full_fetch: 3
   update_story_accesses: 3
+  link_image_uploader: 5
