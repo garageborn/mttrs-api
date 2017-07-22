@@ -2,7 +2,7 @@ class BuzzsumoFetcherJob
   include Sidekiq::Worker
   extend Memoist
 
-  sidekiq_options queue: :buzzsumo_fetcher, retry: false
+  sidekiq_options queue: :buzzsumo_fetcher, retry: false, unique: :until_executed
   attr_reader :publisher_id, :options
 
   MIN_TOTAL_SOCIAL = 10.freeze
