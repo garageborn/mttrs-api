@@ -2,7 +2,7 @@
 development:
   :concurrency: 10
 production:
-  :concurrency: 10
+  :concurrency: 8
 :queues:
   - [buzzsumo_entry_process, 3]
   - [indexer, 10]
