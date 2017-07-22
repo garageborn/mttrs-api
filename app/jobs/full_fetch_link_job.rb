@@ -8,14 +8,15 @@ class FullFetchLinkJob
 
   def perform(link_id)
     @link_id = link_id
-    return if link.blank? || !link.missing_html?
+    return if link.blank?
+    return if !link.publisher.requires_link_html? || !link.missing_html?
 
     set_missing_info
     link.save
     Link::SetCategory.run(id: link.id)
     Link::SetTags.run(id: link.id)
     Link::UpdateStory.run(id: link.id)
-    StoryBuilderJob.perform_async(link.id)
+    Story::Builder.run(link_id: link.id)
     LinkImageUploaderJob.perform_async(link.id)
   end
 
