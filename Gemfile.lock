@@ -558,7 +558,7 @@ GEM
       trailblazer-operation (>= 0.0.12, < 0.1.0)
     trailblazer-cells (0.0.3)
       cells (>= 4.1.0.rc1, < 5.0.0)
-    trailblazer-compat (0.1.2)
+    trailblazer-compat (0.1.1)
       trailblazer (~> 2.0)
       uber (~> 0.0.15)
     trailblazer-loader (0.1.2)
@@ -566,7 +566,7 @@ GEM
       declarative
       pipetree (>= 0.1.1, < 0.2.0)
       uber
-    trailblazer-rails (1.0.4)
+    trailblazer-rails (1.0.2)
       reform-rails (>= 0.1.4, < 0.2.0)
       trailblazer (>= 2.0.0, < 2.1.0)
       trailblazer-loader (>= 0.1.0)
@@ -675,8 +675,8 @@ DEPENDENCIES
   thread (= 0.2.2)
   trailblazer (= 2.0.7)
   trailblazer-cells (= 0.0.3)
-  trailblazer-compat (= 0.1.2)
-  trailblazer-rails (= 1.0.4)
+  trailblazer-compat (= 0.1.1)
+  trailblazer-rails (= 1.0.2)
   turbolinks (= 5.0.1)
   typhoeus (= 1.1.2)
   uglifier (= 3.2.0)

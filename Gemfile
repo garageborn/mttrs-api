@@ -36,8 +36,8 @@ gem 'slim-rails', '3.1.2'
 gem 'thread', '0.2.2'
 gem 'trailblazer', '2.0.7'
 gem 'trailblazer-cells', '0.0.3'
-gem 'trailblazer-compat', '0.1.2'
-gem 'trailblazer-rails', '1.0.4'
+gem 'trailblazer-compat', '0.1.1'
+gem 'trailblazer-rails', '1.0.2'
 gem 'typhoeus', '1.1.2'
 gem 'whenever', '0.9.7', require: false
 
