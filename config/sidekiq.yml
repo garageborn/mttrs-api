@@ -2,7 +2,7 @@
 development:
   :concurrency: 10
 production:
-  :concurrency: 10
+  :concurrency: 12
 :queues:
   - [indexer, 10]
   - amp_fetcher
