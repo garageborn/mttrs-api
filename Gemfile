@@ -45,6 +45,7 @@ gem 'whenever', '0.9.7', require: false
 gem 'apartment-sidekiq', '1.1.0'
 gem 'sidekiq', '5.0.4'
 gem 'sidekiq-limit_fetch', '3.4.0'
+gem 'sidekiq-unique-jobs', '5.0.9'
 gem 'sinatra', '2.0.0'
 
 # Assets
