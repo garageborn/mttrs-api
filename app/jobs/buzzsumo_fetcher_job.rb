@@ -41,7 +41,7 @@ class BuzzsumoFetcherJob
   end
 
   def process(entry)
-    buzzsumo_entry = BuzzsumoEntry.new(entry, publisher_id)
+    buzzsumo_entry = BuzzsumoEntry.new(entry.merge(publisher_id: publisher_id))
     return unless buzzsumo_entry.valid?
     BuzzsumoEntryProcessJob.perform_async(buzzsumo_entry.to_h)
   end
