@@ -12,11 +12,11 @@ module Social
     def counters_from_entry(entry)
       return if entry.blank?
       Social::Counters.new(
-        facebook: entry[:total_facebook_shares],
-        linkedin: entry[:linkedin_shares],
-        twitter: entry[:twitter_shares],
-        pinterest: entry[:pinterest_shares],
-        google_plus: entry[:google_plus_shares]
+        facebook: entry.facebook,
+        linkedin: entry.linkedin,
+        twitter: entry.twitter,
+        pinterest: entry.pinterest,
+        google_plus: entry.google_plus
       )
     end
 

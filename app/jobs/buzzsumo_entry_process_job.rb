@@ -4,10 +4,11 @@ class BuzzsumoEntryProcessJob
 
   sidekiq_options queue: :buzzsumo_entry_process, retry: false
   attr_reader :entry
+  delegate :publisher, to: :entry
 
   def perform(entry)
-    @entry = entry.with_indifferent_access
-    return if entry.blank? || publisher.blank? || blocked_url?
+    @entry = BuzzsumoEntry.new(entry)
+    return unless @entry.valid?
 
     operation = link.blank? ? Link::Create : Link::Update
     operation.run(link: attributes) do |op|
@@ -23,12 +24,8 @@ class BuzzsumoEntryProcessJob
 
   private
 
-  def publisher
-    Publisher.find_by_host(entry[:url])
-  end
-
   def link
-    Link.find_by_url(entry[:url])
+    Link.find_by_url(entry.url)
   end
 
   def attributes
@@ -43,18 +40,18 @@ class BuzzsumoEntryProcessJob
   end
 
   def image_source_url
-    images = [link.try(:image_source_url), entry[:thumbnail]].compact.uniq
+    images = [link.try(:image_source_url), entry.image_source_url].compact.uniq
     images.find do |image|
       image.present? && !publisher.blocked_urls.match?(image)
     end
   end
 
   def language
-    entry[:language] || link.try(:language)
+    entry.language || link.try(:language)
   end
 
   def published_at
-    Time.zone.at(entry[:published_date].to_i) || link.try(:published_at) || Time.zone.now
+    Time.zone.at(entry.published_at) || link.try(:published_at) || Time.zone.now
   end
 
   def publisher_id
@@ -62,16 +59,16 @@ class BuzzsumoEntryProcessJob
   end
 
   def title
-    publisher.title_replacements.apply(entry[:title] || link.try(:title))
+    publisher.title_replacements.apply(entry.title || link.try(:title))
   end
 
   def urls
-    link.try(:urls) || Utils::UrlDiscovery.run(entry[:url])
+    link.try(:urls) || Utils::UrlDiscovery.run(entry.url)
   end
 
   def blocked_url?
-    publisher.blocked_urls.match?(entry[:url]) || publisher.blocked_urls.match?(urls)
+    publisher.blocked_urls.match?(entry.url) || publisher.blocked_urls.match?(urls)
   end
 
-  memoize :link, :publisher, :urls, :attributes
+  memoize :link, :urls, :attributes
 end
