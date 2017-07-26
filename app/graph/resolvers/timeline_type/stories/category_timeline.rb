@@ -5,8 +5,8 @@ module Resolvers
         delegate :date, :filters, :limit, to: :obj
 
         ALLOWED_FILTERS = %w[category_slug tag_slug with_summary].freeze
-        MIN_CATEGORY_SOCIAL = 300
-        MIN_TAG_SOCIAL = 50
+        MIN_CATEGORY_SOCIAL = 100
+        MIN_TAG_SOCIAL = 10
 
         class << self
           def filters(args)
